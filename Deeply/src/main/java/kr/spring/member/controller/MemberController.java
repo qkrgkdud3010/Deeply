@@ -54,6 +54,11 @@ public class MemberController {
 	public String formLogin() {
 		return "memberLogin";
 	}
+	
+	@GetMapping("/registerUser")
+	public String formRegister() {
+		return "memberRegister";
+	}
 }
 
 
