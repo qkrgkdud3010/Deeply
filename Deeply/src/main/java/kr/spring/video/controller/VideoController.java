@@ -12,16 +12,21 @@ import kr.spring.video.vo.VideoVO;
 
 @Controller
 public class VideoController {
+
     @Autowired
     private VideoService videoService;
 
+    // 기존 list.jsp 매핑
     @GetMapping("/videos")
     public String listVideos(Model model) {
-        // 서비스 호출
         List<VideoVO> videos = videoService.getAllVideos();
-
-        // 뷰로 데이터 전달
         model.addAttribute("videos", videos);
-        return "video/list"; // JSP 파일 이름
+        return "video/list";
+    }
+
+    // 새로운 newjeans.jsp 매핑
+    @GetMapping("/newjeans")
+    public String showNewJeansPage() {
+        return "video/newjeans"; // "WEB-INF/views/video/newjeans.jsp"를 호출
     }
 }
