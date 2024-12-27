@@ -28,4 +28,9 @@ public class VideoController {
     public String showNewJeansPage() {
         return "newjeans"; // hy.xml의 definition name과 일치해야 합니다.
     }
+    
+    @GetMapping("/videos/upload")
+    public String showVideoUploadPage() {
+        return "video_upload"; // Tiles 설정에 따라 "video_upload" 호출
+    }
 }

@@ -1,3 +1,7 @@
+/*
+	영상 리스트 테스트 페이지
+*/
+
 body {
     font-family: 'Inter', 'Manrope', sans-serif;
     margin: 0;
@@ -50,3 +54,184 @@ body {
     border-radius: 12px;
     object-fit: cover;
 }
+
+/*
+	영상 업로드 페이지
+*/
+
+.video-upload-content {
+    margin: 50px auto;
+    width: 80%;
+}
+
+.main-title h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    margin-top: 20px;
+}
+
+.upload-title {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 10px 17px;
+    gap: 10px;
+
+    width: 100%; /* 제목 입력 필드가 부모 요소를 꽉 채움 */
+    height: 38px;
+
+    background: #FFFFFF;
+    border: 1px solid #EDEFF1;
+    border-radius: 4px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #000000;
+
+    outline: none;
+}
+
+.upload-title:focus {
+    border: 1px solid #007bff; /* 포커스 시 파란 테두리 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Tabs Container */
+.tabs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+    border-bottom: 2px solid #EDEFF1;
+    position: relative;
+}
+
+/* Individual Tab */
+.tab-button {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 32px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #090909;
+    text-align: center;
+    border-bottom: 2px solid transparent; /* 기본은 투명 */
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tab-button:hover {
+    border-bottom: 2px solid #0079D3; /* 호버 시 강조 */
+    color: #0079D3;
+}
+
+.tab-button.active {
+    border-bottom: 2px solid #0079D3; /* 활성화된 탭 강조 */
+    color: #0079D3;
+}
+
+/* Icon Inside Tab */
+.tab-button .tab-icon {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    background-color: #000000;
+    border-radius: 50%; /* 아이콘 모양 설정 */
+}
+
+
+.char-limit {
+    display: block;
+    text-align: right;
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.upload-options button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+
+.category-select {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 아이콘과 텍스트 사이 간격 */
+    padding: 0 10px;
+    width: 300px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #EDEFF1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.category-text {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #1A1A1B;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 카테고리 선택 아이콘 Wrapper */
+.category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: #FFFFFF;
+    border: 1px dashed #878A8C;
+    border-radius: 50%;
+}
+
+/* 아이콘 스타일 */
+.category-icon::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    background: #878A8C;
+    mask: url('/resources/icons/dropdown.svg') no-repeat center;
+    -webkit-mask: url('/resources/icons/dropdown.svg') no-repeat center;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.form-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.btn-draft,
+.btn-post {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+}
+

@@ -23,6 +23,17 @@
     <put-attribute name="footer"
                    value="/WEB-INF/views/template/footer.jsp"/>        
 	</definition>
+	<definition name="video_upload" 
+          template="/WEB-INF/views/template/layout_basic.jsp">
+    <put-attribute name="title" 
+                   value="영상 업로드"/>
+    <put-attribute name="header"
+                   value="/WEB-INF/views/template/header.jsp"/>                            
+    <put-attribute name="body"
+                   value="/WEB-INF/views/video/video_upload.jsp"/>
+    <put-attribute name="footer"
+                   value="/WEB-INF/views/template/footer.jsp"/>        
+	</definition>
 </tiles-definitions>
 
 
