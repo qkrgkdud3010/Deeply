@@ -17,7 +17,13 @@
 				<div class="premium-btn font-white bold-title align-center">구독 중</div>
 				<hr class="premium-hr">
 			</div>
-			<div class="a-desc "></div>
+			
+		</div>
+		<div class="a-desc font-white vertical-center">아티스트 상세 글</div>
+		<div class="detail-premium-container">
+			<div class="premium-item ad-chat">채팅</div>
+			<div class="premium-item ad-letter">편지</div>
+			<div class="premium-item ad-book">예매</div>
 		</div>
 	</div>
 
