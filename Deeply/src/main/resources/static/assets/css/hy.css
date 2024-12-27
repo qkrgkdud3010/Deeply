@@ -1,0 +1,52 @@
+body {
+    font-family: 'Inter', 'Manrope', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+}
+
+.main-title h1 {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.membership-section,
+.category-section,
+.live-section {
+    margin: 50px auto;
+    width: 90%;
+}
+
+.membership-section h2,
+.category-section h2,
+.live-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.membership-slider,
+.category-videos,
+.live-videos {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+}
+
+.card {
+    width: 248px;
+    height: 342px;
+    background: #1A1A1A;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
