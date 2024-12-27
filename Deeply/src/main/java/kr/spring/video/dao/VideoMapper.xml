@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.spring.video.dao.VideoMapper">
+    <select id="selectAllVideos" resultType="kr.spring.video.vo.VideoVO">
+        SELECT 
+            video_id AS videoId,
+            artist_id AS artistId,
+            title,
+            description,
+            is_exclusive AS isExclusive,
+            created_at AS createdAt,
+            views,
+            likes,
+            comments_count AS commentsCount,
+            category_id AS categoryId
+        FROM VIDEO
+    </select>
+</mapper>
