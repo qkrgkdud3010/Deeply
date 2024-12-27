@@ -24,9 +24,8 @@ public class VideoController {
         return "video/list";
     }
 
-    // 새로운 newjeans.jsp 매핑
     @GetMapping("/newjeans")
     public String showNewJeansPage() {
-        return "video/newjeans"; // "WEB-INF/views/video/newjeans.jsp"를 호출
+        return "newjeans"; // hy.xml의 definition name과 일치해야 합니다.
     }
 }
