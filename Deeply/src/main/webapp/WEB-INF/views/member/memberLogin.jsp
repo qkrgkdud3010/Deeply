@@ -5,7 +5,7 @@
 <!-- 로그인 컨텐츠 부분 -->
 
 	<div class="login">
-		<img alt="" src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png">
+		<img class="logo" src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png">
 		<form action="">
 			<input type="text" placeholder="아이디">
 			<input type="text" placeholder="비밀번호">
@@ -15,7 +15,7 @@
 		</div>
 		<table class="login-button">
 			<tr>
-				<td class="vertical-align: middle;"><img class="inline-img" alt="" src="${pageContext.request.contextPath}/assets/images/naver.png"> <span class="inline-text">네이버로 로그인하기.</span></td>
+				<td><img class="inline-img" alt="" src="${pageContext.request.contextPath}/assets/images/naver.png"> <span class="inline-text">네이버로 로그인하기.</span></td>
 				<td><img class="inline-img" alt="" src="${pageContext.request.contextPath}/assets/images/kakao.png"> <span class="inline-text">카카오로 로그인하기.</span></td>
 			</tr>
 			<tr>
