@@ -11,6 +11,9 @@
 	border:none;
 }
 
+.login .logo{
+	margin-bottom:61px;
+}
 .login form input{
 	width:561px;
 	height:61px;
@@ -87,7 +90,7 @@
     align-items: center;       /* 박스를 세로 중앙에 정렬 */
 }
 .register-image{
-width:1100px;
+width:1072px;
 height:563px;
 background-color:gray;
 float:left;
@@ -96,10 +99,97 @@ flex-shrink: 0;
 .register-content{
 width:350px;
 height:563px;
-background-color:red;
+
 float:left;
 flex-shrink: 0; 
 }
+.register-content .logo-img{
+	width:178px;
+	height:47px;
+	margin-left:7px;
+}
+.register-content h1{
+font-weight:bold; 
+font-size:24px; 
+margin-top:0px; 
+margin-left:7px;
+margin-bottom:0px;
+}
+.register-content h2{
 
+font-size:16px; 
+margin-top:0px; 
+margin-left:7px;
+}
+.register-wrap input{
+	width:230px;
+	height:25px;
+	margin-bottom:7px;
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
+	border-radius:5px;
+	border:1px solid #B0ADAD;
+}
+.register-wrap .Authentication{
+	width:174px;
+}
+.register-wrap .Authentication2{
+	width:149px;
+}
+.register-form .default-btn{
+	width:52px;
+	font-size:11px;
+}
+.register-form .default-btn2{
+	width:76px;
+	font-size:11px;
+}
+.line-with-text2 {
+    display: flex;
+    align-items: center;
 
+    justify-content: center;
+    width: 245px; /* 전체 컨테이너 너비 */
+    margin-top: 20px ; /* 가운데 정렬 */
+	margin-bottom: 20px ;
+}
+
+.line-with-text2::before,
+.line-with-text2::after {
+    content: '';
+    flex: 1; /* 남은 공간을 차지하여 선을 양쪽에 균등 분배 */
+    height: 1px; /* 선의 두께 */
+    background: #000; /* 선 색상 */
+    margin: 0 10px; /* 선과 텍스트 사이 간격 */
+}
+
+.line-with-text2 span {
+    font-size: 14px; /* 텍스트 크기 */
+    color: #333; /* 텍스트 색상 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+.inline-img2{
+	width:17px;
+	height:17px;
+}
+.inline-text2{
+	font-size:10px;
+}
+.register-api td{
+	width:110px;
+	height:23px;
+	border-radius:5px;
+	border:1px solid #B0ADAD;
+			  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
+}
+  .inline-img2 {
+    display: inline-block; /* 이미지를 인라인 블록 요소로 설정 */
+    vertical-align: middle; /* 세로 중앙 정렬 */
+
+  }
+
+  .inline-text2 {
+    display: inline-block; /* 텍스트를 인라인 블록 요소로 설정 */
+    vertical-align: middle; /* 세로 중앙 정렬 */
+  }
 /*회원가입 부분 끝*/
