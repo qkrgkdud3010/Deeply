@@ -5,12 +5,19 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="sw" extends="main">
-    	<put-attribute name="title" value="회원가입"/>
+    <definition name="artistList" extends="main">
+    	<put-attribute name="title" value="아티스트 목록"/>
     	<put-attribute name="css"
-    	       value="/WEB-INF/views/member/memberCSS.jsp"/>                            
+    	  value="/WEB-INF/views/artist/artistCSS.jsp"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/member/memberRegister.jsp"/>
+    	  value="/WEB-INF/views/artist/artistList.jsp"/>
+    </definition>
+    <definition name="artistDetail" extends="main">
+    	<put-attribute name="title" value="아티스트 상세"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/artist/artistCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/artist/artistDetail.jsp"/>
     </definition>
 </tiles-definitions>
 

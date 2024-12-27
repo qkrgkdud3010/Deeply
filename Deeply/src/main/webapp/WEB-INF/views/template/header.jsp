@@ -63,7 +63,7 @@
 		<%--=============사용자 비로그인 영역 시작=========--%>
 		<div class="first-text">
 			<c:if test="${empty principal || principal.memberVO.auth < 9}">
-				<a href="${pageContext.request.contextPath}/board/list">아티스트</a>
+				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
 				<a href="${pageContext.request.contextPath}/board/list">shop</a>
 			</c:if>
 		</div>
