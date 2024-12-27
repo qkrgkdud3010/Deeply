@@ -14,7 +14,7 @@
 			</div>
 			<div class="width-20">
 				<hr class="premium-hr">
-				<div class="premium-btn font-white bold-title align-center">구독 상태</div>
+				<div class="premium-btn font-white bold-title align-center">구독 중</div>
 				<hr class="premium-hr">
 			</div>
 			<div class="a-desc "></div>
