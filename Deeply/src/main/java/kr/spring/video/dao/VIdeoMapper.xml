@@ -1,0 +1,16 @@
+<mapper namespace="kr.spring.video.dao.VideoMapper">
+    <select id="selectAllVideos" resultType="kr.spring.video.vo.VideoVO">
+        SELECT 
+            video_id AS videoId,
+            artist_id AS artistId,
+            title,
+            description,
+            is_exclusive AS isExclusive,
+            created_at AS createdAt,
+            views,
+            likes,
+            comments_count AS commentsCount,
+            category_id AS categoryId
+        FROM VIDEO
+    </select>
+</mapper>
