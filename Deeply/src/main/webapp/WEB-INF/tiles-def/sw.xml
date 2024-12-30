@@ -19,6 +19,20 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/artist/artistDetail.jsp"/>
     </definition>
+    <definition name="bookingList" extends="main">
+    	<put-attribute name="title" value="이벤트 예약 목록"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/booking/bookingCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/booking/bookingList.jsp"/>
+    </definition>
+    <definition name="letterList" extends="main">
+    	<put-attribute name="title" value="편지 목록"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/letterList.jsp"/>
+    </definition>
 </tiles-definitions>
 
 
