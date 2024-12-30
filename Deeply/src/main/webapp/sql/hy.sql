@@ -1,14 +1,15 @@
-CREATE TABLE VIDEO (
+CREATE TABLE video (
     video_id NUMBER PRIMARY KEY, -- 시퀀스를 통해 값이 자동으로 할당됨
-    artist_id NUMBER NOT NULL,
-    title VARCHAR2(100) NOT NULL,
-    description VARCHAR2(500),
+    artist_id NUMBER NOT NULL, -- 아티스트 ID (FK)
+    title VARCHAR2(100 CHAR) NOT NULL, -- 영상 제목
+    description CLOB, -- 영상 설명
     is_exclusive NUMBER(1) DEFAULT 0 NOT NULL, -- 0: 무료, 1: 유료
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    views NUMBER DEFAULT 0,
-    likes NUMBER DEFAULT 0,
-    comments_count NUMBER DEFAULT 0,
-    category_id NUMBER NOT NULL
+    media_url VARCHAR2(500 CHAR), -- 영상 파일 경로 또는 URL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 업로드 일시
+    views NUMBER DEFAULT 0, -- 조회수
+    likes NUMBER DEFAULT 0, -- 좋아요 수
+    comments_count NUMBER DEFAULT 0, -- 댓글 수
+    category_id NUMBER NOT NULL -- 카테고리 ID (FK)
 );
 
 CREATE SEQUENCE VIDEO_SEQ

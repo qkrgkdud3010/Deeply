@@ -11,6 +11,9 @@
     <section class="upload-section">
         <h2>영상 업로드</h2>
         <form action="/videos/upload" method="post" enctype="multipart/form-data">
+            <!-- CSRF 토큰 -->
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
             <!-- 제목 입력 -->
             <div class="title-container">
                 <input type="text" name="title" maxlength="100"

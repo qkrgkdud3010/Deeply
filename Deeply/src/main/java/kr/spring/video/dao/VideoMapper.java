@@ -9,4 +9,10 @@ import kr.spring.video.vo.VideoVO;
 @Mapper
 public interface VideoMapper {
     public List<VideoVO> selectAllVideos(); // 모든 영상 조회
+
+	public void insertVideo(VideoVO video);
+
+	public List<VideoVO> getAllVideos();
+
+	public long getNextVideoId();
 }
