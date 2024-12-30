@@ -1,237 +1,248 @@
 /*
-	영상 리스트 테스트 페이지
+	영상 리스트 및 업로드 페이지 스타일
+	정리된 CSS 파일
 */
 
+/* 공통 스타일 */
 body {
     font-family: 'Inter', 'Manrope', sans-serif;
     margin: 0;
     padding: 0;
-    background: #FFFFFF;
+    background: #FFFFFF; /* 페이지 배경색 */
 }
 
 .main-title h1 {
-    text-align: center;
-    font-size: 38px;
-    font-weight: 700;
-    margin-top: 20px;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    font-size: 38px; /* 메인 타이틀 글씨 크기 */
+    font-weight: 700; /* 글씨 두께 설정 */
+    margin-top: 20px; /* 위쪽 여백 */
 }
 
+/* ========== 영상 리스트 섹션 ========== */
 .membership-section,
 .category-section,
 .live-section {
-    margin: 50px auto;
-    width: 90%;
+    margin: 50px auto; /* 섹션 간격 및 가운데 정렬 */
+    width: 90%; /* 섹션 너비 */
 }
 
 .membership-section h2,
 .category-section h2,
 .live-section h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
+    font-size: 24px; /* 섹션 타이틀 글씨 크기 */
+    font-weight: 700; /* 글씨 두께 설정 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
 }
 
 .membership-slider,
 .category-videos,
 .live-videos {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
+    display: flex; /* 플렉스 레이아웃 */
+    gap: 15px; /* 요소 간 간격 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
 }
 
 .card {
-    width: 248px;
-    height: 342px;
-    background: #1A1A1A;
-    border: 1px solid #262626;
-    border-radius: 12px;
-    flex-shrink: 0;
+    width: 248px; /* 카드 너비 */
+    height: 342px; /* 카드 높이 */
+    background: #1A1A1A; /* 카드 배경색 */
+    border: 1px solid #262626; /* 카드 테두리 색상 */
+    border-radius: 12px; /* 카드 테두리 둥글기 */
+    flex-shrink: 0; /* 플렉스 축소 방지 */
 }
 
 .card img {
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    object-fit: cover;
+    width: 100%; /* 이미지 너비 */
+    height: 100%; /* 이미지 높이 */
+    border-radius: 12px; /* 이미지 테두리 둥글기 */
+    object-fit: cover; /* 이미지 잘림 방지 */
 }
 
-/*
-	영상 업로드 페이지
-*/
-
+/* ========== 영상 업로드 페이지 ========== */
 .video-upload-content {
-    margin: 50px auto;
-    width: 80%;
+    margin: 50px auto; /* 섹션 간격 및 가운데 정렬 */
+    width: 80%; /* 섹션 너비 */
 }
 
 .main-title h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    font-size: 2rem; /* 메인 타이틀 글씨 크기 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
 }
 
 .upload-section {
-    margin-top: 20px;
+    margin-top: 20px; /* 위쪽 여백 */
 }
 
+/* 제목 입력 필드 스타일 */
 .upload-title {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    padding: 10px 17px;
-    gap: 10px;
-
-    width: 100%; /* 제목 입력 필드가 부모 요소를 꽉 채움 */
-    height: 38px;
-
-    background: #FFFFFF;
-    border: 1px solid #EDEFF1;
-    border-radius: 4px;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    color: #000000;
-
-    outline: none;
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    display: flex; /* 플렉스 레이아웃 */
+    align-items: center; /* 세로 정렬 */
+    padding: 10px 17px; /* 내부 여백 */
+    gap: 10px; /* 내부 요소 간 간격 */
+    width: 100%; /* 너비 설정 */
+    height: 38px; /* 높이 설정 */
+    background: #FFFFFF; /* 배경색 */
+    border: 1px solid #EDEFF1; /* 테두리 색상 */
+    border-radius: 4px; /* 테두리 둥글기 */
+    font-family: 'Inter', sans-serif; /* 폰트 설정 */
+    font-size: 16px; /* 글씨 크기 */
+    color: #000000; /* 글씨 색상 */
+    outline: none; /* 아웃라인 제거 */
 }
 
 .upload-title:focus {
-    border: 1px solid #007bff; /* 포커스 시 파란 테두리 */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border: 1px solid #007bff; /* 포커스 시 테두리 색상 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 그림자 효과 */
 }
 
-/* Tabs Container */
+/* ========== 탭 버튼 스타일 ========== */
 .tabs-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin: 0 auto;
-    height: 50px;
-    border-bottom: 2px solid #EDEFF1;
-    position: relative;
+    display: flex; /* 플렉스 레이아웃 */
+    justify-content: space-between; /* 요소 간격 균등 분배 */
+    align-items: center; /* 세로 정렬 */
+    width: 90%; /* 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    height: 50px; /* 높이 설정 */
+    border-bottom: 2px solid #EDEFF1; /* 아래쪽 테두리 */
+    position: relative; /* 위치 설정 */
 }
 
-/* Individual Tab */
 .tab-button {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 32px;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #090909;
-    text-align: center;
-    border-bottom: 2px solid transparent; /* 기본은 투명 */
-    transition: all 0.3s ease;
-    cursor: pointer;
+    flex: 1; /* 동일한 너비 분배 */
+    display: flex; /* 플렉스 레이아웃 */
+    justify-content: center; /* 텍스트 가운데 정렬 */
+    align-items: center; /* 세로 정렬 */
+    padding: 12px 32px; /* 내부 여백 */
+    font-family: 'Noto Sans', sans-serif; /* 폰트 설정 */
+    font-size: 14px; /* 글씨 크기 */
+    font-weight: 700; /* 글씨 두께 */
+    color: #090909; /* 글씨 색상 */
+    text-align: center; /* 텍스트 정렬 */
+    border-bottom: 2px solid transparent; /* 기본 테두리 색상 */
+    transition: all 0.3s ease; /* 전환 효과 */
+    cursor: pointer; /* 클릭 가능한 커서 */
 }
 
 .tab-button:hover {
-    border-bottom: 2px solid #0079D3; /* 호버 시 강조 */
-    color: #0079D3;
+    border-bottom: 2px solid #0079D3; /* 호버 시 테두리 색상 */
+    color: #0079D3; /* 호버 시 글씨 색상 */
 }
 
 .tab-button.active {
     border-bottom: 2px solid #0079D3; /* 활성화된 탭 강조 */
-    color: #0079D3;
+    color: #0079D3; /* 활성화된 탭 글씨 색상 */
 }
 
-/* Icon Inside Tab */
+/* 탭 버튼 아이콘 */
 .tab-button .tab-icon {
-    margin-right: 8px;
-    width: 18px;
-    height: 18px;
-    background-color: #000000;
-    border-radius: 50%; /* 아이콘 모양 설정 */
+    margin-right: 8px; /* 아이콘과 텍스트 간격 */
+    width: 18px; /* 아이콘 너비 */
+    height: 18px; /* 아이콘 높이 */
+    background-color: #000000; /* 아이콘 배경색 */
+    border-radius: 50%; /* 아이콘 둥글기 */
 }
 
-
+/* ========== 기타 스타일 ========== */
 .char-limit {
-    display: block;
-    text-align: right;
-    font-size: 0.9rem;
-    color: gray;
+    display: block; /* 블록 요소 */
+    text-align: right; /* 텍스트 오른쪽 정렬 */
+    font-size: 0.9rem; /* 글씨 크기 */
+    color: gray; /* 글씨 색상 */
 }
 
 .upload-options button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #eee;
-    border: 1px solid #ddd;
+    margin: 5px; /* 버튼 간격 */
+    padding: 10px 20px; /* 내부 여백 */
+    background-color: #eee; /* 버튼 배경색 */
+    border: 1px solid #ddd; /* 버튼 테두리 */
 }
 
+/* 카테고리 선택 스타일 */
 .category-select {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* 아이콘과 텍스트 사이 간격 */
-    padding: 0 10px;
-    width: 300px;
-    height: 40px;
-    background: #FFFFFF;
-    border: 1px solid #EDEFF1;
-    border-radius: 4px;
-    box-sizing: border-box;
-    cursor: pointer;
+    display: flex; /* 플렉스 레이아웃 */
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 내부 요소 간 간격 */
+    padding: 0 10px; /* 내부 여백 */
+    width: 300px; /* 너비 설정 */
+    height: 40px; /* 높이 설정 */
+    background: #FFFFFF; /* 배경색 */
+    border: 1px solid #EDEFF1; /* 테두리 색상 */
+    border-radius: 4px; /* 테두리 둥글기 */
+    box-sizing: border-box; /* 크기 계산 포함 */
+    cursor: pointer; /* 클릭 가능한 커서 */
 }
 
 .category-text {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    color: #1A1A1B;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: 'IBM Plex Sans', sans-serif; /* 폰트 설정 */
+    font-size: 14px; /* 글씨 크기 */
+    font-weight: 500; /* 글씨 두께 */
+    line-height: 18px; /* 줄 간격 */
+    color: #1A1A1B; /* 글씨 색상 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트 줄임표 표시 */
 }
 
-/* 카테고리 선택 아이콘 Wrapper */
+/* 카테고리 아이콘 스타일 */
 .category-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    background: #FFFFFF;
-    border: 1px dashed #878A8C;
-    border-radius: 50%;
+    display: flex; /* 플렉스 레이아웃 */
+    align-items: center; /* 세로 정렬 */
+    justify-content: center; /* 가로 정렬 */
+    width: 22px; /* 너비 설정 */
+    height: 22px; /* 높이 설정 */
+    background: #FFFFFF; /* 배경색 */
+    border: 1px dashed #878A8C; /* 점선 테두리 */
+    border-radius: 50%; /* 둥글기 설정 */
 }
 
-/* 아이콘 스타일 */
 .category-icon::before {
-    content: '';
-    display: block;
-    width: 14px;
-    height: 14px;
-    background: #878A8C;
-    mask: url('/resources/icons/dropdown.svg') no-repeat center;
-    -webkit-mask: url('/resources/icons/dropdown.svg') no-repeat center;
-    mask-size: cover;
-    -webkit-mask-size: cover;
+    content: ''; /* 빈 내용 생성 */
+    display: block; /* 블록 요소 */
+    width: 14px; /* 아이콘 너비 */
+    height: 14px; /* 아이콘 높이 */
+    background: #878A8C; /* 아이콘 색상 */
+    mask: url('/resources/icons/dropdown.svg') no-repeat center; /* 아이콘 마스크 */
+    -webkit-mask: url('/resources/icons/dropdown.svg') no-repeat center; /* 웹킷 마스크 */
+    mask-size: cover; /* 마스크 크기 설정 */
+    -webkit-mask-size: cover; /* 웹킷 마스크 크기 설정 */
 }
 
+/* 텍스트 영역 스타일 */
 textarea {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    margin-top: 10px;
+    width: 100%; /* 너비 설정 */
+    height: 150px; /* 높이 설정 */
+    padding: 10px; /* 내부 여백 */
+    margin-top: 10px; /* 위쪽 여백 */
 }
 
+/* 액션 버튼 스타일 */
 .form-actions {
-    margin-top: 20px;
-    text-align: right;
+    margin-top: 20px; /* 위쪽 여백 */
+    text-align: right; /* 텍스트 오른쪽 정렬 */
 }
 
 .btn-draft,
 .btn-post {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
+    padding: 10px 20px; /* 내부 여백 */
+    border: none; /* 테두리 제거 */
+    background-color: #007bff; /* 배경색 */
+    color: white; /* 글씨 색상 */
+    cursor: pointer; /* 클릭 가능한 커서 */
+    margin: 5px; /* 버튼 간격 */
 }
 
+/* 탭 패널 기본 상태 */
+.tab-panel {
+    display: none; /* 기본적으로 숨김 */
+}
+.tab-panel.active {
+    display: block; /* 활성화된 패널만 표시 */
+}
+
+/* 활성화된 탭 버튼 스타일 */
+.tab-button.active {
+    font-weight: bold; /* 굵은 글씨 */
+    color: #007bff; /* 활성화된 색상 */
+}

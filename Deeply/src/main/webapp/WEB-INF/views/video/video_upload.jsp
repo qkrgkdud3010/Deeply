@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/assets/css/hy.css">
-
 <div class="video-upload-content">
     <!-- 메인 타이틀 -->
     <section class="main-title">
@@ -21,30 +20,36 @@
 
             <!-- 탭 버튼 -->
             <div class="tabs-container">
-                <div class="tab-button active">
+                <div class="tab-button active" data-tab="text">
                     <span class="tab-icon"></span> 글
                 </div>
-                <div class="tab-button">
+                <div class="tab-button" data-tab="media">
                     <span class="tab-icon"></span> 이미지 혹은 비디오
                 </div>
-                <div class="tab-button">
+                <div class="tab-button" data-tab="link">
                     <span class="tab-icon"></span> 링크
                 </div>
-                <div class="tab-button">
+                <div class="tab-button" data-tab="poll">
                     <span class="tab-icon"></span> 폴
                 </div>
             </div>
 
-            <!-- 카테고리 선택 -->
-            <div class="category-select">
-                <div class="category-icon"></div>
-                <span class="category-text">카테고리 선택</span>
-            </div>
-
-            <!-- 텍스트 입력 -->
-            <div class="description-container">
-                <textarea name="description" class="description-input"
-                    placeholder="내용을 입력하세요"></textarea>
+            <!-- 탭에 따른 콘텐츠 영역 -->
+            <div class="tab-content" id="tab-content">
+                <div class="tab-panel active" data-tab="text">
+                    <textarea name="description" class="description-input"
+                        placeholder="내용을 입력하세요"></textarea>
+                </div>
+                <div class="tab-panel" data-tab="media">
+                    <input type="file" name="media" accept="image/*,video/*">
+                </div>
+                <div class="tab-panel" data-tab="link">
+                    <input type="url" name="link" placeholder="링크를 입력하세요">
+                </div>
+                <div class="tab-panel" data-tab="poll">
+                    <textarea name="poll-options" class="poll-input"
+                        placeholder="폴 옵션을 입력하세요 (각 옵션은 줄바꿈으로 구분)"></textarea>
+                </div>
             </div>
 
             <!-- 기능 버튼 -->
@@ -55,3 +60,4 @@
         </form>
     </section>
 </div>
+<script src="${pageContext.request.contextPath}/assets/js/tabs.js" defer></script>
