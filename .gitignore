@@ -1,5 +1,6 @@
 #Spring
 target/
+bin/
 
 # Compiled class file
 *.class
