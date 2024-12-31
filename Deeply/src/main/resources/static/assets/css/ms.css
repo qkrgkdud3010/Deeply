@@ -87,21 +87,23 @@
  display: flex;             /* Flex 컨테이너 */
     flex-wrap: nowrap;         /* 박스들이 줄 바꿈 없이 한 줄에 나열되도록 설정 */
     justify-content: flex-start; /* 박스를 왼쪽에 정렬 */
-    align-items: center;       /* 박스를 세로 중앙에 정렬 */
+    align-items: center;  
+        /* 박스를 세로 중앙에 정렬 */
 }
 .register-image{
-width:1072px;
+width:800px;
 height:563px;
 background-color:gray;
 float:left;
 flex-shrink: 0; 
 }
 .register-content{
-width:350px;
+width:400px;
 height:563px;
 
 float:left;
 flex-shrink: 0; 
+ margin-left:20px;
 }
 .register-content .logo-img{
 	width:178px;
@@ -122,25 +124,26 @@ margin-top:0px;
 margin-left:7px;
 }
 .register-wrap input{
-	width:230px;
-	height:25px;
+	width:280px;
+	height:30px;
 	margin-bottom:7px;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
 	border-radius:5px;
 	border:1px solid #B0ADAD;
 }
 .register-wrap .Authentication{
-	width:174px;
+	width:200px;
+	height:30px;
 }
 .register-wrap .Authentication2{
 	width:149px;
 }
 .register-form .default-btn{
-	width:52px;
+	width:75px;
 	font-size:11px;
 }
 .register-form .default-btn2{
-	width:76px;
+	width:127px;
 	font-size:11px;
 }
 .line-with-text2 {
@@ -148,7 +151,7 @@ margin-left:7px;
     align-items: center;
 
     justify-content: center;
-    width: 245px; /* 전체 컨테이너 너비 */
+    width: 300px; /* 전체 컨테이너 너비 */
     margin-top: 20px ; /* 가운데 정렬 */
 	margin-bottom: 20px ;
 }
@@ -176,8 +179,8 @@ margin-left:7px;
 	font-size:10px;
 }
 .register-api td{
-	width:110px;
-	height:23px;
+	width:140px;
+	height:30px;
 	border-radius:5px;
 	border:1px solid #B0ADAD;
 			  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
@@ -192,4 +195,22 @@ margin-left:7px;
     display: inline-block; /* 텍스트를 인라인 블록 요소로 설정 */
     vertical-align: middle; /* 세로 중앙 정렬 */
   }
+  .register-submit{
+  width:290px;
+  height:30px;
+	border-radius:5px;
+	border:1px solid #B0ADAD;
+			  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
+  }
+  .inz{
+  width:75px;
+  height:30px;
+	font-size:11px;
+	border-radius:5px;
+	border:1px solid #B0ADAD;
+			  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
+			  float:right;
+			  text-align:center;
+			  line-height:30px;}
+			  
 /*회원가입 부분 끝*/

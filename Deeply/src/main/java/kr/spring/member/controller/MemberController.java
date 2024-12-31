@@ -2,7 +2,9 @@ package kr.spring.member.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,13 +20,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+
+import kr.spring.member.service.EmailService;
 import kr.spring.member.service.MemberService;
+import kr.spring.member.service.MemberServiceImpl;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
 import kr.spring.util.ValidationUtil;
@@ -33,6 +42,7 @@ import org.json.JSONObject;
 
 @Slf4j
 @Controller
+
 @RequestMapping("/member")
 public class MemberController {
 
@@ -48,7 +58,8 @@ public class MemberController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+	  @Autowired
+	    private EmailService emailService;
 	//자바빈(VO) 초기화
 	@ModelAttribute
 	public MemberVO initCommand() {
@@ -58,42 +69,79 @@ public class MemberController {
 	 * 회원가입
 	 *===============================*/
 	//회원가입 폼 호출
+	
 	@GetMapping("/registerUser")
 	public String form() {
 		return "memberRegister";
 	}
+	
+	//인증번호 전송
+	@PostMapping("/emailSubmit")
+	 @ResponseBody
+	public Map<String, String> emailSubmit(@RequestBody Map<String, String> request) {
+		 Map<String, String> response = new HashMap<>();
+		String email= request.get("email");
+		  String verificationCode = emailService.generateVerificationCode();
+          emailService.sendVerificationEmail(email, verificationCode);
+          MemberServiceImpl.verificationCodes.put(email,verificationCode );
+         
+          response.put("email",email); 
+          response.put("code",verificationCode);
+          return response;
+	}
+	
+	
 	//회원가입 데이터 전송
 	@PostMapping("/registerUser")
-	public String submit(@Valid MemberVO memberVO,
-			             BindingResult result,
-			             Model model,
-			             HttpServletRequest request) {
-		log.debug("<<회원가입 - MemberVO>> : " + memberVO);
-		
-		//전송된 데이터 유효성 체크 결과 오류가 있으면 폼 호출
-		if(result.hasErrors()) {
-			//유효성 체크 결과 오류 필드 출력
-			ValidationUtil.printErrorFields(result);
-			return form();
-		}
-		
-		//Spring Security 암호화
-		memberVO.setPasswd_hash(passwordEncoder.encode(
-				                    memberVO.getPasswd_hash()));
-		
-		//회원가입
-		memberService.insertMember(memberVO);
-		
-		//UI 메시지 처리
-		model.addAttribute("accessTitle", "회원가입");
-		model.addAttribute("accessMsg", 
-				           "회원가입이 완료되었습니다.");
-		model.addAttribute("accessBtn", "홈으로");
-		model.addAttribute("accessUrl", 
-				     request.getContextPath()+"/main/main");
-		
-		return "common/resultView";
+    public String registerUser(@Valid MemberVO memberVO, 
+                               BindingResult result, 
+                               Model model, 
+                               HttpServletRequest request) {
+        if (result.hasErrors()) {
+            model.addAttribute("error", "입력 값을 확인해주세요.");
+            return "main";
+            }
+        
+			
+          // 비밀번호 암호화 및 회원 저장
+            memberVO.setPasswd_hash(passwordEncoder.encode(memberVO.getPasswd_hash()));
+            memberService.insertMember(memberVO);
+
+          
+            // 이메일 인증 대기 메시지
+          
+
+            
+            
+  
+            
+            return "m";
+
 	}
+       
+    // 이메일 인증 처리
+	@PostMapping("/verifyEmail")
+	public @ResponseBody Map<String, String> verifyEmail(@RequestParam String email, 
+	                                                     @RequestParam String code, 
+	                                                     Model model,
+	                                                     MemberVO memberVO) {
+	    Map<String, String> response = new HashMap<>();
+	    String isVerified = memberService.verifyEmail(email, code);
+	    
+	    if ("verified".equals(isVerified)) {
+	        response.put("status", "verified");
+	    } else {
+	        response.put("status", "failed");
+	    }
+	    return response;
+	}
+
+    // 이메일 인증 코드 확인 페이지
+    @GetMapping("/verifyEmailPage")
+    public String verifyEmailPage(@RequestParam String email, Model model) {
+        model.addAttribute("email", email);
+        return "/verifyEmail";
+    }
 	@GetMapping("/login")
 	public String formLogin(MemberVO memberVO,
 			                BindingResult result,
@@ -124,6 +172,11 @@ public class MemberController {
 		
 		return "memberLogin";
 	}
+	
+	  private String generateVerificationCode() {
+	        Random random = new Random();
+	        return String.format("%06d", random.nextInt(1000000));
+	    }
 	
 }
 

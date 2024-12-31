@@ -1,8 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- jQuery CDN을 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- 회원가입 시작 -->
+
 <div class="main-div">
+<script type="text/javascript">
+
+var csrfToken = $('meta[name="_csrf"]').attr('content');
+var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+function submitEmail() {
+    var email = document.getElementById("email").value;  // 이메일 입력값 가져오기
+   document.getElementById('verificationSection').style.display = 'block';
+    
+    // 인증 요청 버튼을 숨기고 클릭 방지
+    var requestButton = document.getElementById('requestVerificationButton');
+
+ 
+    // 이메일 유효성 검사 (필요한 경우 추가)
+    if (!email || !validateEmail(email)) {
+        alert("유효한 이메일을 입력하세요.");
+        return;
+    }
+
+    // AJAX 요청 보내기
+    $.ajax({
+        url: '/member/emailSubmit',  // 서버의 이메일 전송 처리 URL
+        type: 'POST',
+        headers: {
+            [csrfHeader]: csrfToken  // CSRF 토큰을 헤더에 포함
+        },
+        contentType: 'application/json',
+        data: JSON.stringify({ "email": email }),  // JSON 형식으로 이메일 전송
+        success: function(response) {
+            // 성공적으로 이메일 인증 코드가 발송되면 페이지에 결과를 표시
+         alert("이메일이 전송되었습니다");
+       
+            // 이메일 인증 페이지로 이동할 필요가 없으면 이 부분에서 결과를 페이지에 보여줄 수 있습니다.
+        },
+        error: function(xhr, status, error) {
+            alert("이메일 전송 완료 .");
+        }
+    });
+}
+
+// 이메일 유효성 검사 함수 (필요한 경우)
+function validateEmail(email) {
+    var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(email);
+}
+
+//인증 코드 검증
+function verifyEmail() {
+    var email = $('#email').val();  // 이메일 값 가져오기
+    var code = $('#code').val();    // 인증 코드 값 가져오기
+
+    $.ajax({
+        url: '/member/verifyEmail',  // 서버의 이메일 인증 처리 URL
+        headers: {
+            [csrfHeader]: csrfToken  // CSRF 토큰을 헤더에 포함
+        },
+        type: 'POST',
+        data: { 
+            email: email,  // 이메일
+            code: code     // 인증 코드
+        },
+        success: function(response) {
+           
+            if (response.status === 'verified') {
+                alert("인증번호 일치");
+                $('#registerSection').show();
+            } else {
+            	alert("인증번호 불일치");
+               
+            }
+        },
+        error: function(xhr, status, error) {
+            alert("인증에 실패했습니다. 다시 시도해주세요.");
+        }
+    });
+}
+
+</script>
 	<div class="register-wrap">
 		<div class="register-image"></div>
 
@@ -12,17 +95,26 @@
 				src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png">
 			<h1>Create your Account</h1>
 			<h2>계정을 만들어 주세요</h2>
-
+			<div style="width:290px;">
 			<form:form class="register-form" modelAttribute="memberVO"
 				action="registerUser" id="member_register">
-				<form:input class="Authentication" path="" placeholder="아이디" />
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<form:input path="email" id="email" class="Authentication" type="text" placeholder="email" />
+				<div class="inz" onclick="submitEmail()">인증요청</div>
+				<div style="display:none;" id="verificationSection">
+					<form:input path="verificationCode" id="code" class="Authentication" type="text" placeholder="인증번호" />
+					<div class="inz" onclick="verifyEmail()" >인증 하기</div>
+				</div>
+				
+				<div style="display:none;" id="registerSection">
+				<form:input class="Authentication" path="id" placeholder="아이디" />
 				<input type="button" id="confirm_id" value="중복체크"
 					class="default-btn">
 				<span id="message_id"></span>
-				<form:input path="" type="text" placeholder="비밀번호" />
+				<form:input path="passwd_hash" type="text" placeholder="비밀번호" />
 				<form:input path="" type="text" placeholder="비밀번호확인" />
-				<form:input path="" type="text" placeholder="이름" />
-				<form:input path="" class="Authentication" type="text"
+				<form:input path="name" type="text" placeholder="이름" />
+				<form:input path="nick_name" class="Authentication" type="text"
 					placeholder="닉네임" />
 				<input type="button" id="confirm_id" value="중복체크"
 					class="default-btn">
@@ -32,8 +124,11 @@
 					class="default-btn2">
 				<form:input path="address1" id="address1" type="text"
 					placeholder="주소" />
-				<form:input path="" type="text" placeholder="상세주소" />
-
+		
+				<form:input path="address2" type="text" placeholder="상세주소" />
+		<form:input path="phone" id="phone" type="text" placeholder="번호" />
+			
+			</div>
 				<div class="line-with-text2">
 					<span>or</span>
 				</div>
@@ -51,9 +146,9 @@
 
 					</tr>
 				</table>
-				<form:input path="address1" id="address1" type="submit"
-					value="회원가입" />
+				<form:button class="register-submit" value="registerUser">회원가입</form:button>
 			</form:form>
+				</div>
 		</div>
 	</div>
 </div>

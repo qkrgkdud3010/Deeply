@@ -1,30 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>${accessTitle}</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/common.css">
+    <title>결과</title>
 </head>
 <body>
-<div class="page-one">
-	<h2>${accessTitle}</h2>
-	<div class="result-display">
-		<div class="align-center">
-			${accessMsg}
-			<p>
-			<input type="button" value="${accessBtn}"
-			    onclick="location.href='${accessUrl}'">
-		</div>
-	</div>
-</div>
+    <h2>${accessTitle}</h2>
+    <p>${accessMsg}</p>
+    <a href="${accessUrl}">${accessBtn}</a>
 </body>
 </html>
-
-
-
-
-
-
-

@@ -61,6 +61,7 @@ public class SecurityConfig{
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {	
 		return http
+		
 				.authorizeHttpRequests(authorize-> authorize
 						//롤 설정을 먼저 하고 permitAll()를 호출해야 정상적으로 롤이 지정됨
 						///main/admin: ROLE_ADMIN 권한 필요 지정
@@ -75,7 +76,7 @@ public class SecurityConfig{
 						.successHandler(customAuthenticationSuccessHandler)
 						.failureHandler(customAuthenticationFailureHandler)
 						.usernameParameter("id")
-						.passwordParameter("passwd"))
+						.passwordParameter("passwd_hash"))
 				.logout(logout -> logout //로그아웃 설정
 						.logoutUrl("/member/logout")
 						.logoutSuccessUrl("/")
