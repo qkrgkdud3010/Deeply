@@ -201,6 +201,8 @@ margin-left:7px;
 	border-radius:5px;
 	border:1px solid #B0ADAD;
 			  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
+			  text-align:center;
+			  line-height:30px;
   }
   .inz{
   width:75px;
@@ -212,5 +214,11 @@ margin-left:7px;
 			  float:right;
 			  text-align:center;
 			  line-height:30px;}
+			  
+			  #errorMessage {
+    color: red;
+    display: block;  /* 숨겨져 있지 않도록 display 속성 확인 */
+}
+
 			  
 /*회원가입 부분 끝*/

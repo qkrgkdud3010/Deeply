@@ -66,6 +66,14 @@ public class MemberServiceImpl implements MemberService{
 	    public void storeVerificationCode(String email, String code) {
 	        verificationCodes.put(email, code);
 	    }
+
+		@Override
+		public Optional<MemberVO> findByEmail(String email) {
+		    // memberMapper.findByEmail(email)이 null일 수 있으므로 Optional로 감싼다
+		   
+		    return memberMapper.findByEmail(email);
+		}
+
 	    
 	    
 

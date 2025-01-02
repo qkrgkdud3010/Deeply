@@ -2,6 +2,7 @@ package kr.spring.member.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-
+import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.service.EmailService;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.service.MemberServiceImpl;
@@ -81,43 +83,68 @@ public class MemberController {
 	public Map<String, String> emailSubmit(@RequestBody Map<String, String> request) {
 		 Map<String, String> response = new HashMap<>();
 		String email= request.get("email");
+		Optional<MemberVO> existingMember = memberService.findByEmail(email);
+        if (existingMember.isPresent()) {
+        	response.put("result", "fail");
+        	return response;
+        }
 		  String verificationCode = emailService.generateVerificationCode();
           emailService.sendVerificationEmail(email, verificationCode);
           MemberServiceImpl.verificationCodes.put(email,verificationCode );
-         
+    	  
           response.put("email",email); 
           response.put("code",verificationCode);
+          
           return response;
 	}
 	
 	
 	//회원가입 데이터 전송
 	@PostMapping("/registerUser")
-    public String registerUser(@Valid MemberVO memberVO, 
-                               BindingResult result, 
-                               Model model, 
-                               HttpServletRequest request) {
-        if (result.hasErrors()) {
-            model.addAttribute("error", "입력 값을 확인해주세요.");
-            return "main";
-            }
-        
-			
-          // 비밀번호 암호화 및 회원 저장
-            memberVO.setPasswd_hash(passwordEncoder.encode(memberVO.getPasswd_hash()));
-            memberService.insertMember(memberVO);
+	public @ResponseBody Map<String, String> registerUser(@Valid MemberVO memberVO, 
+	                                                      BindingResult result) {
+	    Map<String, String> response = new HashMap<>();
 
-          
-            // 이메일 인증 대기 메시지
-          
+	    // 유효성 검사 결과 오류가 있으면, 오류 메시지를 response에 추가
+	    if (result.hasErrors()) {
+	    	if(result.hasFieldErrors("email")) {
+	        	  response.put("error", "이메일을 제대로 입력해주새요.");}
+	    	 else if(result.hasFieldErrors("code")) {
+	             response.put("error", "코드를 입력해주세요");
+	         }
+	    else if(result.hasFieldErrors("id")) {
+            response.put("error", "아이디는 4~12자의 영문자와 숫자로 구성되어야 합니다.");
+        } else if (result.hasFieldErrors("passwd_hash")) {
+            response.put("error", "비밀번호는 8~20자의 영문자, 숫자, 특수문자로 구성되어야 합니다.");
+        } else if (result.hasFieldErrors("email")) {
+            response.put("error", "유효한 이메일을 입력하세요.");
+        }else if (result.hasFieldErrors("nick_name")) {
+            response.put("error", "닉네임을 제대로 입력해야 합니다.");
+        } else if (result.hasFieldErrors("zipcode")) {
+            response.put("error", "우편번호는 5자리 숫자로 입력해야 합니다.");
+        } else if (result.hasFieldErrors("address1")) {
+            response.put("error", "주소1를 올바르게 입력해주세요.");
+        } else if (result.hasFieldErrors("address2")) {
+            response.put("error", "주소2를 올바르게 입력해주세요.");
+        } else if (result.hasFieldErrors("phone")) {
+            response.put("error", "전화번호를 올바르게 입력해주세요.");
+        }
+        else {
+    
+            response.put("error", "알 수 없는 오류가 발생했습니다.");
+        }
+	    return response;
+	    }
+	    // 비밀번호 암호화 및 회원 저장
+	    memberVO.setPasswd_hash(passwordEncoder.encode(memberVO.getPasswd_hash()));
+	    memberService.insertMember(memberVO);
 
-            
-            
-  
-            
-            return "m";
+	    // 성공적인 회원가입 후 메시지
+	    response.put("successMessage", "회원가입이 완료되었습니다. 이메일 인증을 진행해주세요.");
 
+	    return response;  // 성공적인 응답 반환
 	}
+
        
     // 이메일 인증 처리
 	@PostMapping("/verifyEmail")
@@ -143,33 +170,7 @@ public class MemberController {
         return "/verifyEmail";
     }
 	@GetMapping("/login")
-	public String formLogin(MemberVO memberVO,
-			                BindingResult result,
-			                HttpServletRequest request) {
-		Map<String,?> flashMap = 
-				RequestContextUtils.getInputFlashMap(request);
-		if(flashMap != null) {
-			String error = (String)flashMap.get("error");
-			log.debug("<<로그인 체크 - error>> : " + error);
-			if("username".equals(error)) {
-				result.rejectValue(
-						"id", "Pattern.id","아이디를 입력하세요");
-			}
-			if("password".equals(error)) {
-				result.rejectValue(
-				   "passwd", "Pattern.passwd","비밀번호를 입력하세요");
-			}
-			if("username_password".equals(error)) {
-				result.rejectValue(
-						"id", "Pattern.id","아이디를 입력하세요");
-				result.rejectValue(
-				 "passwd", "Pattern.passwd","비밀번호를 입력하세요");
-			}
-			if("error".equals(error)) {
-				result.reject("invalidIdOrPassword");
-			}
-		}
-		
+	public String formLogin() {
 		return "memberLogin";
 	}
 	

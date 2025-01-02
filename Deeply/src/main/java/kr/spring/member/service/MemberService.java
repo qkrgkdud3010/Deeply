@@ -1,6 +1,7 @@
 package kr.spring.member.service;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -18,7 +19,7 @@ public interface MemberService {
 	 public void registerMember(MemberVO memberVO);
 	 public String verifyEmail(String email, String code);
 	 public void storeVerificationCode(String email, String code);
-
+	 public Optional<MemberVO> findByEmail(String email);
 
 
 

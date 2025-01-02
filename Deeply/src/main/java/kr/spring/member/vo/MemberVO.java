@@ -28,12 +28,13 @@ public class MemberVO {
 	    @Pattern(regexp = "^[A-Za-z0-9!@#$%^&*()_+]{8,20}$", message = "비밀번호는 8~20자의 영문자, 숫자, 특수문자로 구성되어야 합니다.")
 	    private String passwd_hash; // PASSWD_HASH
 
-
+	    @Pattern(regexp ="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", message="올바른 이메일 형식이 아닙니다")
 	    private String email; // EMAIL
 
 	    private String verificationCode; // VERIFICATION_CODE
+	    @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
+	   private String code;
 
-	    
 	    private int Verified ; // IS_VERIFIED
 
 	    private Date codeExpiration; // CODE_EXPIRATION
@@ -46,13 +47,15 @@ public class MemberVO {
 	    @Size(max = 90, message = "주소는 최대 90자까지 입력 가능합니다.")
 	    private String address1; // ADDRESS1
 
+	    @NotBlank(message = "주소는 필수 입력 값입니다.")
+	    @Size(max = 90, message = "주소는 최대 90자까지 입력 가능합니다.")
 	    private String address2; // ADDRESS2 (선택 값)
 
 	    private String photo; // PHOTO (선택 값)
 
 	    private String photoName; // PHOTO_NAME (선택 값)
 
-
+	    @NotBlank(message = "전화번호는 필수 입력 값입니다.")
 	    private String phone; // PHONE
 
 	    private String socialName; // SOCIAL_NAME (선택 값)

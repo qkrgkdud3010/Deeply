@@ -1,24 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- jQuery CDN을 추가 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- 회원가입 시작 -->
 
 <div class="main-div">
-<script type="text/javascript">
+	<script type="text/javascript">
 
 var csrfToken = $('meta[name="_csrf"]').attr('content');
 var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+function registerUser() {
+$.ajax({
+    url: '/member/registerUser',
+    type: 'POST',
+    headers: {
+        [csrfHeader]: csrfToken  // CSRF 토큰을 헤더에 포함
+    },
+    data: $('#member_register').serialize(),
+    success: function(response) {
+        if (response.error) {
+            // 오류가 있을 경우, 해당 오류를 페이지에 표시
+            $('#errorMessage').text(response.error);
+        } else {
+            // 성공 시 처리
+            alert("회원가입이 완료되었습니다.");
+            window.location.href = "/member/login";
+        }
+    },
+    error: function(xhr, status, error) {
+        // 오류가 발생하면 화면에 표시
+        $('#errorMessage').text("서버 오류가 발생했습니다.");
+    }
+});
+}
+
+
 function submitEmail() {
     var email = document.getElementById("email").value;  // 이메일 입력값 가져오기
-   document.getElementById('verificationSection').style.display = 'block';
+
     
     // 인증 요청 버튼을 숨기고 클릭 방지
-    var requestButton = document.getElementById('requestVerificationButton');
+ 
 
  
     // 이메일 유효성 검사 (필요한 경우 추가)
@@ -38,12 +64,17 @@ function submitEmail() {
         data: JSON.stringify({ "email": email }),  // JSON 형식으로 이메일 전송
         success: function(response) {
             // 성공적으로 이메일 인증 코드가 발송되면 페이지에 결과를 표시
+            if(response.result=="fail"){
+            	alert("중복된 이메일입니다 다른 이메일을 입력해주세요");
+            	return;
+            }
          alert("이메일이 전송되었습니다");
-       
+         var requestButton = document.getElementById('requestVerificationButton');
+         document.getElementById('verificationSection').style.display = 'block';
             // 이메일 인증 페이지로 이동할 필요가 없으면 이 부분에서 결과를 페이지에 보여줄 수 있습니다.
         },
         error: function(xhr, status, error) {
-            alert("이메일 전송 완료 .");
+            alert("이메일 전송 실패 .");
         }
     });
 }
@@ -95,60 +126,70 @@ function verifyEmail() {
 				src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png">
 			<h1>Create your Account</h1>
 			<h2>계정을 만들어 주세요</h2>
-			<div style="width:290px;">
-			<form:form class="register-form" modelAttribute="memberVO"
-				action="registerUser" id="member_register">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					<form:input path="email" id="email" class="Authentication" type="text" placeholder="email" />
-				<div class="inz" onclick="submitEmail()">인증요청</div>
-				<div style="display:none;" id="verificationSection">
-					<form:input path="verificationCode" id="code" class="Authentication" type="text" placeholder="인증번호" />
-					<div class="inz" onclick="verifyEmail()" >인증 하기</div>
-				</div>
-				
-				<div style="display:none;" id="registerSection">
-				<form:input class="Authentication" path="id" placeholder="아이디" />
-				<input type="button" id="confirm_id" value="중복체크"
-					class="default-btn">
-				<span id="message_id"></span>
-				<form:input path="passwd_hash" type="text" placeholder="비밀번호" />
-				<form:input path="" type="text" placeholder="비밀번호확인" />
-				<form:input path="name" type="text" placeholder="이름" />
-				<form:input path="nick_name" class="Authentication" type="text"
-					placeholder="닉네임" />
-				<input type="button" id="confirm_id" value="중복체크"
-					class="default-btn">
-				<form:input path="zipcode" id="zipcode" class="Authentication2"
-					type="text" placeholder="우편번호" />
-				<input type="button" onclick="execDaumPostcode()" value="우편번호찾기"
-					class="default-btn2">
-				<form:input path="address1" id="address1" type="text"
-					placeholder="주소" />
-		
-				<form:input path="address2" type="text" placeholder="상세주소" />
-		<form:input path="phone" id="phone" type="text" placeholder="번호" />
-			
-			</div>
-				<div class="line-with-text2">
-					<span>or</span>
-				</div>
-				<table class="register-api">
-					<tr>
-						<td><img class="inline-img2" alt=""
-							src="${pageContext.request.contextPath}/assets/images/naver.png">
-							<span class="inline-text2">네이버로그인</span></td>
-						<td><img class="inline-img2" alt=""
-							src="${pageContext.request.contextPath}/assets/images/kakao.png">
-							<span class="inline-text2">카카오로그인</span></td>
-					</tr>
-					<tr>
-					
+			<div style="width: 290px;">
+				<form:form class="register-form" modelAttribute="memberVO"
+					 id="member_register">
 
-					</tr>
-				</table>
-				<form:button class="register-submit" value="registerUser">회원가입</form:button>
-			</form:form>
-				</div>
+					<form:input path="email" id="email" class="Authentication"
+						type="text" placeholder="email" />
+					<div class="inz" onclick="submitEmail()">인증요청</div>
+					<div style="display: none;" id="verificationSection">
+						<form:input path="code" id="code"
+							class="Authentication" type="text" placeholder="인증번호" />
+						<div class="inz" onclick="verifyEmail()">인증 하기</div>
+					</div>
+
+					<div style="display: none;" id="registerSection">
+						<form:input class="Authentication" path="id" placeholder="아이디" />
+						<input type="button" id="confirm_id" value="중복체크"
+							class="default-btn">
+						<form:errors path="id" cssClass="error-color" />
+						<span id="message_id"></span>
+						<form:input path="passwd_hash" type="text" placeholder="비밀번호" />
+						<form:input path="" type="text" placeholder="비밀번호확인" />
+						<form:errors path="passwd_hash" cssClass="error-color" />
+						<form:input path="name" type="text" placeholder="이름" />
+						<form:errors path="name" cssClass="error-color" />
+						<form:input path="nick_name" class="Authentication" type="text"
+							placeholder="닉네임" />
+						<form:errors path="nick_name" cssClass="error-color" />
+						<input type="button" id="confirm_id" value="중복체크"
+							class="default-btn">
+						<form:input path="zipcode" id="zipcode" class="Authentication2"
+							type="text" placeholder="우편번호" />
+						<form:errors path="zipcode" cssClass="error-color" />
+						<input type="button" onclick="execDaumPostcode()" value="우편번호찾기"
+							class="default-btn2">
+						<form:input path="address1" id="address1" type="text"
+							placeholder="주소" />
+						<form:errors path="address1" cssClass="error-color" />
+
+						<form:input path="address2" type="text" placeholder="상세주소" />
+						<form:errors path="address2" cssClass="error-color" />
+						<form:input path="phone" id="phone" type="text" placeholder="번호" />
+						<form:errors path="phone" cssClass="error-color" />
+					</div>
+					<div class="line-with-text2">
+						<span>or</span>
+					</div>
+					<table class="register-api">
+						<tr>
+							<td><img class="inline-img2" alt=""
+								src="${pageContext.request.contextPath}/assets/images/naver.png">
+								<span class="inline-text2">네이버로그인</span></td>
+							<td><img class="inline-img2" alt=""
+								src="${pageContext.request.contextPath}/assets/images/kakao.png">
+								<span class="inline-text2">카카오로그인</span></td>
+						</tr>
+						<tr>
+
+
+						</tr>
+					</table>
+					<div class="register-submit" onclick="registerUser()">회원가입</div>
+				</form:form>
+				<div id="errorMessage" class="error"></div>
+			</div>
 		</div>
 	</div>
 </div>
