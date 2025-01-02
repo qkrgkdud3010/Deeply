@@ -16,8 +16,8 @@
   		              *
   		            FROM performance_detail d LEFT OUTER JOIN 
   		                 performance_hall h
-  		            ON d.mem_num = h.mem_num
-  		            ORDER BY h.reg_date DESC NULLS LAST)a)
+  		            ON d.hall_num = h.hall_num
+  		            ORDER BY d.reg_date DESC NULLS LAST)a)
   		WHERE artist_num=#{user_num}            
   		<![CDATA[
   		AND rnum >= #{start} AND rnum <= #{end}
@@ -30,6 +30,6 @@
   		SELECT
   		  COUNT(*)
   		FROM performance_detail d LEFT OUTER JOIN performance_hall h
-  		ON d.mem_num = h.mem_num WHERE artist_num=#{user_num}
+  		ON d.hall_num = h.hall_num WHERE artist_num=#{user_num}
   	</select>
 </mapper>

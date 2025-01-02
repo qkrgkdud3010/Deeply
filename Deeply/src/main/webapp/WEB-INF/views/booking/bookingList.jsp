@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/booking.js"></script>
+
 <div>
 	<div class="booking-artist-container font-white bold-title background-black align-center">
-		아티스트 이름
+		${artist_num}
 	</div>
 	<div class="booking-main">
 		<div class="booking-title bold-title vertical-center">공연 예매</div>
@@ -18,24 +22,30 @@
 			</div>
 			<div class="booking-list top-1">
 				<div class="booking-items height-90">
-					<div class="booking-item">
+					<c:forEach var="list" items="${list}">
+					<div class="booking-item" data-num="${list.perf_num}">
 						<img>
+						<div class="perf-status font-white bold-title align-right">
+							<c:if test="${not empty list and list.perf_status == 'over'}">
+								종료된 이벤트
+							</c:if>
+							<c:if test="${not empty list and list.perf_status == 'ongoing'}">
+								예매 기간
+							</c:if>
+							<c:if test="${not empty list and list.perf_status == 'before'}">
+								예매 전
+							</c:if>
+							<c:if test="${not empty list and list.perf_status == 'membership'}">
+								선예매 기간
+							</c:if>
+						</div>
+						<div class="perf-title font-white bold-title align-center">${list.perf_title}</div>
+						<div class="perf-date font-white bold-title align-center">${list.perf_date}</div>
 					</div>
-					<div class="booking-item">
-						<img>
-					</div>
-					<div class="booking-item">
-						<img>
-					</div>
-					<div class="booking-item">
-						<img>
-					</div>
-					<div class="booking-item">
-						<img>
-					</div>
+					</c:forEach>
 				</div>
 				<div class="page-div align-center height-10 font-white">
-					1 2 3 4 5
+					${page}
 				</div>
 			</div>
 		</div>
@@ -44,17 +54,17 @@
 			<div class="event-title bold-title">공연 정보</div>
 			<div class="event-desc top-5">
 				<div class="desc-div1 height-50">
-					<div class="e-title vertical-center left-3 bold-title">이벤트 제목</div>
+					<div class="e-title vertical-center left-3 bold-title"></div>
 					<div class="e-info1 vertical-center left-3">
 						<div class="e-date bold-title">xxxx.xx.xx</div>
 						<div class="e-time left-5 bold-title">xx:xx ~ xx:xx</div>
 					</div>
 					<div class="e-info2 top-5">
 						<ul>
-							<li><label>예매 기간</label><span>xx.xx.xx ~ xx.xx.xx</span></li>
-							<li class="top-1"><label>선예매 날짜</label><span>xx.xx.xx</span></li>
-							<li class="top-1"><label>공연 장소</label><span>공연 장소 이름</span></li>
-							<li><label></label><span>공연 장소 상세 주소</span></li>
+							<li><label>예매 기간</label><span class="e-period">xx.xx.xx ~ xx.xx.xx</span></li>
+							<li class="top-1"><label>선예매 날짜</label><span class="e-membership">xx.xx.xx</span></li>
+							<li class="top-1"><label>공연 장소</label><span class="e-place">공연 장소 이름</span></li>
+							<li><label></label><span class="e-address">공연 장소 상세 주소</span></li>
 						</ul>
 					</div>
 				</div>
@@ -64,11 +74,11 @@
 						<div class="width-50 left-10">금액<hr></div>
 					</div>
 					<div class="e-info4 vertical-center">
-						<div class="width-50 left-3">상세 내용</div>
+						<div class="e-desc width-50 left-3">상세 내용</div>
 						<div class="width-50 left-3">
 							<ul>
-								<li><label>일반석</label><span>???????원</span></li>
-								<li><label class="top-1">VIP석</label><span>???????원</span></li>
+								<li><label>일반석</label><span class="e-price">???????원</span></li>
+								<li><label class="top-1">VIP석</label><span class="e-vip-price">???????원</span></li>
 							</ul>
 						</div>
 					</div>

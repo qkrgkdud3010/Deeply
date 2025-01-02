@@ -1,28 +1,60 @@
 package kr.spring.booking.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+import kr.spring.booking.service.BookingService;
+import kr.spring.event.vo.EventVO;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("/booking")
 public class BookingController {
+	@Autowired
+	private BookingService bookingService;
+	
 	//아티스트 예매 목록
 	@GetMapping("/list")
-	public String getList(HttpServletRequest request, Model model) {
-		long artist_num = (long)request.getAttribute("artist_num");
-		Map<String,Object> map =  new HashMap<String,Object>();
+	public String getList(long artist_num, @RequestParam(defaultValue="1") int pageNum, HttpServletRequest request, Model model) {
 		
+		log.debug("<<예매 페이지 아티스트 번호>> : " + artist_num);
+		log.debug("<<예매 페이지 번호>> : " + pageNum);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("user_num", artist_num);
 		
+		int count = bookingService.selectEventRowCount(map);
+		log.debug("<<예매 페이지 count>> : " + count);
+		PagingUtil page = new PagingUtil(pageNum, count,20,10,"list");
+		
+		List<EventVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = bookingService.selectEventByArtistId(map);
+		}
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("artist_num", artist_num);
 		
 		return "bookingList";
 	}
+	
+	//공연 상세 정보
+	
 }

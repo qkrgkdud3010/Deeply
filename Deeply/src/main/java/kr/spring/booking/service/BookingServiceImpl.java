@@ -19,14 +19,17 @@ public class BookingServiceImpl implements BookingService{
 
 	@Override
 	public List<EventVO> selectEventByArtistId(Map<String, Object> map) {
-		
-		return null;
+		return bookingMapper.selectEventByArtistId(map);
 	}
 
 	@Override
 	public Integer selectEventRowCount(Map<String, Object> map) {
-		
-		return null;
+		return bookingMapper.selectEventRowCount(map);
+	}
+
+	@Override
+	public EventVO showEventDetail(long perf_num) {
+		return bookingMapper.showEventDetail(perf_num);
 	}
 
 }

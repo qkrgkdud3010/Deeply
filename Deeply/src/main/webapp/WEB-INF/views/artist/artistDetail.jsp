@@ -21,7 +21,7 @@
 		<div class="detail-premium-container">
 			<button class="premium-item ad-chat">채팅</button>
 			<button class="premium-item ad-letter" onclick="location.href='${pageContext.request.contextPath}/letter/list'">편지</button>
-			<button class="premium-item ad-book" onclick="location.href='${pageContext.request.contextPath}/booking/list'">예매</button>
+			<button class="premium-item ad-book" onclick="location.href='${pageContext.request.contextPath}/booking/list?artist_num=51'">예매</button>
 		</div>
 		<div class="a-profile font-white bold-title vertical-center">PROFILE</div>
 		<div class="member-container">

@@ -380,7 +380,7 @@ li {
  
  .booking-item{
  	background:green;
-	
+	height:45%;
  	flex: 0 0 calc(25% - 2rem); /* 5개 기준: 20% 너비에서 간격(gap) 제외 */
     box-sizing: border-box; /* 패딩 포함 크기 계산 */
     position: relative;
@@ -388,7 +388,56 @@ li {
     
  }
  
+ .booking-item::before {
+    content: "";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0, 0, 0, 0.4); /* 어두운 오버레이 색상과 투명도 설정 */
+    z-index:2; /* 이미지 위에 오버레이가 오도록 설정 */
+}
+ 
+ .booking-item img{
+ 	object-fit: cover;
+	z-index:1;
+	width:100%;
+	height:100%;
+ }
+ 
+ .perf-title, .perf-date, .perf-status{
+ 	position:absolute;
+ 	z-index:2;
+ }
+ 
+ .perf-title{
+ 	top:20%;
+ 	font-size:1.5vw;
+ 	height:5vw;
+ 	width:100%;
+
+ }
+ 
+ .perf-date{
+ 	top:60%;
+ 	font-size:1.2vw;
+ 	height:5vw;
+ 	width:100%;
+ 	text-align:center;
+ }
+ 
+ .perf-status{
+ 	width:95%;
+ 	top:3%;
+ 	font-size:0.6vw;
+ }
+ 
  /*=========공연 정보 */
+ 
+ .event-detail{
+ 	display:none;
+ }
  
  .event-desc{
  	width:100%;
