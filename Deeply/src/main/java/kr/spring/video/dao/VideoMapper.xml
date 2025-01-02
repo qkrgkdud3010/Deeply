@@ -3,39 +3,21 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.spring.video.dao.VideoMapper">
-
-    <!-- 모든 비디오 가져오기 -->
-    <select id="getAllVideos" resultType="kr.spring.video.vo.VideoVO">
-        SELECT video_id, artist_id, title, description, is_exclusive,
-               created_at, views, likes, comments_count, category_id, media_url
-        FROM video 
-        ORDER BY created_at DESC
-    </select>
-
-    <!-- 비디오 삽입 -->
-    <insert id="insertVideo" parameterType="kr.spring.video.vo.VideoVO">
-        INSERT INTO video (
-            video_id, artist_id, title, description, is_exclusive,
-            created_at, views, likes, comments_count, category_id, media_url
-        ) VALUES (
-            #{videoId}, 
-            #{artistId}, 
-            #{title}, 
-            #{description}, 
-            #{isExclusive}, 
-            #{createdAt, jdbcType=TIMESTAMP}, 
-            #{views}, 
-            #{likes}, 
-            #{commentsCount}, 
-            #{categoryId}, 
-            #{mediaUrl, jdbcType=VARCHAR}
-        )
-    </insert>
-
-    <!-- 다음 비디오 ID 시퀀스 가져오기 -->
-    <select id="getNextVideoId" resultType="long">
-        SELECT video_seq.NEXTVAL
-        FROM dual
-    </select>
-
+	<insert id="insertVideo" parameterType="kr.spring.video.vo.VideoVO">
+	    INSERT INTO video (
+	        video_id, artist_id, title, description, is_exclusive,
+	  		views, likes, comments_count, category_id, media_url
+	    ) VALUES (
+	        video_seq.NEXTVAL, 
+	        #{artistId, jdbcType=NUMERIC}, 
+	        #{title}, 
+	        #{description}, 
+	        #{isExclusive, jdbcType=NUMERIC},  
+	        #{views, jdbcType=NUMERIC}, 
+	        #{likes, jdbcType=NUMERIC}, 
+	        #{commentsCount, jdbcType=NUMERIC}, 
+	        #{categoryId, jdbcType=NUMERIC}, 
+	        #{mediaUrl, jdbcType=VARCHAR}
+	    )
+	</insert>
 </mapper>

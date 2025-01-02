@@ -5,64 +5,54 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.spring.video.dao.VideoMapper;
 import kr.spring.video.vo.VideoVO;
 
 @Service
 public class VideoServiceImpl implements VideoService {
+
     @Autowired
     private VideoMapper videoMapper;
 
     @Override
-    public void saveVideo(VideoVO video) {
-        video.setVideoId(getNextVideoId());
+    public List<VideoVO> selectList(Map<String, Object> map) {
+        return videoMapper.selectList(map);
+    }
+
+    @Override
+    public Integer selectRowCount(Map<String, Object> map) {
+        return videoMapper.selectRowCount(map);
+    }
+
+    @Override
+    public void insertVideo(VideoVO video) {
         videoMapper.insertVideo(video);
     }
 
     @Override
-    public List<VideoVO> getAllVideos() {
-        return videoMapper.getAllVideos();
+    public VideoVO selectVideo(Long videoId) {
+        return videoMapper.selectVideo(videoId);
     }
 
-    private long getNextVideoId() {
+    @Override
+    public void updateHit(Long videoId) {
+        videoMapper.updateHit(videoId);
+    }
+
+    @Override
+    public void updateVideo(VideoVO video) {
+        videoMapper.updateVideo(video);
+    }
+
+    @Override
+    public void deleteVideo(Long videoId) {
+        videoMapper.deleteVideo(videoId);
+    }
+    
+    @Override
+    public Long getNextVideoId() {
         return videoMapper.getNextVideoId();
     }
 
-	@Override
-	public int selectRowCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<VideoVO> selectList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateHit(long videoId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public VideoVO selectVideo(long videoId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteVideo(long videoId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void insertVideo(VideoVO videoVO) {
-		// TODO Auto-generated method stub
-		
-	}
 }

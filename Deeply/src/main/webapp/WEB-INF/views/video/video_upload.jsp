@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/assets/css/hy.css">
 <div class="video-upload-content">
     <!-- 메인 타이틀 -->
@@ -19,6 +18,29 @@
                 <input type="text" name="title" maxlength="100"
                     placeholder="제목을 입력하세요" class="upload-title">
                 <span class="char-limit">0/100</span>
+            </div>
+
+            <!-- 카테고리와 멤버십 여부 선택 -->
+            <div class="selection-row">
+                <!-- 카테고리 선택 -->
+                <div class="category-select">
+                    <div class="category-icon"></div>
+                    <span class="category-text">카테고리 선택</span>
+                    <select name="category" class="category-dropdown">
+                        <option value="music">음악</option>
+                        <option value="education">교육</option>
+                        <option value="entertainment">엔터테인먼트</option>
+                        <option value="sports">스포츠</option>
+                    </select>
+                </div>
+
+                <!-- 멤버십 여부 선택 -->
+                <div class="membership-toggle">
+                    <label for="isExclusive">
+                        <input type="checkbox" id="isExclusive" name="isExclusive" value="1">
+                        <span>멤버십 영상</span>
+                    </label>
+                </div>
             </div>
 
             <!-- 탭 버튼 -->
