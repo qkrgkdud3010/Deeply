@@ -33,65 +33,57 @@ public class VideoController {
         model.addAttribute("videos", videos);
         model.addAttribute("totalCount", totalCount);
 
-        return "video/video_list";
+        return "videoList"; // Tiles 정의 이름
     }
 
     @GetMapping("/videos/upload")
     public String showUploadPage() {
-        return "video/video_upload";
+        return "videoUpload"; // Tiles 정의 이름
     }
 
     @PostMapping("/videos/upload")
     public String uploadVideo(VideoVO video, @RequestParam("media") MultipartFile media,
                               @RequestParam(value = "isExclusive", defaultValue = "0") int isExclusive) {
-    	
-    	// 테스트용 기본 데이터 설정
         if (video.getArtistId() == null) {
-            video.setArtistId(1L); // 기본 ARTIST_ID 값
+            video.setArtistId(1L);
         }
         if (video.getCategoryId() == null) {
-            video.setCategoryId(1L); // 기본 CATEGORY_ID 값
+            video.setCategoryId(1L);
         }
         if (video.getIsExclusive() == null) {
-            video.setIsExclusive(0); // 기본 IS_EXCLUSIVE 값
+            video.setIsExclusive(0);
         }
-
-        // 나머지 필수 값도 기본값 설정 (테스트용)
         if (video.getTitle() == null || video.getTitle().isEmpty()) {
-            video.setTitle("Default Title"); // 기본 제목
+            video.setTitle("Default Title");
         }
         if (video.getDescription() == null || video.getDescription().isEmpty()) {
-            video.setDescription("Default description"); // 기본 설명
+            video.setDescription("Default description");
         }
-    	
-        // 멤버십 여부 설정
+
         video.setIsExclusive(isExclusive);
 
-        // 파일 경로 설정
         if (!media.isEmpty()) {
             video.setMediaUrl("/uploads/" + media.getOriginalFilename());
         }
 
-        // 비디오 데이터 삽입
         videoService.insertVideo(video);
 
         return "redirect:/videos";
     }
-
 
     @GetMapping("/videos/view")
     public String viewVideo(@RequestParam("id") Long videoId, Model model) {
         videoService.updateHit(videoId);
         VideoVO video = videoService.selectVideo(videoId);
         model.addAttribute("video", video);
-        return "video/video_view";
+        return "videoDetail"; // Tiles 정의 이름
     }
 
     @GetMapping("/videos/edit")
     public String editVideo(@RequestParam("id") Long videoId, Model model) {
         VideoVO video = videoService.selectVideo(videoId);
         model.addAttribute("video", video);
-        return "video/video_edit";
+        return "videoEdit"; // Tiles 정의가 있다면 해당 이름 사용
     }
 
     @PostMapping("/videos/edit")

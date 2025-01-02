@@ -5,42 +5,25 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="hy" extends="main">
-    	<put-attribute name="title" value="회원가입"/>
-    	<put-attribute name="css"
-    	       value="/WEB-INF/views/member/memberCSS.jsp"/>                            
-    	<put-attribute name="body"
-    	  value="/WEB-INF/views/member/memberRegister.jsp"/>
+    <!-- 영상 업로드 페이지 -->
+    <definition name="videoUpload" extends="main">
+        <put-attribute name="title" value="영상 업로드" />
+        <put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp" />
+        <put-attribute name="body" 
+                       value="/WEB-INF/views/video/video_upload.jsp" />
     </definition>
-    <definition name="newjeans" 
-          template="/WEB-INF/views/template/layout_basic.jsp">
-    <put-attribute name="title" 
-                   value="뉴진스 페이지"/>
-    <put-attribute name="header"
-                   value="/WEB-INF/views/template/header.jsp"/>                            
-    <put-attribute name="body"
-                   value="/WEB-INF/views/video/newjeans.jsp"/>
-    <put-attribute name="footer"
-                   value="/WEB-INF/views/template/footer.jsp"/>        
-	</definition>
-	<definition name="video_upload" 
-          template="/WEB-INF/views/template/layout_basic.jsp">
-    <put-attribute name="title" 
-                   value="영상 업로드"/>
-    <put-attribute name="header"
-                   value="/WEB-INF/views/template/header.jsp"/>                            
-    <put-attribute name="body"
-                   value="/WEB-INF/views/video/video_upload.jsp"/>
-    <put-attribute name="footer"
-                   value="/WEB-INF/views/template/footer.jsp"/>        
-	</definition>
+
+    <!-- 영상 목록 페이지 -->
+    <definition name="videoList" extends="main">
+        <put-attribute name="title" value="영상 목록" />
+        <put-attribute name="body" 
+                       value="/WEB-INF/views/video/video_list.jsp" />
+    </definition>
+
+    <!-- 영상 상세 페이지 -->
+    <definition name="videoDetail" extends="main">
+        <put-attribute name="title" value="영상 상세" />
+        <put-attribute name="body" 
+                       value="/WEB-INF/views/video/video_detail.jsp" />
+    </definition>
 </tiles-definitions>
-
-
-
-
-
-
-
-
-

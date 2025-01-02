@@ -246,3 +246,78 @@ textarea {
     font-weight: bold; /* 굵은 글씨 */
     color: #007bff; /* 활성화된 색상 */
 }
+
+/* 선택 섹션 (카테고리 + 멤버십) */
+.selection-row {
+    display: flex; /* Flexbox로 나란히 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 20px; /* 요소 간 간격 */
+    margin: 20px 0; /* 위아래 여백 */
+}
+
+/* 카테고리 선택 박스 스타일 */
+.category-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 1px solid #EDEFF1;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 200px;
+}
+
+/* 카테고리 아이콘 */
+.category-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #878A8C;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #FFFFFF;
+    border: 1px solid #EDEFF1;
+    border-radius: 4px;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+/* 드롭다운 항목 스타일 */
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: #F5F5F5;
+}
+
+/* 멤버십 여부 선택 */
+.membership-toggle label {
+    display: flex; /* 플렉스 레이아웃 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 체크박스와 텍스트 간 간격 */
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #333333;
+}
+
+.membership-toggle input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
