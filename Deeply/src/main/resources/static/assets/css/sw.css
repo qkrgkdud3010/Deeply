@@ -20,12 +20,19 @@ li {
 	font-weight:bold;
 }
 
+/* 구분선 ====================*/
+.hr-2{
+	height:0.1vw;
+}
+
 
 /* 공통 배경색 ====================*/
 .background-black{
 	background:black;
 }
-
+.background-darkblue{
+	background:#0369A1;
+}
 /* 정렬 설정 ====================*/
 
 .display-flex{
@@ -55,6 +62,10 @@ li {
 	align-items:center;
 }
 
+.left-1{
+	margin-left:1%;
+}
+
 .left-3{
 	margin-left:3%;
 }
@@ -79,6 +90,10 @@ li {
 	margin-top:5%;
 }
 
+.top-10{
+	margin-top:10%;
+}
+
 /* 크기 설정 ====================*/
 .width-50{
 	width:50%;
@@ -90,6 +105,31 @@ li {
 	width:20%;
 }
 
+.height-50{
+	height:50%;
+}
+
+.height-90{
+	height:90%;
+}
+
+.height-10{
+	height:10%;
+}
+
+.height-80{
+	height:80%;
+}
+
+.height-20{
+	height:20%;
+}
+
+/* 버튼 디자인 ====================*/
+.white-btn{
+ 	background:none;
+ 	border-radius:10px;
+}
 
 
 /* 
@@ -295,17 +335,112 @@ li {
  }
  
  .booking-list-container{
- 	height:40vw;
+ 	height:50vw;
+ 	margin-top:16%;
  }
  
  .booking-date-container img{
  	border:1px sold black;
- 	width:1.5vw;
- 	height:1.5vw;
+ 	width:1.8vw;
+ 	height:1.6vw;
+ }
+ 
+ .booking-date{
+ 	font-size:1.3vw;
+ 	font-weight:bold;
  }
  
  .booking-list{
- 	height:30vw;
+ 	height:40vw;
  	background:black;
+ 	display:flex;
+ 	flex-direction:column;
+ 	align-items:center;
+ }
+ 
+ .booking-category{
+ 	width:100%;
+ }
+ 
+ .booking-btn{
+ 	width:8vw;
+ 	height:2.5vw;
+ 	font-size:0.8vw;
+ }
+ 
+ .booking-items{
+ 	width:95%;
+ 	display: flex;
+    flex-wrap: wrap; /* 줄바꿈을 허용 */
+    justify-content: flex-start; /* 중앙 정렬 */
+    gap:2rem;
+    margin-top:4%;
+    margin-left:2.5%;
+ }
+ 
+ .booking-item{
+ 	background:green;
+	
+ 	flex: 0 0 calc(25% - 2rem); /* 5개 기준: 20% 너비에서 간격(gap) 제외 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    position: relative;
+    cursor:pointer;
+    
+ }
+ 
+ /*=========공연 정보 */
+ 
+ .event-desc{
+ 	width:100%;
+ 	border:1px solid #0369A1;
+ 	height:40vw;
+ }
+ 
+ .desc-div1{
+ 	background:blue;
+ }
+ 
+ .event-title{
+ 	font-size:2vw;
+ 	margin-left:3%;
+ }
+ 
+ .e-title{
+ 	height:6vw;
+ 	font-size:2vw;
+ }
+ 
+ .e-info2 label, .e-info4 label{
+ 	font-weight:bold;
+ 	display:inline-block;
+ 	width:12vw;
+ }
+ 
+ .e-info3 hr{
+ 	width:5vw;
+ 	height:0.1vw;
+ 	margin-left: 0;
+    margin-right: auto;
+    background:#0369A1;
+ }
+ 
+ .e-info3{
+ 	height:20%;
+ }
+ 
+ .e-info4{
+ 	height:30%;
+ }
+ 
+ .e-submit{
+ 	height:3vw;
+ 	width:95%;
+ }
+ 
+ .e-submit button{
+ 	width:10vw;
+ 	height:3vw;
+ 	font-weight:bold;
+ 	font-size:1vw;
  }
  

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.booking.dao.BookingMapper">
+	
+  	<!-- 전체/검색 목록 -->
+  	<select id="selectEventByArtistId" parameterType="map"
+  	                           resultType="eventVO">
+  		SELECT
+  		  *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT 
+  		              *
+  		            FROM performance_detail d LEFT OUTER JOIN 
+  		                 performance_hall h
+  		            ON d.mem_num = h.mem_num
+  		            ORDER BY h.reg_date DESC NULLS LAST)a)
+  		WHERE artist_num=#{user_num}            
+  		<![CDATA[
+  		AND rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+  	
+  	<!-- 전체/검색 레코드수 -->
+  	<select id="selectEventRowCount" parameterType="map"
+  	                               resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM performance_detail d LEFT OUTER JOIN performance_hall h
+  		ON d.mem_num = h.mem_num WHERE artist_num=#{user_num}
+  	</select>
+</mapper>

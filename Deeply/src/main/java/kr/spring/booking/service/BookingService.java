@@ -1,5 +1,11 @@
 package kr.spring.booking.service;
 
-public interface BookingService {
+import java.util.List;
+import java.util.Map;
 
+import kr.spring.event.vo.EventVO;
+
+public interface BookingService {
+	public List<EventVO> selectEventByArtistId(Map<String,Object> map);
+	public Integer selectEventRowCount(Map<String,Object> map);
 }

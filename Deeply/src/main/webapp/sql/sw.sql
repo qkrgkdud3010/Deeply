@@ -26,3 +26,34 @@ CREATE TABLE auser_detail (
     member10 VARCHAR2(30),
     CONSTRAINT fk_auser_detail_auser FOREIGN KEY (user_num) REFERENCES auser (user_num) -- 외래 키
 );
+
+CREATE TABLE performance_hall(
+	hall_num NUMBER PRIMARY KEY,
+	hall_name VARCHAR2(50) NOT NULL,
+	max_seat NUMBER NOT NULL,
+	location VARCHAR2(100) NOT NULL,
+	has_vip NUMBER NOT NULL
+);
+
+create sequence perf_hall_seq;
+
+CREATE TABLE performance_detail (
+    pref_num NUMBER NOT NULL PRIMARY KEY,
+    hall_num NUMBER NOT NULL,
+    booked_amount NUMBER NOT NULL,
+    artist_num NUMBER NOT NULL,
+    perf_date VARCHAR2(100) NOT NULL,
+    pref_time VARCHAR2(100) NOT NULL,
+    perf_status VARCHAR2(200) NOT NULL,
+    perf_title VARCHAR2(200) NOT NULL,
+    perf_desc VARCHAR2(2000),
+    ticket_price NUMBER NOT NULL,
+    remaining_amount NUMBER NOT NULL,
+    reg_date VARCHAR2(100) NOT NULL,
+    end_date VARCHAR2(100),
+    category VARCHAR2(100) NOT NULL,
+    booking_deadline DATE NOT NULL,
+    CONSTRAINT fk_perf_detail_hall FOREIGN KEY (hall_num) REFERENCES performance_hall (hall_num),
+    CONSTRAINT fk_perf_detail_auser FOREIGN KEY (artist_num) REFERENCES auser (user_num)
+);
+create sequence perf_detail_seq;
