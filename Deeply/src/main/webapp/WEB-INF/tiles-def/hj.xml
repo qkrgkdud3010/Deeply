@@ -5,12 +5,12 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="hj" extends="main">
-    	<put-attribute name="title" value="회원가입"/>
+    <definition name="itemList" extends="main">
+    	<put-attribute name="title" value="상품 목록"/>
     	<put-attribute name="css"
-    	       value="/WEB-INF/views/member/memberCSS.jsp"/>                            
+    	       value="/WEB-INF/views/item/itemCSS.jsp"/>                            
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/member/memberRegister.jsp"/>
+    	  value="/WEB-INF/views/item/itemList.jsp"/>
     </definition>
 </tiles-definitions>
 

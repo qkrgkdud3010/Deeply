@@ -64,7 +64,7 @@
 		<div class="first-text">
 			<c:if test="${empty principal || principal.memberVO.auth < 9}">
 				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
-				<a href="${pageContext.request.contextPath}/board/list">shop</a>
+				<a href="${pageContext.request.contextPath}/item/list">shop</a>
 			</c:if>
 		</div>
 	</div>

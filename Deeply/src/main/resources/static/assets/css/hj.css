@@ -1,0 +1,16 @@
+/* 
+===============================
+			  공통
+===============================
+ */
+.main-container {
+  background-color: black;
+  height: auto;
+  
+}
+
+.content-container {
+  background-color: white;
+  width:86.8vw;
+  height: auto;
+}
