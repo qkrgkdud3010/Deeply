@@ -9,6 +9,7 @@
 		INSERT INTO shop_item(
 			item_num,
 			user_num,
+			filename,
 			item_name,
 			item_price,
 			item_description,
@@ -16,6 +17,7 @@
 		VALUES (
 			shop_item_seq.nextval,
 			#{user_num},
+			#{filename},
 			#{item_name},
 			#{item_price},
 			#{item_description},
@@ -48,7 +50,7 @@
 	<select id="selectRowCount" parameterType="map" resultType="integer">
 		SELECT
 			COUNT(*)
-		FROM shop_item JOIN Auser_detail USING(user_num)
+		FROM shop_item JOIN auser_detail USING(user_num)
 		<include refid="shopSearch"/>
 	</select>
 	
@@ -62,6 +64,7 @@
 					item_num,
 					user_num,
 					name,
+					filename,
 					item_name,
 					item_regdate,
 					item_modifydate,
@@ -69,9 +72,12 @@
 					item_description,
 					item_price
 				FROM shop_item
-				JOIN auser_detail USING(user_num))a)
+				JOIN duser_detail USING(user_num)
+					)a
+				)
+				WHERE user_num = #{user_num} <!-- 로그인된 사용자의 ID로 필터링 -->
 			<![CDATA[
-		WHERE rnum >= #{start} AND rnum <= #{end}
+		AND rnum >= #{start} AND rnum <= #{end}
 		]]>
 	</select>	
 	

@@ -2,6 +2,8 @@ package kr.spring.item.vo;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +16,9 @@ public class ItemVO {
 	private long user_num;        			// 유저 번호 (FK)
 	@NotBlank
 	private String item_name;   		  		// 상품 이름
+	private MultipartFile upload;				//파일
+	@NotBlank
+	private String filename;					//파일명
 	@NotBlank
 	private int item_price;     			    // 상품 가격
 	@NotBlank
