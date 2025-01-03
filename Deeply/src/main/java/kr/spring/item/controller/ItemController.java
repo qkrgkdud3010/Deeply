@@ -25,6 +25,7 @@ import kr.spring.item.service.ItemService;
 import kr.spring.item.vo.ItemVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,59 +43,81 @@ public class ItemController {
 	}
 
 	/*==============================
-	 * 	상품 등록	
+	 *  상품 등록
 	 * =============================*/
-	//등록 폼
+	// 등록 폼
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/write")
-	public String form() {
-		return "itemWrite";
+	public String form(Model model) {
+	    model.addAttribute("itemVO", new ItemVO()); // Command Object 전달
+	    return "itemWrite"; // Tiles View 이름 반환
 	}
-	//전송된 데이터 처리
+
+	// 전송된 데이터 처리
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/write")
-	public String submit(@Valid ItemVO itemVO,BindingResult result,HttpServletRequest request,RedirectAttributes redirect,@AuthenticationPrincipal PrincipalDetails principal) throws IllegalStateException, IOException {
-		log.debug("<<상품 등록>> :" + itemVO);
-		//유효성 체크 결과 오류가 있으면 폼 호출
-		if(result.hasErrors()) {
-			return form();
-		}
-		//회원 번호 읽기
-		MemberVO vo = principal.getMemberVO();
-		itemVO.setUser_num(vo.getUser_num());
-		//파일 업로드 안하면 어떻게 하는지 찾아보기
-		
-		//상품 등록하기
-		itemService.insertItem(itemVO);
-		
-		redirect.addFlashAttribute("result","success");
-		
-		
-		return "redirect:/item/list";
+	public String submit(
+	        @Valid ItemVO itemVO, 
+	        BindingResult result, 
+	        HttpServletRequest request,
+	        RedirectAttributes redirect,
+	        @AuthenticationPrincipal PrincipalDetails principal) throws IllegalStateException, IOException {
+
+	    log.debug("<<상품 등록>> :" + itemVO);
+
+	    // 유효성 체크 결과 오류가 있으면 폼 호출
+	    if (result.hasErrors()) {
+	        return "itemWrite";
+	    }
+
+	    // 회원 번호 읽기
+	    MemberVO vo = principal.getMemberVO();
+	    itemVO.setUser_num(vo.getUser_num());
+
+	    // 파일 업로드
+	    itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
+
+	    // 상품 등록하기
+	    itemService.insertItem(itemVO);
+
+	    redirect.addFlashAttribute("result", "success");
+
+	    return "redirect:/item/list";
 	}
+
 	
 	
 	
 	/*==============================
 	 * 	상품 목록
 	 * =============================*/
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/list")
 	public String getList(
 			@RequestParam(defaultValue="1") int pageNum,
 			@RequestParam(defaultValue="1") int order,
-			String keyfield,String keyword,Model model) {
+			String keyfield,String keyword,
+			Model model,
+			@AuthenticationPrincipal PrincipalDetails principal) {
 		
+		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<게시판 목록 - order>> : " + order);
+		
+		MemberVO member = principal.getMemberVO();
+		Long user_num = member.getUser_num();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
+		map.put("user_num", user_num);
+		
 		
 		//전체/검색 레코드수 
 		int count = itemService.selectRowCount(map);
 		
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,20,10,"list","&order="+order);
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,12,10,"list","&order="+order);
+		
 		
 		List<ItemVO> list = null;
 		if(count > 0) {
@@ -105,11 +128,17 @@ public class ItemController {
 			list = itemService.selectList(map);
 		}
 		
+		
+		
 		model.addAttribute("count", count);
+		model.addAttribute("member", member);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());
 		
+		log.debug("Logged in user's name: " + member.getName());
 		return "itemList";
+		
+		
 	}
 	
 	/*==============================

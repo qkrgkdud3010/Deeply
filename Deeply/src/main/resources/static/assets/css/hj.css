@@ -14,3 +14,14 @@
   width:86.8vw;
   height: auto;
 }
+
+/* 교환/반품 규정  */
+.policy-title {
+    font-weight: bold; /* 진하게 */
+    font-size: 16px;  /* 폰트 크기 16px */
+}
+
+.policy-content {
+    font-size: 16px; /* 폰트 크기 16px */
+    line-height: 1.6; /* 줄 간격 */
+}

@@ -22,7 +22,9 @@
 			<div id="error_id" class="error-color"></div>
 			<input name="passwd_hash" id="passwd_hash" type="password" placeholder="비밀번호" />
 			<div id="error_passwd" class="error-color"></div>
-			
+			<div class="line-with-text">
+						<span>or</span>
+					</div>
 			<table class="login-button">
 				<tr>
 					<td><img class="inline-img" alt=""

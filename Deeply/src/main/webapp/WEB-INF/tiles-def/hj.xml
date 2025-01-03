@@ -12,6 +12,14 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/item/itemList.jsp"/>
     </definition>
+    
+    <definition name="itemWrite" extends="main">
+    	<put-attribute name="title" value="상품 작성"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/item/itemCSS.jsp"/>                            
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/item/itemWrite.jsp"/>
+    </definition>
 </tiles-definitions>
 
 

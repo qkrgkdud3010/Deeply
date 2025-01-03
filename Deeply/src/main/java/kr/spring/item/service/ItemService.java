@@ -11,9 +11,9 @@ public interface ItemService {
 	//부모글
 	public List<ItemVO> selectList(Map<String,Object> map);
 	public int selectRowCount(Map<String,Object> map);
-	int insertItem(ItemVO Item);
+	public int insertItem(ItemVO Item);
 	public ItemVO selectitem(Long item_num);
-	int updateItem(ItemVO Item);
-	int deleteItem(Long item_num);
+	public int updateItem(ItemVO Item);
+	public int deleteItem(Long item_num);
 
 }
