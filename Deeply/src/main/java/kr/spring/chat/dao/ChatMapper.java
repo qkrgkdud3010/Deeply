@@ -12,9 +12,13 @@ public interface ChatMapper {
 	//아티스트가 (채팅방 들어가기)를 누르면 채팅방 정보가 새롭게 insert된다.
 	public void insertChatroom(ChatVO chvo);
 	
-	
 	//유저정보 insert or update
-	//중간 테이블 정보 update
+	//중간테이블로 연결시켜준다.
+	public void insertDuserInfo(ChatVO chvo);
+	public void insertAuserInfo(ChatVO chvo);
+	
+	//최종 usertable에서 select하기
+	
 	//메세지 주고 받기
 
 }
