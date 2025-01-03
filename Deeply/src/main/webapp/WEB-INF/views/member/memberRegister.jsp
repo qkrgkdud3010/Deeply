@@ -4,7 +4,7 @@
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- jQuery CDN을 추가 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 
 <!-- 회원가입 시작 -->
 
@@ -14,6 +14,7 @@
 var csrfToken = $('meta[name="_csrf"]').attr('content');
 var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
 function registerUser() {
+	
 $.ajax({
     url: '/member/registerUser',
     type: 'POST',
@@ -116,6 +117,147 @@ function verifyEmail() {
     });
 }
 
+$(function(){
+	/*--------------------
+	 *      회원가입
+	 *--------------------*/
+	
+	//아이디 중복 여부 저장 변수 : 0 -> 아이디 중복 또는 중복체크 미실행
+	//                        1 -> 아이디 미중복
+	let checkId = 0;
+	//별명 중복 여부 저장 변수 : 0 -> 별명 중복 또는 중복체크 미실행
+	//                       1 -> 별명 미중복	
+	let checkNick = 0;
+	
+	//아이디 중복 체크
+	$('#confirm_id').click(function(){
+		if($('#id').val().trim()==''){
+			$('#message_id').css('color','red')
+			                .text('아이디를 입력하세요');
+	        $('#id').val('').focus();
+			return;						
+		}
+		
+		$('#message_id').text('');//메시지 초기화
+		
+		//서버와 통신
+		$.ajax({
+			url:'confirmIdnNickName',
+			type:'get',
+			data:{id:$('#id').val()},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'idNotFound'){
+					checkId = 1;
+					$('#message_id').css('color','#000')
+					                .text('등록 가능 ID');
+				}else if(param.result == 'idDuplicated'){
+					checkId = 0;
+					$('#message_id').css('color','red')
+					                .text('중복된 ID');
+					$('#id').val('').focus();				
+				}else if(param.result == 'notMatchPattern'){
+					checkId = 0;
+					$('#message_id').css('color','red')
+					                .text('영문,숫자 4~12 입력');
+					$('#id').val('').focus();
+				}
+			},
+			error:function(){
+				checkId = 0;
+				alert('ID 중복 체크 오류');
+			}
+		});
+	});//end of click
+	
+	//별명 중복 체크
+	$('#confirm_nick').click(function(){
+		if($('#nick_name').val().trim()==''){
+			$('#message_nick').css('color','red')
+			                  .text('별명을 입력하세요');
+			$('#nick_name').val('').focus();
+			return;				  
+		}
+		
+		$('#message_nick').text(''); //메시지 초기화
+		
+		//서버와 통신
+		$.ajax({
+			url:'confirmIdnNickName',
+			type:'get',
+			data:{nick_name:$('#nick_name').val()},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'nickNotFound'){
+					checkNick = 1;
+					$('#message_nick').css('color','#000')
+					                  .text('등록 가능 별명');									 
+				}else if(param.result == 'nickDuplicated'){
+					checkNick = 0;
+					$('#message_nick').css('color','red')
+					                  .text('중복된 별명');
+					$('#nick_name').val('').focus();
+				}else if(param.result == 'notMatchPattern'){
+					checkNick = 0;
+					$('message_nick').css('color','red')
+					                 .text('한글,영문,숫자 2~10자만 가능');
+					$('#nick_name').val('').focus();				 
+				}else{
+					checkNick=0;
+					alert('별명 중복 체크 오류');
+				}
+			},
+			error:function(){
+				checkNick=0;
+				alert('네트워크 오류 발생');
+			}
+		});
+		
+	});//end of click
+	
+	//아이디,별명 중복 안내 메시지 초기화 및 아이디,별명 중복 값 초기화
+	$('#id,#nick_name').keydown(function(){
+		if($(this).attr('id') == 'id'){
+			checkId=0;
+			$('#message_id').text('');
+		}else if($(this).attr('id') == 'nick_name'){
+			checkNick=0;
+			$('#message_nick').text('');
+		}
+	});//end of keydown
+	
+	//submit 이벤트 발생시 아이디, 별명 중복 체크 여부 확인
+	$('#member_register2').click(function(){
+		//아이디 중복 체크 필수
+		if(checkId==0){
+			$('#message_id').css('color','red')
+			                .text('아이디 중복 체크 필수!');
+			if($('#id').val().trim()==''){
+				$('#id').val('').focus();
+			}				
+			return false;
+		}
+		//별명 중복 체크 선택
+		if(checkNick == 0){
+			$('#message_nick').css('color','red').html('<div style="width:200px;">별명 중복체크를 해주세용</div>');
+			if($('#nick_name').val().trim()==''){
+				$('#nick_name').val('').focus();
+			}
+			return false;
+		}
+	});	
+});
+
+
+
+
+
+
+
+
+
+
+
 </script>
 	<div class="register-wrap">
 		<div class="register-image"></div>
@@ -153,8 +295,9 @@ function verifyEmail() {
 						<form:input path="nick_name" class="Authentication" type="text"
 							placeholder="닉네임" />
 						<form:errors path="nick_name" cssClass="error-color" />
-						<input type="button" id="confirm_id" value="중복체크"
+						<input type="button" id="confirm_nick" value="중복체크"
 							class="default-btn">
+							<div id="message_nick" style="width:300px;"></div>
 						<form:input path="zipcode" id="zipcode" class="Authentication2"
 							type="text" placeholder="우편번호" />
 						<form:errors path="zipcode" cssClass="error-color" />
@@ -186,7 +329,7 @@ function verifyEmail() {
 
 						</tr>
 					</table>
-					<div class="register-submit" onclick="registerUser()">회원가입</div>
+					<div class="register-submit" id="member_register2" onclick="registerUser()">회원가입</div>
 				</form:form>
 				<div id="errorMessage" class="error"></div>
 			</div>
