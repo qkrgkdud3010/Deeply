@@ -80,7 +80,7 @@
 				<img>
 			</div>
 		</div>
-		<div class="artist-contents-more align-right vertical-center">->전체 영상</div>
+		<div class="artist-contents-more right-align vertical-center">->전체 영상</div>
 	</div>
 	<div class="artist-contents-container">
 		<div class="artist-contents-title bold-title">SHOP</div>
@@ -98,6 +98,6 @@
 				<img>
 			</div>
 		</div>
-		<div class="artist-contents-more align-right vertical-center">->전체 상품</div>
+		<div class="artist-contents-more right-align vertical-center">->전체 상품</div>
 	</div>
 </div>

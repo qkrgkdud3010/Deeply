@@ -20,6 +20,21 @@ li {
 	font-weight:bold;
 }
 
+.font-0_8{
+	font-size:0.8vw;
+}
+.font-1{
+	font-size:1vw;
+}
+.font-1_5{
+	font-size:1.5vw;
+}
+.font-2{
+	font-size:2vw;
+}
+.font-3{
+	font-size:3vw;
+}
 /* 구분선 ====================*/
 .hr-2{
 	height:0.1vw;
@@ -45,7 +60,7 @@ li {
 	justify-content:center;
 }
 
-.align-right{
+.right-align{
 	display:flex;
 	align-items:flex-end;
 	justify-content:flex-end;
@@ -78,6 +93,10 @@ li {
 	margin-left:10%;
 }
 
+.left-20{
+	margin-left:20%;
+}
+
 .top-1{
 	margin-top:1%;
 }
@@ -95,15 +114,22 @@ li {
 }
 
 /* 크기 설정 ====================*/
+.width-20{
+	width:20%;
+}
+.width-40{
+	width:40%;
+}
 .width-50{
 	width:50%;
+}
+.width-60{
+	width:60%;
 }
 .width-80{
 	width:80%;
 }
-.width-20{
-	width:20%;
-}
+
 
 .height-50{
 	height:50%;
@@ -491,5 +517,69 @@ li {
  	height:3vw;
  	font-weight:bold;
  	font-size:1vw;
+ 	cursor:pointer;
  }
+ 
+  /* 
+===============================
+		  예매 폼 작성 페이지
+===============================
+ */
+ 
+ .booking-info{
+ 	width:100%;
+ 	height:22vw;
+ 	position:relative;
+ }
+ 
+ .booking-info::before {
+    content: "";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0, 0, 0, 0.4); /* 어두운 오버레이 색상과 투명도 설정 */
+    z-index:2; /* 이미지 위에 오버레이가 오도록 설정 */
+}
+ 
+ .booking-info img{
+ 	object-fit: cover;
+	z-index:1;
+	width:100%;
+	height:100%;
+ }
+ 
+ .booking-div1, .booking-div2{
+ 	position:absolute;
+ 	width:80%;
+ 	z-index:2;
+ }
+ 
+ .booking-div1{
+ 	top:5%;
+ 	left:5%;
+ 	height:60%;
+ 	display:flex;
+ }
+ .booking-div2{
+ 	top:50%;
+ 	left:5%;
+ 	width:30%;
+ 	height:40%;
+ }
+ 
+ .booking-artist, .booking-place{
+ 	height:60%;
+ }
+ 
+  .booking-artist{
+  	width:20%;
+  }
+  
+  .booking-place{
+  	width:30%;
+  	margin-left:40%;
+  }
+ 
  

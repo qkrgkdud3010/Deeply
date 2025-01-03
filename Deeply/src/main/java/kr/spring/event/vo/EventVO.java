@@ -17,6 +17,7 @@ public class EventVO {
 	private String mem_date;
 	private String perf_date;
 	private String perf_time;
+	private String end_time;
 	private String perf_status;
 	private String perf_title;
 	private String perf_desc;

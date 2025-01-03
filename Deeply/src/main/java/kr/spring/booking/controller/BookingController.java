@@ -7,15 +7,22 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 import kr.spring.booking.service.BookingService;
+import kr.spring.booking.vo.BookingVO;
 import kr.spring.event.vo.EventVO;
+import kr.spring.member.vo.MemberVO;
+import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,6 +62,24 @@ public class BookingController {
 		return "bookingList";
 	}
 	
-	//공연 상세 정보
+	//예매 폼
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/book")
+	public String form(@ModelAttribute("bookingVO") BookingVO bookingVO, long perf_num, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
+		
+		EventVO event = bookingService.showEventDetail(perf_num);
+		MemberVO member = principal.getMemberVO();
+		
+		model.addAttribute("event", event);
+		model.addAttribute("member", member);
+		
+		return "bookingForm";
+	}
+	
+	@PostMapping("/book")
+	public String bookForm() {
+		
+		return "bookingForm";
+	}
 	
 }

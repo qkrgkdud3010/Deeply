@@ -57,3 +57,15 @@ CREATE TABLE performance_detail (
     CONSTRAINT fk_perf_detail_auser FOREIGN KEY (artist_num) REFERENCES auser (user_num)
 );
 create sequence perf_detail_seq;
+
+CREATE TABLE booking(
+	booking_num NUMBER NOT NULL PRIMARY KEY,
+	perf_num NUMBER NOT NULL,
+	user_num NUMBER NOT NULL,
+	booked_seat NUMBER NOT NULL,
+	total_price NUMBER NOT NULL,
+	booking_date VARCHAR2(100) NOT NULL,
+	seat_num1 NUMBER NOT NULL,
+	seat_num2 NUMBER
+);
+CREATE sequence booking_seq;

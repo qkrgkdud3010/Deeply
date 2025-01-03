@@ -26,6 +26,13 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/booking/bookingList.jsp"/>
     </definition>
+    <definition name="bookingForm" extends="main">
+    	<put-attribute name="title" value="이벤트 예약 작성"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/booking/bookingCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/booking/bookingForm.jsp"/>
+    </definition>
     <definition name="letterList" extends="main">
     	<put-attribute name="title" value="편지 목록"/>
     	<put-attribute name="css"

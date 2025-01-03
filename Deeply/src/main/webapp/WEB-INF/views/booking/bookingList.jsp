@@ -25,7 +25,7 @@
 					<c:forEach var="list" items="${list}">
 					<div class="booking-item" data-num="${list.perf_num}">
 						<img>
-						<div class="perf-status font-white bold-title align-right">
+						<div class="perf-status font-white bold-title right-align">
 							<c:if test="${not empty list and list.perf_status == 'over'}">
 								종료된 이벤트
 							</c:if>
@@ -82,8 +82,8 @@
 							</ul>
 						</div>
 					</div>
-					<div class="e-submit align-right vertical-center top-5">
-						<button class="white-btn">예매</button>
+					<div class="e-submit right-align vertical-center top-5">
+						<button id="booking_submit_btn" class="white-btn">예매</button>
 					</div>
 				</div>
 			</div>
