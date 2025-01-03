@@ -26,4 +26,9 @@
         <put-attribute name="body" 
                        value="/WEB-INF/views/video/video_detail.jsp" />
     </definition>
+    <definition name="newjeans" extends="main">
+        <put-attribute name="title" value="뉴진스 페이지" />
+        <put-attribute name="body" 
+                       value="/WEB-INF/views/video/newjeans.jsp" />
+    </definition>
 </tiles-definitions>
