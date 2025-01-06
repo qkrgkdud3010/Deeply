@@ -38,7 +38,7 @@ CREATE TABLE performance_hall(
 create sequence perf_hall_seq;
 
 CREATE TABLE performance_detail (
-    pref_num NUMBER NOT NULL PRIMARY KEY,
+    perf_num NUMBER NOT NULL PRIMARY KEY,
     hall_num NUMBER NOT NULL,
     booked_amount NUMBER NOT NULL,
     artist_num NUMBER NOT NULL,
@@ -69,3 +69,15 @@ CREATE TABLE booking(
 	seat_num2 NUMBER
 );
 CREATE sequence booking_seq;
+
+CREATE TABLE seat(
+	seat_num NUMBER NOT NULL PRIMARY KEY,
+	perf_num NUMBER NOT NULL,
+	hall_num NUMBER NOT NULL,
+	srow VARCHAR2(100) NOT NULL,
+	scolumn VARCHAR2(100) NOT NULL,
+	seat_type VARCHAR2(100) NOT NULL,
+	status VARCHAR2(100) NOT NULL,
+	CONSTRAINT fk_seat_perf FOREIGN KEY (perf_num) REFERENCES performance_detail (perf_num),
+    CONSTRAINT fk_seat_hall FOREIGN KEY (hall_num) REFERENCES performance_hall (hall_num)
+);

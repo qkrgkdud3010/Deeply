@@ -35,10 +35,13 @@
 <div class="booking-main">
 	<form:form modelAttribute="bookingVO" action="book"
 		id="booking_process" enctype="multipart/form-data">
+		<form:hidden path="perf_num" value="${event.perf_num}"></form:hidden>
+		<form:hidden path="user_num" value="${member.user_num}"></form:hidden>
 		<div>
 			<p>
 				<form:label path="booked_seat">예약 인원</form:label>
 				<form:input path="booked_seat" type="number" />
+				<form:errors path="booked_seat" cssClass="error-color"/>
 			</p>
 			<hr>
 			<!-- 예매자 정보 -->
@@ -47,11 +50,13 @@
 					<p>예매자 1</p>
 					<p>
 						<form:label path="name">이름</form:label>
-						<form:input path="name"/>${member.name}
+						<form:input path="name"/>
+						<form:errors path="name" cssClass="error-color"/>
 					</p>
 					<p>
 						<form:label path="phone">전화번호</form:label>
 						<form:input path="phone" />
+						<form:errors path="phone" cssClass="error-color"/>
 					</p>
 				</div>
 				<div class="p_info">
@@ -59,10 +64,12 @@
 					<p>
 						<form:label path="name2">이름</form:label>
 						<form:input path="name2" />
+						<form:errors path="name2" cssClass="error-color"/>
 					</p>
 					<p>
 						<form:label path="phone2">전화번호</form:label>
 						<form:input path="phone2" />
+						<form:errors path="phone2" cssClass="error-color"/>
 					</p>
 				</div>
 			</div>
@@ -70,8 +77,10 @@
 			<div>
 				<h2>배송지 정보</h2>
 				<p>
-					<form:label path="name">이름</form:label>
-					<form:input path="name" />
+					<form:label path="deliver_name">이름</form:label>
+					<form:input path="deliver_name" />
+					<form:errors path="deliver_name" cssClass="error-color"/>
+					
 				</p>
 				<p>
 					<form:input path="zipcode" id="zipcode" class="Authentication2"
@@ -90,7 +99,7 @@
 					<form:errors path="address2" cssClass="error-color" />
 				</p>
 				<p>
-					<form:label path="phone">요청사항</form:label>
+					<form:label path="request">요청사항</form:label>
 				</p>
 				<p>
 					<form:input path="more_info" />
@@ -100,7 +109,16 @@
 			<div>
 				<h2>좌석 정보</h2>
 				<h5>${event.hall_name}</h5>
-				<div></div>
+				<div>
+					<div class="seat-div">
+						<c:forEach var="seats" items="${seats}">
+							<div>${seat_count}</div>
+							<div class="seat-item">${seats.seat_num}</div>
+						</c:forEach>
+					</div>
+					<form:input path="seat_num1"/>
+					<form:input path="seat_num2"/>
+				</div>
 			</div>
 
 			<!-- 선택 좌석 -->

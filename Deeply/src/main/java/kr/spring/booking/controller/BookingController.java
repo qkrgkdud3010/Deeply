@@ -1,28 +1,33 @@
 package kr.spring.booking.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.booking.service.BookingService;
 import kr.spring.booking.vo.BookingVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+import kr.spring.seat.vo.SeatVO;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,24 +67,41 @@ public class BookingController {
 		return "bookingList";
 	}
 	
-	//예매 폼
+	//예매 폼 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/book")
 	public String form(@ModelAttribute("bookingVO") BookingVO bookingVO, long perf_num, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
-		
-		EventVO event = bookingService.showEventDetail(perf_num);
-		MemberVO member = principal.getMemberVO();
-		
-		model.addAttribute("event", event);
-		model.addAttribute("member", member);
-		
-		return "bookingForm";
+	    log.debug("<<예매 작성폼>>");
+	   
+	    model.addAttribute("perf_num", perf_num);
+	    EventVO event = bookingService.showEventDetail(perf_num);
+	    int seat_count = bookingService.countSeatByHallNum(event.getHall_num());
+	    List<SeatVO> seats = bookingService.selectSeatByHallNum(event.getHall_num());
+	    log.debug("수: " + seats);
+	    MemberVO member = principal.getMemberVO();
+	    model.addAttribute("event", event);
+	    model.addAttribute("member", member);
+	    model.addAttribute("seat_count", seat_count);
+	    model.addAttribute("seats",seats);
+	    
+	    return "bookingForm";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/book")
-	public String bookForm() {
-		
-		return "bookingForm";
+	public String bookForm(@Valid @ModelAttribute("bookingVO") BookingVO bookingVO,BindingResult result,Model model, RedirectAttributes redirectAttributes) {
+	    log.debug("<<예매 작성폼2>>");
+	    
+	    if (result.hasErrors()) {
+	        log.debug("<<유효성 검증 실패>> : " + result.getAllErrors());
+	        redirectAttributes.addFlashAttribute("bookingVO", bookingVO); // 기존 입력 데이터 유지
+	        redirectAttributes.addAttribute("perf_num", bookingVO.getPerf_num());
+	        return "redirect:/booking/book"; // 폼 JSP로 다시 이동
+	    }
+
+	    bookingService.registerBookingInfo(bookingVO);
+
+	    return "redirect:/main/main"; // 성공 시 리다이렉트
 	}
 	
 }
