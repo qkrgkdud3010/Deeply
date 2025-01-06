@@ -6,7 +6,7 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 	let result = '${result}';
 	if (result == 'success') {
@@ -29,15 +29,18 @@
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<c:forEach var="item" items="${list}">
-				<div class="item-card">
+			<c:forEach var="item" items="${list}" varStatus="status">
+				<div class="item-card box-shadow">
 					<img
-						src="${pageContext.request.contextPath}/assets/upload/${list.filename}"
+						src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"
 						class="item-img">
 					<hr class="custom-hr" noshade="noshade" width="100%">
-					<span class="item-name">"${list.item_name}</span> <span
-						class="item-name">"${list.item_price}</span>
+					<span class="item-name list-text" style="font-size:18px;">${item.item_name}</span><br>
+					<span class="item-name list-price" style="font-size:18px; color:#0369A1;">${item.item_price}원</span>
 				</div>
+				<c:if test="${(status.index + 1) % 4 == 0}">
+					<hr class="custom-hr" noshade="noshade" width="100%">
+				</c:if>
 			</c:forEach>
 
 			<!-- 페이징 -->

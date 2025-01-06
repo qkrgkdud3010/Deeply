@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
     let result = '${result}';
     if (result == 'success') {
@@ -10,33 +10,40 @@
 </script>
 
 <div class="write-main main-container">
-<div class="artist-name">반갑습니다. "아이유"님</div>
+	
+	
 	<div class="item-container content-container">
+	<div class="artist-name">반갑습니다. "아이유"님</div>
     <div class="button page-action">
         <!-- 수정: modelAttribute="itemVO" 추가 -->
         <form:form modelAttribute="itemVO" method="post" action="write" enctype="multipart/form-data">
+            <div class="button form-actions">
+		<!-- 수정: type="submit"으로 변경 -->
+		<input type="submit" value="등록" /> <input type="button" value="취소"
+			onclick="location.href='/item/list'" />
+	</div>
             <ul>
                 <li>
                     <form:label path="upload">파일 업로드</form:label>
                     <!-- 수정: path 속성 추가 -->
-                    <form:input path="upload" type="file" />
+                    <input type="file" name="upload" id="file" />
                 </li>
                 <li>
                     <form:label path="item_name">상품명</form:label>
                     <!-- 수정: path="item_name" 추가 -->
-                    <form:input path="item_name" placeholder="상품명을 입력하세요." />
+                    <form:input type="text" maxlength="20" path="item_name" placeholder="상품명을 입력하세요." />
                     <form:errors path="item_name" cssClass="error-color" />
                 </li>
                 <li>
                     <form:label path="item_price">가격</form:label>
                     <!-- 수정: path="item_price" 추가 -->
-                    <form:input path="item_price" placeholder="가격을 입력하세요." />
+                    <form:input type="number" min="1" max="9999999" path="item_price" placeholder="가격을 입력하세요." />
                     <form:errors path="item_price" cssClass="error-color" />
                 </li>
                 <li>
                     <form:label path="item_stock">판매 수량</form:label>
                     <!-- 수정: path="item_stock" 추가 -->
-                    <form:input path="item_stock" placeholder="판매 수량을 입력하세요." />
+                    <form:input type="number" min="1" max="9999999" path="item_stock" placeholder="판매 수량을 입력하세요." />
                     <form:errors path="item_stock" cssClass="error-color" />
                 </li>
                 <li>
@@ -46,11 +53,6 @@
                     <form:errors path="item_description" cssClass="error-color" />
                 </li>
             </ul>
-            <div class="form-actions">
-                <!-- 수정: type="submit"으로 변경 -->
-                <input type="submit" value="등록" />
-                <input type="button" value="취소" onclick="location.href='/item/list'" />
-            </div>
         </form:form>
     </div>
 

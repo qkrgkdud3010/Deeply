@@ -15,6 +15,27 @@
   height: auto;
 }
 
+.item-card {
+    width: 13vw; /* 화면 너비의 13% */
+    height: 35vh; /* 화면 높이의 35% */
+    padding: 1vw; /* 화면 너비의 1% */
+    background-color: #fff;
+    border-radius: 1vw; /* 화면 너비의 1% */
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); /* 뷰포트 비율 기반 */
+}
+
+
+.custom-hr{
+	border: none;
+    height: 1px;
+    background: rgb(216, 216, 216); 
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
+	
+}
+
+
 /* 교환/반품 규정  */
 .policy-title {
     font-weight: bold; /* 진하게 */

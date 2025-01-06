@@ -48,8 +48,7 @@ public class ItemController {
 	// 등록 폼
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/write")
-	public String form(Model model) {
-	    model.addAttribute("itemVO", new ItemVO()); // Command Object 전달
+	public String form() {
 	    return "itemWrite"; // Tiles View 이름 반환
 	}
 
@@ -67,7 +66,11 @@ public class ItemController {
 
 	    // 유효성 체크 결과 오류가 있으면 폼 호출
 	    if (result.hasErrors()) {
-	        return "itemWrite";
+	    	result.getFieldErrors().forEach(error -> {
+	            log.error("Field: " + error.getField() + ", Message: " + error.getDefaultMessage());
+	        });
+	    	log.debug("<<FORM 리다이렉트>>");
+	        return form();
 	    }
 
 	    // 회원 번호 읽기
@@ -79,9 +82,9 @@ public class ItemController {
 
 	    // 상품 등록하기
 	    itemService.insertItem(itemVO);
-
+	    
 	    redirect.addFlashAttribute("result", "success");
-
+	    log.debug("성공");
 	    return "redirect:/item/list";
 	}
 

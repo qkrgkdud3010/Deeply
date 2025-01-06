@@ -20,6 +20,8 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/item/itemWrite.jsp"/>
     </definition>
+    
+    
 </tiles-definitions>
 
 
