@@ -97,12 +97,18 @@ public class SecurityConfig{
 										response.sendRedirect("/main/main");
 									}else if(request.getHeader("x-csrf-token")!=null) {
 										response.sendRedirect("/common/accessLogout");
+									}else if(request.getContentType()!= null){
+										request.getContentType().startsWith("multipart/form-data");	
+										
+										try {
+											request.getParts();
+											response.sendRedirect("/member/login");
+										}catch(Exception e) {
+											log.error("<<최대 업로드 사이즈 초과>>");
+											response.sendRedirect("/common/fileSizeExceeded");
+										}
 									}else {
-										final FlashMap flashMap = new FlashMap();
-								        flashMap.put("accessMsg", "CSRF Token이 지정되지 않았습니다.");
-								        final FlashMapManager flashMapManager = new SessionFlashMapManager();
-								        flashMapManager.saveOutputFlashMap(flashMap, request, response);
-										response.sendRedirect("/common/accessDenied");
+										response.sendRedirect("/member/login");
 									}
 								}else if(accessDeniedException instanceof AccessDeniedException) {
 									response.sendRedirect("/common/accessDenied");
