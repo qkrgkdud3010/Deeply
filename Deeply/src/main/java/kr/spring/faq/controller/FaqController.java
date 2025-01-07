@@ -16,6 +16,8 @@ import kr.spring.video.vo.VideoVO;
 
 @Controller
 public class FaqController {
-
-    
+	@GetMapping("/faq")
+	public String showFAQPage() {
+		return "faq"; // Tiles 또는 View Resolver에 따라 경로를 설정
+	}
 }

@@ -1,160 +1,173 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/globals.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styleguide.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css" />
-    <title>자주 묻는 질문 (FAQ)</title>
-    <style>
-      /* FAQ 답변 숨김 기본 스타일 */
-      .answer {
-        padding: 10px 20px;
-        background-color: #f9f9f9;
-        border-top: 1px solid #ccc;
-      }
+<head>
+<meta charset="utf-8" />
+<title>자주 묻는 질문 (FAQ)</title>
+<style>
+/* FAQ 컨테이너 스타일 */
+.faq-container {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
-      .hidden {
-        display: none;
-      }
+/* FAQ 헤더 */
+.faq-header {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  width: 100%; /* faq-item과 동일한 너비 */
+  max-width: 1025px; /* faq-item과 동일한 최대 너비 */
+  font-weight: 700;
+  padding: 20px 40px;
+  margin-top: 20px;
+}
 
-      .q {
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="screen">
-      <div class="div">
-        <!-- 네비게이션 바 -->
-        <div class="navbar">
-          <img class="image" src="${pageContext.request.contextPath}/assets/img/image-30.png" alt="Logo" />
-          <div class="text-wrapper"><%= session.getAttribute("nickname") != null ? session.getAttribute("nickname") + "님" : "회원" %></div>
-          <div class="text-wrapper-2">아티스트</div>
-          <div class="text-wrapper-3">SHOP</div>
-          <div class="text-wrapper-4">로그아웃</div>
-          <img class="face" src="${pageContext.request.contextPath}/assets/img/face-1.png" alt="User Face" />
-          <div class="text-wrapper-5">커뮤니티</div>
-        </div>
-        
-        <!-- FAQ 섹션 -->
-        <div class="overlap">
-          <div class="FAQ">
-            <div class="text-wrapper-23">자주 묻는 질문</div>
-            <div class="questions">
-              <!-- 질문 1 -->
-              <div class="q">
-                <div class="overlap-group">
-                  <div class="rectangle"></div>
-                  <div class="text">
-                    <div class="div-wrapper">
-                      <div class="text-wrapper-24">멤버십 구독 혜택은 무엇인가요?</div>
-                    </div>
-                    <img class="vector toggle-icon" src="${pageContext.request.contextPath}/assets/img/vector-2.svg" alt="Toggle Icon" />
-                  </div>
-                </div>
-                <div class="answer hidden">
-                  <p>멤버십 구독을 통해 다양한 혜택을 누리실 수 있습니다. 예를 들어, 독점 콘텐츠 접근, 할인 혜택, 우선 구매권 등이 포함됩니다.</p>
-                </div>
-              </div>
-              
-              <!-- 질문 2 -->
-              <div class="q">
-                <div class="overlap-group">
-                  <div class="rectangle"></div>
-                  <div class="text">
-                    <div class="div-wrapper">
-                      <div class="text-wrapper-24">아티스트와의 소통은 어떻게 이루어지나요?</div>
-                    </div>
-                    <img class="vector toggle-icon" src="${pageContext.request.contextPath}/assets/img/vector-2.svg" alt="Toggle Icon" />
-                  </div>
-                </div>
-                <div class="answer hidden">
-                  <p>아티스트와의 소통은 플랫폼 내 메시징 시스템을 통해 이루어집니다. 또한, 정기적인 라이브 Q&A 세션도 제공됩니다.</p>
-                </div>
-              </div>
-              
-              <!-- 질문 3 -->
-              <div class="q">
-                <div class="overlap-group">
-                  <div class="rectangle"></div>
-                  <div class="text">
-                    <div class="div-wrapper">
-                      <div class="text-wrapper-24">배송은 며칠 정도 소요되나요?</div>
-                    </div>
-                    <img class="vector toggle-icon" src="${pageContext.request.contextPath}/assets/img/vector-2.svg" alt="Toggle Icon" />
-                  </div>
-                </div>
-                <div class="answer hidden">
-                  <p>배송은 보통 주문 후 3-5일 내에 완료됩니다. 지역에 따라 약간의 차이가 있을 수 있습니다.</p>
-                </div>
-              </div>
-              
-              <!-- 질문 4 -->
-              <div class="q">
-                <div class="overlap-group">
-                  <div class="rectangle"></div>
-                  <div class="text">
-                    <div class="div-wrapper">
-                      <div class="text-wrapper-24">예매 후 티켓 확인은 어떻게 하나요?</div>
-                    </div>
-                    <img class="vector toggle-icon" src="${pageContext.request.contextPath}/assets/img/vector-2.svg" alt="Toggle Icon" />
-                  </div>
-                </div>
-                <div class="answer hidden">
-                  <p>예매 후, 등록하신 이메일로 티켓 확인 링크가 전송됩니다. 또한, 마이페이지에서도 티켓 상태를 확인하실 수 있습니다.</p>
-                </div>
-              </div>
-              
-              <!-- 질문 5 -->
-              <div class="q">
-                <div class="overlap-group">
-                  <div class="rectangle"></div>
-                  <div class="text">
-                    <div class="div-wrapper">
-                      <div class="text-wrapper-24">응모 후 당첨 확인은 어디서 하나요?</div>
-                    </div>
-                    <img class="vector toggle-icon" src="${pageContext.request.contextPath}/assets/img/vector-2.svg" alt="Toggle Icon" />
-                  </div>
-                </div>
-                <div class="answer hidden">
-                  <p>응모 후, 당첨 여부는 등록하신 이메일과 마이페이지에서 확인하실 수 있습니다. 또한, 당첨 시 개별 연락을 드립니다.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- 1대1 문의하기 버튼 -->
-          <div class="heading">1대1 문의하러가기</div>
-        </div>
-        
-        <!-- (필요 시) 게시글 작성 필드 -->
-        <div class="create-post-field">
-          <div class="title">제목</div>
-          <div class="text-wrapper-28">0/300</div>
-        </div>
-      </div>
+/* 제목 */
+.faq-title {
+  color: #000;
+  text-align: center;
+  font: 64px/1 Red Hat Display, sans-serif;
+}
+
+/* 1대1 문의 링크 */
+.contact-link {
+  margin-left: auto; /* 오른쪽 끝으로 이동 */
+  color: #b0adad;
+  font: 16px Manrope, sans-serif;
+}
+
+/* FAQ 항목 */
+.faq-item {
+  border-radius: 8px;
+  background-color: #090909;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1025px;
+  color: #fff;
+  padding: 20px;
+  font: 600 24px/1 Inter, sans-serif;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+/* 아이콘 */
+.faq-icon {
+  width: 25px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* 질문 */
+.faq-question {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 답변 */
+.faq-answer {
+  display: none; /* 기본적으로 숨김 */
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.faq-answer.visible {
+  display: block;
+}
+</style>
+</head>
+<body>
+<div class="faq-container">
+  <!-- FAQ 헤더 -->
+  <div class="faq-header">
+    <h1 class="faq-title">자주 묻는 질문</h1>
+    <a href="#contact" class="contact-link">1대1 문의하러가기</a>
+  </div>
+
+  <!-- FAQ 항목 1 -->
+  <div class="faq-item">
+    <div class="faq-question">
+      <img
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
+        alt="아이콘"
+        class="faq-icon"
+      />
+      <h2>멤버십 구독 혜택은 무엇인가요?</h2>
     </div>
-    
-    <!-- FAQ 토글 스크립트 -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const toggleIcons = document.querySelectorAll('.toggle-icon');
-        
-        toggleIcons.forEach(icon => {
-          icon.addEventListener('click', function() {
-            const answer = this.closest('.q').querySelector('.answer');
-            if (answer.classList.contains('hidden')) {
-              answer.classList.remove('hidden');
-              this.src = '${pageContext.request.contextPath}/assets/img/vector-up.svg'; // 위로 향하는 화살표 이미지로 변경
-            } else {
-              answer.classList.add('hidden');
-              this.src = '${pageContext.request.contextPath}/assets/img/vector-2.svg'; // 아래로 향하는 화살표 이미지로 변경
-            }
-          });
-        });
+    <div class="faq-answer">
+      <p>멤버십 구독 시 독점 콘텐츠, 할인 혜택, 이벤트 우선권 등을 누릴 수 있습니다.</p>
+    </div>
+  </div>
+
+  <!-- FAQ 항목 2 -->
+  <div class="faq-item">
+    <div class="faq-question">
+      <img
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
+        alt="아이콘"
+        class="faq-icon"
+      />
+      <h2>아티스트와의 소통은 어떻게 이루어지나요?</h2>
+    </div>
+    <div class="faq-answer">
+      <p>플랫폼 내 메시징 시스템과 정기적인 라이브 Q&A 세션을 통해 소통할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <!-- FAQ 항목 3 -->
+  <div class="faq-item">
+    <div class="faq-question">
+      <img
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
+        alt="아이콘"
+        class="faq-icon"
+      />
+      <h2>배송은 며칠 정도 소요되나요?</h2>
+    </div>
+    <div class="faq-answer">
+      <p>주문 후 3~5일 내에 배송됩니다. 지역에 따라 다소 차이가 있을 수 있습니다.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const faqItems = document.querySelectorAll(".faq-item");
+
+  faqItems.forEach((item) => {
+    const question = item.querySelector(".faq-question");
+    const answer = item.querySelector(".faq-answer");
+    const icon = item.querySelector(".faq-icon");
+
+    question.addEventListener("click", () => {
+      const isVisible = answer.classList.contains("visible");
+
+      // 모든 FAQ 초기화
+      document.querySelectorAll(".faq-answer").forEach((ans) => ans.classList.remove("visible"));
+      document.querySelectorAll(".faq-icon").forEach((ic) => {
+        ic.src =
+          "https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c";
       });
-    </script>
-  </body>
+
+      if (!isVisible) {
+        answer.classList.add("visible");
+        icon.src =
+          "https://cdn.builder.io/api/v1/image/assets/TEMP/7b42bb8c3c2581d45372b7ca3d972196219c939457af4b9bd4e6a739575a970f";
+      }
+    });
+  });
+});
+</script>
+</body>
 </html>

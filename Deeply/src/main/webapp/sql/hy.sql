@@ -17,3 +17,17 @@ START WITH 1 -- 초기값
 INCREMENT BY 1 -- 증가값
 NOCACHE -- 메모리 캐시 사용 안 함 (옵션)
 NOCYCLE; -- 최대값 이후 다시 1로 돌아가지 않음
+
+CREATE TABLE VIDEO_CATEGORY (
+    CATEGORY_ID NUMBER PRIMARY KEY, -- 각 카테고리를 구별하는 고유 ID
+    VIDEO_ID NUMBER NULL, -- 각 영상을 구별하는 고유 ID
+    ARTIST_ID NUMBER NOT NULL, -- 유저 고유번호
+    CATEGORY_NAME VARCHAR2(100) NOT NULL, -- 카테고리 이름 (아티스트별로 고유)
+    CATEGORY_DESCRIPTION VARCHAR2(255) NULL -- 카테고리의 간단한 설명
+);
+
+
+CREATE SEQUENCE VIDEO_CATEGORY_SEQ
+START WITH 1 -- 시작 값
+INCREMENT BY 1 -- 증가 값
+NOCACHE; -- 캐싱하지 않음
