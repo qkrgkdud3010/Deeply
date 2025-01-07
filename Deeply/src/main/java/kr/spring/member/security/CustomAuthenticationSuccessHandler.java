@@ -15,6 +15,7 @@ import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.support.SessionFlashMapManager;
 
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,13 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     		HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		log.debug("[Spring Security Login Check 2] CustomAuthnticationSuccessHandler 실행");
         MemberVO user = ((PrincipalDetails)authentication.getPrincipal()).getMemberVO();
+        ArtistVO artist = ((PrincipalDetails)authentication.getPrincipal()).getArtistVO();
         log.debug("[Spring Security Login Check 2] 로그인 성공 : " + user);
+        log.debug("[Spring Security Login Check 2] 로그인 성공 : " + artist);
        
-		if(user.getAuth() == 9) {//관리자					
+		if(user!=null && user.getAuth() == 9) {//관리자					
 			setDefaultTargetUrl("/main/admin");
-		}else if(user.getAuth() == 1) {//정지회원	
+		}else if(user!=null && user.getAuth() == 1) {//정지회원	
 			log.debug("[Spring Security Login Check 2] 정지회원 : " + user.getId());
 			//정지회원일 경우 로그아웃 처리
 			new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());

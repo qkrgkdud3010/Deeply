@@ -21,7 +21,7 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String init(@AuthenticationPrincipal PrincipalDetails principal) {
-		if(principal!=null && principal.getMemberVO().getAuth()==9) {
+		if(principal!=null && principal.getMemberVO()!=null && principal.getMemberVO().getAuth()==9) {
 			return "redirect:/main/admin";
 		}
 		return "redirect:/main/main";
