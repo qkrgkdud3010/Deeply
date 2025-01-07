@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<script
-	src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/booking.js"></script>
 
 
 <div class="booking-artist-container font-white bold-title background-black align-center">${event.artist_num}</div>
@@ -59,7 +59,7 @@
 						<form:errors path="phone" cssClass="error-color"/>
 					</p>
 				</div>
-				<div class="p_info">
+				<div class="p_info" id="book2">
 					<p>예매자 2</p>
 					<p>
 						<form:label path="name2">이름</form:label>
@@ -100,6 +100,7 @@
 				</p>
 				<p>
 					<form:label path="request">요청사항</form:label>
+					<form:input path="request"/>
 				</p>
 				<p>
 					<form:input path="more_info" />
@@ -111,31 +112,33 @@
 				<h5>${event.hall_name}</h5>
 				<div>
 					<div class="seat-div">
-						<c:forEach var="seats" items="${seats}">
-							<div>${seat_count}</div>
-							<div class="seat-item">${seats.seat_num}</div>
+						<div class="stage-div"></div>
+						<c:forEach var="seats" items="${seats}" varStatus="status">
+							<div class="seat-item" data-side="${status.index % 2 == 0 ? 'left' : 'right'}" data-price="${seats.price}">${seats.seat_num}</div>
 						</c:forEach>
 					</div>
-					<form:input path="seat_num1"/>
-					<form:input path="seat_num2"/>
+					<form:input id="seat_n1" path="seat_num1"/>
+					<form:input id="seat_n2" path="seat_num2"/>
+					
 				</div>
 			</div>
 
 			<!-- 선택 좌석 -->
 			<div>
 				<h2>선택 좌석</h2>
-				<table width="100%" border="1">
+				<table class="receipt" width="100%" border="1">
+					<thead>
 					<tr>
 						<td>좌석 번호</td>
 						<td>좌석 금액</td>
 						<td>총액</td>
 					</tr>
-					<tr>
-						<td>번호</td>
-						<td>금액</td>
-						<td>총액</td>
-					</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
 				</table>
+				<form:hidden id="seat_price" path="total_price"/>
 			</div>
 		</div>
 		<div class="align-center">
