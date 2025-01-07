@@ -52,17 +52,17 @@
         SELECT * FROM duser_detail
         WHERE email = #{email}
     </select>
-	<select id="selectIdAndNickName" parameterType="map"
-  	                                 resultType="memberVO">
-  		SELECT
-  		   *
-  		FROM duser 
-  		WHERE
-  		<if test="id != null and id != ''">
-  			id = #{id}
-  		</if>
-  		<if test="nick_name != null and nick_name != ''">
-  			nick_name = #{nick_name}
-  		</if>    
-  	</select>
+<select id="selectIdAndNickName" parameterType="map" resultType="memberVO">
+    SELECT *
+    FROM duser
+    WHERE 1=1
+    <if test="id != null and id != ''">
+        AND id = #{id}
+    </if>
+    <if test="nick_name != null and nick_name != ''">
+        AND nick_name = #{nick_name}
+    </if>
+</select>
+
+
 </mapper>

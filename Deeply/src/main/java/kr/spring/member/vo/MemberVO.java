@@ -27,7 +27,9 @@ public class MemberVO {
 	    @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
 	    @Pattern(regexp = "^[A-Za-z0-9!@#$%^&*()_+]{8,20}$", message = "비밀번호는 8~20자의 영문자, 숫자, 특수문자로 구성되어야 합니다.")
 	    private String passwd_hash; // PASSWD_HASH
-
+	    @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
+	    @Pattern(regexp = "^[A-Za-z0-9!@#$%^&*()_+]{8,20}$", message = "비밀번호는 8~20자의 영문자, 숫자, 특수문자로 구성되어야 합니다.")
+	    private String confirmPassword;
 	    @Pattern(regexp ="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", message="올바른 이메일 형식이 아닙니다")
 	    private String email; // EMAIL
 

@@ -116,7 +116,10 @@ public class MemberController {
 				response.put("error", "아이디는 4~12자의 영문자와 숫자로 구성되어야 합니다.");
 			} else if (result.hasFieldErrors("passwd_hash")) {
 				response.put("error", "비밀번호는 8~20자의 영문자, 숫자, 특수문자로 구성되어야 합니다.");
-
+			}else if(!memberVO.getPasswd_hash().equals(memberVO.getConfirmPassword())) {
+				response.put("error", "비밀번호 2개가 일치 안합니다");
+		
+	       
 			}else if (result.hasFieldErrors("nick_name")) {
 				response.put("error", "닉네임을 제대로 입력해야 합니다.");
 			} else if (result.hasFieldErrors("zipcode")) {

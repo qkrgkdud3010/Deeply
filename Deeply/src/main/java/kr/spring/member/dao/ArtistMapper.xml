@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.member.dao.ArtistMapper">
+
+<insert id="insertMember_detail" parameterType="kr.spring.member.vo.ArtistVO">
+      INSERT INTO auser_detail(
+            user_num,
+            name,
+            passwd_hash,
+            email,
+            group_name
+        )
+        VALUES (
+            #{user_num},
+            #{name},
+            #{passwd_hash},
+            #{email},
+            #{group_name}
+        )
+    </insert>
+      	<select id="selectCheckMember" parameterType="string"
+  	                               resultType="ArtistVO">
+  		SELECT 
+  		  user_num,
+  		 id,
+  		  name,
+  		 group_name,
+  		  passwd_hash
+
+  		FROM auser JOIN auser_detail
+  		USING (user_num)
+  		WHERE id= #{id}                       
+  	</select>
+  	
+  		<select id="selectIdAndNickName" parameterType="map" resultType="artistVO">
+    SELECT
+        auser.*, 
+        auser_detail.group_name
+    FROM 
+        auser
+    LEFT JOIN 
+        auser_detail ON auser.user_num = auser_detail.user_num
+    WHERE 
+        1=1
+        <if test="id != null and id != ''">
+            AND auser.id = #{id}
+        </if>
+        <if test="group_name != null and group_name != ''">
+            AND auser_detail.group_name = #{group_name}
+        </if>
+</select>
+   
+</mapper>

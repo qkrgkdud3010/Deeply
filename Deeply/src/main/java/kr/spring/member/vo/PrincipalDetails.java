@@ -15,49 +15,76 @@ import lombok.Data;
  */
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
-	private MemberVO memberVO; 
-	private Map<String, Object> attributes;
 
+	private Map<String, Object> attributes;
+	MemberVO memberVO;
+	ArtistVO artistVO;
+	public PrincipalDetails(ArtistVO artistVO) {
+		this.artistVO=artistVO;
+	}
 	public PrincipalDetails(MemberVO memberVO) {
 		this.memberVO=memberVO;
 	}
-
 	public PrincipalDetails(MemberVO memberVO, Map<String, Object> attributes) {
 		this.memberVO=memberVO;
 		this.attributes=attributes;
 	}
 	
+	public PrincipalDetails(ArtistVO artistVO, Map<String, Object> attributes) {
+		this.artistVO=artistVO;
+		this.attributes=attributes;
+	}
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}
-
+	public ArtistVO getArtistVO() {
+		return artistVO;
+	}
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
 
-	@Override 
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> collect = new ArrayList<>();
-		collect.add(new GrantedAuthority() {
-			@Override
-			public String getAuthority() {
-				if(memberVO.getAuth()==9) {
-					return UserRole.ADMIN.getValue();
-				}else {
-					return UserRole.USER.getValue();
-				}
-			}
-		});
-		return collect;
+	    Collection<GrantedAuthority> collect = new ArrayList<>();
+
+	    // 일반 사용자 (memberVO) 권한 처리
+	    if (memberVO != null) {
+	        collect.add(new GrantedAuthority() {
+	            @Override
+	            public String getAuthority() {
+	                if (memberVO.getAuth() == 9) {
+	                    return UserRole.ADMIN.getValue(); // 관리자 권한
+	                } else {
+	                    return UserRole.USER.getValue(); // 일반 사용자 권한
+	                }
+	            }
+	        });
+	    }
+
+	    // 아티스트 (artistVO) 권한 처리
+	    if (artistVO != null) {
+	        collect.add(new GrantedAuthority() {
+	            @Override
+	            public String getAuthority() {
+	                return UserRole.ARTIST.getValue(); // 아티스트 권한
+	            }
+	        });
+	    }
+
+	    return collect;
 	}
+
 	@Override // password
 	public String getPassword() {
-		return memberVO.getPasswd_hash();
+		if(memberVO!=null) return memberVO.getPasswd_hash();
+		else return artistVO.getPasswd_hash();
 	}
 
 	@Override // name
 	public String getUsername() {
-		return memberVO.getId();
+		if(memberVO!=null) return memberVO.getId();
+		else return artistVO.getId();
 	}
 
 	@Override

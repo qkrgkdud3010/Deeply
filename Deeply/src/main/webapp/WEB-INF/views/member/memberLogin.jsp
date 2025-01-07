@@ -10,7 +10,7 @@
 	<div class="login">
 		<img class="logo"
 			src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png">
-		<form action="login" method="post" id="member_login">
+		<form action="/member/login" method="post" id="member_login">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<c:if test="${!empty error && error == 'error'}">
 			<div class="align-center error-invalid error-color">아이디 또는 비밀번호 불일치</div>
@@ -42,6 +42,6 @@
 			<input type="submit" value="로그인">
 		</form>
 	</div>
-
+	<a href="/artistMember/login">아티스트 로그인</a>
 
 </div>
