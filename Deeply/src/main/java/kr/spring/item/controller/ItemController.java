@@ -147,27 +147,95 @@ public class ItemController {
 	/*==============================
 	 * 	상품 상세
 	 * =============================*/
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
-	public String process(long item_num,Model model){
+	public String process(long item_num,
+							Model model,
+							@AuthenticationPrincipal 
+							PrincipalDetails principal){
+		
+		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<상품 상세 - item_num>> : " + item_num);
+		
+		MemberVO member = principal.getMemberVO();
 		
 		ItemVO item = itemService.selectitem(item_num);
 		
 		model.addAttribute("item",item);	
+		model.addAttribute("member", member);
 		return "itemView";
 	}
 
 	
 	
 	
-	
-	
-	
-	
-	
 	/*==============================
 	 * 	상품 글 수정
 	 * =============================*/
+	//수정폼
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/update")
+	public String formUpdate(@RequestParam("item_num") long item_num,
+							Model model,
+							@AuthenticationPrincipal 
+							PrincipalDetails principal) {
+		ItemVO itemVO = itemService.selectitem(item_num);
+		log.debug("<<등록된 상품 정보>> : " +itemVO);
+		
+		//DB에 저장된 파일 정보 구하기
+		if(principal.getMemberVO().getUser_num() != itemVO.getUser_num()) {
+			return "redirect:.common/accessDenied";
+		}
+		
+		model.addAttribute("itemVO",itemVO);
+		log.debug("<<22등록된 상품 정보>> : " +itemVO);
+		return "itemModify";
+	}
+	//수정폼에서 전송된 데이터 처리
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/update")
+	public String submitUpdate(@Valid ItemVO itemVO,
+								BindingResult result,
+								HttpServletRequest request,
+								Model model,
+								@AuthenticationPrincipal 
+								PrincipalDetails principal)
+										throws IllegalStateException, IOException{
+		log.debug("<<상품 등록 수정>> : " + itemVO);
+		
+		//DB에 저장된 파일 정보 구하기
+		ItemVO db_item = itemService.selectitem(itemVO.getItem_num());
+		
+		//전송된 데이터 유효성 체크 결과 오류가 있으면 폼 호출 -> 코드 이유 노션에 적기
+		if(result.hasErrors()) {
+			itemVO.setFilename(db_item.getFilename());
+			return "itemModify";
+		}
+		
+		//로그인한 회원번호와 작성자 회원번호 일치 여부 체크
+		if(principal.getMemberVO().getUser_num() != 
+				db_item.getUser_num()){
+			return "redirect:/common/accessDenied";
+		}
+		
+		//파일명 셋팅(FileUtil.createFile에서 파일이 없으면 null처리 했음->파일을 무조건 올려야하니까 필요 없는거 아닌가?)
+		//itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
+		
+		
+		//파일을 교체했을 경우 기존 파일을 삭제
+		if(itemVO.getFilename() != null && !itemVO.getUpload().isEmpty()) {
+			//기존 파일(수정 작업 전 파일) 삭제 처리
+			FileUtil.removeFile(request, db_item.getFilename());
+		}
+		//view에 표시할 메세지
+		model.addAttribute("message","글 수정 완료!!");
+		model.addAttribute("url",request.getContextPath() + "/item/detail?item_num=" + itemVO.getItem_num());
+		//글 수정
+				itemService.updateItem(itemVO);
+		
+		return "common/resultAlert";
+	}
+	
 }
 
 

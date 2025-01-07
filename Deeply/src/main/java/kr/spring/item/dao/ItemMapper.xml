@@ -81,7 +81,18 @@
 		]]>
 	</select>	
 	
-	
+	<update id="updateItem" parameterType="ItemVO">
+		UPDATE shop_item SET 
+				user_num = #{user_num},
+				filename = #{filename},
+				item_name = #{item_name},
+				item_price = #{item_price},
+				item_description = #{item_description},
+				item_stock = #{item_stock},
+				item_modifydate = SYSDATE
+		WHERE item_num = #{item_num}
+	</update>
+	 
 
 
 

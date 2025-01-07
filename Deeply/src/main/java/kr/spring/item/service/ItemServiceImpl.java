@@ -35,13 +35,19 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public int updateItem(ItemVO Item) {
-		return 0;
+	public void updateItem(ItemVO Item) {
+		itemMapper.updateItem(Item);
 	}
 
 	@Override
-	public int deleteItem(Long item_num) {
-		return 0;
+	public void deleteItem(Long item_num) {
+		
+	}
+
+	@Override
+	public void deleteFile(Long item_num) {
+		
+		
 	}
 
 	

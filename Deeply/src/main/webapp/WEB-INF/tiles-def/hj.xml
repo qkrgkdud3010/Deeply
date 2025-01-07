@@ -20,6 +20,22 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/item/itemWrite.jsp"/>
     </definition>
+
+    <definition name="itemView" extends="main">
+    	<put-attribute name="title" value="상품 디테일"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/item/itemCSS.jsp"/>                            
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/item/itemView.jsp"/>
+    </definition>
+    
+    <definition name="itemModify" extends="main">
+    	<put-attribute name="title" value="상품 등록 수정"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/item/itemCSS.jsp"/>                            
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/item/itemModify.jsp"/>
+    </definition>
     
     
 </tiles-definitions>
