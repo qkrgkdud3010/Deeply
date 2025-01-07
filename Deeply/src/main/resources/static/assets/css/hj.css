@@ -1,6 +1,6 @@
 /* 
 ===============================
-			  공통
+           공통
 ===============================
  */
 .main-container {
@@ -11,11 +11,25 @@
 
 .content-container {
   background-color: white;
-  width:86.8vw;
+  width: 86.8vw;
   height: auto;
 }
 
+.listcontent-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 1vw; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  background-color: white;
+  width: 86.8vw;
+  height: auto;
+  margin: 0 auto; 
+  padding: 1vw; 
+}
+
 .item-card {
+   object-fit: cover;
     width: 13vw; /* 화면 너비의 13% */
     height: 35vh; /* 화면 높이의 35% */
     padding: 1vw; /* 화면 너비의 1% */
@@ -26,13 +40,13 @@
 
 
 .custom-hr{
-	border: none;
+   border: none;
     height: 1px;
     background: rgb(216, 216, 216); 
     position: relative;
     width: 100%;
     box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
-	
+   
 }
 
 
