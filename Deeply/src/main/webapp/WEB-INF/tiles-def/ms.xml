@@ -29,6 +29,31 @@
     	  value="/WEB-INF/views/artistMember/artistRegister.jsp"/>
     </definition>
     
+     <definition name="findID" extends="main">
+    	<put-attribute name="title" value="아이디 찾기"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/member/findID.jsp"/>                         
+    </definition>
+    
+       <definition name="findPasswd" extends="main">
+    	<put-attribute name="title" value="비밀번호 찾기"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/member/findPasswd.jsp"/>                         
+    </definition>
+    
+ 
+       <definition name="resetPassword" extends="main">
+    	<put-attribute name="title" value="비밀번호 찾기"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/member/resetPassword.jsp"/>                         
+    </definition>
+    
 </tiles-definitions>
 
 

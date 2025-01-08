@@ -4,8 +4,8 @@
     <title>결과</title>
 </head>
 <body>
-    <h2>${accessTitle}</h2>
-    <p>${accessMsg}</p>
-    <a href="${accessUrl}">${accessBtn}</a>
+    <h2>${message}</h2>
+    <p>${message}</p>
+   
 </body>
 </html>

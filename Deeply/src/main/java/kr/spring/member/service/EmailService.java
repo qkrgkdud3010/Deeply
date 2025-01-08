@@ -49,4 +49,27 @@ public class EmailService {
             throw new RuntimeException("이메일 전송에 실패했습니다.");
         }
     }
+    
+    public void sendPasswordResetEmail(String email) {
+        String resetLink = "http://localhost:8080/member/resetPassword?email=" + email;
+        
+        // 이메일 전송 설정
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            // 이메일 발송 설정
+            helper.setFrom("samsun19seo@gmail.com"); // 보내는 이메일 주소
+            helper.setTo(email); // 받는 이메일 주소
+            helper.setSubject("비밀번호 재설정 링크"); // 이메일 제목
+            helper.setText("비밀번호를 재설정하려면 아래 링크를 클릭하세요:\n" + resetLink); // 이메일 내용
+
+            // 이메일 전송
+            mailSender.send(message);
+            System.out.println("비밀번호 재설정 이메일이 성공적으로 전송되었습니다.");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("비밀번호 재설정 이메일 전송에 실패했습니다.");
+        }
+    }
 }
