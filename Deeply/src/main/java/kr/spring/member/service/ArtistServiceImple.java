@@ -27,12 +27,21 @@ public class ArtistServiceImple implements kr.spring.member.service.ArtistServic
 	}
 	@Override
 	public void insertMember(ArtistVO artist) {
-		long user_num = artistMapper.selectUser_num(); 
-		artist.setUser_num(user_num);
-
+		
+		   if(artistMapper.findByGroupName(artist.getGroup_name())==null) {
+			   AgroupVO agroup = new AgroupVO();  // 객체 생성
+	    		long group_num =artistMapper.selecAgroup_num();
+	    		
+	    		agroup.setGroup_num(group_num);
+	    		agroup.setGroup_name(artist.getGroup_name());
+	        	artistMapper.insertAgroup(agroup);
+	        }
+		   long user_num = artistMapper.selectUser_num(); 
+			artist.setUser_num(user_num);
         // 회원 정보를 삽입
         artistMapper.insertMember(artist);
         artistMapper.insertMember_detail(artist);
+     
 		
 	}
 	
