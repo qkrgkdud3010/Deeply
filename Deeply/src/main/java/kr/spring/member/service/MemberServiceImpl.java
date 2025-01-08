@@ -79,8 +79,28 @@ public class MemberServiceImpl implements MemberService{
 			return memberMapper.selectMember(mem_num);
 		}
 
+		@Override
+		public String findId(String name, String email) {
+			if(memberMapper.findIdByNameAndEmail(name, email)!=null) {
+				return memberMapper.findIdByNameAndEmail(name, email);
+			}else {
+				return memberMapper.findIdByNameAndEmail2(name, email);
+			}
+			
+		}
+
+		@Override
+		public void resetPassword(String email,String newPassword) {
+			if(memberMapper.findPasswdByNameAndEmail(email)!=null) {
+				 memberMapper.resetPassword(email, newPassword);
+			}else {
+			 memberMapper.resetPassword2(email, newPassword);
+			}
+
+
+
 	    
 	    
 
-
+		}
 }

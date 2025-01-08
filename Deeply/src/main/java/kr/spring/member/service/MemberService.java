@@ -21,5 +21,10 @@ public interface MemberService {
 	 public void storeVerificationCode(String email, String code);
 	 public Optional<MemberVO> findByEmail(String email);
 	 public MemberVO selectMember(Long user_num);
+	 
+	 public String findId(String name,String email);
+
+
+	public void resetPassword(String email,String newPassword);
 
 }

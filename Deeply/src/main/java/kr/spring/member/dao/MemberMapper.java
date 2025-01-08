@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -27,7 +28,22 @@ public interface MemberMapper {
 	Optional<MemberVO> findByEmail(String email);
 	public MemberVO selectMember(Long mem_num);
 	void updateMember(MemberVO memberVO);
-
+	
+	@Select("SELECT d.id FROM duser d JOIN duser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email} AND dd.name = #{name}")
+	public String findIdByNameAndEmail(@Param("name") String name, @Param("email") String email);
+	@Select("SELECT d.id FROM auser d JOIN auser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email} AND dd.name = #{name}")
+	public String findIdByNameAndEmail2(@Param("name") String name, @Param("email") String email);
+	
+	
+	@Select("SELECT d.id FROM duser d JOIN duser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email}")
+	public String findPasswdByNameAndEmail(@Param("email") String email);
+	@Select("SELECT d.id FROM auser d JOIN auser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email}")
+	public String findPasswdByNameAndEmail2( @Param("email") String email);
+	@Update("UPDATE duser_detail SET passwd_hash = #{newPassword} WHERE email = #{email}")
+	public void resetPassword(String email ,String newPassword);
+	
+	@Update("UPDATE auser_detail SET passwd_hash = #{newPassword} WHERE email = #{email}")
+	public void resetPassword2(String email ,String newPassword);
 }
 
 

@@ -97,6 +97,23 @@ public class MemberController {
 
 		return response;
 	}
+	
+	@PostMapping("/emailSubmit2")
+	@ResponseBody
+	public Map<String, String> emailSubmit2(@RequestBody Map<String, String> request) {
+		Map<String, String> response = new HashMap<>();
+		String email= request.get("email");
+
+		String verificationCode = emailService.generateVerificationCode();
+		emailService.sendVerificationEmail(email, verificationCode);
+		MemberServiceImpl.verificationCodes.put(email,verificationCode );
+
+		response.put("email",email); 
+		response.put("code",verificationCode);
+
+		return response;
+	}
+
 
 
 	//회원가입 데이터 전송
@@ -180,7 +197,67 @@ public class MemberController {
 		Random random = new Random();
 		return String.format("%06d", random.nextInt(1000000));
 	}
+	@GetMapping("/findID")
+	public String findID() {
+		return"findID";
+	}
+	
+    @PostMapping("/findID")
+    public String findUserId(@RequestParam String name, 
+                             @RequestParam String email, 
+                             Model model) {
+        try {
+            String id = memberService.findId(name, email);
+            model.addAttribute("message", "찾은 아이디: " + id);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("message", "입력한 정보에 해당하는 아이디가 없습니다.");
+        }
+        return "findID"; // findId.jsp로 이동
+    }
+    
+    
+    
+    @GetMapping("/findPasswd")
+	public String findPasswd() {
+		return"findPasswd";
+	}
+    
 
+    @PostMapping("/requestReset")
+    public String requestPasswordReset(@RequestParam String email, Model model) {
+        try {
+            String verificationCode = emailService.generateVerificationCode();
+            emailService.sendPasswordResetEmail(email);
+            model.addAttribute("message", "비밀번호 재설정 이메일이 전송되었습니다.");
+        } catch (Exception e) {
+            model.addAttribute("message", "이메일 전송에 실패했습니다.");
+        }
+        return "member/resultView";  // 이메일 발송 후 결과 출력
+    }
+    
+    @GetMapping("/resetPassword")
+    public String resetPasswordForm(@RequestParam String email, Model model) {
+        model.addAttribute("email", email);  // 이메일 값을 폼에 전달
+        return "resetPassword";  // 비밀번호 재설정 폼을 렌더링
+    }
+    
+    @PostMapping("/resetPassword")
+    public String resetPassword(@RequestParam String email, 
+                                @RequestParam String newPassword, 
+                                Model model,
+                                HttpServletRequest request) {
+    	 newPassword=passwordEncoder.encode(newPassword);
+
+        try {
+            memberService.resetPassword(email, newPassword);  // 비밀번호 재설정 서비스 호출
+            model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
+            model.addAttribute("url",request.getContextPath()+"/member/login");
+        } catch (Exception e) {
+            model.addAttribute("message", "비밀번호 변경에 실패했습니다.");
+            model.addAttribute("url",request.getContextPath()+"/member/login");
+        }
+        return "common/resultAlert";  // 변경 결과를 출력할 폼으로 다시 리다이렉트
+    }
 }
 
 

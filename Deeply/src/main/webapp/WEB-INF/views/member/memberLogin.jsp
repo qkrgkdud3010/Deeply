@@ -35,8 +35,8 @@
 						<span class="inline-text">카카오로 로그인하기.</span></td>
 				</tr>
 				<tr>
-					<td>아이디 찾기</td>
-					<td>비밀번호 찾기</td>
+					<td><a href="/member/findID">아이디 찾기</a></td>
+					<td><a href="/member/findPasswd">비밀번호 찾기</a></td>
 				</tr>
 			</table>
 			<input type="submit" value="로그인">
