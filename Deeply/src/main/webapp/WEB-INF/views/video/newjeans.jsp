@@ -31,7 +31,7 @@ body {
 }
 
 /* 제목 및 섹션 헤딩 */
-.main-heading{
+.main-heading {
 	text-align: center; /* 텍스트 가운데 정렬 */
 	margin-bottom: 20px;
 	font-family: "Manrope-Bold", Helvetica;
@@ -41,42 +41,49 @@ body {
 }
 
 .section-heading {
-  display: flex; /* Flexbox 적용 */
-  justify-content: space-between; /* 제목과 오른쪽 요소를 양쪽 끝으로 정렬 */
-  align-items: center; /* 수직 정렬 */
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  padding: 10px 0; /* 간격 추가 */
+	display: flex; /* Flexbox 적용 */
+	justify-content: space-between; /* 제목과 오른쪽 요소를 양쪽 끝으로 정렬 */
+	align-items: center; /* 수직 정렬 */
+	font-size: 28px;
+	font-weight: 700;
+	margin-bottom: 20px;
+	padding: 10px 0; /* 간격 추가 */
+}
+
+.heading-container {
+	display: flex; /* Flexbox를 사용해 제목과 버튼을 양쪽 정렬 */
+	justify-content: space-between; /* 제목과 버튼을 좌우로 배치 */
+	align-items: center; /* 수직 중앙 정렬 */
+	margin-bottom: 20px; /* 아래 간격 추가 */
 }
 
 .right-container {
-  display: flex;
-  align-items: center;
-  gap: 16px; /* 두 요소 간 간격 */
+	display: flex;
+	align-items: center;
+	gap: 16px; /* 두 요소 간 간격 */
 }
 
 /* 업로드 버튼 스타일 */
 .upload-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: #000;
-  border-radius: 9999px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	background-color: #000;
+	border-radius: 9999px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 /* 멤버십 영상 페이지 바로가기 텍스트 스타일 */
 .right-container p {
-  margin: 0;
-  color: #555;
-  font-size: 16px;
-  font-weight: normal;
-  cursor: pointer;
+	margin: 0;
+	color: #555;
+	font-size: 16px;
+	font-weight: normal;
+	cursor: pointer;
 }
 
 /* 영상 리스트 컨테이너 */
@@ -212,26 +219,64 @@ body {
 </style>
 </head>
 <body>
-
 	<div class="page-container">
 		<h1 class="main-heading">뉴진스</h1>
-		<h2 class="section-heading">
-			멤버십 전용
+
+		<div class="heading-container">
+			<h2 class="section-heading">멤버십 전용</h2>
 			<div class="right-container">
 				<div class="upload-button">영상 업로드</div>
 				<p>멤버십 영상 페이지 바로가기 &gt;</p>
 			</div>
-		</h2>
+		</div>
+
+		<!-- 첫 번째 영상 섹션 -->
+		<div class="video-section">
+			<div class="scroll-container" id="scrollContainer1">
+				<div class="scroll-track" id="scrollTrack1">
+					<c:forEach var="video" items="${videos}" varStatus="status">
+						<!-- varStatus 추가 -->
+						<c:if test="${status.index < 7}">
+							<!-- 조건 수정 -->
+							<c:choose>
+								<c:when
+									test="${fn:contains(video.mediaUrl, 'youtube.com/watch?v=')}">
+									<c:set var="youtubeId"
+										value="${fn:substringAfter(video.mediaUrl, 'v=')}" />
+									<c:set var="thumbnailUrl"
+										value="https://img.youtube.com/vi/${youtubeId}/0.jpg" />
+								</c:when>
+								<c:when test="${fn:contains(video.mediaUrl, 'youtu.be/')}">
+									<c:set var="youtubeId"
+										value="${fn:substringAfter(video.mediaUrl, 'youtu.be/')}" />
+									<c:set var="thumbnailUrl"
+										value="https://img.youtube.com/vi/${youtubeId}/0.jpg" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="thumbnailUrl" value="${video.mediaUrl}" />
+								</c:otherwise>
+							</c:choose>
+							<div class="video-card">
+								<img src="${thumbnailUrl}" alt="썸네일" />
+								<div class="video-card-title">${video.title}</div>
+								<div class="video-card-description">${video.description}</div>
+							</div>
+						</c:if>
+					</c:forEach>
+					<div class="more-button">카테고리 영상 더보기</div>
+				</div>
+			</div>
+			<div class="scroll-button scroll-left" id="scrollLeft1">&lt;</div>
+			<div class="scroll-button scroll-right" id="scrollRight1">&gt;</div>
+		</div>
+
 		<h2 class="section-heading">DB에서 불러온 내 영상</h2>
 
-		<!-- 영상 섹션 -->
+		<!-- 두 번째 영상 섹션 -->
 		<div class="video-section">
-			<!-- 스크롤 가능한 컨테이너 -->
-			<div class="scroll-container" id="scrollContainer">
-				<div class="scroll-track" id="scrollTrack">
-					<!-- 동영상 카드 반복 -->
+			<div class="scroll-container" id="scrollContainer2">
+				<div class="scroll-track" id="scrollTrack2">
 					<c:forEach var="video" items="${videos}">
-						<!-- 썸네일 URL 설정 -->
 						<c:choose>
 							<c:when
 								test="${fn:contains(video.mediaUrl, 'youtube.com/watch?v=')}">
@@ -256,49 +301,47 @@ body {
 							<div class="video-card-description">${video.description}</div>
 						</div>
 					</c:forEach>
-					<!-- 더보기 버튼 -->
 					<div class="more-button">카테고리 영상 더보기</div>
 				</div>
 			</div>
-
-			<!-- 왼쪽 버튼 -->
-			<div class="scroll-button scroll-left" id="scrollLeft">&lt;</div>
-
-			<!-- 오른쪽 버튼 -->
-			<div class="scroll-button scroll-right" id="scrollRight">&gt;</div>
+			<div class="scroll-button scroll-left" id="scrollLeft2">&lt;</div>
+			<div class="scroll-button scroll-right" id="scrollRight2">&gt;</div>
 		</div>
 	</div>
-
-	<script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const scrollContainer = document.getElementById('scrollContainer');
-      const leftButton = document.getElementById('scrollLeft');
-      const rightButton = document.getElementById('scrollRight');
-
-      leftButton.addEventListener('click', () => {
-        console.log('슬라이드 왼쪽 클릭됨');
-        scrollContainer.scrollBy({ left: -330, behavior: 'smooth' });
-      });
-
-      rightButton.addEventListener('click', () => {
-        console.log('슬라이드 오른쪽 클릭됨');
-        scrollContainer.scrollBy({ left: 330, behavior: 'smooth' });
-      });
-
-      // 추가: 버튼 비활성화 상태 관리 (선택 사항)
-      function updateButtons() {
-        leftButton.style.display = scrollContainer.scrollLeft > 0 ? 'flex' : 'none';
-        rightButton.style.display = scrollContainer.scrollLeft < (scrollContainer.scrollWidth - scrollContainer.clientWidth) ? 'flex' : 'none';
-      }
-
-      // 초기 버튼 상태 설정
-      window.onload = () => {
-        updateButtons();
-      };
-
-      // 스크롤 시 버튼 상태 업데이트
-      scrollContainer.addEventListener('scroll', updateButtons);
-    });
-  </script>
 </body>
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+	const sections = [
+		{ container: 'scrollContainer1', left: 'scrollLeft1', right: 'scrollRight1' },
+		{ container: 'scrollContainer2', left: 'scrollLeft2', right: 'scrollRight2' },
+	];
+
+	sections.forEach((section) => {
+		const scrollContainer = document.getElementById(section.container);
+		const leftButton = document.getElementById(section.left);
+		const rightButton = document.getElementById(section.right);
+
+		leftButton.addEventListener('click', () => {
+			scrollContainer.scrollBy({ left: -330, behavior: 'smooth' });
+		});
+
+		rightButton.addEventListener('click', () => {
+			scrollContainer.scrollBy({ left: 330, behavior: 'smooth' });
+		});
+
+		function updateButtons() {
+			leftButton.style.display = scrollContainer.scrollLeft > 0 ? 'flex' : 'none';
+			rightButton.style.display =
+				scrollContainer.scrollLeft < scrollContainer.scrollWidth - scrollContainer.clientWidth
+					? 'flex'
+					: 'none';
+		}
+
+		scrollContainer.addEventListener('scroll', updateButtons);
+		updateButtons();
+	});
+});
+
+</script>
 </html>
