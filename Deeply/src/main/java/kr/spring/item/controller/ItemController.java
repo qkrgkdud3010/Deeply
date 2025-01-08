@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.item.service.ItemService;
 import kr.spring.item.vo.ItemVO;
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.util.FileUtil;
@@ -55,12 +56,11 @@ public class ItemController {
 	// 전송된 데이터 처리
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/write")
-	public String submit(
-	        @Valid ItemVO itemVO, 
-	        BindingResult result, 
-	        HttpServletRequest request,
-	        RedirectAttributes redirect,
-	        @AuthenticationPrincipal PrincipalDetails principal) throws IllegalStateException, IOException {
+	public String submit(@Valid ItemVO itemVO, 
+						BindingResult result, 
+						HttpServletRequest request,
+						RedirectAttributes redirect,
+						@AuthenticationPrincipal PrincipalDetails principal) throws IllegalStateException, IOException {
 
 	    log.debug("<<상품 등록>> :" + itemVO);
 
@@ -96,24 +96,40 @@ public class ItemController {
 	 * =============================*/
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/list")
-	public String getList(
-			@RequestParam(defaultValue="1") int pageNum,
-			@RequestParam(defaultValue="1") int order,
-			String keyfield,String keyword,
-			Model model,
-			@AuthenticationPrincipal PrincipalDetails principal) {
+	public String getList(@RequestParam(defaultValue="1") int pageNum,
+						  @RequestParam(defaultValue="1") int order,
+						  String keyfield,
+						  String keyword,
+						  Model model,
+						  @AuthenticationPrincipal 
+						  PrincipalDetails principal) {
 		
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<게시판 목록 - order>> : " + order);
 		
+		//아티스트 정보
+		ArtistVO artist = principal.getArtistVO();
+		Long auser_num = artist.getUser_num();
+		
+		//유저 정보
 		MemberVO member = principal.getMemberVO();
 		Long user_num = member.getUser_num();
+		
+		//구독한 아티스트정보
+		
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		map.put("user_num", user_num);
 		
+		boolean isartist = auser_num != null && auser_num == principal.getArtistVO().getUser_num();
+		
+		if(isartist) {
+			map.put("artist",artist);
+			model.addAttribute("artist", artist);
+		}
+			
 		
 		//전체/검색 레코드수 
 		int count = itemService.selectRowCount(map);
@@ -130,7 +146,6 @@ public class ItemController {
 			
 			list = itemService.selectList(map);
 		}
-		
 		
 		
 		model.addAttribute("count", count);
@@ -150,9 +165,9 @@ public class ItemController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
 	public String process(long item_num,
-							Model model,
-							@AuthenticationPrincipal 
-							PrincipalDetails principal){
+						  Model model,
+						  @AuthenticationPrincipal 
+						  PrincipalDetails principal){
 		
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<상품 상세 - item_num>> : " + item_num);
@@ -176,9 +191,9 @@ public class ItemController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/update")
 	public String formUpdate(@RequestParam("item_num") long item_num,
-							Model model,
-							@AuthenticationPrincipal 
-							PrincipalDetails principal) {
+							 Model model,
+						     @AuthenticationPrincipal 
+							 PrincipalDetails principal) {
 		ItemVO itemVO = itemService.selectitem(item_num);
 		log.debug("<<등록된 상품 정보>> : " +itemVO);
 		
@@ -200,7 +215,7 @@ public class ItemController {
 								Model model,
 								@AuthenticationPrincipal 
 								PrincipalDetails principal)
-										throws IllegalStateException, IOException{
+						  throws IllegalStateException, IOException{
 		log.debug("<<상품 등록 수정>> : " + itemVO);
 		
 		//DB에 저장된 파일 정보 구하기
@@ -234,6 +249,41 @@ public class ItemController {
 				itemService.updateItem(itemVO);
 		
 		return "common/resultAlert";
+	}
+	
+	
+	/*==============================
+	 * 	상품 글 삭제
+	 * =============================*/
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/delete")
+	public String submitDelete(@RequestParam("item_num") long item_num,
+								HttpServletRequest request,
+								@AuthenticationPrincipal 
+								PrincipalDetails principal) 
+										throws IllegalStateException, IOException{
+		log.debug("<<삭제할 상품 번호>> : " + item_num);
+		
+		//DB에 저장된 파일 정보 구하기
+		ItemVO db_item = itemService.selectitem(item_num);
+		
+		//로그인 일치시에 삭제하기
+		if(principal.getMemberVO().getUser_num() != db_item.getUser_num()) {
+			return "redirect:/common/accessDenied";
+		}
+		
+		//글 삭제
+		itemService.deleteItem(item_num);
+		
+		//파일 삭제
+		if(db_item.getFilename() != null) {
+			FileUtil.removeFile(request, db_item.getFilename());
+		}
+		
+		//삭제 후 알람 메시지 띄우기 -> jsp에서 
+		
+		
+		return "redirect:/item/list";
 	}
 	
 }

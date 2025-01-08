@@ -41,15 +41,10 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public void deleteItem(Long item_num) {
-		
+		itemMapper.deleteItem(item_num);
 	}
 
-	@Override
-	public void deleteFile(Long item_num) {
-		
-		
-	}
-
+	
 	
 
 	

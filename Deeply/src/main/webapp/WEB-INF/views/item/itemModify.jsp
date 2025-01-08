@@ -12,8 +12,8 @@
         <!-- 수정: modelAttribute="itemVO" 추가 -->
         <form:form modelAttribute="itemVO" method="post" action="update" enctype="multipart/form-data">
             <div class="button form-actions">
-		<input type="submit" value="등록" /> <input type="button" value="취소"
-			onclick="location.href='/item/list'" />
+		<input type="submit" value="수정" /> 
+		<input type="button" value="취소" onclick="location.href='/item/list'" />
 	</div>
             <ul>
                 <li>

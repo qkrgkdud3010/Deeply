@@ -15,6 +15,5 @@ public interface ItemService {
 	public ItemVO selectitem(Long item_num);
 	public void updateItem(ItemVO Item);
 	public void deleteItem(Long item_num);
-	public void deleteFile(Long item_num);
 
 }

@@ -72,7 +72,7 @@
 					item_description,
 					item_price
 				FROM shop_item
-				JOIN duser_detail USING(user_num)
+				JOIN auser_detail USING(user_num)
 					)a
 				)
 				WHERE user_num = #{user_num} <!-- 로그인된 사용자의 ID로 필터링 -->
