@@ -17,8 +17,11 @@
 	
 	<div class="a-title font-white bold-title vertical-center">ARTIST</div>
 	<div class="aList-container">
-		<div class="aList-items">
-			<a href="detail">yooo</a>
-		</div>
+		<c:forEach var="group" items="${groups}">
+			<div class="aList-items">
+				<a href="detail?artist_num=${group.group_num}">${group.group_name}</a>
+			</div>
+		</c:forEach>
+		
 	</div>
 </div>

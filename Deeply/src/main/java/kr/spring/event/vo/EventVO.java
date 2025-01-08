@@ -18,6 +18,7 @@ public class EventVO {
 	private String location;
 	private int booked_amount;
 	private long artist_num;
+	private String group_name;
 	@NotBlank
 	private String mem_date;
 	@NotBlank

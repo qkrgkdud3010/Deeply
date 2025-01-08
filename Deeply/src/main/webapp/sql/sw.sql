@@ -81,3 +81,28 @@ CREATE TABLE seat(
 	CONSTRAINT fk_seat_perf FOREIGN KEY (perf_num) REFERENCES performance_detail (perf_num),
     CONSTRAINT fk_seat_hall FOREIGN KEY (hall_num) REFERENCES performance_hall (hall_num)
 );
+
+CREATE TABLE letter(
+	letter_num NUMBER NOT NULL PRIMARY KEY,
+	user_num NUMBER NOT NULL,
+	artist_num NUMBER NOT NULL,
+	letter_title VARCHAR2(200) NOT NULL,
+	letter_content VARCHAR2(4000) NOT NULL,
+	post_date VARCHAR2(200) NOT NULL,
+	replied NUMBER NOT NULL DEFAULT 0,
+	CONSTRAINT fk_letter_duser FOREIGN KEY (user_num) REFERENCES duser (user_num),
+	CONSTRAINT fk_letter_artist FOREIGN KEY (user_num) REFERENCES auser (user_num),
+);
+CREATE sequence letter_seq;
+
+CREATE TABLE reply(
+	reply_num NUMBER NOT NULL PRIMARY KEY,
+	user_num NUMBER NOT NULL,
+	letter_num NUMBER NOT NULL,
+	artist_num NUMBER NOT NULL,
+	letter_title VARCHAR2(200) NOT NULL,
+	letter_content VARCHAR2(4000) NOT NULL,
+	post_date VARCHAR2(200) NOT NULL,
+	img VARCHAR2(4000) NOT NULL
+);
+CREATE sequence reply_seq;

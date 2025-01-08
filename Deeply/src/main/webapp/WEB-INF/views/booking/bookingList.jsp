@@ -6,7 +6,7 @@
 
 <div>
 	<div class="booking-artist-container font-white bold-title background-black align-center">
-		${artist_num}
+		${group_name}
 	</div>
 	<div class="booking-main">
 		<div class="booking-title bold-title vertical-center">공연 예매</div>

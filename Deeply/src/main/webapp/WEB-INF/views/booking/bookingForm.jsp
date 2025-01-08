@@ -6,7 +6,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/booking.js"></script>
 
 
-<div class="booking-artist-container font-white bold-title background-black align-center">${event.artist_num}</div>
+<div class="booking-artist-container font-white bold-title background-black align-center">${group_name}</div>
 <div class="booking-title bold-title">예매 정보 입력</div>
 <div class="booking-info">
 	<img>
@@ -15,7 +15,7 @@
 		<div class="booking-artist width-40">
 			<div class="bold-title font-white font-1_5">아티스트</div>
 			<hr>
-			<div class="bold-title font-white font-1_5 top-5">${event.artist_num}</div>
+			<div class="bold-title font-white font-1_5 top-5">${group_name}</div>
 		</div>
 		<!-- 공연 장소 -->
 		<div class="booking-place width-60">

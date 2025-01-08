@@ -1,11 +1,13 @@
 package kr.spring.member.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 
@@ -23,4 +25,17 @@ public interface ArtistMapper {
 	public void insertMember_detail(ArtistVO artist);
 	public ArtistVO selectCheckMember(String id);
 	public ArtistVO selectIdAndNickName(Map<String,String> map);
+	
+	//아티스트 페이지
+	@Select("SELECT * FROM agroup")
+	public List<AgroupVO> selectArtistByGroup();
+	
+	@Select("SELECT * FROM agroup WHERE group_num=#{group_num}")
+	public AgroupVO selectArtistDetail(long group_num); 
+	
+	@Select("SELECT * FROM agroup g JOIN auser_detail d ON g.group_name = d.group_name WHERE g.group_num=#{artist_num}")
+	public List<ArtistVO> selectGroupMembers(long group_num);
+	
+	@Select("SELECT * FROM auser_detail WHERE user_num=#{artist_num}")
+	public ArtistVO selectMember(long artist_num);
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.letter.dao.LetterMapper">
+	<select id="countLetterByUser" parameterType="map"
+  	                               resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM letter WHERE artist_num=#{artist_num} AND user_num=#{user_num}
+  	</select>
+  	<select id="selectLetterByUser" parameterType="map"
+  	                               resultType="letterVO">
+  		SELECT
+  		  *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT 
+  		              *
+  		            FROM letter l
+  		            ORDER BY l.post_date DESC NULLS LAST)a)
+  		WHERE artist_num=#{artist_num} AND user_num=#{user_num}            
+  		<![CDATA[
+  		AND rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+  	<insert id="postLetter" parameterType="LetterVO">
+  		INSERT INTO letter(
+  			letter_num,
+  			user_num,
+  			artist_num,
+  			letter_title,
+  			letter_content,
+  			post_date,
+  			replied)
+  		VALUES(
+  			letter_seq.nextval,
+  			#{user_num},
+  			#{artist_num},
+  			#{letter_title},
+  			#{letter_content},
+  			sysdate,
+  			#{replied})
+  	</insert>
+</mapper>
