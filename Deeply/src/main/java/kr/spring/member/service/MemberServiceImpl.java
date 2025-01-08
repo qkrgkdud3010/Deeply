@@ -74,6 +74,11 @@ public class MemberServiceImpl implements MemberService{
 		    return memberMapper.findByEmail(email);
 		}
 
+		@Override
+		public MemberVO selectMember(Long mem_num) {
+			return memberMapper.selectMember(mem_num);
+		}
+
 	    
 	    
 

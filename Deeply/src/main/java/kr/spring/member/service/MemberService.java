@@ -20,7 +20,6 @@ public interface MemberService {
 	 public String verifyEmail(String email, String code);
 	 public void storeVerificationCode(String email, String code);
 	 public Optional<MemberVO> findByEmail(String email);
-
-
+	 public MemberVO selectMember(Long user_num);
 
 }

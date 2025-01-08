@@ -1,14 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/artistPage.js"></script>
+
 
 <div class="artist-main background-black">
+	<div class="member-selection-container">
+		<div class="member-selection-header align-center">
+			<div class="font-white bold-title top-5 font-1_5">편지로 소통하고싶은 ${vo.group_name} 멤버를 선택해 주세요</div>
+			<div class="member-selection-close font-white font-1">닫기</div>
+		</div>
+		<div class="member-selection-div">
+			<c:forEach var="member" items="${members}">
+				<a href="${pageContext.request.contextPath}/letter/list?artist_num=${member.user_num}">
+				<div class="member-selection">
+					<img class="member-profile-img">
+					<div class="align-center font-white bold-title top-5">${member.name}</div>
+				</div>
+				</a>
+			</c:forEach>
+		</div>
+	</div>
+
 	<div class="a-mainpic">아티스트 이미지</div>
 	<div class="artist-detail">
 		<div class="vertical-center">
 			<div class="width-80">
-				<div class="a-fandom font-white bold-title vertical-center">아티스트 팬덤명</div>
-				<div class="a-title font-white bold-title vertical-center">아티스트 이름</div>
+				<div class="a-fandom font-white bold-title vertical-center">${vo.fandom_name}</div>
+				<div class="a-title font-white bold-title vertical-center">${vo.group_name}</div>
 			</div>
 			<div class="width-20">
 				<hr class="premium-hr">
@@ -17,34 +37,35 @@
 			</div>
 			
 		</div>
-		<div class="a-desc font-white vertical-center">아티스트 상세 글</div>
+		<div class="a-desc font-white vertical-center">${vo.intro_desc}</div>
 		<div class="detail-premium-container">
 			<button class="premium-item ad-chat">채팅</button>
-			<button class="premium-item ad-letter" onclick="location.href='${pageContext.request.contextPath}/letter/list'">편지</button>
-			<button class="premium-item ad-book" onclick="location.href='${pageContext.request.contextPath}/booking/list?artist_num=51'">예매</button>
+			<button class="premium-item ad-letter">편지</button>
+			<button class="premium-item ad-book" onclick="location.href='${pageContext.request.contextPath}/booking/list?artist_num=${vo.group_num}'">예매</button>
 		</div>
+		
 		<div class="a-profile font-white bold-title vertical-center">PROFILE</div>
 		<div class="member-container">
 			<div class="member-list">
-				<div class="member-item">
+				<c:forEach var="member" items="${members}">
+					<div class="member-item">
 					<img class="member-profile-img">
-					<div class="align-center font-white bold-title top-5">멤버 이름1</div>
+					<div class="align-center font-white bold-title top-5">${member.name}</div>
 				</div>
-				<div class="member-item">
-					<img class="member-profile-img">
-					<div class="align-center font-white bold-title top-5">멤버 이름2</div>
-				</div>
+				</c:forEach>	
 			</div>
 			<div class="member-detail font-white">
 				<hr>
-				<ul>
-					<li>
-						<label>아티스트</label><span>멤버 이름</span>
-					</li>
-					<li>
-						<label>데뷔일</label><span>xxxx.xx.xx</span>
-					</li>
-				</ul>
+					<c:forEach var="member" items="${members}">
+					<ul>
+						<li>
+							<label>아티스트</label><span>${member.name}</span>
+						</li>
+						<li>
+							<label>데뷔일</label><span>xxxx.xx.xx</span>
+						</li>
+					</ul>
+					</c:forEach>
 				<hr>
 				<div class="member-desc font-white vertical-center left-3">멤버 소개글</div>
 			</div>

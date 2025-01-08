@@ -219,6 +219,9 @@ margin-left:7px;
     color: red;
     display: block;  /* 숨겨져 있지 않도록 display 속성 확인 */
 }
-
+.artist_register{
+	text-decoration:none;
+	color:black;
+}
 			  
 /*회원가입 부분 끝*/

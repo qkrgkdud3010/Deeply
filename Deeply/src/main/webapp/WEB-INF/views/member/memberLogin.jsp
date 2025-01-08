@@ -42,6 +42,6 @@
 			<input type="submit" value="로그인">
 		</form>
 	</div>
-	<a href="/artistMember/login">아티스트 로그인</a>
+
 
 </div>

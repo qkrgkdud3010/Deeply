@@ -19,34 +19,37 @@
 <div class="item-main main-container">
 	<div class="button page-action">
 		<c:if test="${!empty principal}">
-			<input type="button" value="등록하기" onclick="location.href='/item/write'">
+			<input type="button" value="등록하기"
+				onclick="location.href='/item/write'">
 		</c:if>
 	</div>
 
-	<div class="item-container content-container">
-		<div class="artist-name">반갑습니다. "${member.nick_name}"님</div><!-- name으로 불러올까? -->
-		<c:if test="${count == 0}">
-			<div class="result-display">표시할 게시물이 없습니다.</div>
-		</c:if>
-		<c:if test="${count > 0}">
-			<c:forEach var="item" items="${list}" varStatus="status">
-				<div class="item-card box-shadow">
-					<img
-						src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"
-						class="item-img">
-					<hr class="custom-hr" noshade="noshade" width="100%">
-					<span class="item-name list-text" style="font-size:18px;">${item.item_name}</span><br>
-					<span class="item-name list-price" style="font-size:18px; color:#0369A1;">${item.item_price}원</span>
-				</div>
-				<c:if test="${(status.index + 1) % 4 == 0}">
-					<hr class="custom-hr" noshade="noshade" width="100%">
-				</c:if>
-			</c:forEach>
-
+	<div class="listcontent-container item-container">
+			<div class="artist-name">반갑습니다. "${member.nick_name}"님</div>
+			<c:if test="${count == 0}">
+				<div class="result-display">표시할 게시물이 없습니다.</div>
+			</c:if>
+			<c:if test="${count > 0}">
+				<c:forEach var="item" items="${list}" varStatus="status">
+					<div class="item-card box-shadow">
+						<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
+							<img
+							src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
+							style="width: 10vw; height: 10vw; object-fit: cover;"
+							class="item-img">
+						</a>
+						<hr class="custom-hr" noshade="noshade" width="100%">
+						<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span><br>
+						<span class="item-name list-price"
+							style="font-size: 18px; color: #0369A1;">${item.item_price}원</span>
+					</div>
+					<c:if test="${(status.index + 1) % 4 == 0}">
+						<hr class="custom-hr" noshade="noshade" width="100%">
+					</c:if>
+				</c:forEach>
+			</c:if>
 			<!-- 페이징 -->
-			<div class=list-paging>${page}</div>
-		</c:if>
-
-
+			<span class=list-paging>${page}</span>	
 	</div>
+	
 </div>

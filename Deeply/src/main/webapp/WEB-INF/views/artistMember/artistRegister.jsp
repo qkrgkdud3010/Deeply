@@ -15,28 +15,7 @@ var csrfToken = $('meta[name="_csrf"]').attr('content');
 var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
 function registerUser() {
 	
-$.ajax({
-    url: '/artistMember/registerUser',
-    type: 'POST',
-    headers: {
-        [csrfHeader]: csrfToken  // CSRF 토큰을 헤더에 포함
-    },
-    data: $('#member_register').serialize(),
-    success: function(response) {
-        if (response.error) {
-            // 오류가 있을 경우, 해당 오류를 페이지에 표시
-            $('#errorMessage').text(response.error);
-        } else {
-            // 성공 시 처리
-            alert("회원가입이 완료되었습니다.");
-            window.location.href = "/member/login";
-        }
-    },
-    error: function(xhr, status, error) {
-        // 오류가 발생하면 화면에 표시
-        $('#errorMessage').text("서버 오류가 발생했습니다.");
-    }
-});
+
 }
 
 
@@ -237,14 +216,28 @@ $(function(){
 			}				
 			return false;
 		}
-		//별명 중복 체크 선택
-		if(checkNick == 0){
-			$('#message_nick').css('color','red').html('<div style="width:200px;">그룹이름 중복체크 해주세요</div>');
-			if($('#nick_name').val().trim()==''){
-				$('#nick_name').val('').focus();
-			}
-			return false;
-		}
+		$.ajax({
+		    url: '/artistMember/registerUser',
+		    type: 'POST',
+		    headers: {
+		        [csrfHeader]: csrfToken  // CSRF 토큰을 헤더에 포함
+		    },
+		    data: $('#member_register').serialize(),
+		    success: function(response) {
+		        if (response.error) {
+		            // 오류가 있을 경우, 해당 오류를 페이지에 표시
+		            $('#errorMessage').text(response.error);
+		        } else {
+		            // 성공 시 처리
+		            alert("회원가입이 완료되었습니다.");
+		            window.location.href = "/member/login";
+		        }
+		    },
+		    error: function(xhr, status, error) {
+		        // 오류가 발생하면 화면에 표시
+		        $('#errorMessage').text("서버 오류가 발생했습니다.");
+		    }
+		});
 	});	
 });
 
@@ -265,7 +258,7 @@ $(function(){
 		<div class="register-content">
 
 			<img class="logo-img"
-				src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png">
+				src="${pageContext.request.contextPath}/assets/images/artistLogo.png" style="height:80px;">
 			<h1>Create your Account</h1>
 			<h2>계정을 만들어 주세요</h2>
 			<div style="width: 290px;">
@@ -292,9 +285,8 @@ $(function(){
 						<form:errors path="passwd_hash" cssClass="error-color" />
 						<form:input path="name" type="text" placeholder="이름" />
 						<form:errors path="name" cssClass="error-color" />
-						<form:input  class="Authentication" id="group_name" path="group_name" type="text" placeholder="그룹이름" />
-						<input type="button" id="confirm_nick" value="중복체크"
-							class="default-btn">
+						<form:input id="group_name" path="group_name" type="text" placeholder="그룹이름" />
+					
 						
 					
 							<div id="message_nick" style="width:300px;"></div>

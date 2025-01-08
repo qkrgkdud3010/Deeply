@@ -13,7 +13,8 @@ public interface ItemService {
 	public int selectRowCount(Map<String,Object> map);
 	public int insertItem(ItemVO Item);
 	public ItemVO selectitem(Long item_num);
-	public int updateItem(ItemVO Item);
-	public int deleteItem(Long item_num);
+	public void updateItem(ItemVO Item);
+	public void deleteItem(Long item_num);
+	public void deleteFile(Long item_num);
 
 }

@@ -17,14 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.spring.member.service.ArtistService;
 import kr.spring.booking.service.BookingService;
 import kr.spring.booking.vo.BookingVO;
 import kr.spring.event.vo.EventVO;
+import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.seat.vo.SeatVO;
@@ -37,6 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 public class BookingController {
 	@Autowired
 	private BookingService bookingService;
+	@Autowired
+	private ArtistService artistService;
 	
 	//아티스트 예매 목록
 	@GetMapping("/list")
@@ -59,10 +62,14 @@ public class BookingController {
 			list = bookingService.selectEventByArtistId(map);
 		}
 		
+		AgroupVO group = artistService.selectArtistDetail(artist_num);
+		String group_name = group.getGroup_name();
+		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());
 		model.addAttribute("artist_num", artist_num);
+		model.addAttribute("group_name", group_name);
 		
 		return "bookingList";
 	}
@@ -79,6 +86,11 @@ public class BookingController {
 	    List<SeatVO> seats = bookingService.selectSeatByHallNum(event.getHall_num());
 	    log.debug("수: " + seats);
 	    MemberVO member = principal.getMemberVO();
+	    
+	    AgroupVO group = artistService.selectArtistDetail(event.getArtist_num());
+		String group_name = group.getGroup_name();
+		
+	    model.addAttribute("group_name", group_name);
 	    model.addAttribute("event", event);
 	    model.addAttribute("member", member);
 	    model.addAttribute("seat_count", seat_count);
@@ -89,7 +101,7 @@ public class BookingController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/book")
-	public String bookForm(@Valid @ModelAttribute("bookingVO") BookingVO bookingVO,BindingResult result,Model model, RedirectAttributes redirectAttributes) {
+	public String bookForm(@Valid @ModelAttribute("bookingVO") BookingVO bookingVO,BindingResult result,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 	    log.debug("<<예매 작성폼2>>");
 	    
 	    if (result.hasErrors()) {
@@ -100,8 +112,11 @@ public class BookingController {
 	    }
 
 	    bookingService.registerBookingInfo(bookingVO);
-
-	    return "redirect:/main/main"; // 성공 시 리다이렉트
+	    
+	    model.addAttribute("message", "예매를 성공하였습니다");
+	    model.addAttribute("url",request.getContextPath() + "/main/main");
+	    
+	    return "common/resultAlert"; // 성공 시 리다이렉트
 	}
 	
 }
