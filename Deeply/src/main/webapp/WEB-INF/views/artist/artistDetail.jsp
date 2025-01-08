@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/artistPage.js"></script>
+<sec:authorize access="isAuthenticated()"><sec:authentication property="principal" var="principal" /></sec:authorize>
 
 
 <div class="artist-main background-black">
@@ -31,9 +33,16 @@
 				<div class="a-title font-white bold-title vertical-center">${vo.group_name}</div>
 			</div>
 			<div class="width-20">
+			<c:if test="${empty principal.artistVO || principal.artistVO.group_name != vo.group_name}">
 				<hr class="premium-hr">
-				<div class="premium-btn font-white bold-title align-center">구독 중</div>
+				<div class="premium-btn font-white bold-title align-center">팔로우 하기</div>
 				<hr class="premium-hr">
+			</c:if>
+			<c:if test="${!empty principal.artistVO && principal.artistVO.group_name == vo.group_name}">
+				<button class="artist-modify-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/artist/modify?group_num=${vo.group_num}'">
+					정보 수정
+				</button>
+			</c:if>	
 			</div>
 			
 		</div>

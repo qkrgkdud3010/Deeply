@@ -77,46 +77,60 @@ public class BookingController {
 	//예매 폼 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/book")
-	public String form(@ModelAttribute("bookingVO") BookingVO bookingVO, long perf_num, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
+	public String form(BookingVO bookingVO, long perf_num, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
 	    log.debug("<<예매 작성폼>>");
-	   
-	    model.addAttribute("perf_num", perf_num);
-	    EventVO event = bookingService.showEventDetail(perf_num);
-	    int seat_count = bookingService.countSeatByHallNum(event.getHall_num());
-	    List<SeatVO> seats = bookingService.selectSeatByHallNum(event.getHall_num());
-	    log.debug("수: " + seats);
+	    
+	    if(bookingVO == null) {
+	    	bookingVO = new BookingVO();
+	    }
+	    
 	    MemberVO member = principal.getMemberVO();
 	    
-	    AgroupVO group = artistService.selectArtistDetail(event.getArtist_num());
-		String group_name = group.getGroup_name();
-		
-	    model.addAttribute("group_name", group_name);
-	    model.addAttribute("event", event);
+	    loadBookingContents(perf_num, model);
+	    
+	    model.addAttribute("perf_num", perf_num);
 	    model.addAttribute("member", member);
-	    model.addAttribute("seat_count", seat_count);
-	    model.addAttribute("seats",seats);
+	    
 	    
 	    return "bookingForm";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/book")
-	public String bookForm(@Valid @ModelAttribute("bookingVO") BookingVO bookingVO,BindingResult result,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public String bookForm(@ModelAttribute("bookingVO") @Valid BookingVO bookingVO,BindingResult result,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 	    log.debug("<<예매 작성폼2>>");
 	    
-	    if (result.hasErrors()) {
-	        log.debug("<<유효성 검증 실패>> : " + result.getAllErrors());
-	        redirectAttributes.addFlashAttribute("bookingVO", bookingVO); // 기존 입력 데이터 유지
-	        redirectAttributes.addAttribute("perf_num", bookingVO.getPerf_num());
-	        return "redirect:/booking/book"; // 폼 JSP로 다시 이동
+	    if((Long)bookingVO.getPerf_num() != null) {
+	    	long perf_num = bookingVO.getPerf_num();
+	    	loadBookingContents(perf_num, model);
 	    }
-
+	    
+	    if (result.hasErrors()) {
+	        model.addAttribute("errors", result.getAllErrors());
+	        model.addAttribute("bookingVO", bookingVO);
+	        return "bookingForm"; // 유효성 검증 실패 시 JSP로 이동
+	    }
+	    
 	    bookingService.registerBookingInfo(bookingVO);
 	    
 	    model.addAttribute("message", "예매를 성공하였습니다");
 	    model.addAttribute("url",request.getContextPath() + "/main/main");
 	    
 	    return "common/resultAlert"; // 성공 시 리다이렉트
+	}
+	
+	public void loadBookingContents(long perf_num, Model model) {
+		EventVO event = bookingService.showEventDetail(perf_num);
+    	AgroupVO group = artistService.selectArtistDetail(event.getArtist_num());
+    	String group_name = group.getGroup_name();
+
+	    int seat_count = bookingService.countSeatByHallNum(event.getHall_num());
+	    List<SeatVO> seats = bookingService.selectSeatByHallNum(event.getHall_num());
+	    
+	    model.addAttribute("group_name", group_name);
+    	model.addAttribute("event", event);
+	    model.addAttribute("seat_count", seat_count);
+	    model.addAttribute("seats",seats);
 	}
 	
 }

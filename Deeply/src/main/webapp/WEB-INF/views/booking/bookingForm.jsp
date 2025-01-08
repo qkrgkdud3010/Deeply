@@ -119,6 +119,8 @@
 					</div>
 					<form:input id="seat_n1" path="seat_num1"/>
 					<form:input id="seat_n2" path="seat_num2"/>
+					<form:errors path="seat_num1" cssClass="error-color"/>
+					<form:errors path="seat_num2" cssClass="error-color"/>
 					
 				</div>
 			</div>

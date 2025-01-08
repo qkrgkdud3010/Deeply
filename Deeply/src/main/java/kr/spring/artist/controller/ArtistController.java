@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.member.service.ArtistService;
 import kr.spring.member.vo.AgroupVO;
@@ -31,7 +33,7 @@ public class ArtistController {
 		
 		return "artistList";
 	}
-	//아티스트 목록
+	//아티스트 상세
 	@GetMapping("/detail")
 	public String getDetail(long artist_num, Model model) {
 		AgroupVO vo = artistService.selectArtistDetail(artist_num);
@@ -41,6 +43,19 @@ public class ArtistController {
 		model.addAttribute("members", members);
 		
 		return "artistDetail";
+	}
+	
+	//아티스트 상세 정보 수정
+	@GetMapping("/modify")
+	public String form(@RequestParam long group_num, Model model) {
+		
+		AgroupVO vo = artistService.selectArtistDetail(group_num);
+		List<ArtistVO> members = artistService.selectGroupMembers(group_num);
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("members", members);
+		
+		return "artistModify";
 	}
 	
 }

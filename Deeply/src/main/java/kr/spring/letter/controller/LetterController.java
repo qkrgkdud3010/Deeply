@@ -61,13 +61,16 @@ public class LetterController {
 	//편지 폼 전송
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/write")
-	public String writeLetter(@Valid @ModelAttribute("letterVO") LetterVO letterVO,BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public String writeLetter(@ModelAttribute("letterVO") @Valid LetterVO letterVO,BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		
 		
 		log.debug("<<편지 전송>> : " + letterVO);
+		letterVO.setLetter_num(0); // 클라이언트 입력 무시		
 		
 		if(result.hasErrors()) {
-			 redirectAttributes.addFlashAttribute("letterVO", letterVO);
-			return "redirect:/letter/write";
+		    model.addAttribute("letterVO", letterVO);
+		    model.addAttribute("errors", result.getAllErrors());
+		    return "letterWrite"; // 유효성 검증 실패 시 다시 작성 화면으로 이동
 		}
 		
 		letterService.postLetter(letterVO);

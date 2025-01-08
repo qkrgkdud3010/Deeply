@@ -33,9 +33,11 @@
 		<div class="letter-form">
 			<div class="letter-title">
 				<form:input path="letter_title" placeholder="편지 제목 입력"/>
+				<form:errors path="letter_title" cssClass="error-color"/>
 			</div>
 			<div class="letter-content">
 				<form:textarea path="letter_content" placeholder="편지 내용 입력"/>
+				<form:errors path="letter_content" cssClass="error-color"/>
 			</div>
 		</div>
 		<form:button>전송</form:button>

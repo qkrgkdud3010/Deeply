@@ -3,6 +3,7 @@ package kr.spring.booking.vo;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +21,16 @@ public class BookingVO {
 	private int booked_seat;
 	private int total_price;
 	private String booking_date;
+	@NotBlank
 	private String seat_num1;
 	private String seat_num2;
 	@NotBlank
 	private String name;
 	private String name2;
+	@Pattern(regexp = "\\d{3}-\\d{3,4}-\\d{4}", message = "전화번호 형식이 올바르지 않습니다.")
 	@NotBlank
 	private String phone;
+	@Pattern(regexp = "\\d{3}-\\d{3,4}-\\d{4}", message = "전화번호 형식이 올바르지 않습니다.")
 	private String phone2;
 	private String more_info;
 	@NotBlank
