@@ -26,7 +26,10 @@ public interface MemberMapper {
 
 	public MemberVO selectCheckMember(String id);
 	Optional<MemberVO> findByEmail(String email);
+	@Select("SELECT * FROM duser JOIN duser_detail USING (user_num) WHERE user_num=#{user_num}")
 	public MemberVO selectMember(Long mem_num);
+	@Select("SELECT * FROM auser JOIN auser_detail USING (user_num) WHERE user_num=#{user_num}")
+	public MemberVO selectDMember(Long mem_num);
 	void updateMember(MemberVO memberVO);
 	
 	@Select("SELECT d.id FROM duser d JOIN duser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email} AND dd.name = #{name}")
