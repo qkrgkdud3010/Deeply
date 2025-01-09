@@ -240,3 +240,27 @@ margin-left:7px;
 }
 			  
 /*회원가입 부분 끝*/
+
+/*관리자 부분 시작*/
+.admin-one{
+	width:255px;
+	height:1105px;
+	background-color:#000000;
+	opacity:75%;
+	padding-top:10px;
+		float:left;
+}
+.admin-one ul li{
+		margin-top:40px;
+}
+.admin-one ul li a{
+	color:white;
+	font-size:20px;
+	text-decoration:none;
+
+}
+
+.admin-two{
+	float:left;
+}
+/*관리자 부분 끝*/

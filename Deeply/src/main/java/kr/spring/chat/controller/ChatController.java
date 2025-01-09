@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.chat.service.ChatService;
 import kr.spring.chat.vo.ChatVO;
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -47,44 +48,49 @@ public class ChatController {
 	}
 	
 	//형성된 채팅방 데이터 처리
+	//아티스트만 방을 만들 수 있도록
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/chWrite")
-	public String submit(@Valid ChatVO chvo, BindingResult result,
+	public String submit(@Valid ChatVO chatVO, BindingResult result,
 			HttpServletRequest request, RedirectAttributes redirect,
 			 @AuthenticationPrincipal 
              PrincipalDetails principal)throws IllegalStateException, IOException{
 		
-		log.debug("<<채팅방 형성>>" + chvo);
+		log.debug("<<채팅방 형성>>" + chatVO);
 		//유효성 체크결과 오류가 있으면 폼 호출
 		if(result.hasErrors()) {
 			return form();
 		}
 		//현재는 그냥 회원이면 방을 만들 수 있도록 설정
 		//채팅방 만드는 회원번호 설정
-		MemberVO vo = principal.getMemberVO();
-		chvo.setAuser_num(vo.getUser_num());
-		//제목(title=chat_name은 jsp에서 써서 전송할 예정)
+				
+		ArtistVO avo = principal.getArtistVO();
 		
-		//채팅방 만들기
-		try {
-		    chatService.insertChatroom(chvo);
-		} catch (Exception e) {
-		    log.error("Error inserting chatroom", e);
-		    throw new RuntimeException("Failed to create chatroom");
-		}
+		
+		Long user_num = avo.getUser_num();
+		chatVO.setChat_id(avo.getId());
+		
+		//제목(title=chat_name은 jsp에서 써서 전송할 예정)
+		chatService.insertChatroom(chatVO);
+		
+		/*========================
+		 * 아티스트 정보를 중간 테이블에 넣기
+		 *========================*/	
+		
+		chatService.insertAuserInfo(user_num);
+		System.out.println("유저번호 : "+user_num);
 		
 		//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
 		//데이터의 형태로 전달
 		redirect.addFlashAttribute("result","success");
 		
 
-		return "redirect:/chat/chRoom";
+		return "chatRoom";
 	}
 	
-	//@GetMapping("/chRoom")
-	//public String getList(
-		//	) {}
+
 	
+
 	
 	
 

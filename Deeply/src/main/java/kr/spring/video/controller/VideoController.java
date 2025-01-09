@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.video.service.VideoService;
 import kr.spring.video.vo.VideoVO;
+import kr.spring.member.vo.PrincipalDetails;
 
 @Controller
 public class VideoController {
@@ -20,6 +23,7 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
+    // 영상 목록 조회
     @GetMapping("/videos")
     public String listVideos(@RequestParam(value = "page", defaultValue = "1") int page,
                              Model model) {
@@ -35,41 +39,29 @@ public class VideoController {
         return "videoList"; // Tiles 정의 이름
     }
 
+    // 영상 업로드 페이지 (로그인 필요)
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/videos/upload")
     public String showUploadPage() {
         return "videoUpload"; // Tiles 정의 이름
     }
 
-    // ===========================
-    // 파일 대신 "링크"만 입력 받는 메서드
-    // ===========================
+    // 영상 업로드 처리 (로그인 필요)
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/videos/upload")
     public String uploadVideo(
             VideoVO video,
-            @RequestParam(value="mediaUrl", required=false) String mediaUrl,
-            @RequestParam(value="isExclusive", defaultValue="0") int isExclusive
-    ) {
-        // 기본값 세팅
-        if (video.getArtistId() == null) {
-            video.setArtistId(1L);
-        }
-        if (video.getCategoryId() == null) {
-            video.setCategoryId(1L);
-        }
-        if (video.getIsExclusive() == null) {
-            video.setIsExclusive(0);
-        }
-        if (video.getTitle() == null || video.getTitle().isEmpty()) {
-            video.setTitle("Default Title");
-        }
-        if (video.getDescription() == null || video.getDescription().isEmpty()) {
-            video.setDescription("Default description");
-        }
+            @RequestParam(value = "mediaUrl", required = false) String mediaUrl,
+            @RequestParam(value = "isExclusive", defaultValue = "0") int isExclusive,
+            @AuthenticationPrincipal PrincipalDetails principal) {
+
+        // 로그인 사용자 정보 설정
+        video.setArtistId(principal.getArtistVO().getUser_num());
 
         // 멤버십 여부
         video.setIsExclusive(isExclusive);
 
-        // (변경) mediaUrl만 세팅
+        // mediaUrl 설정
         if (mediaUrl != null && !mediaUrl.trim().isEmpty()) {
             video.setMediaUrl(mediaUrl.trim());
         } else {
@@ -79,43 +71,13 @@ public class VideoController {
         // DB 저장
         videoService.insertVideo(video);
 
-        // 목록으로 이동
-        return "redirect:/videos";
-    }
-
-    @GetMapping("/videos/view")
-    public String viewVideo(@RequestParam("id") Long videoId, Model model) {
-        videoService.updateHit(videoId);
-        VideoVO video = videoService.selectVideo(videoId);
-        model.addAttribute("video", video);
-        return "videoDetail"; // Tiles 정의 이름
-    }
-
-    @GetMapping("/videos/edit")
-    public String editVideo(@RequestParam("id") Long videoId, Model model) {
-        VideoVO video = videoService.selectVideo(videoId);
-        model.addAttribute("video", video);
-        return "videoEdit"; // Tiles 정의가 있다면 해당 이름 사용
-    }
-
-    @PostMapping("/videos/edit")
-    public String updateVideo(VideoVO video) {
-        videoService.updateVideo(video);
-        return "redirect:/videos/view?id=" + video.getVideoId();
-    }
-
-    @GetMapping("/videos/delete")
-    public String deleteVideo(@RequestParam("id") Long videoId) {
-        videoService.deleteVideo(videoId);
         return "redirect:/videos";
     }
 
     @GetMapping("/videos/newjeans")
-    public String showNewJeansPage(
-        @RequestParam(value="page", defaultValue="1") int page,
-        Model model
-    ) {
-        Map<String,Object> map = new HashMap<>();
+    public String showNewJeansPage(@RequestParam(value = "page", defaultValue = "1") int page,
+                                   Model model) {
+        Map<String, Object> map = new HashMap<>();
         map.put("page", page);
 
         List<VideoVO> videos = videoService.selectList(map);

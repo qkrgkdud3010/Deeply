@@ -63,6 +63,52 @@
         AND nick_name = #{nick_name}
     </if>
 </select>
+  	<sql id="memberSearch">
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					m.id LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					d.name LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					d.email LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 4">
+  					m.id LIKE '%' || #{keyword} || '%' OR
+  					d.name LIKE '%' || #{keyword} || '%' OR
+  					d.email LIKE '%' || #{keyword} || '%'
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+	<select id="selectRowCount" parameterType="map"
+  	                               resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM duser m LEFT OUTER JOIN duser_detail d
+  		ON m.user_num = d.user_num
+  		<include refid="memberSearch"/>
+  	</select>
+  	
+  	<!-- 전체/검색 목록 -->
+<select id="selectList" parameterType="map" resultType="memberVO">
+  SELECT *
+  FROM (
+    SELECT a.*, rownum rnum
+    FROM (
+      SELECT *
+      FROM duser m
+      LEFT OUTER JOIN duser_detail d ON m.user_num = d.user_num
+    ) a
+    <include refid="memberSearch"/> <!-- 이 부분에서 WHERE 조건이 추가된다면 위치를 확인 -->
+  )
+  <![CDATA[
+  WHERE rnum >= #{start} AND rnum <= #{end}
+  ]]>
+</select>
+
 
 
 </mapper>

@@ -21,4 +21,18 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
+	@Override
+	public void insertDuserInfo(Long chat_user_num) {
+		
+		chatMapper.insertDuserInfo(chat_user_num);
+	}
+
+	@Override
+	public void insertAuserInfo(Long chat_user_num) {
+		
+		 chatMapper.insertAuserInfo(chat_user_num);;
+	}
+
+	
+
 }

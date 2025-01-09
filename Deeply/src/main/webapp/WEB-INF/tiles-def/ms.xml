@@ -54,6 +54,22 @@
     	  value="/WEB-INF/views/member/resetPassword.jsp"/>                         
     </definition>
     
+    <definition name="admin_main" extends="main">
+    	<put-attribute name="title" value="어드민 메인"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/admin/admin_main.jsp"/>                         
+    </definition>
+    
+    <definition name="admin_list" extends="main">
+    	<put-attribute name="title" value="어드민 메인"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/admin/admin_list.jsp"/>                         
+    </definition>
+    
 </tiles-definitions>
 
 

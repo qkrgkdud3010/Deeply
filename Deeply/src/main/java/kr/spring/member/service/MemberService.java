@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.admin.vo.UserStatisticVO;
 import kr.spring.member.vo.MemberVO;
 public interface MemberService {
 
@@ -24,7 +25,10 @@ public interface MemberService {
 	 
 	 public String findId(String name,String email);
 
-
+		public int selectRowCount(Map<String,Object> map);
+		public List<MemberVO> selectList(Map<String,Object> map);
 	public void resetPassword(String email,String newPassword);
-
+	
+	public void recordUserCountForDate();
+	public List<UserStatisticVO> getUserStatisticsByDate();
 }
