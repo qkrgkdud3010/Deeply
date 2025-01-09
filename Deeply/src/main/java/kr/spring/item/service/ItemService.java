@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.item.vo.ItemVO;
+import kr.spring.member.vo.AgroupVO;
 
 public interface ItemService {
 	//부모글
@@ -15,5 +16,6 @@ public interface ItemService {
 	public ItemVO selectitem(Long item_num);
 	public void updateItem(ItemVO Item);
 	public void deleteItem(Long item_num);
-
+	public List<Map<String,Object>> showListByGroup(Map<String,Object> map);
+	public AgroupVO selectGroup(String group_name);
 }

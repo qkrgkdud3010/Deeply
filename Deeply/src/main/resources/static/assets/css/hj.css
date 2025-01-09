@@ -3,6 +3,17 @@
            공통
 ===============================
  */
+.right-align{
+	display:flex;
+	align-items:flex-end;
+	justify-content:flex-end;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;       
+}
+ 
 .main-container {
   background-color: black;
   height: auto;
@@ -36,6 +47,7 @@
     background-color: #fff;
     border-radius: 1vw; /* 화면 너비의 1% */
     box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); /* 뷰포트 비율 기반 */
+    color:black;
 }
 
 
@@ -59,4 +71,16 @@
 .policy-content {
     font-size: 16px; /* 폰트 크기 16px */
     line-height: 1.6; /* 줄 간격 */
+}
+
+.main-items{
+	width:100%;
+	background:black;
+	color:white;
+}
+
+.value-list{
+	display:flex;
+	align-items:center;
+	gap:2rem;	
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%><!-- 로그인 관련 태그 -->
 <sec:authorize access="isAuthenticated()">
@@ -23,23 +24,35 @@
 		</c:if>
 	</div>
 	<div class="listcontent-container item-container">
-		<div class="artist-name">반갑습니다. </div>
+		<div class="artist-name">반갑습니다. 상품의 메인 페이지 </div>
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<c:forEach var="item" items="${list}" varStatus="status">
-				<div class="item-card">
-					<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"
-						class="item-img">
-					<hr class="custom-hr" noshade="noshade" width="100%">
-					<span class="item-name list-text" style="font-size:18px;">${item.item_name}</span>
-					<span class="item-name list-price" style="font-size:18px; color:#0369A1;">${item.item_price}</span>
+			<c:forEach items="${groupedItems}" var="entry" varStatus="status">
+				<!-- group_name을 key로 출력 -->
+				<div class="main-items">
+					<c:if test="${fn:length(entry.value) > 0}">
+					<div><h3>${entry.key}</h3></div>
+					<!-- group_name -->
+
+					<!-- itemVO 리스트를 4개씩 나누기 -->
+					<div class="value-list">
+						<c:forEach items="${entry.value}" var="item" begin="0" end="3">
+							<div class="item-card">
+								<img
+									src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
+									width="180px" height="180px" class="item-img">
+								<hr class="custom-hr" noshade="noshade" width="100%">
+								<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span>
+								<span class="item-name list-price"
+									style="font-size: 18px; color: #0369A1;">${item.item_price}</span>
+							</div>
+						</c:forEach>
+					</div>
+					<a class="right-align" href="list?user_num=${entry.value[0].user_num}">-> 전체보기</a>
+					</c:if>
 				</div>
-				
-				<c:if test="${(status.index + 1) % 4 == 0}">
-					<hr class="custom-hr" noshade="noshade" width="100%">
-				</c:if>
 			</c:forEach>
 			<!-- 페이징 -->
 			<div class=list-paging>${page}</div>

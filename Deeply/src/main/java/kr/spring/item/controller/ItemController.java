@@ -1,7 +1,9 @@
 package kr.spring.item.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.item.service.ItemService;
 import kr.spring.item.vo.ItemVO;
+import kr.spring.member.service.ArtistService;
+import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
@@ -36,6 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ItemController {
 	@Autowired
 	private ItemService itemService;
+	@Autowired
+	private ArtistService artistService;
 	
 	//자바빈(VO)초기화
 	@ModelAttribute
@@ -74,66 +80,65 @@ public class ItemController {
 	    }
 
 	    // 회원 번호 읽기
-	    MemberVO vo = principal.getMemberVO();
-	    itemVO.setUser_num(vo.getUser_num());
-
+	    ArtistVO vo = principal.getArtistVO();
+	    String group_name = vo.getGroup_name();
+	    AgroupVO agroupVO = itemService.selectGroup(group_name);
+	    itemVO.setUser_num(agroupVO.getGroup_num());
 	    // 파일 업로드
 	    itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
-
+	    
 	    // 상품 등록하기
 	    itemService.insertItem(itemVO);
-	    
+	    	
 	    redirect.addFlashAttribute("result", "success");
 	    log.debug("성공");
-	    return "redirect:/item/list";
+	    return "redirect:/item/main";
 	}
 
 	
-	
-	
 	/*==============================
-	 * 	상품 목록
+	 * 	상품 메인
 	 * =============================*/
-	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/list")
-	public String getList(@RequestParam(defaultValue="1") int pageNum,
-						  @RequestParam(defaultValue="1") int order,
-						  String keyfield,
-						  String keyword,
-						  Model model,
-						  @AuthenticationPrincipal 
-						  PrincipalDetails principal) {
-		
+	
+	 @PreAuthorize("isAuthenticated()")
+	 @GetMapping("/main")
+	 public String getMain(
+			@RequestParam(defaultValue="1") int pageNum,
+			@RequestParam(defaultValue="1") int order,
+			String keyfield,String keyword,Model model,
+			@AuthenticationPrincipal PrincipalDetails principal) {
+
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<게시판 목록 - order>> : " + order);
-		
-		//아티스트 정보
-		ArtistVO artist = principal.getArtistVO();
-		Long auser_num = artist.getUser_num();
-		
-		//유저 정보
-		MemberVO member = principal.getMemberVO();
-		Long user_num = member.getUser_num();
-		
-		//구독한 아티스트정보
-		
+
+		//MemberVO member = principal.getMemberVO();
+	//	Long user_num = member.getUser_num();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
+		
+		//아티스트 계정으로 접속
+		if(principal.getArtistVO() != null) {
+			ArtistVO artist = principal.getArtistVO();
+			Long auser_num = artist.getUser_num();
+			map.put("user_num", auser_num);
+			model.addAttribute("auser_num", auser_num);
+		}
+		
+		//유저 계정으로 접속
+		else if(principal.getMemberVO() != null) {
+			MemberVO member = principal.getMemberVO();
+			Long duser_num = member.getUser_num();
+			map.put("user_num", duser_num);
+			model.addAttribute("member", member);
+		}
+		
+		
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
-		map.put("user_num", user_num);
-		
-		boolean isartist = auser_num != null && auser_num == principal.getArtistVO().getUser_num();
-		
-		if(isartist) {
-			map.put("artist",artist);
-			model.addAttribute("artist", artist);
-		}
-			
-		
+
 		//전체/검색 레코드수 
 		int count = itemService.selectRowCount(map);
-		
+
 		//페이지 처리
 		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,12,10,"list","&order="+order);
 		
@@ -146,14 +151,106 @@ public class ItemController {
 			
 			list = itemService.selectList(map);
 		}
+
+		List<AgroupVO> agroup = artistService.selectArtistByGroup();
+		
+		Map<String,List<ItemVO>> groupedItems = new HashMap<String, List<ItemVO>>();
+		
+		for (AgroupVO a : agroup) {
+		 
+		    List<ItemVO> items = groupedItems.getOrDefault(a.getGroup_name(), new ArrayList<>());
+		    
+		    for (ItemVO item : list) {
+		        if (item.getUser_num()== a.getGroup_num()) {
+		            items.add(item);
+		        }
+		    }
+		    // 최종적으로 그룹에 리스트 추가
+		    groupedItems.put(a.getGroup_name(), items);
+		}
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("groupedItems", groupedItems);
+
+		return "itemMain";
+		
+		
+	}
+	 
+	 /* 1. 아티스트 계정으로 접근 시
+			-"등록하기" 버튼 표시.
+			-그룹별 최신 상품(4개씩) 표시
+	   2. 일반 유저 계정으로 접근 시
+  			-그룹별 최신 상품(4개씩) 표시
+			-유료회원인 경우 구독한 아티스트 그룹의 상품을 추가적으로 표시
+	   3. 공통
+		   - 모든 경우 그룹별로 최신 업데이트된 순으로 데이터를 표시
+		   - itemList.jsp에서 데이터 불러오기*/
+	
+	/*==============================
+	 * 	상품 목록
+	 * =============================*/
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/list")
+	public String getList(
+			@RequestParam(defaultValue="1") int pageNum,
+			@RequestParam(defaultValue="1") int order,
+			String keyfield,String keyword,Model model,
+			@AuthenticationPrincipal PrincipalDetails principal) {
+
+		log.debug("<<PrincipalDetails 객체>>: " + principal);
+		log.debug("<<게시판 목록 - order>> : " + order);
+
+		//MemberVO member = principal.getMemberVO();
+	//	Long user_num = member.getUser_num();
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		//아티스트 계정으로 접속
+		if(principal.getArtistVO() != null) {
+			ArtistVO artist = principal.getArtistVO();
+			Long auser_num = artist.getUser_num();
+			map.put("user_num", auser_num);
+			model.addAttribute("auser_num", auser_num);
+		}
+		
+		//유저 계정으로 접속
+		else if(principal.getMemberVO() != null) {
+			MemberVO member = principal.getMemberVO();
+			Long duser_num = member.getUser_num();
+			map.put("user_num", duser_num);
+			model.addAttribute("member", member);
+		}
+		
+		
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+
+		//전체/검색 레코드수 
+		int count = itemService.selectRowCount(map);
+
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,12,10,"list","&order="+order);
+		
+		
+		List<ItemVO> list = null;
+		if(count > 0) {
+			map.put("order", order);
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = itemService.selectList(map);
+		}
+
 		
 		
 		model.addAttribute("count", count);
-		model.addAttribute("member", member);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());
-		
-		log.debug("Logged in user's name: " + member.getName());
+
+
 		return "itemList";
 		
 		
@@ -199,7 +296,7 @@ public class ItemController {
 		
 		//DB에 저장된 파일 정보 구하기
 		if(principal.getMemberVO().getUser_num() != itemVO.getUser_num()) {
-			return "redirect:.common/accessDenied";
+			return "redirect:common/accessDenied";
 		}
 		
 		model.addAttribute("itemVO",itemVO);

@@ -50,7 +50,7 @@
 	<select id="selectRowCount" parameterType="map" resultType="integer">
 		SELECT
 			COUNT(*)
-		FROM shop_item JOIN auser_detail USING(user_num)
+		FROM shop_item JOIN agroup ON shop_item.user_num = agroup.group_num
 		<include refid="shopSearch"/>
 	</select>
 	
@@ -62,23 +62,24 @@
 				rownum rnum
 			FROM (SELECT
 					item_num,
-					user_num,
-					name,
 					filename,
 					item_name,
 					item_regdate,
 					item_modifydate,
 					item_stock,
 					item_description,
-					item_price
+					item_price,
+					user_num
 				FROM shop_item
-				JOIN auser_detail USING(user_num)
+				JOIN agroup ON shop_item.user_num = agroup.group_num
 					)a
 				)
-				WHERE user_num = #{user_num} <!-- 로그인된 사용자의 ID로 필터링 -->
 			<![CDATA[
-		AND rnum >= #{start} AND rnum <= #{end}
-		]]>
+					WHERE rnum >= #{start} 
+					AND rnum <= #{end}
+			]]>
+				ORDER BY item_regdate desc
+		 			
 	</select>	
 	
 	<update id="updateItem" parameterType="ItemVO">
@@ -92,7 +93,28 @@
 				item_modifydate = SYSDATE
 		WHERE item_num = #{item_num}
 	</update>
-	 
+	
+	<select id="showListByGroup" parameterType="map" resultType="map">
+	    SELECT *
+	    FROM (
+	        SELECT 
+	            g.group_name,
+	            g.group_photo,
+	            i.item_num,
+	            i.item_name,
+	            i.item_price,
+	            i.item_description,
+	            i.item_stock,
+	            i.filename,
+	            ROW_NUMBER() OVER (PARTITION BY g.group_name ORDER BY i.item_modifydate DESC) AS rnum
+	        FROM agroup g
+	        LEFT JOIN shop_item i ON g.group_num = i.group_num
+	    ) sub
+	    <![CDATA[
+	    WHERE sub.rnum <= 4
+	    ORDER BY sub.group_name, sub.rnum
+	    ]]>
+	</select>
 
 
 

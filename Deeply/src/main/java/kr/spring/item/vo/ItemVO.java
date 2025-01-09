@@ -1,7 +1,6 @@
 package kr.spring.item.vo;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -30,5 +29,6 @@ public class ItemVO {
 	@NotNull
 	private int item_stock;      			// 상품 재고 수량
 	
-	private String name; //아티스트 이름
+	private String group_name; 				//아티스트 이름
+	private String group_photo;				//아티스크 사진
 }

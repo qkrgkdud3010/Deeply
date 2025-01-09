@@ -8,7 +8,8 @@ create table shop_item(
  item_modifydate date,
  item_stock number not null,
  constraint shop_item_pk primary key (item_num),
- constraint shop_item_fk foreign key (user_num) references duser_detail (user_num)
+ constraint shop_item_fk foreign key (user_num) references auser_detail (user_num)
+ constraint shop_item_fk_group foreign key (group_num) references agroup (group_num)
 );
 create sequence shop_item_seq;
 
@@ -25,7 +26,7 @@ create table shop_order(
  order_notice varchar(4000),
  constraint shop_order_pk primary key (order_num),
  constraint shop_order_fk_item foreign key (item_num) references shop_item (item_num),
- constraint shop_order_fk_user foreign key (user_num) references duser_detail (user_num),
+ constraint shop_order_fk_user foreign key (user_num) references auser_detail (user_num),
  constraint shop_order_fk_pay foreign key (pay_num) references payment (pay_num) 
 );
 create sequence order_num_seq;
@@ -38,7 +39,7 @@ create table shop_cart(
  order_quantity number not null,
  constraint shop_cart_pk primary key(cart_num),
  constraint shop_cart_fk_item foreign key (item_num) references shop_item (item_num),
- constraint shop_cart_fk_user foreign key (user_num) references duser_detail (user_num)
+ constraint shop_cart_fk_user foreign key (user_num) references auser_detail (user_num)
 );
 create sequence cart_num_seq;
 
@@ -47,5 +48,5 @@ create table shop_like(
  like_date date default sysdate not null,
  user_num number not null,
  constraint shop_like_fk_item foreign key (item_num) references shop_item (item_num),
- constraint shop_like_fk_user foreign key (user_num) references duser_detail (user_num)
+ constraint shop_like_fk_user foreign key (user_num) references auser_detail (user_num)
 );

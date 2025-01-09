@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.item.dao.ItemMapper;
 import kr.spring.item.vo.ItemVO;
+import kr.spring.member.vo.AgroupVO;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -42,6 +43,16 @@ public class ItemServiceImpl implements ItemService{
 	@Override
 	public void deleteItem(Long item_num) {
 		itemMapper.deleteItem(item_num);
+	}
+
+	@Override
+	public List<Map<String,Object>> showListByGroup(Map<String, Object> map) {
+		return itemMapper.showListByGroup(map);
+	}
+
+	@Override
+	public AgroupVO selectGroup(String group_name) {
+		return itemMapper.selectGroup(group_name);
 	}
 
 	
