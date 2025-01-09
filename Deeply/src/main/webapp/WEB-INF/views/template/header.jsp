@@ -14,7 +14,11 @@
 			src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png"></a>
 	</c:if>
 	<c:if test="${!empty principal && principal.memberVO.auth == 9}"><%-- 관리자 화면 링크 --%>
-	<a href="${pageContext.request.contextPath}/main/admin"><img alt=""
+	<a href="${pageContext.request.contextPath}/main/main"><img alt=""
+			src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png"></a>
+	</c:if>
+	<c:if test="${!empty principal && principal.artistVO!=null}"><%-- 아티스트 화면 링크 --%>
+	<a href="${pageContext.request.contextPath}/main/main"><img alt=""
 			src="${pageContext.request.contextPath}/assets/images/DeeplyLoginLogo.png"></a>
 	</c:if>
 	</div>
@@ -30,16 +34,19 @@
 		<c:if test="${!empty principal && principal.memberVO.auth < 9}">
 			<a href="${pageContext.request.contextPath}/member/myPage">MY페이지</a>
 		</c:if>
+		<c:if test="${!empty principal && principal.artistVO!=null}">
+			<a href="${pageContext.request.contextPath}/member/myPage">MY페이지</a>
+		</c:if>
 		<%--=============사용자 로그인 영역 끝=========--%>
 		<%--=====사용자,관리자 공통 로그인 영역 시작======--%>
 		<c:if test="${!empty principal}">
 			<img src="${pageContext.request.contextPath}/member/photoView"
 				width="25" height="25" class="my-photo">
 			<c:if test="${!empty principal.memberVO.nick_name}">
-		[<span class="user_name">${principal.memberVO.nick_name}</span>]
+		<span class="user_name">${principal.memberVO.nick_name}</span>님
 		</c:if>
-			<c:if test="${empty principal.memberVO.nick_name}">
-		[<span class="user_name">${principal.memberVO.id}</span>]
+			<c:if test="${!empty principal && principal.artistVO!=null}">
+		<span class="user_name">${principal.artistVO.name}</span>님
 		</c:if>
 			<%-- 아래와 같이 폼을 만들고 post방식으로 전달해야 스프링
 		     시큐리티가 지원하는 로그아웃 기능을 사용할 수 있음 --%>
@@ -62,9 +69,30 @@
 	</div>
 		<%--=============사용자 비로그인 영역 시작=========--%>
 		<div class="first-text">
-			<c:if test="${empty principal || principal.memberVO.auth < 9}">
+		<%--로그인전--%>
+			<c:if test="${empty principal}">
 				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
 				<a href="${pageContext.request.contextPath}/item/list">shop</a>
+			</c:if>
+		<%--일반회원--%>
+			<c:if test="${!empty principal && principal.memberVO.auth < 9}">
+				<a href="#">커뮤니티</a>
+				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
+				<a href="${pageContext.request.contextPath}/item/list">shop</a>
+			</c:if>
+		<%--아티스트--%>
+			<c:if test="${!empty principal && principal.artistVO!=null}">
+				<a href="#">커뮤니티</a>
+				<a href="${pageContext.request.contextPath}/item/list">shop</a>
+			
+				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
+				<a href="#">팬관리</a>
+			
+			</c:if>
+		<%--관리자--%>
+			<c:if test="${!empty principal && principal.memberVO.auth == 9}">
+				<a href="#">관리자</a>
+	
 			</c:if>
 		</div>
 	</div>
