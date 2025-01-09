@@ -24,8 +24,11 @@
 			</c:forEach>
 		</div>
 	</div>
-
-	<div class="a-mainpic">아티스트 이미지</div>
+	<c:if test="${!empty vo.group_photo && vo.group_photo != ''}">
+	<div class="a-mainpic align-center">
+		<img class="a-mainImg" src="${pageContext.request.contextPath}/assets/upload/${vo.group_photo}">
+	</div>
+	</c:if>
 	<div class="artist-detail">
 		<div class="vertical-center">
 			<div class="width-80">

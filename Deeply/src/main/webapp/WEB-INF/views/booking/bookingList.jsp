@@ -19,6 +19,7 @@
 					<button class="booking-btn white-btn left-1">예매 중</button>
 					<button class="booking-btn white-btn left-1">마감/종료</button>
 				</div>
+				<button class="register-event-btn align-center bold-title" onclick="location.href='register?group_num=${artist_num}'">공연 등록</button>
 			</div>
 			<div class="booking-list top-1">
 				<div class="booking-items height-90">

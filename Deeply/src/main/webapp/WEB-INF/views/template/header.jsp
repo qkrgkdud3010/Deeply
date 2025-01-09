@@ -91,7 +91,7 @@
 			</c:if>
 		<%--관리자--%>
 			<c:if test="${!empty principal && principal.memberVO.auth == 9}">
-				<a href="#">관리자</a>
+				<a href="${pageContext.request.contextPath}/admin/admin_main">관리자</a>
 	
 			</c:if>
 		</div>

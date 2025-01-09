@@ -11,36 +11,36 @@ import lombok.ToString;
 @Setter
 @ToString
 public class EventVO {
-	private long perf_num;
-	private long hall_num;
+	private long perf_num;//공연 번호
+	private long hall_num;//공연장 번호
 	@NotBlank
-	private String hall_name;
-	private String location;
-	private int booked_amount;
-	private long artist_num;
-	private String group_name;
+	private String hall_name;//공연장 이름
+	private String location;//공연 장소
+	private int booked_amount;//예매 수
+	private long artist_num;//아티스트(그룹) 번호
+	private String group_name;//아티스트(그룹) 이름
 	@NotBlank
-	private String mem_date;
+	private String mem_date;//멤버십 선예매 날짜
 	@NotBlank
-	private String perf_date;
+	private String perf_date;//공연 날짜
 	@NotBlank
-	private String perf_time;
+	private String perf_time;//공연 시간
 	@NotBlank
-	private String end_time;
-	private String perf_status;
+	private String end_time;//끝나는 시간
+	private String perf_status;//공연 상태(진행중, 완료 ,,)
 	@NotBlank
-	private String perf_title;
+	private String perf_title;//공연 제목
 	@NotEmpty
-	private String perf_desc;
+	private String perf_desc;//공연 설명
 	@NotBlank
-	private int ticket_price;
-	private int remaining_amount;
+	private int ticket_price;//티켓 총가격
+	private int remaining_amount;//남은 좌석 수
 	@NotBlank
-	private String reg_date;
+	private String reg_date;//예매 시작날짜
 	@NotBlank
-	private String end_date;
+	private String end_date;//예매 종료날짜
 	@NotBlank
-	private int category;
+	private int category;//카테고리
 	@NotBlank
-	private String booking_deadline;
+	private String booking_deadline;//예매 종료날짜
 }

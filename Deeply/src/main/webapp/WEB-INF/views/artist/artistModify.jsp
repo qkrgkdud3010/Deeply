@@ -9,39 +9,47 @@
 
 
 <div class="artist-main background-black">
-	<form:form modelAttribute="vo" action="detail?artist_num=${vo.group_num}" id="modify_artist" enctype="multipart/form-data">
+	<form:form modelAttribute="agroupVO" action="modify?origin_name=${agroupVO.group_name}" id="modify_artist" enctype="multipart/form-data">
+	<form:hidden path="group_num" value="${agroupVO.group_num}"/>
+	
 	<div class="a-mainpic align-center">
-		<img class="img-previewer" id="previewImage">
+		<c:if test="${!empty agroupVO.group_photo && agroupVO.group_photo != ''}">
+			<img class="img-previewer" id="previewImage" src="${pageContext.request.contextPath}/assets/upload/${agroupVO.group_photo}">
+		</c:if>
+		<c:if test="${empty agroupVO.group_photo || agroupVO.group_photo == ''}">
+			<img class="img-previewer" id="previewImage">
+		</c:if>
 		<button class="amainpic-select bold-title">이미지 수정</button>
-		<input type="file" name="group_photo" id="group_photo">
-		
+		<input type="file" name="upload" id="group_photo">
+		<input type="hidden" name="group_photo" value="${agroupVO.group_photo}">
 	</div>
-	<div class="artist-detail">
+	
+	<div class="artist-detail modify-details">
 		<div class="vertical-center">
 			<div class="width-80">
-				<div class="font-white bold-title vertical-center font-2">
-					<form:label path="fandom_name">팬덤명</form:label><form:input path="fandom_name"/>	
+				<div class="font-white bold-title vertical-center font-1_5">
+					<form:label path="fandom_name">팬덤명</form:label>
+					<form:input path="fandom_name"/>
+					<form:errors path="fandom_name" cssClass="error-color"/>	
 				</div>
-				<div class="font-white bold-title vertical-center font-2">
-					<form:label path="fandom_name">아티스트(그룹)명</form:label><form:input path="group_name"/>
+				<div class="font-white bold-title vertical-center font-1_5">
+					<form:label path="group_name">아티스트(그룹)명</form:label>
+					<form:input path="group_name"/>
+					<form:errors path="group_name" cssClass="error-color"/>
 				</div>
 			</div>
-			<div class="width-20">
-				<c:if test="${empty principal.artistVO || principal.artistVO.group_name != vo.group_name}">
-					<hr class="premium-hr">
-					<div class="premium-btn font-white bold-title align-center">팔로우 하기</div>
-					<hr class="premium-hr">
-				</c:if>
-			</div>
-			
 		</div>
 		<div class="a-desc font-white">
-			<div><form:label class="bold-title font-2" path="intro_desc">아티스트 상세 정보</form:label></div>
+			<div><form:label class="bold-title font-1_5" path="intro_desc">아티스트 상세 정보</form:label></div>
 			<div><form:textarea path="intro_desc"/></div>
+			<div><form:errors path="intro_desc" cssClass="error-color"/></div>
 		</div>
 	</div>
 	<div class="modify-submit align-center">
-	<form:button class="modify-submit-btn">수정</form:button>
+	<form:button class="modify-submit-btn left-10">수정</form:button>
 	</div>
 	</form:form>
+	<div class="modify-bottom-div">
+	<button class="modify-cancel-btn" onclick="location.href='${pageContext.request.contextPath}/artist/detail?artist_num=${agroupVO.group_num}'">목록</button>
+	</div>
 </div>

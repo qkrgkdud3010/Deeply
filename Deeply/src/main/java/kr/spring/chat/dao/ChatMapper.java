@@ -14,8 +14,8 @@ public interface ChatMapper {
 	
 	//유저정보 insert or update
 	//중간테이블로 연결시켜준다.
-	public void insertDuserInfo(ChatVO chvo);
-	public void insertAuserInfo(ChatVO chvo);
+	public void insertDuserInfo(Long user_num);
+	public void insertAuserInfo(Long user_num);
 	
 	//최종 usertable에서 select하기
 	

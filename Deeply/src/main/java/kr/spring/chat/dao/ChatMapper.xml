@@ -13,9 +13,39 @@
 		chat_status
 		) VALUES (
 		chatroom_seq.nextval,
-		#{title},
+		#{chat_name},
 		1)
 		
+	</insert>
+	<!-- 유료 사용자 정보 중간 테이블에 넣기 -->
+	<insert id ="insertDuserInfo">
+	INSERT INTO chat (
+    chat_user_num,
+    chat_num,
+    chat_id,
+    chat_kind
+	)
+	SELECT
+    user_num,
+    (SELECT chat_num FROM chatroom),
+    chat_seq.nextval,
+    id,
+    chat_kind
+	FROM duser
+	</insert>
+	<!-- 아티스트 정보 중간테이블에 넣기 -->
+	<insert id ="insertAuserInfo">
+	INSERT INTO chat (chat_user_num, chat_num, chat_id, chat_kind)
+SELECT #{chat_user_num}, 
+       (SELECT chat_num FROM chatroom WHERE ROWNUM = 1), 
+       id, 
+       1
+FROM auser
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM chat 
+    WHERE chat_user_num = #{chat_user_num}
+)
 	</insert>
 
 
