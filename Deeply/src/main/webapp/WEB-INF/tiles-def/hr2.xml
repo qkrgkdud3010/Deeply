@@ -5,12 +5,36 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+	<!-- 회원가입 -->
     <definition name="hr2" extends="main">
     	<put-attribute name="title" value="회원가입"/>
-    	<put-attribute name="css"
-    	       value="/WEB-INF/views/member/memberCSS.jsp"/>                            
-    	<put-attribute name="body"
-    	  value="/WEB-INF/views/member/memberRegister.jsp"/>
+    	<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>                            
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberRegister.jsp"/>
+    </definition>
+    
+	<!-- 회원 마이페이지 -->
+    <definition name="myInfo" extends="main">
+    	<put-attribute name="title" value="나의 정보"/>
+    	<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>                            
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/myInfo.jsp"/>
+    </definition>
+    <definition name="follow" extends="main">
+    	<put-attribute name="title" value="팔로우리스트"/>
+    	<put-attribute name="body" value="/WEB-INF/views/follow/followView.jsp"/>
+    </definition>
+    <definition name="modifyInfo" extends="main">
+    	<put-attribute name="title" value="회원정보 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/modifyInfo.jsp"/>
+    </definition>
+    
+    <!-- 아티스트 마이페이지 -->
+     <definition name="artiInfo" extends="main">
+    	<put-attribute name="title" value="아티스트 정보"/>
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/artiInfo.jsp"/>
+    </definition>
+     <definition name="modifyArtiInfo" extends="main">
+    	<put-attribute name="title" value="아티스트 정보 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/modifyArtiInfo.jsp"/>
     </definition>
 </tiles-definitions>
 

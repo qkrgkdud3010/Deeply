@@ -1,6 +1,7 @@
 package kr.spring.follow.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,22 @@ import kr.spring.follow.vo.FollowVO;
 @Transactional
 public class FollowServiceImpl implements FollowService{
 	@Autowired
-    private FollowMapper followMapper;
+	FollowMapper followMapper;
+
+	@Override
+	public List<FollowVO> getMyFollow(Map<String, Object> map) {
+		return followMapper.getMyFollow(map);
+	}
+
+	@Override
+	public Integer countMyFollow(long follower_num) {
+		return followMapper.countMyFollow(follower_num);
+	}
+
+	@Override
+	public FollowVO selectFollow(FollowVO follow) {
+		return followMapper.selectFollow(follow);
+	}
 
 	@Override
 	public void following(FollowVO follow) {
@@ -21,18 +37,8 @@ public class FollowServiceImpl implements FollowService{
 	}
 
 	@Override
-	public void unFollow(Long follow_num, Long follower_num) {
-		followMapper.unFollow(follow_num, follower_num);
+	public void unfollow(FollowVO follow) {
+		followMapper.unfollow(follow);
 	}
-
-	@Override
-	public List<FollowVO> getMyFollow(Long user_num) {
-		return followMapper.getMyFollow(user_num);
-	}
-
-	@Override
-	public List<FollowVO> getMyFollower(Long user_num) {
-		return followMapper.getMyFollower(user_num);
-	}
-
+	
 }

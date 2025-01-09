@@ -1,18 +1,17 @@
 package kr.spring.follow.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import kr.spring.follow.vo.FollowVO;
 
 public interface FollowService {
-	//팔로우하기
-	public void following(FollowVO follow);
-	//팔로우 취소
-	public void unFollow(Long follow_num, Long follower_num);
+	//나의 팔로우 목록)마이페이지
+	List<FollowVO> getMyFollow(Map<String,Object> map);
+	public Integer countMyFollow(long follower_num);
 
-	//내가 팔로우하는 리스트
-	List<FollowVO> getMyFollow(Long user_num);
-	//나를 팔로우하는 리스트
-	List<FollowVO> getMyFollower(Long user_num);
+	//팔로우 기능
+	public FollowVO selectFollow(FollowVO follow);
+	public void following(FollowVO follow);
+	public void unfollow(FollowVO follow);
 }
