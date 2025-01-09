@@ -44,6 +44,9 @@ public interface MemberMapper {
 	
 	@Update("UPDATE auser_detail SET passwd_hash = #{newPassword} WHERE email = #{email}")
 	public void resetPassword2(String email ,String newPassword);
+	
+	public int selectRowCount(Map<String,Object> map);
+	public List<MemberVO> selectList(Map<String,Object> map);
 }
 
 

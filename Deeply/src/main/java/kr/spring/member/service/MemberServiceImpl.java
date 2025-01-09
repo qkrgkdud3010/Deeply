@@ -1,4 +1,7 @@
 package kr.spring.member.service;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +10,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import kr.spring.admin.dao.UserStatisticMapper;
+import kr.spring.admin.vo.UserStatisticVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
 @Service
@@ -98,9 +104,34 @@ public class MemberServiceImpl implements MemberService{
 			}
 
 
-
-	    
-	    
+			
 
 		}
-}
+		@Autowired
+		private UserStatisticMapper userStatisticMapper;
+   
+	
+		@Override
+		   public void recordUserCountForDate() {
+			 String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		        // 날짜별로 접속자 수를 확인하고, 없으면 새로 추가, 있으면 업데이트
+		        if (userStatisticMapper.existsByDate(date)) {
+		            userStatisticMapper.updateUserCount(date);  // 접속자 수 업데이트
+		        } else {
+		            userStatisticMapper.insertUserCount(date);  // 새로운 날짜에 접속자 수 추가
+		        }
+		    }
+		@Override
+		public List<UserStatisticVO> getUserStatisticsByDate() {
+	        return userStatisticMapper.selectAllStatistics();  // 날짜별 접속자 수를 반환
+	    }
+
+		@Override
+		public int selectRowCount(Map<String, Object> map) {
+			return memberMapper.selectRowCount(map);
+		}
+
+		@Override
+		public List<MemberVO> selectList(Map<String, Object> map) {
+			return memberMapper.selectList(map);
+		}}
