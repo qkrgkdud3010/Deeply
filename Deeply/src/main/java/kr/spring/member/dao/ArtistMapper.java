@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
@@ -42,4 +43,9 @@ public interface ArtistMapper {
 	
 	@Select("SELECT * FROM auser_detail WHERE user_num=#{artist_num}")
 	public ArtistVO selectMember(long artist_num);
+	
+	@Update("UPDATE agroup SET group_name=#{group_name},fandom_name=#{fandom_name},intro_desc=#{intro_desc},group_photo=#{group_photo} WHERE group_num=#{group_num}")
+	public void updateArtistGroup(AgroupVO agroupVO);
+	@Update("UPDATE auser_detail SET group_name = #{agroupVO.group_name} WHERE group_name = #{origin_name}")
+	public void updateArtistMemberGroupName(Map<String,Object> map);
 }

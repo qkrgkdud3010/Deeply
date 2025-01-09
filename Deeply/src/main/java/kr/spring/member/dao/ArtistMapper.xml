@@ -51,5 +51,6 @@
             AND auser_detail.group_name = #{group_name}
         </if>
 </select>
+
    
 </mapper>

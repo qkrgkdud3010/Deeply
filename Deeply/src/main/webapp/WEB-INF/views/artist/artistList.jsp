@@ -18,10 +18,17 @@
 	<div class="a-title font-white bold-title vertical-center">ARTIST</div>
 	<div class="aList-container">
 		<c:forEach var="group" items="${groups}">
-			<div class="aList-items">
-				<a href="detail?artist_num=${group.group_num}">${group.group_name}</a>
-			</div>
+			<a href="detail?artist_num=${group.group_num}">
+				<div class="aList-items">
+					<div class="over-hidden height-80 align-top">
+						<img class="alist-img" src="${pageContext.request.contextPath}/assets/upload/${group.group_photo}">
+					</div>
+					<div class="height-20 align-center bold-title font-1">
+						${group.group_name}
+					</div>
+				</div>
+			</a> 
 		</c:forEach>
-		
 	</div>
+	<div class="space-10vw"></div>
 </div>

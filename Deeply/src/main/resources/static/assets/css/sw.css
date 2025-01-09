@@ -54,7 +54,9 @@ a {
 .hr-2{
 	height:0.1vw;
 }
-
+.border-black{
+	border:1px solid black;
+}
 
 /* 공통 배경색 ====================*/
 .background-black{
@@ -67,6 +69,12 @@ a {
 
 .display-flex{
 	display:flex;	
+}
+
+.align-top{
+	display:flex;
+	align-items:flex-start;
+	justify-content:center;	
 }
 
 .align-center{
@@ -91,6 +99,8 @@ a {
 	display:flex;
 	align-items:center;
 }
+
+
 
 .left-1{
 	margin-left:1%;
@@ -219,19 +229,30 @@ a {
  }
  
  .aList-container{
- 	background:blue;
  	width:80%;
  	margin:5% auto;
  	display:flex;
  	flex-wrap:wrap;
- 	gap:3rem;
+ 	gap:9.5vw;
  }
  
  .aList-items{
+
  	width:20vw;
- 	height:20vw;
- 	background:yellow;
- 	flex: 0 0 calc(33% - 5rem);
+ 	height:18vw;
+ 	background:white;
+ 	overflow: hidden;
+ 	border-radius:10px;
+ }
+ 
+ .over-hidden{
+ 	overflow: hidden;
+ }
+ 
+ .alist-img{
+ 	object-fit:cover;
+ 	width:100%;
+ 	height:auto;
  }
  
  
@@ -293,9 +314,20 @@ a {
  .a-mainpic{
  	width:95%;
  	margin:0 auto;
- 	height:30vw;
+ 	height:40vw;
  	position:relative;
  	overflow: hidden;
+ }
+ 
+ .a-mainImg{
+ 	width:90%;
+ 	height:100%;
+ 	object-fit:cover;
+ 	object-position:top;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 20%, black 90%, transparent);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
  }
  
  .a-fandom{
@@ -342,6 +374,12 @@ a {
  	background:none;
  	border-radius:10%;
  	border:1px solid white;
+ 	cursor:pointer;
+ }
+ 
+ .premium-item:hover{
+ 	border:2px solid #0369A1;
+ 	color:#0369A1;
  }
  
  .a-profile{
@@ -446,8 +484,10 @@ a {
 ===============================
  */
  .img-previewer{
+ 	width:90%;
+ 	height:100%;
  	object-fit:cover;
- 	object-position: center;
+ 	object-position:top;
     -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 90%, transparent);
     mask-image: linear-gradient(to right, transparent, black 20%, black 90%, transparent);
     -webkit-mask-repeat: no-repeat;
@@ -468,7 +508,7 @@ a {
  	display:none;
  }
  
- .artist-detail label{
+ .modify-details label{
  	width:20vw;
  	height:5vw;
  	position:inline-block;
@@ -476,7 +516,7 @@ a {
  	align-items:center;	
  }
  
- .artist-detail input{
+ .modify-details input{
  	height:3vw;
  	width:30vw;
  	border:2px solid white;
@@ -485,7 +525,7 @@ a {
  	font-size:1vw;
  }
  
- .artist-detail textarea{
+ .modify-details textarea{
  	width: 55vw;
     height:10vw;
     resize: none;
@@ -509,6 +549,26 @@ a {
  	border:2px solid white;
  	font-weight:bold;
  	font-size:0.8vw;
+ 	cursor:pointer;
+ }
+ 
+ .modify-bottom-div{
+ 	position:relative;
+ 	height:10vw;
+ }
+ 
+ .modify-cancel-btn{
+ 	width:10vw;
+ 	height:3vw;
+ 	border-radius:5px;
+ 	background:white;
+ 	border:2px solid white;
+ 	font-weight:bold;
+ 	font-size:0.8vw;
+ 	position:absolute;
+ 	left:37%;
+ 	top:-115%;
+ 	cursor:pointer;
  }
  /* 
 ===============================
@@ -630,6 +690,15 @@ a {
  	width:95%;
  	top:3%;
  	font-size:0.6vw;
+ }
+ 
+ .register-event-btn{
+ 	width:10vw;
+ 	height:3vw;
+ 	border:2px solid black;
+ 	background:none;
+ 	border-radius:10px;
+ 	cursor:pointer;
  }
  
  /*=========공연 정보 */
@@ -797,6 +866,31 @@ a {
     top: calc(50% + var(--index) * 20px);
 }
 
+/*===========================
+		  이벤트 등록 페이지
+  ===========================*/
+
+.event-register-main{
+	margin:0 auto;
+	width:80%;
+	background:grey;
+}
+.register-date{
+	width:100%;
+	min-height:10vw;	
+}
+.register-detail{
+	width:100%;
+	min-height:10vw;
+}
+.register-img{
+	width:100%;
+	min-height:10vw;
+}
+.register-booking{
+	width:100%;
+	min-height:10vw;
+}
 
 /*===========================
 		  편지 페이지

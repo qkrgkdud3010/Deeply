@@ -19,4 +19,8 @@ public interface ArtistService {
 	public AgroupVO selectArtistDetail(long group_num); 
 	public List<ArtistVO> selectGroupMembers(long group_num);
 	public ArtistVO selectMember(long artist_num);
+	
+	//아티스트 수정
+	public void updateArtistGroup(AgroupVO agroupVO);
+	public void updateArtistMemberGroupName(Map<String,Object> map);
 }

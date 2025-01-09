@@ -56,6 +56,7 @@ public class BookingController {
 		
 		List<EventVO> list = null;
 		if(count > 0) {
+			
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
@@ -97,7 +98,7 @@ public class BookingController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/book")
-	public String bookForm(@ModelAttribute("bookingVO") @Valid BookingVO bookingVO,BindingResult result,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public String bookForm(@ModelAttribute @Valid BookingVO bookingVO,BindingResult result,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 	    log.debug("<<예매 작성폼2>>");
 	    
 	    if((Long)bookingVO.getPerf_num() != null) {
@@ -117,6 +118,15 @@ public class BookingController {
 	    model.addAttribute("url",request.getContextPath() + "/main/main");
 	    
 	    return "common/resultAlert"; // 성공 시 리다이렉트
+	}
+	
+	@GetMapping("/register")
+	public String registerEvent(long group_num, Model model) {
+		
+		AgroupVO group = artistService.selectArtistDetail(group_num);
+		
+		model.addAttribute("group", group);
+		return "bookingRegister";
 	}
 	
 	public void loadBookingContents(long perf_num, Model model) {
