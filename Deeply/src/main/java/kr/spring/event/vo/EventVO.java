@@ -3,6 +3,8 @@ package kr.spring.event.vo;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,6 +25,7 @@ public class EventVO {
 	private String mem_date;//멤버십 선예매 날짜
 	@NotBlank
 	private String perf_date;//공연 날짜
+	private String end_date;//공연 종료날짜
 	@NotBlank
 	private String perf_time;//공연 시간
 	@NotBlank
@@ -33,14 +36,15 @@ public class EventVO {
 	@NotEmpty
 	private String perf_desc;//공연 설명
 	@NotBlank
-	private int ticket_price;//티켓 총가격
+	private int ticket_price;//티켓 가격
 	private int remaining_amount;//남은 좌석 수
 	@NotBlank
-	private String reg_date;//예매 시작날짜
-	@NotBlank
-	private String end_date;//예매 종료날짜
+	private String book_date;//예매 시작날짜
 	@NotBlank
 	private int category;//카테고리
 	@NotBlank
 	private String booking_deadline;//예매 종료날짜
+	private String perf_photo;
+	private MultipartFile upload;
+	private String reg_date;
 }

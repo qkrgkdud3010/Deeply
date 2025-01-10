@@ -121,7 +121,24 @@ public class BookingController {
 	}
 	
 	@GetMapping("/register")
-	public String registerEvent(long group_num, Model model) {
+	public String registerForm(EventVO eventVO, long group_num, Model model) {
+		
+		if(eventVO == null) {
+			eventVO = new EventVO();
+		}
+		
+		AgroupVO group = artistService.selectArtistDetail(group_num);
+		
+		model.addAttribute("group", group);
+		return "bookingRegister";
+	}
+	
+	@PostMapping("/register")
+	public String registerEvent(EventVO eventVO, long group_num, Model model) {
+		
+		if(eventVO == null) {
+			eventVO = new EventVO();
+		}
 		
 		AgroupVO group = artistService.selectArtistDetail(group_num);
 		

@@ -112,5 +112,13 @@ $(function () {
 	    `);
 	}
 	
+	$('.dropdown-item').click(function (e) {
+	    e.preventDefault();
+	    
+	    $('#hall_num').val($(this).data('value'));
+	    
+	    $('#drop_title').text($(this).text());
+	});
+	
 	       
 });
