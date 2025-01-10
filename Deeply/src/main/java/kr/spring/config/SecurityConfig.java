@@ -30,6 +30,7 @@ import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.support.SessionFlashMapManager;
 
+import kr.spring.member.security.CustomOauth2UserService;
 import kr.spring.member.security.UserSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,8 @@ public class SecurityConfig{
 	@Autowired
 	@Qualifier("dataSource")
 	private DataSource dataSource;
-
+	@Autowired
+	private CustomOauth2UserService principalOauth2UserService;
 	@Autowired
 	private UserSecurityService userSecurityService;
 	@Autowired
@@ -82,6 +84,11 @@ public class SecurityConfig{
 						.logoutSuccessUrl("/")
 						.invalidateHttpSession(true)
 						.deleteCookies("remember-me","JSESSIONID"))
+				
+				.oauth2Login(oauth2 -> oauth2
+						.loginPage("/member/login")
+						.userInfoEndpoint()
+						.userService(principalOauth2UserService))
 				.exceptionHandling(error -> error
 						.accessDeniedHandler(new AccessDeniedHandler(){
 							@Override

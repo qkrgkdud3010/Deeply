@@ -19,6 +19,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	private Map<String, Object> attributes;
 	MemberVO memberVO;
 	ArtistVO artistVO;
+	AgroupVO agroupVO;
 	public PrincipalDetails(ArtistVO artistVO) {
 		this.artistVO=artistVO;
 	}

@@ -27,12 +27,12 @@
 					</div>
 			<table class="login-button">
 				<tr>
-					<td><img class="inline-img" alt=""
+					<td><a href="${pageContext.request.contextPath}/oauth2/authorization/naver"><img class="inline-img" alt=""
 						src="${pageContext.request.contextPath}/assets/images/naver.png">
-						<span class="inline-text">네이버로 로그인하기.</span></td>
-					<td><img class="inline-img" alt=""
+						<span class="inline-text">네이버로 로그인하기.</span></a></td>
+					<td><a href="${pageContext.request.contextPath}/oauth2/authorization/kakao"><img class="inline-img" alt=""
 						src="${pageContext.request.contextPath}/assets/images/kakao.png">
-						<span class="inline-text">카카오로 로그인하기.</span></td>
+						<span class="inline-text">카카오로 로그인하기.</span></a></td>
 				</tr>
 				<tr>
 					<td><a href="/member/findID">아이디 찾기</a></td>

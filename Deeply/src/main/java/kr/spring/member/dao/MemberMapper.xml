@@ -101,8 +101,9 @@
       SELECT *
       FROM duser m
       LEFT OUTER JOIN duser_detail d ON m.user_num = d.user_num
+         <include refid="memberSearch"/> <!-- 이 부분에서 WHERE 조건이 추가된다면 위치를 확인 -->
     ) a
-    <include refid="memberSearch"/> <!-- 이 부분에서 WHERE 조건이 추가된다면 위치를 확인 -->
+ 
   )
   <![CDATA[
   WHERE rnum >= #{start} AND rnum <= #{end}

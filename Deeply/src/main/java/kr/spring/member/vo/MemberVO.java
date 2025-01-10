@@ -60,7 +60,7 @@ public class MemberVO {
 	    @NotBlank(message = "전화번호는 필수 입력 값입니다.")
 	    private String phone; // PHONE
 
-	    private String socialName; // SOCIAL_NAME (선택 값)
+	    private String social_name; // SOCIAL_NAME (선택 값)
 
 	    private String twoFactorEnabled; // TWO_FACTOR_ENABLED
 
