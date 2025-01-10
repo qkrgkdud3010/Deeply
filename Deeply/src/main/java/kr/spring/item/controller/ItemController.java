@@ -48,7 +48,7 @@ public class ItemController {
 	public ItemVO initCommand() {
 		return new ItemVO();
 	}
-
+ 
 	/*==============================
 	 *  상품 등록
 	 * =============================*/
