@@ -277,6 +277,26 @@ public class MemberController {
     	return "myInfo";
     }
     
+    // 프로필 사진 업로드
+	@PostMapping("/updateMyPhoto")
+	@ResponseBody
+	public Map<String,String> processProfile(
+			               @AuthenticationPrincipal
+			               PrincipalDetails principalDetails,
+			               MemberVO memberVO){
+		log.debug("<<PrincipalDetails>> : " + principalDetails);
+		Map<String,String> mapAjax = new HashMap<String,String>();
+		try {
+			MemberVO user = principalDetails.getMemberVO();
+			memberVO.setUser_num(user.getUser_num());
+			memberService.updateProfile(memberVO);
+			mapAjax.put("result","success");
+		}catch(NullPointerException e) {
+			mapAjax.put("result", "logout");
+		}	
+		return mapAjax;
+	}
+	
 }
 
 
