@@ -260,6 +260,9 @@ public class MemberController {
         return "common/resultAlert";  // 변경 결과를 출력할 폼으로 다시 리다이렉트
     }
     
+    /*=================
+     * 마이페이지
+    =================*/
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/myInfo")
     public String myInfo(@AuthenticationPrincipal 
