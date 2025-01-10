@@ -277,20 +277,6 @@ public class MemberController {
     	return "myInfo";
     }
     
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/artiInfo")
-    public String artiInfo(@AuthenticationPrincipal 
-    		PrincipalDetails principalDetails,
-    		Model model) {
-    	
-    	//회원정보
-    	MemberVO artiInfo = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
-    	log.debug("<<회원상세 정보>> : " + artiInfo);
-    	
-    	model.addAttribute("artiInfo", artiInfo);
-    	return "artiInfo";
-    }
-    
 }
 
 

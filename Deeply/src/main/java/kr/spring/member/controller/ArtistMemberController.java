@@ -6,8 +6,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.spring.member.service.ArtistService;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.member.vo.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
@@ -82,6 +86,23 @@ private ArtistService artistService;
 		return null;
 		
 	}
+	
+	/*=================
+     * 마이페이지
+    =================*/
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/artiInfo")
+    public String artiInfo(@AuthenticationPrincipal 
+    		PrincipalDetails principalDetails,
+    		Model model) {
+    	
+    	//회원정보
+    	ArtistVO artiInfo = artistService.selectMember(principalDetails.getArtistVO().getUser_num());
+    	log.debug("<<회원상세 정보>> : " + artiInfo);
+    	
+    	model.addAttribute("artiInfo", artiInfo);
+    	return "artiInfo";
+    }
 
 	
 }
