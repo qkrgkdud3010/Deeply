@@ -10,25 +10,26 @@ import kr.spring.admin.vo.UserStatisticVO;
 import kr.spring.member.vo.MemberVO;
 public interface MemberService {
 
-
-	
-
 	public void insertMember(MemberVO member);
 
 	public MemberVO selectIdAndNickName(Map<String,String> map);
 	public MemberVO selectCheckMember(String id);
-	 public void registerMember(MemberVO memberVO);
-	 public String verifyEmail(String email, String code);
-	 public void storeVerificationCode(String email, String code);
-	 public Optional<MemberVO> findByEmail(String email);
-	 public MemberVO selectMember(Long user_num);
-	 
-	 public String findId(String name,String email);
+	public void registerMember(MemberVO memberVO);
+	public String verifyEmail(String email, String code);
+	public void storeVerificationCode(String email, String code);
+	public Optional<MemberVO> findByEmail(String email);
 
-		public int selectRowCount(Map<String,Object> map);
-		public List<MemberVO> selectList(Map<String,Object> map);
+
+	public String findId(String name,String email);
+
+	public int selectRowCount(Map<String,Object> map);
+	public List<MemberVO> selectList(Map<String,Object> map);
 	public void resetPassword(String email,String newPassword);
-	
+
 	public void recordUserCountForDate();
 	public List<UserStatisticVO> getUserStatisticsByDate();
+
+	//마이페이지
+	public MemberVO selectMember(Long user_num);
+	public void updateProfile(MemberVO member);
 }

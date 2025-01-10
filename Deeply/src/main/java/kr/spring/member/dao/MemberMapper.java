@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 
 @Mapper
@@ -26,9 +27,13 @@ public interface MemberMapper {
 
 	public MemberVO selectCheckMember(String id);
 	Optional<MemberVO> findByEmail(String email);
+	
 	@Select("SELECT * FROM duser JOIN duser_detail USING (user_num) WHERE user_num=#{user_num}")
 	public MemberVO selectMember(Long mem_num);
 	void updateMember(MemberVO memberVO);
+	//프로필 이미지 업데이트
+	@Update("UPDATE duser_detail SET photo=#{photo},photo_name=#{photo_name} WHERE user_num=#{user_num}")
+	public void updateProfile(MemberVO member);
 	
 	@Select("SELECT d.id FROM duser d JOIN duser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email} AND dd.name = #{name}")
 	public String findIdByNameAndEmail(@Param("name") String name, @Param("email") String email);

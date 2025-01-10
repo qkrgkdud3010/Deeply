@@ -20,6 +20,7 @@
     </definition>
     <definition name="follow" extends="main">
     	<put-attribute name="title" value="팔로우리스트"/>
+    	<put-attribute name="css" value="/WEB-INF/views/follow/followCSS.jsp"/>                            
     	<put-attribute name="body" value="/WEB-INF/views/follow/followView.jsp"/>
     </definition>
     <definition name="modifyInfo" extends="main">

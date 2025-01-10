@@ -134,4 +134,9 @@ public class MemberServiceImpl implements MemberService{
 		@Override
 		public List<MemberVO> selectList(Map<String, Object> map) {
 			return memberMapper.selectList(map);
+		}
+
+		@Override
+		public void updateProfile(MemberVO member) {
+			memberMapper.updateProfile(member);
 		}}
