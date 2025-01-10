@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.video.service.VideoService;
 import kr.spring.video.vo.VideoVO;
+import kr.spring.member.dao.ArtistMapper;
+import kr.spring.member.vo.AgroupVO;
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.PrincipalDetails;
 
 @Controller
@@ -22,6 +25,10 @@ public class VideoController {
 
     @Autowired
     private VideoService videoService;
+
+    // (추가) ArtistMapper 주입
+    @Autowired
+    private ArtistMapper artistMapper;
 
     // 영상 목록 조회
     @GetMapping("/videos")
@@ -50,15 +57,24 @@ public class VideoController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/videos/upload")
     public String uploadVideo(
-            VideoVO video,
-            @RequestParam(value = "mediaUrl", required = false) String mediaUrl,
-            @RequestParam(value = "isExclusive", defaultValue = "0") int isExclusive,
-            @AuthenticationPrincipal PrincipalDetails principal) {
+        VideoVO video,
+        @RequestParam(value = "mediaUrl", required = false) String mediaUrl,
+        @RequestParam(value = "isExclusive", defaultValue = "0") int isExclusive,
+        @AuthenticationPrincipal PrincipalDetails principal) {
 
-        // 로그인 사용자 정보 설정
-        video.setArtistId(principal.getArtistVO().getUser_num());
-
-        // 멤버십 여부
+        // 1) 로그인 사용자 정보 가져오기
+        ArtistVO artist = principal.getArtistVO();
+        // - artist.getGroup_name() : 그룹명
+        
+        // 2) group_name으로 agroup 정보(AgroupVO) 조회
+        AgroupVO agroup = artistMapper.findByGroupName(artist.getGroup_name());
+        if (agroup == null) {
+            throw new IllegalArgumentException("해당 group_name이 agroup 테이블에 존재하지 않습니다.");
+        }
+        
+        // 3) video에 필요한 값 채우기
+        video.setArtistId(artist.getUser_num());
+        video.setGroupNum(agroup.getGroup_num());
         video.setIsExclusive(isExclusive);
 
         // mediaUrl 설정
@@ -68,7 +84,7 @@ public class VideoController {
             video.setMediaUrl("");
         }
 
-        // DB 저장
+        // 4) DB에 영상 정보 저장
         videoService.insertVideo(video);
 
         return "redirect:/videos";
