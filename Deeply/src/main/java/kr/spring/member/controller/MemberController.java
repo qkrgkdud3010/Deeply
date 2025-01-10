@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import kr.spring.follow.vo.FollowVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.service.EmailService;
 import kr.spring.member.service.MemberService;
@@ -258,6 +259,35 @@ public class MemberController {
         }
         return "common/resultAlert";  // 변경 결과를 출력할 폼으로 다시 리다이렉트
     }
+    
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/myInfo")
+    public String myInfo(@AuthenticationPrincipal 
+			PrincipalDetails principalDetails,
+			Model model) {
+    	
+    	//회원정보
+    	MemberVO member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
+    	log.debug("<<회원상세 정보>> : " + member);
+    	
+    	model.addAttribute("member", member);
+    	return "myInfo";
+    }
+    
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/artiInfo")
+    public String artiInfo(@AuthenticationPrincipal 
+    		PrincipalDetails principalDetails,
+    		Model model) {
+    	
+    	//회원정보
+    	MemberVO artiInfo = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
+    	log.debug("<<회원상세 정보>> : " + artiInfo);
+    	
+    	model.addAttribute("artiInfo", artiInfo);
+    	return "artiInfo";
+    }
+    
 }
 
 
