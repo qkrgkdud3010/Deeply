@@ -21,4 +21,5 @@ public class VideoVO {
     private Integer likes;        // 좋아요 수
     private Integer commentsCount;// 댓글 수
     private Long categoryId;      // 카테고리 ID
+    private Long groupNum;        // 그룹 번호 (AUSER_DETAIL.group_num 등과 연동)
 }
