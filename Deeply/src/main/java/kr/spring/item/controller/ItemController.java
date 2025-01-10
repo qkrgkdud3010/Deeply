@@ -100,13 +100,13 @@ public class ItemController {
 	 * 	상품 메인
 	 * =============================*/
 	
-	 @PreAuthorize("isAuthenticated()")
 	 @GetMapping("/main")
-	 public String getMain(
-			@RequestParam(defaultValue="1") int pageNum,
-			@RequestParam(defaultValue="1") int order,
-			String keyfield,String keyword,Model model,
-			@AuthenticationPrincipal PrincipalDetails principal) {
+	 public String getMain(@RequestParam(defaultValue="1") int pageNum,
+			 			   @RequestParam(defaultValue="1") int order,
+			 			   String keyfield,
+			 			   String keyword,
+			 			   Model model,
+			 			   @AuthenticationPrincipal PrincipalDetails principal) {
 
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<게시판 목록 - order>> : " + order);
@@ -116,22 +116,23 @@ public class ItemController {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
-		//아티스트 계정으로 접속
-		if(principal.getArtistVO() != null) {
-			ArtistVO artist = principal.getArtistVO();
-			Long auser_num = artist.getUser_num();
-			map.put("user_num", auser_num);
-			model.addAttribute("auser_num", auser_num);
+		if(principal != null) {
+			//아티스트 계정으로 접속
+			if(principal.getArtistVO() != null) {
+				ArtistVO artist = principal.getArtistVO();
+				Long auser_num = artist.getUser_num();
+				map.put("user_num", auser_num);
+				model.addAttribute("auser_num", auser_num);
+			}
+			
+			//유저 계정으로 접속
+			else if(principal.getMemberVO() != null) {
+				MemberVO member = principal.getMemberVO();
+				Long duser_num = member.getUser_num();
+				map.put("user_num", duser_num);
+				model.addAttribute("member", member);
+			}
 		}
-		
-		//유저 계정으로 접속
-		else if(principal.getMemberVO() != null) {
-			MemberVO member = principal.getMemberVO();
-			Long duser_num = member.getUser_num();
-			map.put("user_num", duser_num);
-			model.addAttribute("member", member);
-		}
-		
 		
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
@@ -192,13 +193,13 @@ public class ItemController {
 	/*==============================
 	 * 	상품 목록
 	 * =============================*/
-	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/list")
-	public String getList(
-			@RequestParam(defaultValue="1") int pageNum,
-			@RequestParam(defaultValue="1") int order,
-			String keyfield,String keyword,Model model,
-			@AuthenticationPrincipal PrincipalDetails principal) {
+	public String getList(@RequestParam(defaultValue="1") int pageNum,
+						  @RequestParam(defaultValue="1") int order,
+						  String keyfield,
+						  String keyword,
+						  Model model,
+						  @AuthenticationPrincipal PrincipalDetails principal) {
 
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<게시판 목록 - order>> : " + order);
@@ -208,6 +209,7 @@ public class ItemController {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
+		if(principal != null) {
 		//아티스트 계정으로 접속
 		if(principal.getArtistVO() != null) {
 			ArtistVO artist = principal.getArtistVO();
@@ -222,6 +224,7 @@ public class ItemController {
 			Long duser_num = member.getUser_num();
 			map.put("user_num", duser_num);
 			model.addAttribute("member", member);
+		  }
 		}
 		
 		
@@ -259,7 +262,7 @@ public class ItemController {
 	/*==============================
 	 * 	상품 상세
 	 * =============================*/
-	@PreAuthorize("isAuthenticated()")
+	//@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
 	public String process(long item_num,
 						  Model model,
@@ -269,12 +272,16 @@ public class ItemController {
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<상품 상세 - item_num>> : " + item_num);
 		
-		MemberVO member = principal.getMemberVO();
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		
 		
 		ItemVO item = itemService.selectitem(item_num);
+		AgroupVO agroup = artistService.selectArtistDetail(item.getUser_num());
 		
-		model.addAttribute("item",item);	
-		model.addAttribute("member", member);
+		model.addAttribute("item",item);
+		model.addAttribute("agroup", agroup);
+		
 		return "itemView";
 	}
 
@@ -293,14 +300,14 @@ public class ItemController {
 							 PrincipalDetails principal) {
 		ItemVO itemVO = itemService.selectitem(item_num);
 		log.debug("<<등록된 상품 정보>> : " +itemVO);
-		
+		log.debug("<<list에서 받아온 item_num>> : " +item_num);
 		//DB에 저장된 파일 정보 구하기
-		if(principal.getMemberVO().getUser_num() != itemVO.getUser_num()) {
+		if(principal.getArtistVO().getUser_num() != itemVO.getUser_num()) {
 			return "redirect:common/accessDenied";
 		}
 		
-		model.addAttribute("itemVO",itemVO);
-		log.debug("<<22등록된 상품 정보>> : " +itemVO);
+		model.addAttribute("item",itemVO);
+		log.debug("<<등록된 상품 정보>> : " +itemVO);
 		return "itemModify";
 	}
 	//수정폼에서 전송된 데이터 처리
@@ -325,7 +332,7 @@ public class ItemController {
 		}
 		
 		//로그인한 회원번호와 작성자 회원번호 일치 여부 체크
-		if(principal.getMemberVO().getUser_num() != 
+		if(principal.getArtistVO().getUser_num() != 
 				db_item.getUser_num()){
 			return "redirect:/common/accessDenied";
 		}
@@ -342,8 +349,9 @@ public class ItemController {
 		//view에 표시할 메세지
 		model.addAttribute("message","글 수정 완료!!");
 		model.addAttribute("url",request.getContextPath() + "/item/detail?item_num=" + itemVO.getItem_num());
+		
 		//글 수정
-				itemService.updateItem(itemVO);
+		itemService.updateItem(itemVO);
 		
 		return "common/resultAlert";
 	}
@@ -365,7 +373,7 @@ public class ItemController {
 		ItemVO db_item = itemService.selectitem(item_num);
 		
 		//로그인 일치시에 삭제하기
-		if(principal.getMemberVO().getUser_num() != db_item.getUser_num()) {
+		if(principal.getArtistVO().getUser_num() != db_item.getUser_num()) {
 			return "redirect:/common/accessDenied";
 		}
 		

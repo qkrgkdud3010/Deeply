@@ -30,8 +30,10 @@
 		<c:if test="${count > 0}">
 			<c:forEach var="item" items="${list}" varStatus="status">
 				<div class="item-card">
-					<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"
-						class="item-img">
+					<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
+						<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"
+							class="item-img">
+					</a>
 					<hr class="custom-hr" noshade="noshade" width="100%">
 					<span class="item-name list-text" style="font-size:18px;">${item.item_name}</span>
 					<span class="item-name list-price" style="font-size:18px; color:#0369A1;">${item.item_price}</span>

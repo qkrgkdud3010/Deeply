@@ -40,9 +40,11 @@
 					<div class="value-list">
 						<c:forEach items="${entry.value}" var="item" begin="0" end="3">
 							<div class="item-card">
+								<a href="${pageContext.request.contextPath}/item/list?item_num=${item.item_num}">
 								<img
 									src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
 									width="180px" height="180px" class="item-img">
+								</a>
 								<hr class="custom-hr" noshade="noshade" width="100%">
 								<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span>
 								<span class="item-name list-price"
