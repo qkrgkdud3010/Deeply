@@ -17,32 +17,31 @@ $(function(){
 	}
 	
 	$('.output_follow').on('click', function(){
-	    const followNum = $(this).data('num');
-	    const header = $(this).data('header');
-	    const token = $(this).data('token');
+		    const followNum = $(this).attr('data-num');
+		    const followerNum = $(this).attr('data-rnum');
 
-	    $.ajax({
-	        url: '/follow/follow',
-	        type: 'post',
-	        data: { follow_num: followNum },
-	        dataType: 'json',
-	        beforeSend: function(xhr) {
-	            xhr.setRequestHeader(header, token);
-	        },
-	        success: function(param) {
-	            if(param.result === 'logout') {
-	                alert('로그인 후 팔로우가 가능합니다');
-	            } else if(param.result === 'success') {
-	                displayFollow(param, followNum);
-	            } else {
-	                alert('팔로우 오류 발생');
-	            }
-	        },
-	        error: function() {
-	            alert('네트워크 오류 발생');
-	        }
-	    });
-	});
+		    $.ajax({
+		        url: '/follow/follow',
+		        type: 'post',
+		        data: { follow_num: followNum, follower_num:followerNum },
+		        dataType: 'json',
+		        beforeSend: function(xhr) {
+		            xhr.setRequestHeader($('table').attr('data-header'), $('table').attr('data-token'));
+		        },
+		        success: function(param) {
+		            if(param.result === 'logout') {
+		                alert('로그인 후 팔로우가 가능합니다');
+		            } else if(param.result === 'success') {
+		                alert('팔로우 완료!');
+		            } else {
+		                alert('팔로우 오류 발생');
+		            }
+		        },
+		        error: function() {
+		            alert('네트워크 오류 발생');
+		        }
+		    });
+		});
 
 	function displayFollow(param, followNum) {
 	    let output;
@@ -55,34 +54,6 @@ $(function(){
 	    }
 	    $(`img[data-num="${followNum}"]`).attr('src', output);
 	}
-	/*
-	//팔로우/언팔로우
-	$('.output_follow').on(click(function(){
-		//서버와 통신
-		$.ajax({
-			url:'follow',
-			type:'post',
-			data:{follow_num:$('.output_follow').attr('data-num'),follower_num:$('.output_follow').attr('data-usernum')},
-			dataType:'json',
-			beforeSend:function(xhr){
-				xhr.setRequestHeader($('.output_follow').attr('data-header'),
-									 $('.output_follow').attr('data-token'));
-			},
-			success:function(param){
-				if(param.result == 'logout'){
-					alert('로그인 후 팔로우가 가능합니다');
-				}else if(param.result == 'success'){
-					displayFollow(param);
-				}else{
-					alert('팔로우 오류 발생');
-				}
-			},
-			error:function(){
-				alert('네트워크 오류 발생');
-			}
-		});
-	}));
-	*/
 	
 	//팔로우 표시 공통 함수
 	function displayFollow(param){

@@ -43,6 +43,9 @@ public interface ArtistMapper {
 	
 	@Select("SELECT * FROM auser JOIN auser_detail USING (user_num) WHERE user_num=#{user_num}")
 	public ArtistVO selectMember(long artist_num);
+	//프로필 이미지 업데이트
+	@Update("UPDATE auser_detail SET photo=#{photo},photo_name=#{photo_name} WHERE user_num=#{user_num}")
+	public void updateProfile(ArtistVO member);
 	
 	@Update("UPDATE agroup SET group_name=#{group_name},fandom_name=#{fandom_name},intro_desc=#{intro_desc},group_photo=#{group_photo} WHERE group_num=#{group_num}")
 	public void updateArtistGroup(AgroupVO agroupVO);

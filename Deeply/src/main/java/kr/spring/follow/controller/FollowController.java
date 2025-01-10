@@ -27,8 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class FollowController {
 	@Autowired
 	private FollowService followService;
-	@Autowired
-	private MemberService memberService;
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/followList")
@@ -39,7 +37,6 @@ public class FollowController {
 			Model model, FollowVO follow) {
 
 		//로그인한 회원정보 저장
-		MemberVO member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
 		Long follower_num = principalDetails.getMemberVO().getUser_num();
 
 		//전체 팔로우 수
@@ -60,7 +57,6 @@ public class FollowController {
 		}
 
 		model.addAttribute("count", count);
-		model.addAttribute("member", member);
 		model.addAttribute("followList", followList);
 
 		return "follow";

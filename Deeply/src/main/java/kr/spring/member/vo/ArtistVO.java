@@ -1,7 +1,5 @@
 package kr.spring.member.vo;
 
-import java.sql.Date;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -33,6 +31,8 @@ import lombok.ToString;
 	    private String id;
 	    @NotBlank(message = "비밀번호 확인은 필수 입력 값입니다.")
 	    private String confirmPassword;
+	    
+	    private String intro;
 	    
 }
 

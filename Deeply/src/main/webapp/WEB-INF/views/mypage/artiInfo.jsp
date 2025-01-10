@@ -9,11 +9,10 @@
 	<div class="artiInfo">
 		<img src="${pageContext.request.contextPath}/" width="100"
 			height="100" class="my-photo" style="item-align: center;">
-		<div class="align-center">${artiInfo.auth}</div>
 		<table class="myTable">
 			<tr>
-				<td class="align-center"><b>아이디 </b>${artiInfo.name}</td>
-				<td class="align-center"><b>닉네임 </b>${artiInfo.nick_name}</td>
+				<td class="align-center"><b>아이디 </b>${artiInfo.id}</td>
+				<td class="align-center"><b>닉네임 </b>${artiInfo.group_name} ${artiInfo.name}</td>
 			</tr>
 			<tr>
 				<td class="align-center"><b>이메일 </b>${artiInfo.email}</td>
