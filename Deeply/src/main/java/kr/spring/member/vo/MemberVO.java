@@ -63,7 +63,7 @@ public class MemberVO {
 	private String automaticLogin; // AUTOMATIC_LOGIN
 
 
-	private String userBal; // USER_BAL
+	private String user_bal; // USER_BAL
 
 
 

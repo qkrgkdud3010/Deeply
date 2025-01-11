@@ -26,10 +26,10 @@
 			</tr>
 			<tr>
 				<td class="align-center"><b>닉네임 </b>${member.nick_name}</td>
-				<c:if test="${!empty member.userBal}">
-					<td class="align-center"><b>예치금 </b>${member.userBal}원</td>
+				<c:if test="${!empty member.user_bal}">
+					<td class="align-center"><b>예치금 </b>${member.user_bal}원</td>
 				</c:if>
-				<c:if test="${empty member.userBal}">
+				<c:if test="${empty member.user_bal}">
 					<td class="align-center"><b>예치금 </b>0원</td>
 				</c:if>
 			</tr>
