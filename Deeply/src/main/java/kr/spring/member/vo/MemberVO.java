@@ -1,14 +1,10 @@
 package kr.spring.member.vo;
 
-import java.io.IOException;
 import java.sql.Date;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;

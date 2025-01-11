@@ -22,7 +22,7 @@ $(function(){
 		form_data.append('upload',$('#upload')[0].files[0]);
 		//서버와 통신
 		$.ajax({
-			url:'updateMyPhoto',
+			url:'updateArtiPhoto',
 			type:'post',
 			data:form_data,
 			dataType:'json',
@@ -59,3 +59,7 @@ $(function(){
 	});	   
 			   		   
 });
+
+
+
+

@@ -5,14 +5,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,22 +23,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import kr.spring.follow.vo.FollowVO;
-import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.service.EmailService;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.service.MemberServiceImpl;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
-
-import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
-import kr.spring.util.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 
 @Slf4j
 @Controller
@@ -150,14 +139,20 @@ public class MemberController {
 				response.put("error", "전화번호를 올바르게 입력해주세요.");
 			}
 			else {
-
 				response.put("error", "알 수 없는 오류가 발생했습니다.");
 			}
 			return response;
 		}
 		// 비밀번호 암호화 및 회원 저장
 		memberVO.setPasswd_hash(passwordEncoder.encode(memberVO.getPasswd_hash()));
+		// 기본 프로필 이미지 설정
+	    String defaultPhoto = "/assets/image_bundle/";
+	    String defaultPhotoName = "defaultProfile.svg";
+
+	    memberVO.setPhoto(defaultPhoto);
+	    memberVO.setPhotoName(defaultPhotoName);
 		memberService.insertMember(memberVO);
+		
 
 		// 성공적인 회원가입 후 메시지
 		response.put("successMessage", "회원가입이 완료되었습니다. 이메일 인증을 진행해주세요.");
@@ -294,6 +289,7 @@ public class MemberController {
 		}
 		return "imageView";
 	}
+	
 	// 프로필 사진 업로드
 	@PostMapping("/updateMyPhoto")
 	@ResponseBody
@@ -336,14 +332,14 @@ public class MemberController {
 	}
 	
 	//기본 이미지 읽기
-		public void getBasicProfileImage(HttpServletRequest request, Model model) {
-			byte[] readbyte = 
-					FileUtil.getBytes(
-							request.getServletContext().getRealPath(
-									 "/assets/image_bundle/basicProfile.svg"));
-			model.addAttribute("imageFile", readbyte);
-			model.addAttribute("filename", "basicProfile.svg");
-		}
+	public void getBasicProfileImage(HttpServletRequest request, Model model) {
+		byte[] readbyte = 
+				FileUtil.getBytes(
+						request.getServletContext().getRealPath(
+								"/assets/image_bundle/defaultProfile.svg"));
+		model.addAttribute("imageFile", readbyte);
+		model.addAttribute("filename", "defaultProfile.svg");
+	}
 
 }
 
