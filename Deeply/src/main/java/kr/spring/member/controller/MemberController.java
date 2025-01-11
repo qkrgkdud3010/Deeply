@@ -146,13 +146,13 @@ public class MemberController {
 		// 비밀번호 암호화 및 회원 저장
 		memberVO.setPasswd_hash(passwordEncoder.encode(memberVO.getPasswd_hash()));
 		// 기본 프로필 이미지 설정
-	    String defaultPhoto = "/assets/image_bundle/";
-	    String defaultPhotoName = "defaultProfile.svg";
+		String defaultPhoto = "/assets/image_bundle/";
+		String defaultPhotoName = "defaultProfile.svg";
 
-	    memberVO.setPhoto(defaultPhoto);
-	    memberVO.setPhotoName(defaultPhotoName);
+		memberVO.setPhoto(defaultPhoto);
+		memberVO.setPhotoName(defaultPhotoName);
 		memberService.insertMember(memberVO);
-		
+
 
 		// 성공적인 회원가입 후 메시지
 		response.put("successMessage", "회원가입이 완료되었습니다. 이메일 인증을 진행해주세요.");
@@ -289,7 +289,7 @@ public class MemberController {
 		}
 		return "imageView";
 	}
-	
+
 	// 프로필 사진 업로드
 	@PostMapping("/updateMyPhoto")
 	@ResponseBody
@@ -309,7 +309,7 @@ public class MemberController {
 		}	
 		return mapAjax;
 	}
-	
+
 	//프로필 사진 출력(회원번호 지정)
 	@GetMapping("/viewProfile")
 	public String getProfileByUser_num(long user_num, HttpServletRequest request, Model model) {
@@ -319,7 +319,7 @@ public class MemberController {
 
 		return "imageView";
 	}
-	
+
 	//프로필 사진 처리를 위한 공통 코드
 	public void viewProfile(MemberVO memberVO, HttpServletRequest request, Model model) {
 		if(memberVO==null || memberVO.getPhotoName()==null) {
@@ -330,7 +330,7 @@ public class MemberController {
 			model.addAttribute("filename", memberVO.getPhotoName());
 		}
 	}
-	
+
 	//기본 이미지 읽기
 	public void getBasicProfileImage(HttpServletRequest request, Model model) {
 		byte[] readbyte = 

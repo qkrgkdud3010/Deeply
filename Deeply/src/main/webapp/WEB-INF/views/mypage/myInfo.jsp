@@ -26,12 +26,17 @@
 			</tr>
 			<tr>
 				<td class="align-center"><b>닉네임 </b>${member.nick_name}</td>
-				<td class="align-center"><b>예치금 </b>${member.userBal}</td>
+				<c:if test="${!empty member.userBal}">
+					<td class="align-center"><b>예치금 </b>${member.userBal}원</td>
+				</c:if>
+				<c:if test="${empty member.userBal}">
+					<td class="align-center"><b>예치금 </b>0원</td>
+				</c:if>
 			</tr>
 			<tr>
 				<td class="align-center"><b>이메일 </b>${member.email}</td>
-				<c:if test="${!empty member.socialName}">
-					<td class="align-center"><b>소셜연결 </b>${member.socialName}</td>
+				<c:if test="${!empty member.social_name}">
+					<td class="align-center"><b>소셜연결 </b>${member.social_name}</td>
 				</c:if>
 			</tr>
 			<tr>
