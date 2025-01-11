@@ -98,7 +98,7 @@ public class MemberController {
 
 		return response;
 	}
-	
+
 	@PostMapping("/emailSubmit2")
 	@ResponseBody
 	public Map<String, String> emailSubmit2(@RequestBody Map<String, String> request) {
@@ -136,8 +136,8 @@ public class MemberController {
 				response.put("error", "비밀번호는 8~20자의 영문자, 숫자, 특수문자로 구성되어야 합니다.");
 			}else if(!memberVO.getPasswd_hash().equals(memberVO.getConfirmPassword())) {
 				response.put("error", "비밀번호 2개가 일치 안합니다");
-		
-	       
+
+
 			}else if (result.hasFieldErrors("nick_name")) {
 				response.put("error", "닉네임을 제대로 입력해야 합니다.");
 			} else if (result.hasFieldErrors("zipcode")) {
@@ -202,88 +202,105 @@ public class MemberController {
 	public String findID() {
 		return"findID";
 	}
-	
-    @PostMapping("/findID")
-    public String findUserId(@RequestParam String name, 
-                             @RequestParam String email, 
-                             Model model) {
-        try {
-            String id = memberService.findId(name, email);
-            model.addAttribute("message", "찾은 아이디: " + id);
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("message", "입력한 정보에 해당하는 아이디가 없습니다.");
-        }
-        return "findID"; // findId.jsp로 이동
-    }
-    
-    
-    
-    @GetMapping("/findPasswd")
+
+	@PostMapping("/findID")
+	public String findUserId(@RequestParam String name, 
+			@RequestParam String email, 
+			Model model) {
+		try {
+			String id = memberService.findId(name, email);
+			model.addAttribute("message", "찾은 아이디: " + id);
+		} catch (IllegalArgumentException e) {
+			model.addAttribute("message", "입력한 정보에 해당하는 아이디가 없습니다.");
+		}
+		return "findID"; // findId.jsp로 이동
+	}
+
+
+
+	@GetMapping("/findPasswd")
 	public String findPasswd() {
 		return"findPasswd";
 	}
-    
 
-    @PostMapping("/requestReset")
-    public String requestPasswordReset(@RequestParam String email, Model model) {
-        try {
-            String verificationCode = emailService.generateVerificationCode();
-            emailService.sendPasswordResetEmail(email);
-            model.addAttribute("message", "비밀번호 재설정 이메일이 전송되었습니다.");
-        } catch (Exception e) {
-            model.addAttribute("message", "이메일 전송에 실패했습니다.");
-        }
-        return "member/resultView";  // 이메일 발송 후 결과 출력
-    }
-    
-    @GetMapping("/resetPassword")
-    public String resetPasswordForm(@RequestParam String email, Model model) {
-        model.addAttribute("email", email);  // 이메일 값을 폼에 전달
-        return "resetPassword";  // 비밀번호 재설정 폼을 렌더링
-    }
-    
-    @PostMapping("/resetPassword")
-    public String resetPassword(@RequestParam String email, 
-                                @RequestParam String newPassword, 
-                                Model model,
-                                HttpServletRequest request) {
-    	 newPassword=passwordEncoder.encode(newPassword);
 
-        try {
-            memberService.resetPassword(email, newPassword);  // 비밀번호 재설정 서비스 호출
-            model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
-            model.addAttribute("url",request.getContextPath()+"/member/login");
-        } catch (Exception e) {
-            model.addAttribute("message", "비밀번호 변경에 실패했습니다.");
-            model.addAttribute("url",request.getContextPath()+"/member/login");
-        }
-        return "common/resultAlert";  // 변경 결과를 출력할 폼으로 다시 리다이렉트
-    }
-    
-    /*=================
-     * 마이페이지
+	@PostMapping("/requestReset")
+	public String requestPasswordReset(@RequestParam String email, Model model) {
+		try {
+			String verificationCode = emailService.generateVerificationCode();
+			emailService.sendPasswordResetEmail(email);
+			model.addAttribute("message", "비밀번호 재설정 이메일이 전송되었습니다.");
+		} catch (Exception e) {
+			model.addAttribute("message", "이메일 전송에 실패했습니다.");
+		}
+		return "member/resultView";  // 이메일 발송 후 결과 출력
+	}
+
+	@GetMapping("/resetPassword")
+	public String resetPasswordForm(@RequestParam String email, Model model) {
+		model.addAttribute("email", email);  // 이메일 값을 폼에 전달
+		return "resetPassword";  // 비밀번호 재설정 폼을 렌더링
+	}
+
+	@PostMapping("/resetPassword")
+	public String resetPassword(@RequestParam String email, 
+			@RequestParam String newPassword, 
+			Model model,
+			HttpServletRequest request) {
+		newPassword=passwordEncoder.encode(newPassword);
+
+		try {
+			memberService.resetPassword(email, newPassword);  // 비밀번호 재설정 서비스 호출
+			model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		} catch (Exception e) {
+			model.addAttribute("message", "비밀번호 변경에 실패했습니다.");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}
+		return "common/resultAlert";  // 변경 결과를 출력할 폼으로 다시 리다이렉트
+	}
+
+	/*=================
+	 * 마이페이지
     =================*/
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/myInfo")
-    public String myInfo(@AuthenticationPrincipal 
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/myInfo")
+	public String myInfo(@AuthenticationPrincipal 
 			PrincipalDetails principalDetails,
 			Model model) {
-    	
-    	//회원정보
-    	MemberVO member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
-    	log.debug("<<회원상세 정보>> : " + member);
-    	
-    	model.addAttribute("member", member);
-    	return "myInfo";
-    }
-    
-    // 프로필 사진 업로드
+
+		//회원정보
+		MemberVO member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
+		log.debug("<<회원상세 정보>> : " + member);
+
+		model.addAttribute("member", member);
+		return "myInfo";
+	}
+	/*=================
+	 * 프로필 사진
+    =================*/
+	//프로필 사진 보기
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/photoView")
+	public String getProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request, Model model) {
+		MemberVO user = principalDetails.getMemberVO();
+		log.debug("<<photoView>> : " + user);
+		if(user==null) {//로그인이 되지 않은 경우
+			getBasicProfileImage(request, model);			
+		}else {//로그인 된 경우
+			MemberVO memberVO = 
+					memberService.selectMember(user.getUser_num());
+			viewProfile(memberVO,request,model);
+		}
+		return "imageView";
+	}
+	// 프로필 사진 업로드
 	@PostMapping("/updateMyPhoto")
 	@ResponseBody
 	public Map<String,String> processProfile(
-			               @AuthenticationPrincipal
-			               PrincipalDetails principalDetails,
-			               MemberVO memberVO){
+			@AuthenticationPrincipal
+			PrincipalDetails principalDetails,
+			MemberVO memberVO){
 		log.debug("<<PrincipalDetails>> : " + principalDetails);
 		Map<String,String> mapAjax = new HashMap<String,String>();
 		try {
@@ -297,6 +314,37 @@ public class MemberController {
 		return mapAjax;
 	}
 	
+	//프로필 사진 출력(회원번호 지정)
+	@GetMapping("/viewProfile")
+	public String getProfileByUser_num(long user_num, HttpServletRequest request, Model model) {
+		MemberVO memberVO = 
+				memberService.selectMember(user_num);
+		viewProfile(memberVO, request, model);
+
+		return "imageView";
+	}
+	
+	//프로필 사진 처리를 위한 공통 코드
+	public void viewProfile(MemberVO memberVO, HttpServletRequest request, Model model) {
+		if(memberVO==null || memberVO.getPhotoName()==null) {
+			//DB에 저장된 프로필 이미지가 없기 때문에 기본 이미지 호출
+			getBasicProfileImage(request, model);
+		}else {//업로드한 프로필 이미지 읽기
+			model.addAttribute("imageFile", memberVO.getPhoto());
+			model.addAttribute("filename", memberVO.getPhotoName());
+		}
+	}
+	
+	//기본 이미지 읽기
+		public void getBasicProfileImage(HttpServletRequest request, Model model) {
+			byte[] readbyte = 
+					FileUtil.getBytes(
+							request.getServletContext().getRealPath(
+									 "/assets/image_bundle/basicProfile.svg"));
+			model.addAttribute("imageFile", readbyte);
+			model.addAttribute("filename", "basicProfile.svg");
+		}
+
 }
 
 
