@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.chat.dao.ChatMapper;
 import kr.spring.chat.vo.ChatVO;
+import kr.spring.member.vo.ArtistVO;
 
 
 @Service
@@ -22,16 +23,28 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public void insertDuserInfo(Long chat_user_num) {
+	public void insertAuserInfo(ChatVO chvo) {
+		chatMapper.insertAuserInfo(chvo);
 		
-		chatMapper.insertDuserInfo(chat_user_num);
+	}
+
+
+	@Override
+	public void insertAuserChat(long chat_num) {
+		chatMapper.insertAuserChat(chat_num);
+		
 	}
 
 	@Override
-	public void insertAuserInfo(Long chat_user_num) {
+	public void insertDuserInfo(ChatVO chvo) {
+		// TODO Auto-generated method stub
 		
-		 chatMapper.insertAuserInfo(chat_user_num);;
 	}
+
+	
+	
+	
+
 
 	
 

@@ -17,36 +17,27 @@
 		1)
 		
 	</insert>
-	<!-- 유료 사용자 정보 중간 테이블에 넣기 -->
-	<insert id ="insertDuserInfo">
-	INSERT INTO chat (
-    chat_user_num,
-    chat_num,
-    chat_id,
-    chat_kind
-	)
-	SELECT
-    user_num,
-    (SELECT chat_num FROM chatroom),
-    chat_seq.nextval,
-    id,
-    chat_kind
-	FROM duser
-	</insert>
+
 	<!-- 아티스트 정보 중간테이블에 넣기 -->
-	<insert id ="insertAuserInfo">
-	INSERT INTO chat (chat_user_num, chat_num, chat_id, chat_kind)
-SELECT #{chat_user_num}, 
-       (SELECT chat_num FROM chatroom WHERE ROWNUM = 1), 
-       id, 
-       1
-FROM auser
-WHERE NOT EXISTS (
-    SELECT 1 
-    FROM chat 
-    WHERE chat_user_num = #{chat_user_num}
-)
+	<insert id ="insertAuserInfo" parameterType="chatVO">
+	INSERT INTO achat(auser_num, auser_id) 
+	VALUES(#{auser_num},
+	#{auser_id})
+
 	</insert>
+	
+	<!-- 아티스트 정보 중간테이블에 넣기 -->
+	<insert id ="insertDuserInfo" parameterType="chatVO">
+	INSERT INTO dchat(duser_num, duser_id) 
+	VALUES (#{duser_num},
+	#{duser_id})
+
+	</insert>
+	
+	<insert id ="insertAuserChat" parameterType="chatVO" >
+	INSERT INTO chat chat_num
+	VALUES #{chat_num}
+	</insert>	
 
 
 

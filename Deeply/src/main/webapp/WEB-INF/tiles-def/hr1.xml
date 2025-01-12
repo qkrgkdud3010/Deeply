@@ -21,6 +21,14 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/chat/chatRoom.jsp"/>
 
+
+    </definition>
+       <!--채팅방 들어가기 -->
+    <definition name="chatClick" extends="main">
+    	<put-attribute name="title" value="채팅방 만들기"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/chat/chatClick.jsp"/>
+
     </definition>
     
     

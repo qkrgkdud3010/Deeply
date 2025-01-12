@@ -31,6 +31,8 @@ public class ChatVO {
 	private String auser_id; //아티스트 아이디
 	
 	//채팅에 참여하는 유저
+	private long duser_num; //아티스트 번호
+	private String duser_id; //아티스트 아이디
 	
 	
 
