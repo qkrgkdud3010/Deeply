@@ -336,9 +336,9 @@ public class MemberController {
 		byte[] readbyte = 
 				FileUtil.getBytes(
 						request.getServletContext().getRealPath(
-								"/assets/image_bundle/defaultProfile.svg"));
+								"/assets/image_bundle/face 1.png"));
 		model.addAttribute("imageFile", readbyte);
-		model.addAttribute("filename", "defaultProfile.svg");
+		model.addAttribute("filename", "face 1.png");
 	}
 
 }
