@@ -51,6 +51,12 @@ public class BookingServiceImpl implements BookingService{
 		return bookingMapper.selectSeatByHallNum(hall_num);
 	}
 
+	@Override
+	public void registerEvent(EventVO eventVO) {
+		bookingMapper.registerEvent(eventVO);
+		
+	}
+
 	
 
 }

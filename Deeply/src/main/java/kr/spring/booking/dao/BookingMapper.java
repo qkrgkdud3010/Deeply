@@ -22,4 +22,5 @@ public interface BookingMapper {
 	public int countSeatByHallNum(long hall_num);
 	@Select("SELECT * FROM seat WHERE hall_num=#{hall_num}")
 	public List<SeatVO> selectSeatByHallNum(long hall_num);
+	public void registerEvent(EventVO eventVO);
 }

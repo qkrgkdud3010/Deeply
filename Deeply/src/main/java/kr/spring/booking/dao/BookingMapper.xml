@@ -70,4 +70,42 @@
   			#{address2},
   			#{request, jdbcType=VARCHAR})
   	</insert>
+  	<insert id="registerEvent" parameterType="EventVO">
+  		INSERT INTO performance_detail(
+  			perf_num,
+  			hall_num,
+  			artist_num,
+  			perf_date,
+  			perf_time,
+  			perf_status,
+  			perf_title,
+  			perf_desc,
+  			ticket_price,
+  			book_date,
+  			end_date,
+  			booking_deadline,
+  			mem_date,
+  			end_time,
+  			perf_photo,
+  			reg_date
+  		) 
+  		VALUES(
+  			perf_detail_seq.nextval,
+  			#{hall_num},
+  			#{artist_num},
+  			#{perf_date},
+  			#{perf_time},
+  			'before',
+  			#{perf_title},
+  			#{perf_desc},
+  			#{ticket_price},
+  			#{book_date},
+  			#{end_date},
+  			#{booking_deadline},
+  			#{mem_date},
+  			#{end_time},
+  			#{perf_photo},
+  			sysdate
+  		)
+  	</insert>
 </mapper>

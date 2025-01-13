@@ -12,10 +12,14 @@
 <div class="space-10vw"></div>
 <div class="event-register-main">
 	<form:form modelAttribute="eventVO" action="register" id="register_event" enctype="multipart/form-data">
+	<form:hidden path="artist_num" value="${group.group_num}"/>
 	<div class="register-date border-black">
 		<div>공연 일정</div>
 		<div>
-			<form:label path="perf_date">공연일</form:label><form:input path="perf_date"/>
+			<p><form:label path="perf_date">공연 시작일</form:label><form:input path="perf_date"/></p>
+			<p><form:label path="perf_date">공연 종료일</form:label><form:input path="end_date"/></p>
+			<p><form:label path="perf_time">공연 시작시간</form:label><form:input path="perf_time"/></p>
+			<p><form:label path="end_time">공연 종료시간</form:label><form:input path="end_time"/></p>
 			<form:hidden path="hall_num" id="hall_num"/>
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" id="drop_title" type="button" data-bs-toggle="dropdown" aria-expanded="false">공연 장소</button>
@@ -45,7 +49,7 @@
 		</div>
 	</div>
 	<div class="register-booking border-black">
-		<div>공연 정보</div>
+		<div>예매 정보</div>
 		<div>
 			<p><form:label path="book_date">예매 시작일</form:label><form:input path="book_date"/></p>
 			<p><form:label path="booking_deadline">예매 종료일</form:label><form:input path="booking_deadline"/></p>

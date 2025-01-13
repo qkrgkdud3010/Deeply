@@ -2,6 +2,7 @@ package kr.spring.event.vo;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,13 +36,10 @@ public class EventVO {
 	private String perf_title;//공연 제목
 	@NotEmpty
 	private String perf_desc;//공연 설명
-	@NotBlank
+	@NotNull
 	private int ticket_price;//티켓 가격
-	private int remaining_amount;//남은 좌석 수
 	@NotBlank
 	private String book_date;//예매 시작날짜
-	@NotBlank
-	private int category;//카테고리
 	@NotBlank
 	private String booking_deadline;//예매 종료날짜
 	private String perf_photo;

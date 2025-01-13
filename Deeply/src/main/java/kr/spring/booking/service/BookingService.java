@@ -15,4 +15,5 @@ public interface BookingService {
 	public void registerBookingInfo(BookingVO bookingVO);
 	public int countSeatByHallNum(long hall_num);
 	public List<SeatVO> selectSeatByHallNum(long hall_num);
+	public void registerEvent(EventVO eventVO);
 }

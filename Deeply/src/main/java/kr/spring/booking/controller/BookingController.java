@@ -29,6 +29,7 @@ import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.seat.vo.SeatVO;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -134,16 +135,26 @@ public class BookingController {
 	}
 	
 	@PostMapping("/register")
-	public String registerEvent(EventVO eventVO, long group_num, Model model) {
+	public String registerEvent(@ModelAttribute @Valid EventVO eventVO,BindingResult result, long group_num, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+			
+		AgroupVO group = artistService.selectArtistDetail(group_num);
+		model.addAttribute("group", group);
 		
-		if(eventVO == null) {
-			eventVO = new EventVO();
+		if(result.hasErrors()) {
+		    model.addAttribute("errors", result.getAllErrors());
+		    model.addAttribute("eventVO", eventVO);
+		    return "bookingRegister"; // 유효성 검증 실패 시 JSP로 이동
 		}
 		
-		AgroupVO group = artistService.selectArtistDetail(group_num);
+		String uploadedPhoto = FileUtil.createFile(request, eventVO.getUpload());
+		eventVO.setPerf_photo(uploadedPhoto);
 		
-		model.addAttribute("group", group);
-		return "bookingRegister";
+		bookingService.registerEvent(eventVO);
+		
+		model.addAttribute("message", "공연 등록을 성공하였습니다");
+		model.addAttribute("url",request.getContextPath() + "/booking/list?artist_num="+group_num);
+		    
+		return "common/resultAlert";
 	}
 	
 	public void loadBookingContents(long perf_num, Model model) {

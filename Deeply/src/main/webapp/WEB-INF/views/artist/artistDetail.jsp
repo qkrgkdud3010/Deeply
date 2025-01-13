@@ -113,7 +113,7 @@
 				<img>
 			</div>
 		</div>
-		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}/video/group_num=${vo.group_num}">->전체 영상</a></div>
+		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}videos/group?group_num=${vo.group_num}">->전체 영상</a></div>
 	</div>
 	<div class="artist-contents-container">
 		<div class="artist-contents-title bold-title">SHOP</div>
@@ -131,6 +131,6 @@
 				<img>
 			</div>
 		</div>
-		<div class="artist-contents-more right-align vertical-center">->전체 상품</div>
+		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}/item/list?user_num=${vo.group_num}">->전체 상품</a></div>
 	</div>
 </div>
