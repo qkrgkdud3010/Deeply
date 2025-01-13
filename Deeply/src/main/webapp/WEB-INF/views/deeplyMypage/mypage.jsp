@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!-- 회원정보 시작 -->
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- jQuery CDN을 추가 -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/member.profile.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/customjs.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/js/member.profile.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/js/customjs.js"></script>
+	<c:if test="${not empty successMessage}">
+    <script type="text/javascript">
+        alert('${successMessage}');
+    </script>
+</c:if>
 <script type="text/javascript">
 
 var csrfToken = $('meta[name="_csrf"]').attr('content');
@@ -262,69 +270,92 @@ $(function(){
 
 
 </script>
-<div class="main-div" style="text-align:center">
-	<h2>회원상세정보 <input type="button" value="회원정보수정"
-	                onclick="location.href='update'"></h2>
-<div class="profile-image"><img src="${pageContext.request.contextPath}/member/photoView"
-			       width="200" height="200" class="my-photo2" id="photo_btn"></div>
-<div class="mypage-1">
-<div id="photo_choice" style="display:none;">
-				<input type="hidden" id="csrfHeaderName"
-				       value="${_csrf.headerName}">
-				<input type="hidden" id="csrfTokenValue"
-				       value="${_csrf.token}">
-				<input type="file" id="upload"
-				    accept="image/gif,image/png,image/jpeg">
-				<br>
-				<input type="button" value="전송" id="photo_submit">
-				<input type="button" value="취소" id="photo_reset">           
-			</div>
-		<div style="margin-left:50px; padding-top:22px; width:350px; display:inline-block; text-align:left;"><b>이름</b>   ${member.name}<div style="width:150px; display:inline-block; width:10px;"></div>  <b style="margin-right:30px;">연락처</b>   ${member.phone}</div>
-		<div style="margin-left:50px; padding-top:22px; width:350px; display:inline-block; text-align:left;"><b>닉네임</b>   ${member.nick_name}<div style="width:150px; display:inline-block; width:10px;"></div>  <b style="margin-right:30px;">예치금</b>0   </div>
-		<div style="margin-left:50px; padding-top:22px; width:350px; display:inline-block; text-align:left;"><b>이메일</b>   ${member.email}<div style="width:150px; display:inline-block; width:10px;"></div>  <b style="margin-right:30px;">소셜연결</b></div>
-		<div style="margin-left:50px; padding-top:22px; width:350px; display:inline-block; text-align:left;"><b>주소</b> ${member.zipcode}${member.address1}${member.address2}</div>
-		
-</div>
-		<div class="register-wrap">
-		<div class="register-content" style="margin:0 auto; margin-top:50px;">
-	<form:form  class="register-form" modelAttribute="memberVO"
-					 id="member_register">
+<div class="main-div" style="text-align: center">
+	<h2>
+		회원상세정보 
+	</h2>
+	<div class="profile-image">
+		<img src="${pageContext.request.contextPath}/member/photoView"
+			width="200" height="200" class="my-photo2" id="photo_btn">
+	</div>
+	<div class="mypage-1">
+		<div id="photo_choice" style="display: none;">
+			<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}">
+			<input type="hidden" id="csrfTokenValue" value="${_csrf.token}">
+			<input type="file" id="upload"
+				accept="image/gif,image/png,image/jpeg"> <br> <input
+				type="button" value="전송" id="photo_submit"> <input
+				type="button" value="취소" id="photo_reset">
+		</div>
+		<div
+			style="margin-left: 50px; padding-top: 22px; width: 350px; display: inline-block; text-align: left;">
+			<b>이름</b> ${member.name}
+			<div style="width: 150px; display: inline-block; width: 10px;"></div>
+			<b style="margin-right: 30px;">연락처</b> ${member.phone}
+		</div>
+		<div
+			style="margin-left: 50px; padding-top: 22px; width: 350px; display: inline-block; text-align: left;">
+			<b>닉네임</b> ${member.nick_name}
+			<div style="width: 150px; display: inline-block; width: 10px;"></div>
+			<b style="margin-right: 30px;">예치금</b>0
+		</div>
+		<div
+			style="margin-left: 50px; padding-top: 22px; width: 350px; display: inline-block; text-align: left;">
+			<b>이메일</b> ${member.email}
+			<div style="width: 150px; display: inline-block; width: 10px;"></div>
+			<b style="margin-right: 30px;">소셜연결</b>
+		</div>
+		<div
+			style="margin-left: 50px; padding-top: 22px; width: 350px; display: inline-block; text-align: left;">
+			<b>주소</b> ${member.zipcode}${member.address1}${member.address2}
+		</div>
 
-					<form:input path="email" id="email"
-						type="text" placeholder="email" />
-					
-						<form:input class="Authentication" path="id" placeholder="아이디" />
-						<input type="button" id="confirm_id" value="중복체크"
-							class="default-btn">
-						<form:errors path="id" cssClass="error-color" />
-						<div id="message_id" style="width:300px;"></div>
+	</div>
+	<div class="register-wrap">
+		<div class="register-content"
+			style="margin: 0 auto; margin-top: 50px;">
+			<form:form class="register-form" method="post" action="update"
+				modelAttribute="memberVO" id="member_register">
+
+				<form:input path="email" id="email" type="text" placeholder="email" />
+
+				<form:input class="Authentication" path="id" placeholder="아이디" />
+				<input type="button" id="confirm_id" value="중복체크"
+					class="default-btn">
 			
-						<form:errors path="passwd_hash" cssClass="error-color" />
-						<form:input path="nick_name" class="Authentication" type="text"
-							placeholder="닉네임" />
-						<form:errors path="nick_name" cssClass="error-color" />
-						<input type="button" id="confirm_nick" value="중복체크"
-							class="default-btn">
-							<div id="message_nick" style="width:300px;"></div>
-						<form:input path="zipcode" id="zipcode" class="Authentication2"
-							type="text" placeholder="우편번호" />
-						<form:errors path="zipcode" cssClass="error-color" />
-						<input type="button" onclick="execDaumPostcode()" value="우편번호찾기"
-							class="default-btn2">
-						<form:input path="address1" id="address1" type="text"
-							placeholder="주소" />
-						<form:errors path="address1" cssClass="error-color" />
+				<div id="message_id" style="width: 300px;"></div>
 
-						<form:input path="address2" type="text" placeholder="상세주소" />
-						<form:errors path="address2" cssClass="error-color" />
-						<form:input path="phone" id="phone" type="text" placeholder="번호" />
-						<form:errors path="phone" cssClass="error-color" />
 				
-						<form:button style="width:300px;">저장</form:button>
-					
-				</form:form>
-	            </div>   
-</div></div>
+				<form:input path="nick_name" class="Authentication" type="text"
+					placeholder="닉네임" />
+				<form:errors path="nick_name" cssClass="error-color" />
+				<input type="button" id="confirm_nick" value="중복체크"
+					class="default-btn">
+
+				<div id="message_nick" style="width: 300px;"></div>
+				<form:input path="zipcode" id="zipcode" class="Authentication2"
+					type="text" placeholder="우편번호" />
+				
+			
+				<input type="button" onclick="execDaumPostcode()" value="우편번호찾기"
+					class="default-btn2">
+				<form:input path="address1" id="address1" type="text"
+					placeholder="주소" />
+			
+		
+
+				<form:input path="address2" type="text" placeholder="상세주소" />
+			
+			
+				<form:input path="phone" id="phone" type="text" placeholder="번호" />
+		
+				
+				<form:button style="width:300px;">저장</form:button>
+
+			</form:form>
+		</div>
+	</div>
+</div>
 <!-- 회원정보 끝 -->
 
 <div id="layer"

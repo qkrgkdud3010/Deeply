@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.member.service.EmailService;
 import kr.spring.member.service.MemberService;
@@ -30,6 +31,7 @@ import kr.spring.member.service.MemberServiceImpl;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.util.FileUtil;
+import kr.spring.util.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -322,7 +324,78 @@ public class MemberController {
 		model.addAttribute("imageFile", readbyte);
 		model.addAttribute("filename", "face 1.png");
 	}
+	
+	//수정폼에서 전송된 데이터 처리
+		@PreAuthorize("isAuthenticated()")
+		@PostMapping("/update")
+		public String submitUpdate(MemberVO memberVO,
+	
+				                   @AuthenticationPrincipal
+				                   PrincipalDetails principal,
+				                   Model model,
+				                   RedirectAttributes redirectAttributes) {
+			log.debug("<<회원정보 수정>> : " + memberVO);
+			//유효성 체크 결과 오류가 있으면 폼 호출
+			 if (!isValidEmail(memberVO.getEmail())) {
+				 redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+			    if (!isValidNickName(memberVO.getNick_name())) {
+			    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+			    
+			    if (!isValidNickName2(memberVO.getZipcode())) {
+			    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+			    if (!isValidNickName2(memberVO.getAddress1())) {
+			    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+			    if (!isValidNickName2(memberVO.getAddress2())) {
+			    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요.");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+			    if (!isValidNickName2(memberVO.getPhone())) {
+			    	redirectAttributes.addFlashAttribute("successMessage", "번호를 입력하세요.");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+			    if (!isValidNickName2(memberVO.getId())) {
+			    	redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요");
+			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+			    }
+		    
+			memberVO.setUser_num(
+					principal.getMemberVO().getUser_num());
+			//회원정보 수정
+			memberService.updateMember(memberVO);
+			
+			//PrincipalDetails에 저장된 자바빈의 nick_name,email
+			//정보 갱신
+			principal.getMemberVO().setNick_name(
+					           memberVO.getNick_name());
+			principal.getMemberVO().setEmail(
+					               memberVO.getEmail());
+			   redirectAttributes.addFlashAttribute("successMessage", "회원 정보가 성공적으로 수정되었습니다.");
+			return "redirect:/member/myPage";
+		}
 
+		
+		private boolean isValidEmail(String email) {
+		    // 이메일 유효성 검사 로직
+		    return email != null && email.contains("@");
+		}
+
+		private boolean isValidNickName(String nickName) {
+		    // 닉네임 유효성 검사 로직
+		    return nickName != null && nickName.length() > 2;
+		}
+		
+		private boolean isValidNickName2(String nickName) {
+		    // 닉네임 유효성 검사 로직
+		    return nickName != null;
+		}
 }
 
 

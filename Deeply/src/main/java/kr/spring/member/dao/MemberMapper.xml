@@ -109,7 +109,17 @@
   WHERE rnum >= #{start} AND rnum <= #{end}
   ]]>
 </select>
+  	<update id="updateMember_detail" parameterType="memberVO">
+  		UPDATE duser_detail
+  		SET
+  		 phone=#{phone},
+  		 email=#{email},
+  		 zipcode=#{zipcode},
+  		 address1=#{address1},
+  		 address2=#{address2}
 
+  		WHERE user_num=#{user_num}
+  	</update>
 
 
 </mapper>

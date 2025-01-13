@@ -46,6 +46,12 @@ public class MemberServiceImpl implements MemberService{
 
 	}
 	
+	@Override
+	public void updateMember(MemberVO member) {
+		memberMapper.updateMember2(member);
+		memberMapper.updateMember_detail(member);
+	}
+	
 
 	public static Map<String, String> verificationCodes = new HashMap<>();
 	    

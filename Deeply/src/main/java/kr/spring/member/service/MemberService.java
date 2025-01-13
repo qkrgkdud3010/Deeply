@@ -31,4 +31,5 @@ public interface MemberService {
 	//마이페이지
 	public MemberVO selectMember(Long user_num);
 	public void updateProfile(MemberVO member);
+	public void updateMember(MemberVO member);
 }

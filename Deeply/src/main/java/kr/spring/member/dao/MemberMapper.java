@@ -28,7 +28,7 @@ public interface MemberMapper {
 
 	@Select("SELECT * FROM duser JOIN duser_detail USING (user_num) WHERE user_num=#{user_num}")
 	public MemberVO selectMember(Long mem_num);
-	void updateMember(MemberVO memberVO);
+
 	//프로필 이미지 업데이트
 	@Update("UPDATE duser_detail SET photo=#{photo},photo_name=#{photo_name} WHERE user_num=#{user_num}")
 	public void updateProfile(MemberVO member);
@@ -48,9 +48,13 @@ public interface MemberMapper {
 
 	@Update("UPDATE auser_detail SET passwd_hash = #{newPassword} WHERE email = #{email}")
 	public void resetPassword2(String email ,String newPassword);
-
+	@Update("UPDATE duser SET nick_name=#{nick_name} WHERE user_num=#{user_num}")
+	public void updateMember2(MemberVO member);
+	public void updateMember_detail(MemberVO member);
 	public int selectRowCount(Map<String,Object> map);
 	public List<MemberVO> selectList(Map<String,Object> map);
+	
+
 }
 
 
