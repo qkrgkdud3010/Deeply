@@ -8,7 +8,7 @@ $(function(){
 	//업로드 이미지 미리보기
 	//파일 업로드 태그의 선택자,업로드되는 이미지가 보여지는 태그 선택자,
 	//업로드 허용 확장자, 업로드 허용 파일 사이즈
-	customViewImage('#upload','.my-photo',
+	customViewImage('#upload','.my-photo2',
 	           ['png','jpg','jpeg','gif','svg'],1024*1024);
 	
 	$('#photo_submit').click(function(){
@@ -20,6 +20,9 @@ $(function(){
 		//파일 전송
 		const form_data = new FormData();
 		form_data.append('upload',$('#upload')[0].files[0]);
+		for (let pair of form_data.entries()) {
+		    console.log(pair[0], pair[1]); // 여기서 파일의 자세한 정보는 별도로 출력
+		}
 		//서버와 통신
 		$.ajax({
 			url:'updateMyPhoto',
@@ -38,7 +41,7 @@ $(function(){
 				}else if(param.result == 'success'){
 					alert('프로필 사진이 수정되었습니다.');
 					//파일 업로드 태그의 선택자,업로드되는 이미지가 보여지는 태그 선택자
-					customInitImage('#upload','.my-photo');
+					customInitImage('#upload','.my-photo2');
 					$('#photo_choice').hide();
 					$('#photo_btn').show();
 				}else{
@@ -53,7 +56,7 @@ $(function(){
 	//취소 버튼 처리
 	$('#photo_reset').click(function(){
 		//파일 업로드 태그의 선택자,업로드되는 이미지가 보여지는 태그 선택자
-		customCancelImage('#upload','.my-photo');
+		customCancelImage('#upload','.my-photo2');
 		$('#photo_choice').hide();
 		$('#photo_btn').show();
 	});	   

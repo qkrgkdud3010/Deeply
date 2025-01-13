@@ -146,11 +146,11 @@ public class MemberController {
 		// 비밀번호 암호화 및 회원 저장
 		memberVO.setPasswd_hash(passwordEncoder.encode(memberVO.getPasswd_hash()));
 		// 기본 프로필 이미지 설정
-		String defaultPhoto = "/assets/image_bundle/";
+
 		String defaultPhotoName = "defaultProfile.svg";
 
-		memberVO.setPhoto(defaultPhoto);
-		memberVO.setPhotoName(defaultPhotoName);
+
+		memberVO.setPhoto_name(defaultPhotoName);
 		memberService.insertMember(memberVO);
 
 
@@ -259,7 +259,7 @@ public class MemberController {
 	 * 마이페이지
     =================*/
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/myInfo")
+	@GetMapping("/myPage")
 	public String myInfo(@AuthenticationPrincipal 
 			PrincipalDetails principalDetails,
 			Model model) {
@@ -269,7 +269,7 @@ public class MemberController {
 		log.debug("<<회원상세 정보>> : " + member);
 
 		model.addAttribute("member", member);
-		return "myInfo";
+		return "myPage";
 	}
 	/*=================
 	 * 프로필 사진
@@ -290,25 +290,7 @@ public class MemberController {
 		return "imageView";
 	}
 
-	// 프로필 사진 업로드
-	@PostMapping("/updateMyPhoto")
-	@ResponseBody
-	public Map<String,String> processProfile(
-			@AuthenticationPrincipal
-			PrincipalDetails principalDetails,
-			MemberVO memberVO){
-		log.debug("<<PrincipalDetails>> : " + principalDetails);
-		Map<String,String> mapAjax = new HashMap<String,String>();
-		try {
-			MemberVO user = principalDetails.getMemberVO();
-			memberVO.setUser_num(user.getUser_num());
-			memberService.updateProfile(memberVO);
-			mapAjax.put("result","success");
-		}catch(NullPointerException e) {
-			mapAjax.put("result", "logout");
-		}	
-		return mapAjax;
-	}
+
 
 	//프로필 사진 출력(회원번호 지정)
 	@GetMapping("/viewProfile")
@@ -322,12 +304,12 @@ public class MemberController {
 
 	//프로필 사진 처리를 위한 공통 코드
 	public void viewProfile(MemberVO memberVO, HttpServletRequest request, Model model) {
-		if(memberVO==null || memberVO.getPhotoName()==null) {
+		if(memberVO==null || memberVO.getPhoto_name()==null) {
 			//DB에 저장된 프로필 이미지가 없기 때문에 기본 이미지 호출
 			getBasicProfileImage(request, model);
 		}else {//업로드한 프로필 이미지 읽기
 			model.addAttribute("imageFile", memberVO.getPhoto());
-			model.addAttribute("filename", memberVO.getPhotoName());
+			model.addAttribute("filename", memberVO.getPhoto_name());
 		}
 	}
 

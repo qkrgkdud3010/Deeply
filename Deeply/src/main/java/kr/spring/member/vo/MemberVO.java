@@ -1,10 +1,13 @@
 package kr.spring.member.vo;
 
+import java.io.IOException;
 import java.sql.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +37,7 @@ public class MemberVO {
 	private String code;
 
 	private int Verified ; // IS_VERIFIED
-
+	private String photo_name;
 	private Date codeExpiration; // CODE_EXPIRATION
 
 	@NotBlank(message = "우편번호는 필수 입력 값입니다.")
@@ -49,7 +52,7 @@ public class MemberVO {
 	@Size(max = 90, message = "주소는 최대 90자까지 입력 가능합니다.")
 	private String address2; // ADDRESS2 (선택 값)
 
-	private String photo; // PHOTO (선택 값)
+
 
 	private String photoName; // PHOTO_NAME (선택 값)
 
@@ -84,5 +87,13 @@ public class MemberVO {
 		}
 		return false;
 	}
+	private byte[] photo;
+	public void setUpload(MultipartFile upload) 
+            throws IOException {
+//MultipartFile -> byte[]
+setPhoto(upload.getBytes());
+//파일 이름
+setPhoto_name(upload.getOriginalFilename());
+}
 
 }

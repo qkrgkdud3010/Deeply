@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
-
+import kr.spring.member.vo.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -103,4 +104,24 @@ public class MemberAjaxController {
 	    return mapAjax;
 	}
 
+	
+	@PostMapping("/updateMyPhoto")
+	@ResponseBody
+	public Map<String,String> processProfile(
+			               @AuthenticationPrincipal
+			               PrincipalDetails principalDetails,
+			               MemberVO memberVO){
+		log.debug("<<PrincipalDetails>> : " + principalDetails);
+		Map<String,String> mapAjax = 
+				new HashMap<String,String>();
+		try {
+			MemberVO user = principalDetails.getMemberVO();
+			memberVO.setUser_num(user.getUser_num());
+			memberService.updateProfile(memberVO);
+			mapAjax.put("result","success");
+		}catch(NullPointerException e) {
+			mapAjax.put("result", "logout");
+		}	
+		return mapAjax;
+	}
 	}

@@ -264,3 +264,21 @@ margin-left:7px;
 	float:left;
 }
 /*관리자 부분 끝*/
+/*마이페이지 시작*/
+
+.mypage-1{
+
+	width:673px;
+	height:194px;
+	border-radius:19px;
+	  background-color: rgba(0, 162, 207, 0.08);
+	  margin:0 auto;
+}
+.my-photo2{
+	width:190px;
+	height:190px;
+	border-radius:100%;
+	background-color:black;
+	margin:0 auto;
+}
+/*마이페이지 끝*/
