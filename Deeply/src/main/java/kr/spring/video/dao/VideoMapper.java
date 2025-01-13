@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -41,5 +42,10 @@ public interface VideoMapper {
 
 	@Select("SELECT COUNT(*) FROM video WHERE group_num = #{groupNum}")
 		    Integer selectRowCountByGroup(Map<String, Object> map);
+
+		List<VideoVO> selectVideosByCategoryAndGroup(
+		    @Param("categoryId") Long categoryId,
+		    @Param("groupNum") Long groupNum
+		);
 
 }

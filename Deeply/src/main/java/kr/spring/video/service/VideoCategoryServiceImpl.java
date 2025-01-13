@@ -15,9 +15,9 @@ public class VideoCategoryServiceImpl implements VideoCategoryService {
     private VideoCategoryMapper videoCategoryMapper;
 
     @Override
-    public List<VideoCategoryVO> getCategoriesByArtist(Long artistId) {
-        // 특정 아티스트의 모든 카테고리 가져오기
-        return videoCategoryMapper.selectCategoriesByArtist(artistId);
+    public List<VideoCategoryVO> getCategoriesByGroupNum(Long groupNum) {
+        // Mapper 메서드 호출
+        return videoCategoryMapper.selectCategoriesByGroupNum(groupNum);
     }
 
     @Override
@@ -32,4 +32,9 @@ public class VideoCategoryServiceImpl implements VideoCategoryService {
         // 새로 추가된 카테고리를 반환
         return category;
     }
+
+	@Override
+	public Long getGroupNumByUserNum(Long userNum) {
+		 return videoCategoryMapper.findGroupNumByUserNum(userNum);
+	}
 }
