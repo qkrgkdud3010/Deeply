@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %> 
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
@@ -12,6 +13,7 @@
 <div class="main-div">
 	<h2>나의 구독 아티스트</h2>
 	<hr>
+	<jsp:include page="/WEB-INF/views/mypage/myInfo.jsp"/>
 	<div class="followList">
 		<c:if test="${count == 0}">
 			<div class="result-display">팔로우하는 아티스트가 없습니다.</div>

@@ -99,3 +99,15 @@ Constraint community_promotion_reply_fk1 foreign key (user_num) references duser
 Constraint community_promotion_reply_fk2 foreign key (cp_num) references community_promotion (cp_num)
 );
 Create sequence community_promotion_reply_seq;
+
+CREATE TABLE FAN (
+    fan_num NUMBER NOT NULL,
+    fan_start DATE DEFAULT SYSDATE NOT NULL,
+    fan_end DATE,
+    fan_artist NUMBER NOT NULL,
+    user_num NUMBER NOT NULL,
+    CONSTRAINT fan_pk PRIMARY KEY (fan_num),
+    CONSTRAINT fan_fk1 FOREIGN KEY (fan_artist) REFERENCES auser (user_num),
+    CONSTRAINT fan_fk2 FOREIGN KEY (user_num) REFERENCES duser (user_num)
+);
+Create sequence fan_seq;

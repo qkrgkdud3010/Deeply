@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.payment.dao.FanMapper">
+	<!-- 내가 팬 맺은 아티스트 리스트 -->
+	<select id="getMyArtist" parameterType="map" resultType="FanVO">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			FROM (SELECT
+					*
+				FROM fan f
+				JOIN duser d ON f.user_num=d.user_num
+				LEFT OUTER JOIN duser_detail dd ON f.user_num=dd.user_num
+				JOIN auser a ON f.fan_artist=a.user_num
+				LEFT OUTER JOIN auser_detail ad ON f.fan_artist=ad.user_num
+				WHERE f.user_num=#{user_num} ORDER BY fan_start DESC)a)
+		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>
+	</select>
+	<select id="selectFan" parameterType="long" resultType="FanVO">
+	    SELECT * FROM fan f
+		JOIN duser d ON f.user_num=d.user_num
+		LEFT OUTER JOIN duser_detail dd ON f.user_num=dd.user_num
+		JOIN auser a ON f.fan_artist=a.user_num
+		LEFT OUTER JOIN auser_detail ad ON f.fan_artist=ad.user_num
+		WHERE f.user_num = #{user_num} and fan_artist=fan_artist
+	</select>
+</mapper>

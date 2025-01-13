@@ -13,14 +13,20 @@
     </definition>
     
 	<!-- 회원 마이페이지 -->
-    <definition name="myInfo" extends="main">
-    	<put-attribute name="title" value="나의 정보"/>
-    	<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>                            
-    	<put-attribute name="body" value="/WEB-INF/views/mypage/myInfo.jsp"/>
+	<definition name="myPage" template="/WEB-INF/views/template/layout_mypage.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="css" 
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>
+        <put-attribute name="header"
+               value="/WEB-INF/views/template/header.jsp"/>
+        <put-attribute name="body" 
+    	       value="/WEB-INF/views/follow/followList.jsp"/> 
+    	<put-attribute name="footer"
+               value="/WEB-INF/views/template/footer.jsp"/>                    
     </definition>
-    <definition name="follow" extends="main">
+    <definition name="follow">
     	<put-attribute name="title" value="팔로우리스트"/>
-    	<put-attribute name="css" value="/WEB-INF/views/follow/followCSS.jsp"/>                            
+    	<put-attribute name="css" value="/WEB-INF/views/follow/followCSS.jsp"/>
     	<put-attribute name="body" value="/WEB-INF/views/follow/followView.jsp"/>
     </definition>
     <definition name="modifyInfo" extends="main">
@@ -29,6 +35,17 @@
     </definition>
     
     <!-- 아티스트 마이페이지 -->
+	<definition name="artiMyPage" template="/WEB-INF/views/template/layout_mypage.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="css" 
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>
+        <put-attribute name="header"
+               value="/WEB-INF/views/template/header.jsp"/>
+        <put-attribute name="body" 
+    	       value="/WEB-INF/views/mypage/artiInfo.jsp"/> 
+    	<put-attribute name="footer"
+               value="/WEB-INF/views/template/footer.jsp"/>                    
+    </definition>
      <definition name="artiInfo" extends="main">
     	<put-attribute name="title" value="아티스트 정보"/>
     	<put-attribute name="body" value="/WEB-INF/views/mypage/artiInfo.jsp"/>
@@ -37,6 +54,13 @@
     	<put-attribute name="title" value="아티스트 정보 수정"/>
     	<put-attribute name="body" value="/WEB-INF/views/mypage/modifyArtiInfo.jsp"/>
     </definition>
+    
+    <!-- 아티스트 멤버십 -->
+     <definition name="fan" extends="main">
+    	<put-attribute name="title" value="아티스트 멤버십"/>
+    	<put-attribute name="body" value="/WEB-INF/views/payment/fan.jsp"/>
+    </definition>
+    
 </tiles-definitions>
 
 

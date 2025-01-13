@@ -35,3 +35,21 @@
 .group-name, .artist-name {
 	display: block;
 }
+
+/* 멤버십 가입부분 */
+.membership-title {
+    font-size: 16pt;
+    color: black;
+}
+
+.artist-name {
+    font-size: 20pt;
+    color: skyblue;
+    font-weight: bold; /* 추가적으로 강조하려면 bold를 추가할 수 있습니다. */
+}
+
+.individual-name {
+    font-size: 20pt;
+    color: skyblue;
+    font-weight: bold;
+}
