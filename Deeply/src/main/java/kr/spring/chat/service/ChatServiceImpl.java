@@ -28,19 +28,46 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
-
-	@Override
-	public void insertAuserChat(long chat_num) {
-		chatMapper.insertAuserChat(chat_num);
-		
-	}
-
 	@Override
 	public void insertDuserInfo(ChatVO chvo) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
+	public void insertAuserChat(ChatVO chvo) {
+		chatMapper.insertAuserChat(chvo);
+		
+	}
+
+	@Override
+	public Long selectChatnum(Long auser_num) {
+		
+		return chatMapper.selectChatnum(auser_num);
+	}
+
+	@Override
+	public void updateAuserKind(Long chat_num) {
+		 chatMapper.updateAuserKind(chat_num);
+		
+	}
+
+	@Override
+	public void insertDuserChat(ChatVO chvo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+
+
+	
+	
+
+	
+
+	
 	
 	
 	

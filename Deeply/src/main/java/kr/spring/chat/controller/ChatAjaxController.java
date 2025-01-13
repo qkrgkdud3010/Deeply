@@ -13,9 +13,5 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatAjaxController {
 	@Autowired
 	private ChatService chatService;
-	
-	/*===================
-	 * 유저 정보 중간테이블로 업데이트
-	 * 	 *===================*/
 
 }

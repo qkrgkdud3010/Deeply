@@ -1,5 +1,6 @@
 --채팅방 테이블
 create table chatroom(
+auser_num number not null, 
 chat_num number not null, --채팅 방 번호 pk
 chat_name varchar2(10) not null, --채팅방 이름
 chat_status number(1) default 0 not null, --1이면 방이 활성화
@@ -33,6 +34,15 @@ constraint achat_fk_id foreign key (auser_id) references auser (id)
 
 --채팅에 참여하는 유저
 
+create table dchat(
+duser_num number not null, --아티스트 번호, fk
+duser_id varchar2(10) not null, --아티스트 아이디 ,fk
+constraint dchat_fk_num foreign key (duser_num) references duser (user_num),
+constraint dchat_fk_id foreign key (duser_id) references duser (id)
+);
+
+
+
 --중간 테이블
 create table chat(
 chat_user_num number not null, --채팅방에 들어온 user 번호, 두 테이블에서 들어오는 거라서 fk 될 수 없음
@@ -47,4 +57,6 @@ ALTER TABLE chat
 ADD CONSTRAINT chat_user_uniq UNIQUE (chat_user_num);
 create sequence chatmsg_seq;
 
-
+ALTER TABLE chatroom
+ADD CONSTRAINT fk_auser_num FOREIGN KEY (auser_num)references
+ auser (user_num);s

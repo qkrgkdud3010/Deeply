@@ -6,16 +6,13 @@
 <div class="page-main">
 
 	<h2>채팅방</h2>
-	<form:form modelAttribute="chatVO" action="chClick" id = "enterChatroom"
+	<form:form modelAttribute="chatVO" action="chatting" id = "enterChatroom"
 	enctype="multipart/form-data">
-	
-	<form:form method="post" action="chat/chClick" modelAttribute="chatVO">
+
 
 	 <div>
 	 	<button type="submit" onclick="location.href='chatRoom'">채팅방으로 입장</button>
 	 </div>
-	</form:form>
-	
 	</form:form>
 
 </div>
