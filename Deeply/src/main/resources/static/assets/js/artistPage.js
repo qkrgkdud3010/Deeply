@@ -37,4 +37,17 @@ $(function () {
 				
 		};		
 	});
+	
+	$('.member-item').click(function(){
+		const member_val = $(this).data('value');
+		
+		$('.member-info').hide();
+		
+		$('.member-info').each(function () {
+			const member_data = $(this).data('member'); // 각 member_info의 data-member 값 가져오기
+		    if (member_data === member_val) {
+		       $(this).show(); // 값이 일치하면 해당 요소를 표시
+		    }
+		});
+	});
 });

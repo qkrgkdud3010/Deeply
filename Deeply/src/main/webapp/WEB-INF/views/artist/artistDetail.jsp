@@ -60,26 +60,31 @@
 		<div class="member-container">
 			<div class="member-list">
 				<c:forEach var="member" items="${members}">
-					<div class="member-item">
+					<div class="member-item" data-value="${member.user_num}">
 					<img class="member-profile-img">
 					<div class="align-center font-white bold-title top-5">${member.name}</div>
-				</div>
+					</div>
 				</c:forEach>	
 			</div>
 			<div class="member-detail font-white">
 				<hr>
 					<c:forEach var="member" items="${members}">
-					<ul>
+					<ul class="member-info" data-member="${member.user_num}">
 						<li>
 							<label>아티스트</label><span>${member.name}</span>
 						</li>
 						<li>
 							<label>데뷔일</label><span>xxxx.xx.xx</span>
 						</li>
+						
+						<li>
+							<hr>
+							<div class="member-desc font-white vertical-center left-3">멤버 소개글</div>
+						</li>
 					</ul>
 					</c:forEach>
-				<hr>
-				<div class="member-desc font-white vertical-center left-3">멤버 소개글</div>
+				
+				
 			</div>
 			<div class="official-board-container">
 				<div class="official-board-title font-white bold-title"><span class="vertical-center left-5">공지사항</span></div>

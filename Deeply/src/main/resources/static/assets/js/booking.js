@@ -140,12 +140,50 @@ $(function () {
 	      mode: "range", // 범위 모드 활성화
 	      dateFormat: "Y-m-d", // 날짜 형식 설정
 	      onChange: function (selectedDates, dateStr, instance) {
+			
 			if (selectedDates.length === 2) {
+				if (selectedDates[0].getTime() === selectedDates[1].getTime()) {
+				               alert("서로 다른 날짜를 입력해주세요");
+				               instance.clear(); // 선택된 날짜 초기화
+				               $('#date-range').val(''); // 입력 필드 초기화
+				               return;
+				           }
 				console.log("선택된 날짜:", dateStr); // 선택된 날짜 출력
 				const formattedDate = dateStr.replace(' to ', ' ~ ');
 				$('#date-range').val(formattedDate);
 				$('#booking_filter').submit();
 			}
+			
+			
 	      }
-	  }); 
+	  });
+	  
+	  $('#calendar_img').click(function () {
+	         
+	    const today = new Date();
+	    const hundredDaysLater = new Date();
+	    hundredDaysLater.setDate(today.getDate() + 100);
+
+	         
+	    const formatDate = (date) => {
+	        const year = date.getFullYear();
+	        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+	        const day = String(date.getDate()).padStart(2, '0');
+	        return `${year}-${month}-${day}`;
+	    };
+
+	    const startDate = formatDate(today);
+	    const endDate = formatDate(hundredDaysLater);
+
+	    $('#date-range').val(`${startDate} ~ ${endDate}`);
+		$('#booking_filter').submit();
+	 });
+	 
+	 $('.booking-btn').click(function(){
+		$('#event_status').val($(this).data('value'));
+	 }); 
+	 
+	 $('.register-event-btn').click(function(e){
+		e.preventDefault();
+	 });
 });

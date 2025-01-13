@@ -482,6 +482,10 @@ a {
  	margin-right:3%;
  }
  
+ .member-info{
+ 	display:none;
+ }
+ 
   /* 
 ===============================
 		  아티스트 수정
@@ -616,10 +620,14 @@ a {
  }
  
  .dateSelect-btn{
- 	width:10vw;
+ 	width:11vw;
  	height:2vw;
  	border-radius:5px;
  	border:1px solid #0369A1;
+ }
+ 
+ .dateSelect-btn::placeholder{
+ 	color:black;
  }
  
  .booking-list{
@@ -635,9 +643,10 @@ a {
  }
  
  .booking-btn{
- 	width:8vw;
+ 	width:6vw;
  	height:2.5vw;
  	font-size:0.8vw;
+ 	cursor:pointer;
  }
  
  .booking-items{
