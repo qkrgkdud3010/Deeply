@@ -15,14 +15,16 @@
 	<form:hidden path="artist_num" value="${group.group_num}"/>
 	<div class="register-date border-black">
 		<div>공연 일정</div>
+		<button class="dur-btn" id="event_dur1">1일 공연</button><button class="dur-btn" id="event_dur2">기간 공연</button>
 		<div>
-			<p><form:label path="perf_date">공연 시작일</form:label><form:input path="perf_date"/></p>
-			<p><form:label path="perf_date">공연 종료일</form:label><form:input path="end_date"/></p>
-			<p><form:label path="perf_time">공연 시작시간</form:label><form:input path="perf_time"/></p>
-			<p><form:label path="end_time">공연 종료시간</form:label><form:input path="end_time"/></p>
-			<form:hidden path="hall_num" id="hall_num"/>
+			<p><form:label path="perf_date">공연 시작일</form:label><form:input path="perf_date"/><form:errors path="perf_date" cssClass="error-color"/></p>
+			<p class="event-end-date"><form:label path="perf_date">공연 종료일</form:label><form:input path="end_date"/><form:errors path="end_date" cssClass="error-color"/></p>
+			<p><form:label path="perf_time">공연 시작시간</form:label><form:input path="perf_time"/><form:errors path="perf_time" cssClass="error-color"/></p>
+			<p><form:label path="end_time">공연 종료시간</form:label><form:input path="end_time"/><form:errors path="end_time" cssClass="error-color"/></p>
+			<form:hidden path="hall_num" id="hall_num"/> 
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" id="drop_title" type="button" data-bs-toggle="dropdown" aria-expanded="false">공연 장소</button>
+				<form:errors path="hall_num" cssClass="error-color"/>
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="#" data-value="1">테스트 홀</a></li>
 					<li><a class="dropdown-item" href="#" data-value="2">서울 체육관</a></li>
@@ -35,26 +37,27 @@
 	<div class="register-detail border-black">
 		<div>공연 정보</div>
 		<div>
-			<p><form:label path="perf_title">공연 이름</form:label><form:input path="perf_title"/></p>
+			<p><form:label path="perf_title">공연 이름</form:label><form:input path="perf_title"/><form:errors path="perf_title" cssClass="error-color"/></p>
 			<div>
 			<p><form:label path="perf_desc">공연 상세</form:label></p>
 			
 				<form:textarea path="perf_desc"/>
 			</div>
+			<form:errors path="perf_desc" cssClass="error-color"/>
 			<div>
 			<p><form:label path="upload">공연 이미지</form:label></p>
 			<div></div>
-			<input type="file" name="upload">
+			<input type="file" name="upload"><form:errors path="upload" cssClass="error-color"/>
 			</div>
 		</div>
 	</div>
 	<div class="register-booking border-black">
 		<div>예매 정보</div>
 		<div>
-			<p><form:label path="book_date">예매 시작일</form:label><form:input path="book_date"/></p>
-			<p><form:label path="booking_deadline">예매 종료일</form:label><form:input path="booking_deadline"/></p>
-			<p><form:label path="mem_date">선예매 시작일</form:label><form:input path="mem_date"/></p>
-			<p><form:label path="ticket_price">티켓 금액</form:label><form:input path="ticket_price"/></p>
+			<p><form:label path="book_date">예매 시작일</form:label><form:input path="book_date"/><form:errors path="book_date" cssClass="error-color"/></p>
+			<p><form:label path="booking_deadline">예매 종료일</form:label><form:input path="booking_deadline"/><form:errors path="booking_deadline" cssClass="error-color"/></p>
+			<p><form:label path="mem_date">선예매 시작일</form:label><form:input path="mem_date"/><form:errors path="mem_date" cssClass="error-color"/></p>
+			<p><form:label path="ticket_price">티켓 금액</form:label><form:input path="ticket_price"/><form:errors path="ticket_price" cssClass="error-color"/></p>
 			<p class="font-red">VIP좌석 금액은 기본 좌석 금액 기준 1.4배로 측정됩니다</p>
 		</div>
 	</div>

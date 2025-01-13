@@ -1,6 +1,7 @@
 package kr.spring.booking.controller;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,9 @@ import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Slf4j
 @Controller
 @RequestMapping("/booking")
@@ -42,14 +46,41 @@ public class BookingController {
 	@Autowired
 	private ArtistService artistService;
 	
+	
 	//아티스트 예매 목록
 	@GetMapping("/list")
-	public String getList(long artist_num, @RequestParam(defaultValue="1") int pageNum, HttpServletRequest request, Model model) {
+	public String getList(long artist_num, @RequestParam(defaultValue="1") int pageNum,
+										   @RequestParam(defaultValue="before") String status, 
+										   @RequestParam(required=false) String dateRange, HttpServletRequest request, Model model) {
+		
+		
 		
 		log.debug("<<예매 페이지 아티스트 번호>> : " + artist_num);
 		log.debug("<<예매 페이지 번호>> : " + pageNum);
 		Map<String,Object> map = new HashMap<String,Object>();
+		
+		LocalDate today = LocalDate.now();
+	    LocalDate hundredDaysLater = today.plusDays(100);
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	    String startDate = today.format(formatter);
+	    String endDate = hundredDaysLater.format(formatter);
+		
+		if(dateRange !=  null) {
+			String[] dates = dateRange.split(" ~ ");
+			startDate = dates[0];
+			endDate = dates[1];
+		}
+		
+		
+		log.debug("dateRange: " + dateRange);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
 		map.put("user_num", artist_num);
+		if(status != null) {
+			map.put("status", status);
+		}
+		
 		
 		int count = bookingService.selectEventRowCount(map);
 		log.debug("<<예매 페이지 count>> : " + count);
@@ -88,6 +119,11 @@ public class BookingController {
 	    
 	    MemberVO member = principal.getMemberVO();
 	    
+	    if(principal.getArtistVO() != null) {
+	    	AgroupVO av = principal.getAgroupVO();
+	    	log.debug("------------------------------------------------" + av);
+	    }
+	    
 	    loadBookingContents(perf_num, model);
 	    
 	    model.addAttribute("perf_num", perf_num);
@@ -122,24 +158,25 @@ public class BookingController {
 	}
 	
 	@GetMapping("/register")
-	public String registerForm(EventVO eventVO, long group_num, Model model) {
+	public String registerForm(EventVO eventVO, @RequestParam long group_num, Model model, HttpServletRequest request) {
 		
 		if(eventVO == null) {
 			eventVO = new EventVO();
 		}
 		
 		AgroupVO group = artistService.selectArtistDetail(group_num);
-		
+		log.debug("Agroup: " + group);
 		model.addAttribute("group", group);
 		return "bookingRegister";
 	}
 	
 	@PostMapping("/register")
-	public String registerEvent(@ModelAttribute @Valid EventVO eventVO,BindingResult result, long group_num, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+	public String registerEvent(@ModelAttribute @Valid EventVO eventVO, BindingResult result, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
 			
+		long group_num = eventVO.getArtist_num();
 		AgroupVO group = artistService.selectArtistDetail(group_num);
 		model.addAttribute("group", group);
-		
+		log.debug("Agroup2: " + group);
 		if(result.hasErrors()) {
 		    model.addAttribute("errors", result.getAllErrors());
 		    model.addAttribute("eventVO", eventVO);
@@ -148,6 +185,23 @@ public class BookingController {
 		
 		String uploadedPhoto = FileUtil.createFile(request, eventVO.getUpload());
 		eventVO.setPerf_photo(uploadedPhoto);
+		
+		long hall_num = eventVO.getHall_num();
+		String hall_name = null;
+		if(hall_num == 1) {
+			hall_name = "테스트 홀";
+		}
+		if(hall_num == 2) {
+			hall_name = "서울 체육관";
+		}
+		if(hall_num == 3) {
+			hall_name = "수도권 경기장";
+		}
+		if(hall_num == 4) {
+			hall_name = "월드컵 돔";
+		}
+		
+		eventVO.setHall_name(hall_name);
 		
 		bookingService.registerEvent(eventVO);
 		

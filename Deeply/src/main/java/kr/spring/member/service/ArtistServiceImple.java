@@ -75,7 +75,11 @@ public class ArtistServiceImple implements kr.spring.member.service.ArtistServic
 	public void updateArtistMemberGroupName(Map<String, Object> map) {
 		artistMapper.updateArtistMemberGroupName(map);
 	}
-	
+	@Override
+	public AgroupVO selectAgroupByArtistNum(long artist_num) {
+		return artistMapper.selectAgroupByArtistNum(artist_num);
+	}
+
 	
 	
 

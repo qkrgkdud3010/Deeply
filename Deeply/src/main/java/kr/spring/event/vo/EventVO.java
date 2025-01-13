@@ -15,8 +15,8 @@ import lombok.ToString;
 @ToString
 public class EventVO {
 	private long perf_num;//공연 번호
+	@NotNull
 	private long hall_num;//공연장 번호
-	@NotBlank
 	private String hall_name;//공연장 이름
 	private String location;//공연 장소
 	private int booked_amount;//예매 수

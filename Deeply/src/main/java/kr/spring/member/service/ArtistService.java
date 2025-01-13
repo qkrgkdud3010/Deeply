@@ -23,4 +23,8 @@ public interface ArtistService {
 	//아티스트 수정
 	public void updateArtistGroup(AgroupVO agroupVO);
 	public void updateArtistMemberGroupName(Map<String,Object> map);
+	
+	//아티스트 번호로 agroupVO 검색
+	public AgroupVO selectAgroupByArtistNum(long artist_num);
+	
 }

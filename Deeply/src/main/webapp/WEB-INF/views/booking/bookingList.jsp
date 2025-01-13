@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/booking.js"></script>
+<!-- Flatpickr -->
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <div>
 	<div class="booking-artist-container font-white bold-title background-black align-center">
@@ -11,9 +14,13 @@
 	<div class="booking-main">
 		<div class="booking-title bold-title vertical-center">공연 예매</div>
 		<div class="booking-list-container">
+			<form id="booking_filter" action="list" method="get">
+			<input type="hidden" name="artist_num" value="${artist_num}">
 			<div class="booking-date-container vertical-center">
-				<img class="left-1">
-				<div class="booking-date left-1"><span>xx.xx</span>~<span>xx.xx</span></div>
+				<img class="left-1" src="${pageContext.request.contextPath}/assets/image_bundle/calendar.svg">
+				<div class="booking-date left-1">
+				<input type="text" id="date-range" name="dateRange" class="dateSelect-btn align-center" value="${defaultRange}" placeholder="날짜를 선택하세요">
+				</div>
 				<div class="booking-category left-3">
 					<button class="booking-btn white-btn left-1">예매 전</button>
 					<button class="booking-btn white-btn left-1">예매 중</button>
@@ -21,11 +28,12 @@
 				</div>
 				<button class="register-event-btn align-center bold-title" onclick="location.href='register?group_num=${artist_num}'">공연 등록</button>
 			</div>
+			</form>
 			<div class="booking-list top-1">
 				<div class="booking-items height-90">
 					<c:forEach var="list" items="${list}">
 					<div class="booking-item" data-num="${list.perf_num}">
-						<img>
+						<img src="${pageContext.request.contextPath}/assets/upload/${list.perf_photo}">
 						<div class="perf-status font-white bold-title right-align">
 							<c:if test="${not empty list and list.perf_status == 'over'}">
 								종료된 이벤트
@@ -55,6 +63,7 @@
 			<div class="event-title bold-title">공연 정보</div>
 			<div class="event-desc top-5">
 				<div class="desc-div1 height-50">
+					<img class="e-img">
 					<div class="e-title vertical-center left-3 bold-title"></div>
 					<div class="e-info1 vertical-center left-3">
 						<div class="e-date bold-title">xxxx.xx.xx</div>

@@ -29,16 +29,17 @@ $(function () {
 	
 	function displayEventDetails(response){
 		const event = response.event;
-		$('.e-title').text(event.perf_title || '제목 없음');
-		$('.e-date').text(event.perf_date || '제목 없음');
-		$('.e-time').text(event.perf_time +" ~ "+event.end_time || '제목 없음');
-		$('.e-period').text(event.perf_date + ' ~ ' + event.end_date || '제목 없음');
-		$('.e-membership').text(event.mem_date || '제목 없음');
-		$('.e-place').text(event.hall_name || '제목 없음');
-		$('.e-desc').text(event.perf_desc || '제목 없음');
-		$('.e-address').text(event.location || '제목 없음');
-		$('.e-price').text(event.ticket_price || '제목 없음');
-		$('.e-vip-price').text(event.ticket_price * 2.1 || '제목 없음');
+		$('.e-img').attr('src', '../assets/upload/'+event.perf_photo);
+		$('.e-title').text(event.perf_title);
+		$('.e-date').text(event.perf_date);
+		$('.e-time').text(event.perf_time +" ~ "+event.end_time);
+		$('.e-period').text(event.perf_date + ' ~ ' + event.end_date);
+		$('.e-membership').text(event.mem_date);
+		$('.e-place').text(event.hall_name);
+		$('.e-desc').text(event.perf_desc);
+		$('.e-address').text(event.location);
+		$('.e-price').text(event.ticket_price + '원');
+		$('.e-vip-price').text(Math.round(event.ticket_price * 1.4) + '원');
 	}
 	
 	$('.seat-item').click(function () {
@@ -120,5 +121,31 @@ $(function () {
 	    $('#drop_title').text($(this).text());
 	});
 	
-	       
+	$('#event_dur1').click(function(e){
+		e.preventDefault();
+		$('.event-end-date').hide();
+		$(this).css('background','#0369A1');
+		$('#event_dur2').css('background','none');
+	});
+	$('#event_dur2').click(function(e){
+		e.preventDefault();
+		$('.event-end-date').show();
+		$(this).css('background','#0369A1');
+		$('#event_dur1').css('background','none');
+	})
+	
+	
+	
+	$('#date-range').flatpickr({
+	      mode: "range", // 범위 모드 활성화
+	      dateFormat: "Y-m-d", // 날짜 형식 설정
+	      onChange: function (selectedDates, dateStr, instance) {
+			if (selectedDates.length === 2) {
+				console.log("선택된 날짜:", dateStr); // 선택된 날짜 출력
+				const formattedDate = dateStr.replace(' to ', ' ~ ');
+				$('#date-range').val(formattedDate);
+				$('#booking_filter').submit();
+			}
+	      }
+	  }); 
 });
