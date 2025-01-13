@@ -271,27 +271,25 @@ public class MemberController {
 	    ArtistVO artist = null;
 
 	    // principalDetails가 null이 아니고 memberVO가 null이 아니면 member 정보 조회
-	    if (principalDetails != null && principalDetails.getMemberVO() != null) {
-	        member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
-	        log.debug("<<회원상세 정보>> : " + member);
+	    if (principalDetails != null) {
+	        // memberVO가 존재하면 member 정보 조회
+	        if (principalDetails.getMemberVO() != null) {
+	            member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
+	            log.debug("<<회원상세 정보>> : " + member);
+	        }
+	        // memberVO가 없고 artistVO가 존재하면 artist 정보 조회
+	        else if (principalDetails.getArtistVO() != null) {
+	            artist = artistService.selectMember(principalDetails.getArtistVO().getUser_num());
+	            log.debug("<<아티스트상세 정보>> : " + artist);
+	        }
 	    }
 
-	    // principalDetails가 null이 아니고 artistVO가 null이 아니면 artist 정보 조회
-	    if (principalDetails != null && principalDetails.getArtistVO() != null) {
-	        artist = artistService.selectMember(principalDetails.getArtistVO().getUser_num());
-	        log.debug("<<아티스트상세 정보>> : " + artist);
-	    }
 	  
 	    // member와 artist 중 하나라도 존재하면 해당 정보를 모델에 담음
-	    if (member != null) {
+	    if (member instanceof MemberVO) {
 	        model.addAttribute("member", member);
-	    } else if (artist != null) {
-	        model.addAttribute("member", artist);
-	     
 	    } else {
-	        // 둘 다 null인 경우 오류 처리 (예: 로그인 상태가 아님)
-	        model.addAttribute("error", "회원 정보와 아티스트 정보가 모두 없습니다.");
-	        return "errorPage"; // 적절한 오류 페이지로 리다이렉트
+	        model.addAttribute("member", artist);
 	    }
 	    if (member instanceof MemberVO) {
 	        model.addAttribute("isMemberVO", true);
@@ -363,80 +361,81 @@ public class MemberController {
 	}
 	
 	//수정폼에서 전송된 데이터 처리
-		@PreAuthorize("isAuthenticated()")
-		@PostMapping("/update")
-		public String submitUpdate(MemberVO memberVO,
-								   ArtistVO artistVO,
-				                   @AuthenticationPrincipal
-				                   PrincipalDetails principal,
-				                   Model model,
-				                   RedirectAttributes redirectAttributes) {
-			log.debug("<<회원정보 수정>> : " + memberVO);
-			log.debug("<<회원정보 수정>> : " + artistVO);
-			//유효성 체크 결과 오류가 있으면 폼 호출
-			
-			if(artistVO==null) {
-				 if (!isValidEmail(memberVO.getEmail())) {
-					 redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-				    if (!isValidNickName(memberVO.getNick_name())) {
-				    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-				    
-				    if (!isValidNickName2(memberVO.getZipcode())) {
-				    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-				    if (!isValidNickName2(memberVO.getAddress1())) {
-				    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-				    if (!isValidNickName2(memberVO.getAddress2())) {
-				    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요.");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-				    if (!isValidNickName2(memberVO.getPhone())) {
-				    	redirectAttributes.addFlashAttribute("successMessage", "번호를 입력하세요.");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-				    if (!isValidNickName2(memberVO.getId())) {
-				    	redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요");
-				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-				    }
-			    
-				
-				//회원정보 수정
-			memberService.updateMember(memberVO);
-			
-			//PrincipalDetails에 저장된 자바빈의 nick_name,email
-			//정보 갱신
-			principal.getMemberVO().setNick_name(
-					           memberVO.getNick_name());
-			principal.getMemberVO().setEmail(
-					               memberVO.getEmail());
-			}else {
-				if(artistVO!=null) {
-					if (!isValidEmail(artistVO.getEmail())) {
-						 redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
-					        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-					    }
-					  if (!isValidNickName2(artistVO.getId())) {
-					    	redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요");
-					        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-					    }
-				}
-				long userNum = principal.getArtistVO().getUser_num();
-				artistVO.setUser_num(userNum);
-				memberService.updateMember2(artistVO);
-				
-			
-		principal.getArtistVO().setEmail(artistVO.getEmail());
-			}
-			   redirectAttributes.addFlashAttribute("successMessage", "회원 정보가 성공적으로 수정되었습니다.");
-			return "redirect:/member/myPage";
-		}
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/update")
+	public String submitUpdate(MemberVO memberVO, 
+	                           ArtistVO artistVO, 
+	                           @AuthenticationPrincipal PrincipalDetails principal, 
+	                           RedirectAttributes redirectAttributes) {
+
+	    // memberVO가 있을 경우 처리
+	    if (principal.getMemberVO() != null) {
+	        if (!isValidEmail(memberVO.getEmail())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName(memberVO.getNick_name())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName2(memberVO.getZipcode())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "유효한 우편번호를 입력해주세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName2(memberVO.getAddress1())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName2(memberVO.getAddress2())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName2(memberVO.getPhone())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "번호를 입력하세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName2(memberVO.getId())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요.");
+	            return "redirect:/member/myPage";
+	        }
+
+	        // 회원 정보 수정
+	        
+	        long userNum = principal.getMemberVO().getUser_num();
+	        memberVO.setUser_num(userNum);
+	        memberService.updateMember(memberVO);
+
+	        // PrincipalDetails에 저장된 정보 갱신
+	        principal.getMemberVO().setNick_name(memberVO.getNick_name());
+	        principal.getMemberVO().setEmail(memberVO.getEmail());
+	    }
+
+	    // artistVO가 있을 경우 처리
+	    if (principal.getArtistVO() != null) {
+	        if (!isValidEmail(artistVO.getEmail())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
+	            return "redirect:/member/myPage";
+	        }
+	        if (!isValidNickName2(artistVO.getId())) {
+	            redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요.");
+	            return "redirect:/member/myPage";
+	        }
+
+	        // 아티스트 정보 수정
+	        
+	        long userNum = principal.getArtistVO().getUser_num();
+	        artistVO.setUser_num(userNum);
+	        memberService.updateMember2(artistVO);
+
+	        // PrincipalDetails에 저장된 아티스트 이메일 갱신
+	        principal.getArtistVO().setEmail(artistVO.getEmail());
+	    }
+
+	    // 성공 메시지
+	    redirectAttributes.addFlashAttribute("successMessage", "회원 정보가 성공적으로 수정되었습니다.");
+	    return "redirect:/member/myPage";
+	}
+
 
 		
 		private boolean isValidEmail(String email) {

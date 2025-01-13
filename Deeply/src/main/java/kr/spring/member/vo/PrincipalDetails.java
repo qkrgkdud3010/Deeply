@@ -26,10 +26,20 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	public PrincipalDetails(MemberVO memberVO) {
 		this.memberVO=memberVO;
 	}
+	
+	public PrincipalDetails(AgroupVO agroupVO) {
+		this.agroupVO=agroupVO;
+	}
 	public PrincipalDetails(MemberVO memberVO, Map<String, Object> attributes) {
 		this.memberVO=memberVO;
 		this.attributes=attributes;
 	}
+	
+	public PrincipalDetails(AgroupVO agroupVO, Map<String, Object> attributes) {
+		this.agroupVO=agroupVO;
+		this.attributes=attributes;
+	}
+	
 	
 	public PrincipalDetails(ArtistVO artistVO, Map<String, Object> attributes) {
 		this.artistVO=artistVO;
@@ -40,6 +50,9 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	}
 	public ArtistVO getArtistVO() {
 		return artistVO;
+	}
+	public AgroupVO agroupVO() {
+		return agroupVO;
 	}
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
