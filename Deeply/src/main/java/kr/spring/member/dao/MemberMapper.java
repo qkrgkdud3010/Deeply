@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 
 @Mapper
@@ -32,7 +33,8 @@ public interface MemberMapper {
 	//프로필 이미지 업데이트
 	@Update("UPDATE duser_detail SET photo=#{photo},photo_name=#{photo_name} WHERE user_num=#{user_num}")
 	public void updateProfile(MemberVO member);
-
+	@Update("UPDATE auser_detail SET photo=#{photo},photo_name=#{photo_name} WHERE user_num=#{user_num}")
+	public void updateProfile2(ArtistVO artist);
 	@Select("SELECT d.id FROM duser d JOIN duser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email} AND dd.name = #{name}")
 	public String findIdByNameAndEmail(@Param("name") String name, @Param("email") String email);
 	@Select("SELECT d.id FROM auser d JOIN auser_detail dd ON d.user_num = dd.user_num WHERE dd.email = #{email} AND dd.name = #{name}")
@@ -50,10 +52,14 @@ public interface MemberMapper {
 	public void resetPassword2(String email ,String newPassword);
 	@Update("UPDATE duser SET nick_name=#{nick_name} WHERE user_num=#{user_num}")
 	public void updateMember2(MemberVO member);
+
+	
 	public void updateMember_detail(MemberVO member);
+	public void updateMember_detail2(ArtistVO artist);
 	public int selectRowCount(Map<String,Object> map);
 	public List<MemberVO> selectList(Map<String,Object> map);
-	
+	@Update("UPDATE auser SET id=#{id} WHERE user_num=#{user_num}")
+	public void updateMember3(ArtistVO artist);
 
 }
 

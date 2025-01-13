@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.spring.member.service.ArtistService;
 import kr.spring.member.service.EmailService;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.service.MemberServiceImpl;
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.util.FileUtil;
@@ -49,7 +51,8 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private ArtistService artistService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -262,17 +265,43 @@ public class MemberController {
     =================*/
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myPage")
-	public String myInfo(@AuthenticationPrincipal 
-			PrincipalDetails principalDetails,
-			Model model) {
+	public String myInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+	    // 멤버와 아티스트 정보를 각각 조회
+	    MemberVO member = null;
+	    ArtistVO artist = null;
 
-		//회원정보
-		MemberVO member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
-		log.debug("<<회원상세 정보>> : " + member);
+	    // principalDetails가 null이 아니고 memberVO가 null이 아니면 member 정보 조회
+	    if (principalDetails != null && principalDetails.getMemberVO() != null) {
+	        member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
+	        log.debug("<<회원상세 정보>> : " + member);
+	    }
 
-		model.addAttribute("member", member);
-		return "myPage";
+	    // principalDetails가 null이 아니고 artistVO가 null이 아니면 artist 정보 조회
+	    if (principalDetails != null && principalDetails.getArtistVO() != null) {
+	        artist = artistService.selectMember(principalDetails.getArtistVO().getUser_num());
+	        log.debug("<<아티스트상세 정보>> : " + artist);
+	    }
+	  
+	    // member와 artist 중 하나라도 존재하면 해당 정보를 모델에 담음
+	    if (member != null) {
+	        model.addAttribute("member", member);
+	    } else if (artist != null) {
+	        model.addAttribute("member", artist);
+	     
+	    } else {
+	        // 둘 다 null인 경우 오류 처리 (예: 로그인 상태가 아님)
+	        model.addAttribute("error", "회원 정보와 아티스트 정보가 모두 없습니다.");
+	        return "errorPage"; // 적절한 오류 페이지로 리다이렉트
+	    }
+	    if (member instanceof MemberVO) {
+	        model.addAttribute("isMemberVO", true);
+	    } else {
+	        model.addAttribute("isMemberVO", false);
+	        model.addAttribute("artistVO", artist); // artistVO를 추가
+	    }
+	    return "myPage";
 	}
+
 	/*=================
 	 * 프로필 사진
     =================*/
@@ -281,13 +310,16 @@ public class MemberController {
 	@GetMapping("/photoView")
 	public String getProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request, Model model) {
 		MemberVO user = principalDetails.getMemberVO();
+		ArtistVO artist=principalDetails.getArtistVO();
 		log.debug("<<photoView>> : " + user);
-		if(user==null) {//로그인이 되지 않은 경우
-			getBasicProfileImage(request, model);			
+		if(artist!=null) {//로그인이 되지 않은 경우
+			ArtistVO artistVO = 
+					artistService.selectMember(artist.getUser_num());
+			viewProfile(user,artistVO,request,model);			
 		}else {//로그인 된 경우
 			MemberVO memberVO = 
 					memberService.selectMember(user.getUser_num());
-			viewProfile(memberVO,request,model);
+			viewProfile(memberVO,artist,request,model);
 		}
 		return "imageView";
 	}
@@ -299,19 +331,24 @@ public class MemberController {
 	public String getProfileByUser_num(long user_num, HttpServletRequest request, Model model) {
 		MemberVO memberVO = 
 				memberService.selectMember(user_num);
-		viewProfile(memberVO, request, model);
+		ArtistVO aritstVO=artistService.selectMember(user_num);
+		
+		viewProfile(memberVO,aritstVO, request, model);
 
 		return "imageView";
 	}
 
 	//프로필 사진 처리를 위한 공통 코드
-	public void viewProfile(MemberVO memberVO, HttpServletRequest request, Model model) {
-		if(memberVO==null || memberVO.getPhoto_name()==null) {
+	public void viewProfile(MemberVO memberVO,ArtistVO artistVO, HttpServletRequest request, Model model) {
+		if(memberVO==null &&artistVO==null) {
 			//DB에 저장된 프로필 이미지가 없기 때문에 기본 이미지 호출
 			getBasicProfileImage(request, model);
-		}else {//업로드한 프로필 이미지 읽기
+		}else if(memberVO!=null&&memberVO.getPhoto_name()!=null) {//업로드한 프로필 이미지 읽기
 			model.addAttribute("imageFile", memberVO.getPhoto());
 			model.addAttribute("filename", memberVO.getPhoto_name());
+		}else {
+			model.addAttribute("imageFile", artistVO.getPhoto());
+			model.addAttribute("filename", artistVO.getPhoto_name());
 		}
 	}
 
@@ -329,46 +366,48 @@ public class MemberController {
 		@PreAuthorize("isAuthenticated()")
 		@PostMapping("/update")
 		public String submitUpdate(MemberVO memberVO,
-	
+								   ArtistVO artistVO,
 				                   @AuthenticationPrincipal
 				                   PrincipalDetails principal,
 				                   Model model,
 				                   RedirectAttributes redirectAttributes) {
 			log.debug("<<회원정보 수정>> : " + memberVO);
+			log.debug("<<회원정보 수정>> : " + artistVO);
 			//유효성 체크 결과 오류가 있으면 폼 호출
-			 if (!isValidEmail(memberVO.getEmail())) {
-				 redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
-			    if (!isValidNickName(memberVO.getNick_name())) {
-			    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
+			
+			if(artistVO==null) {
+				 if (!isValidEmail(memberVO.getEmail())) {
+					 redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
+				    if (!isValidNickName(memberVO.getNick_name())) {
+				    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
+				    
+				    if (!isValidNickName2(memberVO.getZipcode())) {
+				    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
+				    if (!isValidNickName2(memberVO.getAddress1())) {
+				    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
+				    if (!isValidNickName2(memberVO.getAddress2())) {
+				    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요.");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
+				    if (!isValidNickName2(memberVO.getPhone())) {
+				    	redirectAttributes.addFlashAttribute("successMessage", "번호를 입력하세요.");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
+				    if (!isValidNickName2(memberVO.getId())) {
+				    	redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요");
+				        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+				    }
 			    
-			    if (!isValidNickName2(memberVO.getZipcode())) {
-			    	redirectAttributes.addFlashAttribute("successMessage", "닉네임을 올바르게 입력해주세요.");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
-			    if (!isValidNickName2(memberVO.getAddress1())) {
-			    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
-			    if (!isValidNickName2(memberVO.getAddress2())) {
-			    	redirectAttributes.addFlashAttribute("successMessage", "주소를 입력하세요.");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
-			    if (!isValidNickName2(memberVO.getPhone())) {
-			    	redirectAttributes.addFlashAttribute("successMessage", "번호를 입력하세요.");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
-			    if (!isValidNickName2(memberVO.getId())) {
-			    	redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요");
-			        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
-			    }
-		    
-			memberVO.setUser_num(
-					principal.getMemberVO().getUser_num());
-			//회원정보 수정
+				
+				//회원정보 수정
 			memberService.updateMember(memberVO);
 			
 			//PrincipalDetails에 저장된 자바빈의 nick_name,email
@@ -377,6 +416,24 @@ public class MemberController {
 					           memberVO.getNick_name());
 			principal.getMemberVO().setEmail(
 					               memberVO.getEmail());
+			}else {
+				if(artistVO!=null) {
+					if (!isValidEmail(artistVO.getEmail())) {
+						 redirectAttributes.addFlashAttribute("successMessage", "유효한 이메일을 입력해주세요.");
+					        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+					    }
+					  if (!isValidNickName2(artistVO.getId())) {
+					    	redirectAttributes.addFlashAttribute("successMessage", "아이디를 입력하세요");
+					        return "redirect:/member/myPage";  // 오류가 있으면 폼 페이지로 돌아가기
+					    }
+				}
+				long userNum = principal.getArtistVO().getUser_num();
+				artistVO.setUser_num(userNum);
+				memberService.updateMember2(artistVO);
+				
+			
+		principal.getArtistVO().setEmail(artistVO.getEmail());
+			}
 			   redirectAttributes.addFlashAttribute("successMessage", "회원 정보가 성공적으로 수정되었습니다.");
 			return "redirect:/member/myPage";
 		}

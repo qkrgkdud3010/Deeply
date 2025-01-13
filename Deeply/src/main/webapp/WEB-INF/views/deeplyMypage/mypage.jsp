@@ -270,6 +270,7 @@ $(function(){
 
 
 </script>
+<c:if test="${isMemberVO}">
 <div class="main-div" style="text-align: center">
 	<h2>
 		회원상세정보 
@@ -356,6 +357,72 @@ $(function(){
 		</div>
 	</div>
 </div>
+</c:if>
+
+
+<c:if test="${!isMemberVO}">
+<div class="main-div" style="text-align: center">
+	<h2>
+		회원상세정보 
+	</h2>
+	<div class="profile-image">
+		<img src="${pageContext.request.contextPath}/member/photoView"
+			width="200" height="200" class="my-photo2" id="photo_btn">
+	</div>
+	<div class="mypage-1">
+		<div id="photo_choice" style="display: none;">
+			<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}">
+			<input type="hidden" id="csrfTokenValue" value="${_csrf.token}">
+			<input type="file" id="upload"
+				accept="image/gif,image/png,image/jpeg"> <br> <input
+				type="button" value="전송" id="photo_submit"> <input
+				type="button" value="취소" id="photo_reset">
+		</div>
+		<div
+			style="margin-left: 50px; padding-top: 22px; width: 350px; display: inline-block; text-align: left;">
+			<b>아이디</b> ${member.id}
+		
+		</div>
+		
+	
+		<div
+			style="margin-left: 50px; padding-top: 22px; width: 350px; display: inline-block; text-align: left;">
+			<b>이메일</b> ${member.email}
+		
+
+		</div>
+	
+	</div>
+	<div class="register-wrap">
+		<div class="register-content"
+			style="margin: 0 auto; margin-top: 50px;">
+			<form:form class="register-form" method="post" action="update"
+				modelAttribute="artistVO" id="member_register">
+
+				<form:input path="email" id="email" type="text" placeholder="email" />
+
+				<form:input class="Authentication" path="id" placeholder="아이디" />
+				<input type="button" id="confirm_id" value="중복체크"
+					class="default-btn">
+			
+				<div id="message_id" style="width: 300px;"></div>
+
+
+
+		
+		
+			
+		
+
+
+				<form:button style="width:300px;">저장</form:button>
+
+			</form:form>
+		</div>
+	</div>
+</div>
+
+</c:if>
 <!-- 회원정보 끝 -->
 
 <div id="layer"

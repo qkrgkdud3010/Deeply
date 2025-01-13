@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.admin.vo.UserStatisticVO;
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 public interface MemberService {
 
@@ -31,5 +32,7 @@ public interface MemberService {
 	//마이페이지
 	public MemberVO selectMember(Long user_num);
 	public void updateProfile(MemberVO member);
+	public void updateProfile2(ArtistVO artist);
 	public void updateMember(MemberVO member);
+	public void updateMember2(ArtistVO artist);
 }

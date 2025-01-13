@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.admin.dao.UserStatisticMapper;
 import kr.spring.admin.vo.UserStatisticVO;
 import kr.spring.member.dao.MemberMapper;
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 @Service
 @Transactional
@@ -145,4 +146,18 @@ public class MemberServiceImpl implements MemberService{
 		@Override
 		public void updateProfile(MemberVO member) {
 			memberMapper.updateProfile(member);
+		}
+
+		@Override
+		public void updateProfile2(ArtistVO artist) {
+	
+			memberMapper.updateProfile2(artist);
+		}
+
+		@Override
+		public void updateMember2(ArtistVO artist) {
+		
+			memberMapper.updateMember_detail2(artist);
+			memberMapper.updateMember3(artist);
+			
 		}}

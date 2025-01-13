@@ -1,8 +1,12 @@
 package kr.spring.member.vo;
 
+import java.io.IOException;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +37,14 @@ import lombok.ToString;
 	    private String confirmPassword;
 	    
 	    private String intro;
-	    
+	    private String Photo_name;
+		private byte[] photo;
+		public void setUpload(MultipartFile upload) 
+	            throws IOException {
+	//MultipartFile -> byte[]
+	setPhoto(upload.getBytes());
+	//파일 이름
+	setPhoto_name(upload.getOriginalFilename());
+	}
 }
 

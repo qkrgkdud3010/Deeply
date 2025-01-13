@@ -120,6 +120,14 @@
 
   		WHERE user_num=#{user_num}
   	</update>
-
+		<update id="updateMember_detail2" parameterType="artistVO">
+  		UPDATE auser_detail
+  		SET
+  	
+  		 email=#{email}
+  		WHERE user_num=#{user_num}
+  	</update>
+  	
+ 
 
 </mapper>

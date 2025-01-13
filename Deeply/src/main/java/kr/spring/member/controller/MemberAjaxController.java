@@ -107,21 +107,39 @@ public class MemberAjaxController {
 	
 	@PostMapping("/updateMyPhoto")
 	@ResponseBody
-	public Map<String,String> processProfile(
-			               @AuthenticationPrincipal
-			               PrincipalDetails principalDetails,
-			               MemberVO memberVO){
-		log.debug("<<PrincipalDetails>> : " + principalDetails);
-		Map<String,String> mapAjax = 
-				new HashMap<String,String>();
-		try {
-			MemberVO user = principalDetails.getMemberVO();
-			memberVO.setUser_num(user.getUser_num());
-			memberService.updateProfile(memberVO);
-			mapAjax.put("result","success");
-		}catch(NullPointerException e) {
-			mapAjax.put("result", "logout");
-		}	
-		return mapAjax;
+	public Map<String, String> processProfile(
+	        @AuthenticationPrincipal PrincipalDetails principalDetails,
+	        MemberVO memberVO,
+	        ArtistVO artistVO) {
+	    log.debug("<<PrincipalDetails>> : " + principalDetails);
+
+	    Map<String, String> mapAjax = new HashMap<>();
+
+	    // Check if the member is logged in
+	    if (principalDetails.getMemberVO() != null) {
+	        MemberVO user = principalDetails.getMemberVO();
+	        memberVO.setUser_num(user.getUser_num());
+	        memberService.updateProfile(memberVO);
+	        mapAjax.put("userType", "member");
+	    } 
+	    // Check if the artist is logged in
+	    else if (principalDetails.getArtistVO() != null) {
+	        ArtistVO artist = principalDetails.getArtistVO();
+	        artistVO.setUser_num(artist.getUser_num());
+	        memberService.updateProfile2(artistVO);
+	        mapAjax.put("userType", "artist");
+	    } 
+	    // Handle the case where neither MemberVO nor ArtistVO is available
+	    else {
+	        mapAjax.put("result", "error");
+	        mapAjax.put("message", "Invalid user type or user not authenticated.");
+	        return mapAjax;
+	    }
+
+	    // Add a success message if no errors occur
+	    mapAjax.put("result", "success");
+	    return mapAjax;
 	}
+
 	}
+
