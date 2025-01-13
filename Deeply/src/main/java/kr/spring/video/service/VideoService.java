@@ -14,5 +14,7 @@ public interface VideoService {
     void updateVideo(VideoVO video);
     void deleteVideo(Long videoId);
     Long getNextVideoId();
+	List<VideoVO> selectListByGroup(Map<String, Object> map);
+	int selectRowCountByGroup(Map<String, Object> map);
 
 }

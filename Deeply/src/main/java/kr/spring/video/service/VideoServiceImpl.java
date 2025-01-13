@@ -55,4 +55,16 @@ public class VideoServiceImpl implements VideoService {
         return videoMapper.getNextVideoId();
     }
 
+	@Override
+	public List<VideoVO> selectListByGroup(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectRowCountByGroup(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

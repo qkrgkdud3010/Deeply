@@ -19,12 +19,11 @@
                        value="/WEB-INF/views/video/video_list.jsp" />
     </definition>
 	<!-- 아티스트 영상 페이지 -->
-    <definition name="newjeans" extends="main">
-        <put-attribute name="title" value="뉴진스 페이지" />
-        <put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp" />
-        <put-attribute name="body" 
-                       value="/WEB-INF/views/video/newjeans.jsp" />
-    </definition>
+	<definition name="groupVideoList" extends="main">
+	    <put-attribute name="title" value="그룹 영상 페이지" />
+	    <put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp" />
+	    <put-attribute name="body" value="/WEB-INF/views/video/groupVideoList.jsp" />
+	</definition>
     
     <definition name="faq" extends="main">
         <put-attribute name="title" value="자주 묻는 질문 (FAQ)" />

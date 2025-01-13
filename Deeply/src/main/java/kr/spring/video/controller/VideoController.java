@@ -90,18 +90,25 @@ public class VideoController {
         return "redirect:/videos";
     }
 
-    @GetMapping("/videos/newjeans")
-    public String showNewJeansPage(@RequestParam(value = "page", defaultValue = "1") int page,
-                                   Model model) {
+    @GetMapping("artist/videos/group")
+    public String showGroupVideosPage(
+        @RequestParam("group_num") Long groupNum,
+        @RequestParam(value = "page", defaultValue = "1") int page,
+        Model model
+    ) {
         Map<String, Object> map = new HashMap<>();
+        map.put("groupNum", groupNum);
         map.put("page", page);
 
-        List<VideoVO> videos = videoService.selectList(map);
+        // 그룹 번호로 영상 목록 조회 (서비스/매퍼에서 group_num 조건으로 필터링)
+        List<VideoVO> videos = videoService.selectListByGroup(map);
+        int totalCount = videoService.selectRowCountByGroup(map);
+
         model.addAttribute("videos", videos);
-
-        Integer totalCount = videoService.selectRowCount(map);
         model.addAttribute("totalCount", totalCount);
+        model.addAttribute("groupNum", groupNum); 
 
-        return "newjeans"; // newjeans.jsp
+        
+        return "groupVideoList"; 
     }
 }
