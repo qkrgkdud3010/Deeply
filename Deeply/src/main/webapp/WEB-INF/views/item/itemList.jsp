@@ -12,15 +12,25 @@
 	if (result == 'success') {
 		alert('글 등록이 완료되었습니다.');
 	}
+	
+	 function goHistory(n) {
+	        if (window.history.length > Math.abs(n)) {
+	            history.go(n);
+	        } else {
+	            // 이동 가능한 단계가 없을 경우 기본 페이지로 이동
+	            window.location.href = '/item/main';
+	        }
+	    }
 </script>
 
 
 
 <div class="item-main main-container">
 	<div class="button page-action">
-		<c:if test="${!empty principal}">
+		<c:if test="${!empty principal.artistVO}">
 			<input type="button" value="등록하기" onclick="location.href='/item/write'">
 		</c:if>
+		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 	</div>
 	<div class="listcontent-container item-container">
 		<div class="artist-name">반갑습니다. </div>
@@ -28,7 +38,7 @@
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<c:forEach var="item" items="${list}" varStatus="status">
+			<c:forEach var="item" items="${listByUserNum}" varStatus="status">
 				<div class="item-card">
 					<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
 						<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"

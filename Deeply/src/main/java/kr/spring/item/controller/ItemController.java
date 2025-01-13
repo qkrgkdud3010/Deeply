@@ -145,7 +145,8 @@ public class ItemController {
 		
 		
 		List<ItemVO> list = null;
-		if(count > 0) {
+		if(count > 0) {			
+			
 			map.put("order", order);
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
@@ -169,6 +170,8 @@ public class ItemController {
 		    // 최종적으로 그룹에 리스트 추가
 		    groupedItems.put(a.getGroup_name(), items);
 		}
+		
+	
 		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
@@ -196,6 +199,7 @@ public class ItemController {
 	@GetMapping("/list")
 	public String getList(@RequestParam(defaultValue="1") int pageNum,
 						  @RequestParam(defaultValue="1") int order,
+						  Long user_num,
 						  String keyfield,
 						  String keyword,
 						  Model model,
@@ -227,7 +231,6 @@ public class ItemController {
 		  }
 		}
 		
-		
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 
@@ -239,12 +242,20 @@ public class ItemController {
 		
 		
 		List<ItemVO> list = null;
+		
 		if(count > 0) {
 			map.put("order", order);
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
 			list = itemService.selectList(map);
+			
+			
+			List<ItemVO> listByUserNum = null;
+			if(user_num != null) {
+				listByUserNum = itemService.selectListByUserNum(user_num);
+				model.addAttribute("listByUserNum", listByUserNum);
+			}
 		}
 
 		
@@ -286,7 +297,7 @@ public class ItemController {
 	}
 
 	
-	
+
 	
 	/*==============================
 	 * 	상품 글 수정
@@ -298,17 +309,32 @@ public class ItemController {
 							 Model model,
 						     @AuthenticationPrincipal 
 							 PrincipalDetails principal) {
+		log.debug("<<getArtistVO 객체>>: " + principal.getArtistVO());
+		
+		long artist_num = principal.getArtistVO().getUser_num();
+		AgroupVO agroupVO = artistService.selectAgroupByArtistNum(artist_num);
+		
 		ItemVO itemVO = itemService.selectitem(item_num);
+		log.debug("AgroupVO 정보 : " + agroupVO);
 		log.debug("<<등록된 상품 정보>> : " +itemVO);
 		log.debug("<<list에서 받아온 item_num>> : " +item_num);
-		//DB에 저장된 파일 정보 구하기
-		if(principal.getArtistVO().getUser_num() != itemVO.getUser_num()) {
-			return "redirect:common/accessDenied";
-		}
+		log.debug("<<상품 작성자 유저 번호>> : " + itemVO.getUser_num());
+		log.debug("<<등록 시 ItemVO filename>>: " + itemVO.getFilename());
 		
+		
+
+
+		
+		//DB에 저장된 파일 정보 구하기
+		
+		if(agroupVO.getGroup_num() != itemVO.getUser_num()) {
+			return "redirect:common/accessDenied";
+		}else {		
 		model.addAttribute("item",itemVO);
 		log.debug("<<등록된 상품 정보>> : " +itemVO);
+		log.debug("<<등록완료한 ItemVO filename>>: " + itemVO.getFilename());
 		return "itemModify";
+		}	
 	}
 	//수정폼에서 전송된 데이터 처리
 	@PreAuthorize("isAuthenticated()")
@@ -324,6 +350,7 @@ public class ItemController {
 		
 		//DB에 저장된 파일 정보 구하기
 		ItemVO db_item = itemService.selectitem(itemVO.getItem_num());
+		log.debug("<<db_item 정보>> : " + db_item);
 		
 		//전송된 데이터 유효성 체크 결과 오류가 있으면 폼 호출 -> 코드 이유 노션에 적기
 		if(result.hasErrors()) {
@@ -338,7 +365,7 @@ public class ItemController {
 		}
 		
 		//파일명 셋팅(FileUtil.createFile에서 파일이 없으면 null처리 했음->파일을 무조건 올려야하니까 필요 없는거 아닌가?)
-		//itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
+		itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
 		
 		
 		//파일을 교체했을 경우 기존 파일을 삭제
@@ -372,7 +399,7 @@ public class ItemController {
 		//DB에 저장된 파일 정보 구하기
 		ItemVO db_item = itemService.selectitem(item_num);
 		
-		//로그인 일치시에 삭제하기
+		//로그인 일치시에 삭제하기->principal.getAgroupVO().getGroup_num() != itemVO.getUser_num()이거로 고치기
 		if(principal.getArtistVO().getUser_num() != db_item.getUser_num()) {
 			return "redirect:/common/accessDenied";
 		}
@@ -385,7 +412,7 @@ public class ItemController {
 			FileUtil.removeFile(request, db_item.getFilename());
 		}
 		
-		//삭제 후 알람 메시지 띄우기 -> jsp에서 
+		//삭제 후 알람 메시지 띄우기 -> Ajax에서 
 		
 		
 		return "redirect:/item/list";

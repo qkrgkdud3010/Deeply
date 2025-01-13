@@ -20,13 +20,25 @@
 					location.replace('delete?item_num=${item.item_num}');
 				}
 			};
+			
+			function goHistory(n) {
+		        if (window.history.length > Math.abs(n)) {
+		            history.go(n);
+		        } else {
+		            // 이동 가능한 단계가 없을 경우 기본 페이지로 이동
+		            window.location.href = '/item/main';
+		        }
+		    }
 		</script>
+		
+		<input type="button" value="등록하기" onclick="location.href='/item/write'">
+		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 	</c:if>
 	
 
 
 
-	<input type="button" value="취소" onclick="location.href='/item/list'"/>
+	
 		<div class="content-container">
 			<div class="artist-name">반갑습니다.
 				<span class="date">등록일 : ${item.item_regdate}
