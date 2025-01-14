@@ -24,6 +24,12 @@ public interface ChatMapper {
 	//이미 형성되어서 들어갈 방 SELECT 하기(먼저 채팅방 번호를 구하는 method를 구현한다.)
 	@Select("SELECT chat_num FROM (SELECT chat_num FROM chatroom WHERE auser_num=#{auser_num} ORDER BY chat_time DESC) WHERE ROWNUM=1")
 	public Long selectChatnum(Long auser_num);
+	
+	//@Select("SELECT chat_num FROM (SELECT chat_num FROM chatroom WHERE chat=#{auser_num} ORDER BY chat_time DESC) WHERE ROWNUM=1")
+	//ipublic Long selectChatnum(Long auser_num);
+	
+	
+	@Update("UPDATE chat_room SET chat_status=0 WHERE chat_num=#{chat_num}")
 	//@Select("SELECT fan_artist FROM FAN WHERE user_num=#{duser_num}")
 	//public Long selectAusernum(Long duser_num);
 	

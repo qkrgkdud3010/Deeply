@@ -53,7 +53,7 @@ $(document).ready(function() {
   <h2>형성된 채팅방</h2>
   
  	${chat_num}
- 	#{auser_num}
+ 	${auser_num}
  
  	
 	<c:if test="${chat_kind==1}">

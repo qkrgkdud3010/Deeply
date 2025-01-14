@@ -103,9 +103,19 @@ public class ChatController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/artistChatroom")
 	public String enterRoomArtist() {
-		
+				
 		return "chatRoom";
 	}
+	//채팅방 닫기
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/closeChatroom")
+	public String closeRoomArtist() {
+		
+		
+		
+		return "chatWrite";
+	}
+	
 	
 
 	/*========================
@@ -139,14 +149,10 @@ public class ChatController {
 		chatVO.setDuser_id(memberVO.getId());
 		
 		
-		Long auser_num = Long.parseLong(request.getParameter("auser_num"));
+	
 
 		//제목(title=chat_name은 jsp에서 써서 전송할 예정)
 		chatService.insertDuserInfo(chatVO);
-		
-		Long chat_num = chatService.selectChatnum(auser_num);
-		chatVO.setChat_num(chat_num);
-		System.out.println(chat_num);
 		
 
 

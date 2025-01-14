@@ -29,7 +29,7 @@ public class FanController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/selectFan")
 	public String selectFan(long fan_artist,@AuthenticationPrincipal PrincipalDetails principal, Model model) {
-		//회원정보
+		//회원정보s
 		Long user_num = principal.getMemberVO().getUser_num();
 		
 		Map<String,Long> map = new HashMap<String,Long>();
