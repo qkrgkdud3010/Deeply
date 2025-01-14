@@ -20,7 +20,7 @@
     	  value="/WEB-INF/views/artist/artistDetail.jsp"/>
     </definition>
     <definition name="artistModify" extends="main">
-    	<put-attribute name="title" value="아티스트 상세"/>
+    	<put-attribute name="title" value="아티스트 수정"/>
     	<put-attribute name="css"
     	  value="/WEB-INF/views/artist/artistCSS.jsp"/>
     	<put-attribute name="body"
@@ -62,11 +62,39 @@
     	  value="/WEB-INF/views/letter/letterWrite.jsp"/>
     </definition>
     <definition name="letterDetail" extends="main">
-    	<put-attribute name="title" value="편지 작성"/>
+    	<put-attribute name="title" value="편지 상세"/>
     	<put-attribute name="css"
     	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/letter/letterDetail.jsp"/>
+    </definition>
+    <definition name="letterReply" extends="main">
+    	<put-attribute name="title" value="편지 답장"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/letterReply.jsp"/>
+    </definition>
+    <definition name="artist_letterList" extends="main">
+    	<put-attribute name="title" value="아티스트 편지 목록"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/artist_letterList.jsp"/>
+    </definition>
+    <definition name="artist_replyList" extends="main">
+    	<put-attribute name="title" value="아티스트 답장 목록"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/artist_replyList.jsp"/>
+    </definition>
+    <definition name="artist_writeReply" extends="main">
+    	<put-attribute name="title" value="아티스트 답장 작성"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/artist_writeReply.jsp"/>
     </definition>
 </tiles-definitions>
 

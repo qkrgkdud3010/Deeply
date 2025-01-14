@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.letter.vo.LetterVO;
+import kr.spring.letter.vo.ReplyVO;
 
 @Mapper
 public interface LetterMapper {
@@ -16,4 +17,13 @@ public interface LetterMapper {
 	public void postLetter(LetterVO letterVO);
 	@Select("SELECT * FROM letter WHERE letter_num=#{letter_num}")
 	public LetterVO showLetterDetail(long letter_num);
+	
+	//Reply
+	public int countReply(Map<String,Object> map);
+	public List<ReplyVO> showReplyForUser(Map<String,Object> map);
+	
+	//아티스트
+	public int countLetterForArtist(Map<String,Object> map);
+	public List<LetterVO> selectLetterForArtist(Map<String, Object> map);
+	
 }

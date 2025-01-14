@@ -52,11 +52,11 @@ public class ArtistController {
 	}
 	//아티스트 상세
 	@GetMapping("/detail")
-	public String getDetail(long artist_num, Model model) {
-		AgroupVO vo = artistService.selectArtistDetail(artist_num);
-		List<ArtistVO> members = artistService.selectGroupMembers(artist_num);
+	public String getDetail(long group_num, Model model) {
+		AgroupVO vo = artistService.selectArtistDetail(group_num);
+		List<ArtistVO> members = artistService.selectGroupMembers(group_num);
 		
-		List<ItemVO> shops = itemService.selectListByUserNum(artist_num);
+		List<ItemVO> shops = itemService.selectListByUserNum(group_num);
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);

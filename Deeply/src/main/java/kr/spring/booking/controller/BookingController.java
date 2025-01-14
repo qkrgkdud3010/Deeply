@@ -49,13 +49,13 @@ public class BookingController {
 	
 	//아티스트 예매 목록
 	@GetMapping("/list")
-	public String getList(long artist_num, @RequestParam(defaultValue="1") int pageNum,
+	public String getList(long group_num, @RequestParam(defaultValue="1") int pageNum,
 										   @RequestParam(defaultValue="before") String status, 
 										   @RequestParam(required=false) String dateRange, HttpServletRequest request, Model model) {
 		
 		
 		
-		log.debug("<<예매 페이지 아티스트 번호>> : " + artist_num);
+		log.debug("<<예매 페이지 아티스트 번호>> : " + group_num);
 		log.debug("<<예매 페이지 번호>> : " + pageNum);
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -82,7 +82,7 @@ public class BookingController {
 		log.debug("dateRange: " + dateRange);
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
-		map.put("user_num", artist_num);
+		map.put("user_num", group_num);
 		if(status != null) {
 			map.put("status", status);
 		}
@@ -101,14 +101,14 @@ public class BookingController {
 			list = bookingService.selectEventByArtistId(map);
 		}
 		
-		AgroupVO group = artistService.selectArtistDetail(artist_num);
+		AgroupVO group = artistService.selectArtistDetail(group_num);
 		String group_name = group.getGroup_name();
 		
 		model.addAttribute("dateRange",dateRange);
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());
-		model.addAttribute("artist_num", artist_num);
+		model.addAttribute("artist_num", group_num);
 		model.addAttribute("group_name", group_name);
 		
 		return "bookingList";

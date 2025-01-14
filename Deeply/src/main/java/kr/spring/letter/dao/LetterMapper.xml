@@ -33,7 +33,8 @@
   			letter_title,
   			letter_content,
   			post_date,
-  			replied)
+  			replied,
+  			letter_photo)
   		VALUES(
   			letter_seq.nextval,
   			#{user_num},
@@ -41,6 +42,51 @@
   			#{letter_title},
   			#{letter_content},
   			sysdate,
-  			#{replied})
+  			#{replied},
+  			#{letter_photo})
   	</insert>
+  	
+  	<select id="countReply" parameterType="map">
+  		SELECT COUNT(*) FROM reply WHERE artist_num=#{artist_num} AND user_num=#{user_num}
+  	</select>
+  	<select id="showReplyForUser" parameterType="map">
+  		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM reply r ORDER BY r.post_date DESC NULLS LAST)a )
+  		WHERE artist_num=#{artist_num}
+  		<![CDATA[
+  		AND rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+  	
+  	<select id="countLetterForArtist" parameterType="map"
+  	                               resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM letter WHERE artist_num=#{artist_num}
+  	</select>
+  	<select id="selectLetterForArtist" parameterType="map"
+  	                               resultType="letterVO">
+  		SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT l.*, d.nick_name
+        FROM letter l JOIN duser d ON l.user_num = d.user_num
+        ORDER BY l.post_date DESC NULLS LAST) a) 
+		WHERE
+    	artist_num = #{artist_num}
+    	<![CDATA[
+    	AND rnum >= #{start} AND rnum <= #{end}
+    	]]>
+  	</select>
+  	
+  	<select id="countReplyForArtist" parameterType="map">
+  		SELECT COUNT(*) FROM reply WHERE artist_num=#{artist_num}
+  	</select>
+  	<select id="showReplyForArtist" parameterType="map">
+  		SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT r.*, d.nick_name
+        FROM reply r JOIN duser d ON r.user_num = d.user_num
+        ORDER BY r.post_date DESC NULLS LAST) a) 
+		WHERE
+    	artist_num = #{artist_num}
+  		<![CDATA[
+  		AND rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+  	
 </mapper>

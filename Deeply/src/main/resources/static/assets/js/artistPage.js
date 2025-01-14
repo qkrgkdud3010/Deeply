@@ -4,6 +4,7 @@ $(function () {
 	
 	$('.member-selection-close').click(function(){
 		$('.member-selection-container').hide();
+		$('.member-selection-container2').hide();
 	});
 	
 	$('.ad-letter').click(function(){
@@ -11,6 +12,13 @@ $(function () {
 		if ($('.member-selection-container').length > 0) {
 			$('.member-selection-container')[0].scrollIntoView({ behavior: 'smooth', block: "center"});
 		}
+	});
+	
+	$('.ad-chat').click(function(){
+			$('.member-selection-container2').show();
+			if ($('.member-selection-container2').length > 0) {
+				$('.member-selection-container2')[0].scrollIntoView({ behavior: 'smooth', block: "center"});
+			}
 	});
 	
 	$('.amainpic-select').click(function(e){

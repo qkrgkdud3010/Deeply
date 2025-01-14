@@ -23,4 +23,5 @@ public class LetterVO {
 	private int replied;
 	private MultipartFile upload;
 	private String letter_photo;
+	private String nick_name;
 }

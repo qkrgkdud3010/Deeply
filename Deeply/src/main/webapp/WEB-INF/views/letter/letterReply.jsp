@@ -24,34 +24,33 @@
 	</div>
 	<div class="font-white bold-title align-center width-20 font-1 top-3">잔여 발송 가능 편지 2/3</div>
 	<div class="space-10vw"></div>
-	<div class="letter-btn-div vertical-center">
+	<div id="letter_form" class="letter-btn-div vertical-center">
 		<button class="letter-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}'">보낸편지</button>
 		<button class="letter-btn font-white bold-title align-center"  onclick="location.href='${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}'">아티스트의 답장</button>
 		<button class="write-btn bold-title align-center left-50" onclick="location.href='${pageContext.request.contextPath}/letter/write?artist_num=${artist.user_num}'">편지 작성</button>
 	</div>
 	<div class="letter-body">
 		<div class="letter-box">
+		<c:if test="${count <= 0}">
+			<div class="no-reply font-white bold-title align-center">받은 답장이 없습니다</div>
+		</c:if>
+		<c:if test="${count > 0}">
 			<div id="letter_item" class="letter-item font-white bold-title font-1 left-5 vertical-center">
 					<div class="width-80">제목</div>
 					<div class="width-10 align-center">발송일</div>
 					<div class="width-10 align-center">답장 여부</div>
 			</div>
 			<hr>
-		<c:forEach var="letter" items="${letters}">
-				<a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">
+		<c:forEach var="reply" items="${replies}">
+				<a href="${pageContext.request.contextPath}/letter/detail?letter_num=${reply.reply_num}">
 				<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
-					<div class="width-80">${letter.letter_title}</div>
-					<div class="width-10 align-center">${letter.post_date}</div>
-					<c:if test="${letter.replied == 0}">
-					<div class="width-10 align-center">X</div>
-					</c:if>
-					<c:if test="${letter.replied == 1}">
-					<div class="width-10 align-center">O</div>
-					</c:if>
+					<div class="width-80">${reply.letter_title}</div>
+					<div class="width-10 align-center">${reply.post_date}</div>
 				</div>
 				</a>
 				<hr>
 		</c:forEach>
+		</c:if>
 		</div>
 		<div class="page-box space-10vw align-center">${page}</div>
 	</div>

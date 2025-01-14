@@ -1,5 +1,6 @@
 $(function () {
 	
+	
 	const targetElement = $('#letter_form');
 	if (targetElement.length) {
 	    const elementPosition = targetElement.offset().top;

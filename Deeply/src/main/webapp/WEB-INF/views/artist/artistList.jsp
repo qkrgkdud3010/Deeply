@@ -18,7 +18,7 @@
 	<div class="a-title font-white bold-title vertical-center">ARTIST</div>
 	<div class="aList-container">
 		<c:forEach var="group" items="${groups}">
-			<a href="detail?artist_num=${group.group_num}">
+			<a href="detail?group_num=${group.group_num}">
 				<div class="aList-items">
 					<div class="over-hidden height-80 align-top">
 						<img class="alist-img" src="${pageContext.request.contextPath}/assets/upload/${group.group_photo}">
