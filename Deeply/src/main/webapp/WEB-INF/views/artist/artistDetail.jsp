@@ -123,18 +123,11 @@
 	<div class="artist-contents-container">
 		<div class="artist-contents-title bold-title">SHOP</div>
 		<div class="artist-contents-list vertical-center">
+			<c:forEach items="${shops}" var="item" begin="0" end="3">
 			<div class="artist-contents-item">
-				<img>
+				<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}">
 			</div>
-			<div class="artist-contents-item">
-				<img>
-			</div>
-			<div class="artist-contents-item">
-				<img>
-			</div>
-			<div class="artist-contents-item">
-				<img>
-			</div>
+			</c:forEach>
 		</div>
 		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}/item/list?user_num=${vo.group_num}">->전체 상품</a></div>
 	</div>

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.spring.item.service.ItemService;
+import kr.spring.item.vo.ItemVO;
 import kr.spring.member.service.ArtistService;
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
@@ -35,6 +37,8 @@ public class ArtistController {
 	
 	@Autowired
 	ArtistService artistService;
+	@Autowired
+	ItemService itemService;
 	
 	//아티스트 목록
 	@GetMapping("/list")
@@ -52,8 +56,10 @@ public class ArtistController {
 		AgroupVO vo = artistService.selectArtistDetail(artist_num);
 		List<ArtistVO> members = artistService.selectGroupMembers(artist_num);
 		
+		List<ItemVO> shops = itemService.selectListByUserNum(artist_num);
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
+		model.addAttribute("shops",shops);
 		
 		return "artistDetail";
 	}
