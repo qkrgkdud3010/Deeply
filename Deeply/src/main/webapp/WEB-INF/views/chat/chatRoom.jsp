@@ -44,7 +44,7 @@ $(document).ready(function() {
                 console.error("에러 발생:", error);
                 alert("에러");
             }
-        });
+        }); 
     }
     </script>
     
@@ -52,13 +52,13 @@ $(document).ready(function() {
 <div class="page-main">
 
   <h2>형성된 채팅방</h2>
-  ${param.artist_num}
+  ${param.artist_num} 
   
 	<c:if test="${chat_kind==1}">
 	<div>
 	 	<button type="submit" onclick="location.href='chWrite'">채팅방 닫기</button>
 	 </div>
-	</c:if>
+	</c:if> 
 	
 	<c:if test="${chat_kind==0}">
 	<div>

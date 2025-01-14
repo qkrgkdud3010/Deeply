@@ -24,3 +24,4 @@ public interface BookingMapper {
 	public List<SeatVO> selectSeatByHallNum(long hall_num);
 	public void registerEvent(EventVO eventVO);
 }
+ 
