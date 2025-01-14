@@ -87,3 +87,27 @@ a {
 	align-items:center;
 	gap:2rem;	
 }
+
+/*
+상품 수정
+*/
+
+.file-submit{
+	display:none;
+}
+
+.upload-btn{
+	width:8vw;
+	height:2vw;
+	border:1px solid black;
+	background:white;
+	border-radius:10px;
+	font-size:1vw;
+}
+
+.items-img{
+	width:20vw;
+	height:20vw;
+	border:1px solid black;
+}
+

@@ -10,6 +10,7 @@
 </script>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/customjs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/shop.js"></script>
 <script type="text/javascript">
 	$('#item_price').keyup(function(){
  	   customNumberLocale($(this),false);    
@@ -22,17 +23,19 @@
 	<div class="content-container">
     <div class="button page-action">
         <!-- 수정: modelAttribute="itemVO" 추가 -->
-        <form:form modelAttribute="itemVO" method="post" action="write" enctype="multipart/form-data">
+        <form:form modelAttribute="itemVO" method="post" action="write" id="item_writeForm" enctype="multipart/form-data">
             <div class="button form-actions">
 		<!-- 수정: type="submit"으로 변경 -->
-		<input type="submit" value="등록" /> <input type="button" value="취소"
-			onclick="location.href='/item/list'" />
+		<input type="submit" value="등록" id="item_writeSubmit"/> <input type="button" value="취소" onclick="location.href='/item/main'" />
 	</div>
             <ul>
                 <li>
                     <form:label path="upload">파일 업로드</form:label>
                     <!-- 수정: path 속성 추가 -->
-                    <input type="file" name="upload" id="file" />
+                    <button class="upload-btn" id="upload_btn">파일 업로드</button>
+                    <input type="file" class="file-submit" name="upload" id="upload" multiple>
+                    <form:errors path="upload" cssClass="error-color" />
+    				<img src="" class="items-img" alt="상품 이미지" />
                 </li>
                 <li>
                     <form:label path="item_name">상품명</form:label>
@@ -54,6 +57,15 @@
                 </li>
                 <li>
                     <form:label path="item_description">상품 설명</form:label>
+                    <img src="default1.jpg" class="preview_photo1" alt="Preview 1">
+                    <button class="upload-btn" id="desc_btn1">설명 사진1</button>
+                    <img src="default1.jpg" class="preview_photo2" alt="Preview 2">
+                    <button class="upload-btn" id="desc_btn2">설명 사진2</button>
+                    <img src="default1.jpg" class="preview_photo3" alt="Preview 3">
+                    <button class="upload-btn" id="desc_btn3">설명 사진3</button>
+                    <input type="file" class="file-submit" id="desc_photo1" name="upload1">
+                    <input type="file" class="file-submit" id="desc_photo2" name="upload2">
+                    <input type="file" class="file-submit" id="desc_photo3" name="upload3">
                     <!-- 수정: path="item_description" 추가 -->
                     <form:textarea path="item_description" placeholder="상품 설명을 입력하세요."></form:textarea>
                     <form:errors path="item_description" cssClass="error-color" />

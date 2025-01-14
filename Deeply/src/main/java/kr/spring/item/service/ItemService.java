@@ -17,6 +17,7 @@ public interface ItemService {
 	public ItemVO selectitem(Long item_num);
 	public void updateItem(ItemVO Item);
 	public void deleteItem(Long item_num);
-	public List<Map<String,Object>> showListByGroup(Map<String,Object> map);
+	public List<ItemVO> showListByGroup();
+	public List<ItemVO> showListGroup();
 	public AgroupVO selectGroup(String group_name);
 }

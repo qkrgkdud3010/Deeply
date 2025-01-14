@@ -47,37 +47,36 @@
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
-		<c:if test="${count > 0}">
-			<c:forEach items="${groupedItems}" var="entry" varStatus="status">
-				<!-- group_name을 key로 출력 -->
+			<c:set var="group_cnt" value="0"/>
+			<c:set var="user_num" value="0"/>
+		    <c:forEach items="${group}" var="group">
+		    <c:set var="loop_flag" value="true"/>
 				<div class="main-items">
-					<c:if test="${fn:length(entry.value) > 0}">
-					<div><h3>${entry.key}</h3></div>
-					<!-- group_name -->
-
-					<!-- itemVO 리스트를 4개씩 나누기 -->
 					<div class="value-list">
-						<c:forEach items="${entry.value}" var="item" begin="0" end="3">
-							<div class="item-card">
-								<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
-								<img
-									src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-									width="180px" height="180px" class="item-img">
-								</a>
-								<hr class="custom-hr" noshade="noshade" width="100%">
-								<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span>
-								<span class="item-name list-price"
-									style="font-size: 18px; color: #0369A1;">${item.item_price}</span>
-							</div>
+					<div><h3>${group.group_name}</h3></div>
+						<c:forEach items="${list}" var="item" varStatus="status" begin="${group_cnt}">
+							<c:if test="${loop_flag}">
+								<div class="item-card">
+									<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
+									<img
+										src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
+										width="180px" height="180px" class="item-img">
+									</a>
+									<hr class="custom-hr" noshade="noshade" width="100%">
+									<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span>
+									<span class="item-name list-price"
+										style="font-size: 18px; color: #0369A1;">${item.item_price}</span>
+								</div>
+								<c:if test="${(item.rnum==4 and item.group_cnt >= 4) or (item.rnum==item.group_cnt and item.group_cnt < 4)}">
+									<c:set var="group_cnt" value="${group_cnt + status.count}"/>
+									<c:set var="loop_flag" value="false"/>	
+									<c:set var="user_num" value="${item.user_num}"/>
+								</c:if>
+							</c:if>
 						</c:forEach>
 					</div>
-					<a class="right-align" href="list?user_num=${entry.value[0].user_num}">-> 전체보기</a>
-					</c:if>
+					<a class="right-align" href="list?user_num=${user_num}">-> 전체보기</a>
 				</div>
 			</c:forEach>
-			<!-- 페이징 -->
-			<div class=list-paging>${page}</div>
-		</c:if>
-
 	</div>
 </div>

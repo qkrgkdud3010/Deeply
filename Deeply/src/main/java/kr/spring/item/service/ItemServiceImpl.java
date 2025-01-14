@@ -51,13 +51,18 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public List<Map<String,Object>> showListByGroup(Map<String, Object> map) {
-		return itemMapper.showListByGroup(map);
+	public List<ItemVO> showListByGroup() {
+		return itemMapper.showListByGroup();
 	}
 
 	@Override
 	public AgroupVO selectGroup(String group_name) {
 		return itemMapper.selectGroup(group_name);
+	}
+
+	@Override
+	public List<ItemVO> showListGroup() {
+		return itemMapper.showListGroup();
 	}
 
 	

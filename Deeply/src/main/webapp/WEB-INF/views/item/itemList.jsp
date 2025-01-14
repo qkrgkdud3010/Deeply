@@ -38,7 +38,7 @@
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<c:forEach var="item" items="${listByUserNum}" varStatus="status">
+			<c:forEach var="item" items="${list}" varStatus="status">
 				<div class="item-card">
 					<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
 						<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" width="180px" height="180px"

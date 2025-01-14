@@ -1,65 +1,57 @@
-/*======================
-         검색창 
- =======================*/
- document.addEventListener("DOMContentLoaded", () => {
-     const searchTrigger = document.getElementById("search-trigger");
-     const searchModal = document.getElementById("artist-search-modal");
-     const closeSearch = document.getElementById("close-search");
-     const searchInput = document.getElementById("artist-search");
-     const artistList = document.getElementById("artist-list");
+$(function () {
+	$('#upload_btn').click(function(e){
+		e.preventDefault();
+		$('#upload').click();
+	});
+	
+	$('#upload').change(function(){
+		let my_photo = this.files[0];
+		if(!my_photo){
+		//선택을 취소하면 원래 처음 화면으로 되돌림
+		$('.items-img').attr('src',photo_path);
+		alert('파일 선택 안됨');
+		return;
+		}
+		//화면에서 이미지 미리보기
+		const reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+									
+		reader.onload=function(){
+		$('.items-img').attr('src',reader.result);
+						
+		};		
+	});
+	$('[id^="desc_btn"]').click(function(e) {
+	    e.preventDefault(); // 기본 동작 방지
+	    const btnId = $(this).attr('id'); // 현재 클릭된 버튼의 ID 가져오기
+	    const photoId = btnId.replace('desc_btn', 'desc_photo'); // 버튼 ID를 photo ID로 변환
+	    $('#' + photoId).click(); // 해당 photo ID를 클릭
+	});
+	
+	$('[id^="desc_photo"]').change(function() { 
+	    let myPhoto = this.files[0];
+	    const previewClass = $(this).attr('id').replace('desc_photo', 'preview_photo'); // 클래스와 ID 매칭
 
-     let artistData = []; // 서버에서 받은 데이터 캐싱
+	    if (!myPhoto) {
+	        // 선택 취소 시 초기 이미지로 되돌림
+	        $('.' + previewClass).attr('src', photo_path);
+	        alert('파일 선택 안됨');
+	        return;
+	    }
 
-     // 검색창 열기
-     searchTrigger.addEventListener("click", () => {
-         searchModal.classList.remove("hidden"); // 검색창 보이기
-         fetchArtists(); // 데이터 가져오기
-     });
+	    // 화면에서 이미지 미리보기
+	    const reader = new FileReader();
+	    reader.readAsDataURL(myPhoto);
 
-     // 검색창 닫기
-     closeSearch.addEventListener("click", () => {
-         searchModal.classList.add("hidden"); // 검색창 숨기기
-     });
-
-     // 서버에서 아티스트 데이터 가져오기
-     function fetchArtists() {
-         if (artistData.length === 0) {
-             fetch("/api/artists") // API 호출
-                 .then(response => response.json())
-                 .then(data => {
-                     artistData = data; // 데이터 저장
-                     renderArtists(artistData); // 데이터 렌더링
-                 })
-                 .catch(error => console.error("Error fetching artists:", error));
-         } else {
-             renderArtists(artistData); // 이미 데이터가 있으면 렌더링
-         }
-     }
-
-     // 검색 입력 처리
-     searchInput.addEventListener("input", (e) => {
-         const query = e.target.value.toLowerCase();
-         const filteredData = artistData.filter(artist =>
-             artist.group_name.toLowerCase().includes(query)
-         );
-         renderArtists(filteredData); // 필터링된 데이터 렌더링
-     });
-
-     // 아티스트 목록 렌더링
-     function renderArtists(artists) {
-         artistList.innerHTML = ""; // 기존 목록 초기화
-         if (artists.length === 0) {
-             artistList.innerHTML = "<p>No results found.</p>";
-             return;
-         }
-         artists.forEach(artist => {
-             const div = document.createElement("div");
-             div.className = "artist-item";
-             div.innerHTML = `
-                 <img src="/images/${artist.group_photo || 'default.png'}" alt="${artist.group_name}" />
-                 <span class="artist-name">${artist.group_name}</span>
-             `;
-             artistList.appendChild(div);
-         });
-     }
- });
+	    reader.onload = function() {
+	        $('.' + previewClass).attr('src', reader.result);
+	    };
+	});
+	
+	$('#item_writeSubmit').submit(function(e) {
+	    if ($('#upload').val() === "") {
+	        e.preventDefault(); // 폼 제출 중단
+	        alert('상품 이미지는 필수로 등록해주세요');
+	    }
+	});
+});

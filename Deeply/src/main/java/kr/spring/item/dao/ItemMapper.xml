@@ -13,7 +13,10 @@
 			item_name,
 			item_price,
 			item_description,
-			item_stock)
+			item_stock,
+			desc_photo1,
+			desc_photo2,
+			desc_photo3)
 		VALUES (
 			shop_item_seq.nextval,
 			#{user_num},
@@ -21,7 +24,10 @@
 			#{item_name},
 			#{item_price},
 			#{item_description},
-			#{item_stock})
+			#{item_stock},
+			#{desc_photo1, jdbcType=VARCHAR},
+       		#{desc_photo2, jdbcType=VARCHAR},
+        	#{desc_photo3, jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- sql태그와 include 태그를 이용해 sql문을 재사용 -->
@@ -33,6 +39,14 @@
 			</if>
 			<if test="keyfield == 2">
 				item_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="user_num!=null">
+				and user_num = #{user_num}
+			</if>
+		</if>
+		<if test="keyword == null or keyword == ''">
+			<if test="user_num!=null">
+				user_num = #{user_num}
 			</if>
 		</if>
 	</where>
@@ -72,14 +86,12 @@
 					user_num
 				FROM shop_item
 				JOIN agroup ON shop_item.user_num = agroup.group_num
-					)a
-				)
+				<include refid="shopSearch"/>
+				ORDER BY item_regdate desc)a)
 			<![CDATA[
 					WHERE rnum >= #{start} 
 					AND rnum <= #{end}
 			]]>
-				ORDER BY item_regdate desc
-		 			
 	</select>	
 	
 	<update id="updateItem" parameterType="ItemVO">
@@ -90,34 +102,55 @@
 				item_price = #{item_price},
 				item_description = #{item_description},
 				item_stock = #{item_stock},
-				item_modifydate = SYSDATE
+				item_modifydate = SYSDATE,
+				#{desc_photo1, jdbcType=VARCHAR},
+       			#{desc_photo2, jdbcType=VARCHAR},
+        		#{desc_photo3, jdbcType=VARCHAR}
 		WHERE item_num = #{item_num}
 	</update>
 	
-	<select id="showListByGroup" parameterType="map" resultType="map">
-	    SELECT *
-	    FROM (
-	        SELECT 
-	            g.group_name,
-	            g.group_photo,
-	            i.item_num,
-	            i.item_name,
-	            i.item_price,
-	            i.item_description,
-	            i.item_stock,
-	            i.filename,
-	            ROW_NUMBER() OVER (PARTITION BY g.group_name ORDER BY i.item_modifydate DESC) AS rnum
-	        FROM agroup g
-	        LEFT JOIN shop_item i ON g.group_num = i.group_num
-	    ) sub
-	    <![CDATA[
-	    WHERE sub.rnum <= 4
-	    ORDER BY sub.group_name, sub.rnum
+	<select id="showListByGroup" resultType="itemVO">
+	    SELECT 
+		  * 
+		FROM(        
+		 SELECT 
+		  g.group_num,
+		  g.group_name,
+		  g.group_photo,
+		  i.item_num,
+		  i.item_name,
+		  i.item_price,
+		  i.item_description,
+		  i.item_stock,
+		  i.filename,
+		  i.user_num,
+		  b.group_cnt,
+		  ROW_NUMBER() OVER (PARTITION BY g.group_name ORDER BY i.item_modifydate DESC) AS rnum 
+		 FROM agroup g 
+		 JOIN shop_item i on g.group_num=i.user_num
+		 JOIN (SELECT user_num, COUNT(*) group_cnt FROM shop_item GROUP BY user_num)b ON g.group_num=b.user_num
+		 )
+		 <![CDATA[
+		 WHERE rnum <= 4
 	    ]]>
 	</select>
 
-
-
+	<!-- 그룹명 읽기 -->
+	<select id="showListGroup" resultType="itemVO">
+		SELECT 
+		  * 
+		FROM(        
+		 SELECT 
+		  g.group_num,
+		  g.group_name,
+		  ROW_NUMBER() OVER (PARTITION BY g.group_name ORDER BY i.item_modifydate DESC) AS rnum 
+		 FROM agroup g 
+		 JOIN shop_item i on g.group_num=i.user_num
+		 )
+		 <![CDATA[
+		 WHERE rnum <= 1
+	    ]]>
+	</select>
 
 
 
