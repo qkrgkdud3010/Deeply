@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.admin.dao.UserStatisticMapper;
 import kr.spring.admin.vo.UserStatisticVO;
+import kr.spring.member.dao.ArtistMapper;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
@@ -142,7 +143,16 @@ public class MemberServiceImpl implements MemberService{
 		public List<MemberVO> selectList(Map<String, Object> map) {
 			return memberMapper.selectList(map);
 		}
+		
+		@Override
+		public int selectRowCount2(Map<String, Object> map) {
+			return memberMapper.selectRowCount2(map);
+		}
 
+		@Override
+		public List<MemberVO> selectList2(Map<String, Object> map) {
+			return memberMapper.selectList2(map);
+		}
 		@Override
 		public void updateProfile(MemberVO member) {
 			memberMapper.updateProfile(member);
@@ -159,5 +169,11 @@ public class MemberServiceImpl implements MemberService{
 		
 			memberMapper.updateMember_detail2(artist);
 			memberMapper.updateMember3(artist);
+			
+		}
+
+		@Override
+		public void updateByAdmin(MemberVO memberVO) {
+			memberMapper.updateByAdmin(memberVO);
 			
 		}}

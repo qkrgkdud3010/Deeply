@@ -7,7 +7,7 @@
 	<div class="admin-one">
 		<ul>
 			<li><a href="admin_list">사용자 조회</a></li>
-			<li><a href="#">아티스트 정보 조회</a></li>
+			<li><a href="admin_artist">아티스트 정보 조회</a></li>
 			<li><a href="#">이벤트 관리</a></li>
 			<li><a href="#">사이트 관리</a></li>
 			<li><a href="#">1대1문의 관리</a></li>
@@ -66,7 +66,7 @@
                                     text: '접속자 수'
                                 },
                                 beginAtZero: true,  // y축 시작값 0
-                                max: 200,  // y축 최대값 200으로 설정
+                                max: 1000,  // y축 최대값 200으로 설정
                                 ticks: {
                                     stepSize: 20  // y축 값 간격을 20으로 설정
                                 }

@@ -58,9 +58,17 @@ public interface MemberMapper {
 	public void updateMember_detail2(ArtistVO artist);
 	public int selectRowCount(Map<String,Object> map);
 	public List<MemberVO> selectList(Map<String,Object> map);
+	
+	public int selectRowCount2(Map<String,Object> map);
+	public List<MemberVO> selectList2(Map<String,Object> map);
+	
+	
 	@Update("UPDATE auser SET id=#{id} WHERE user_num=#{user_num}")
 	public void updateMember3(ArtistVO artist);
 
+	
+	@Update("UPDATE duser SET auth=#{auth} WHERE user_num=#{user_num}")
+	public void updateByAdmin(MemberVO memberVO);
 }
 
 

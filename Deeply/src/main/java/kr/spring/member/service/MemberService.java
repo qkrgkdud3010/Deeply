@@ -24,11 +24,19 @@ public interface MemberService {
 
 	public int selectRowCount(Map<String,Object> map);
 	public List<MemberVO> selectList(Map<String,Object> map);
+	
+	public int selectRowCount2(Map<String,Object> map);
+	public List<MemberVO> selectList2(Map<String,Object> map);
+	
+	
 	public void resetPassword(String email,String newPassword);
 
 	public void recordUserCountForDate();
 	public List<UserStatisticVO> getUserStatisticsByDate();
-
+	public void updateByAdmin(MemberVO memberVO);
+	
+	
+	
 	//마이페이지
 	public MemberVO selectMember(Long user_num);
 	public void updateProfile(MemberVO member);

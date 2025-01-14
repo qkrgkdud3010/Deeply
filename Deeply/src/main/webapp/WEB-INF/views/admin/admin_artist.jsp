@@ -98,7 +98,7 @@
 	<div class="admin-one">
 		<ul>
 			<li><a href="admin_list">사용자 조회</a></li>
-			<li><a href="admin_artist">아티스트 정보 조회</a></li>
+			<li><a href="#">아티스트 정보 조회</a></li>
 			<li><a href="#">이벤트 관리</a></li>
 			<li><a href="#">사이트 관리</a></li>
 			<li><a href="#">1대1문의 관리</a></li>
@@ -107,7 +107,7 @@
 	<div class="admin-two">
 
 	<h2>회원관리(관리자 전용)</h2>
-	<form action="admin_list" id="search_form" method="get">
+	<form action="admin_artist" id="search_form" method="get">
 		<ul class="search">
 			<li>
 				<select name="keyfield">
@@ -135,27 +135,21 @@
 	<table class="striped-table">
 		<tr>
 			<th>아이디</th>
-			<th>이름</th>
-			<th>전화번호</th>
+			<th>아티스트 이름</th>
+			<th>그룹 이름</th>
 			<th>이메일</th>
-			<th>권한</th>
+		
 		</tr>
 		<c:forEach var="member" items="${list}">
 		<tr>
-			<td>
-				<c:if test="${member.auth==1||member.auth==9}">${member.id}</c:if>
-				<c:if test="${member.auth==0||member.auth==2}"><a href="${pageContext.request.contextPath}/member/admin_update?user_num=${member.user_num}">${member.id}</a></c:if>
-			</td>
+			<td>${member.id}</td>
+			
 			<td>${member.name}</td>
-			<td>${member.phone}</td>
+			
+			<td>${member.group_name}</td>
 			<td>${member.email}</td>
 		
-			<td>
-				<c:if test="${member.auth==1}">탈퇴</c:if>
-				<c:if test="${member.auth==2}">정지</c:if>
-				<c:if test="${member.auth==0}">일반</c:if>
-				<c:if test="${member.auth==9}">관리</c:if>
-			</td>
+			
 		</tr>
 		</c:forEach>
 	</table>

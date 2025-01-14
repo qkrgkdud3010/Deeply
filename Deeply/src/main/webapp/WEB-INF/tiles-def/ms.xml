@@ -63,19 +63,34 @@
     </definition>
     
     <definition name="admin_list" extends="main">
-    	<put-attribute name="title" value="어드민 메인"/>
+    	<put-attribute name="title" value="어드민 맴버 리스트"/>
     	<put-attribute name="css"
     	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
     	<put-attribute name="body"
     	  value="/WEB-INF/views/admin/admin_list.jsp"/>                         
     </definition>
+ 	 <definition name="admin_artist" extends="main">
+    	<put-attribute name="title" value="어드민 아티스르 리스트"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/admin/admin_artist.jsp"/>                         
+    </definition>   
     
-       <definition name="myPage" extends="main">
+    	 <definition name="admin_memberModify" extends="main">
+    	<put-attribute name="title" value="어드민 맴버 수정"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/admin/admin_memberModify.jsp"/>                         
+    </definition> 
+    
+       <definition name="myPage1" extends="main">
     	<put-attribute name="title" value="마이페이지 수정"/>
     	<put-attribute name="css"
     	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/deeplyMypage/mypage.jsp"/>                         
+    	  value="/WEB-INF/views/deeplyMypage/mypage1.jsp"/>                         
     </definition>
     
 </tiles-definitions>

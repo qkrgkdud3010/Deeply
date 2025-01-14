@@ -67,4 +67,39 @@ public class AdminController {
 		return "admin_list";
 		
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/admin_artist")
+	public String getList2(
+			@RequestParam(value="pageNum",defaultValue="1")
+			int currentPage, String keyfield, String keyword,
+			Model model) {
+		Map<String,Object> map = 
+				new HashMap<String,Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		
+		//전체/검색 레코드수
+		int count = memberService.selectRowCount2(map);
+		
+		log.debug("<<count>> : " + count);
+		
+		PagingUtil page = 
+				new PagingUtil(keyfield,keyword,currentPage,
+						        count,20,10,"admin_artist");
+		List<MemberVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = memberService.selectList2(map);
+		}
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
+		
+		return "admin_artist";
+		
+	}
 }

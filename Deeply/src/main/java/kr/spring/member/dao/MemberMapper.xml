@@ -109,6 +109,74 @@
   WHERE rnum >= #{start} AND rnum <= #{end}
   ]]>
 </select>
+
+
+
+
+
+<sql id="memberSearch2">
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					m.id LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					d.name LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					d.email LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 4">
+  					m.id LIKE '%' || #{keyword} || '%' OR
+  					d.name LIKE '%' || #{keyword} || '%' OR
+  					d.email LIKE '%' || #{keyword} || '%'
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+
+
+
+
+
+<select id="selectRowCount2" parameterType="map"
+  	                               resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM auser m LEFT OUTER JOIN auser_detail d
+  		ON m.user_num = d.user_num
+  		<include refid="memberSearch"/>
+  	</select>
+  	
+  	<!-- 전체/검색 목록 -->
+<select id="selectList2" parameterType="map" resultType="artistVO">
+  SELECT *
+  FROM (
+    SELECT a.*, rownum rnum
+    FROM (
+      SELECT *
+      FROM auser m
+      LEFT OUTER JOIN auser_detail d ON m.user_num = d.user_num
+         <include refid="memberSearch2"/> <!-- 이 부분에서 WHERE 조건이 추가된다면 위치를 확인 -->
+    ) a
+ 
+  )
+  <![CDATA[
+  WHERE rnum >= #{start} AND rnum <= #{end}
+  ]]>
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
   	<update id="updateMember_detail" parameterType="memberVO">
   		UPDATE duser_detail
   		SET

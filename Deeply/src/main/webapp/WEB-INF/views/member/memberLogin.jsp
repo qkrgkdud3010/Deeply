@@ -29,14 +29,14 @@
 				<tr>
 					<td><a href="${pageContext.request.contextPath}/oauth2/authorization/naver"><img class="inline-img" alt=""
 						src="${pageContext.request.contextPath}/assets/images/naver.png">
-						<span class="inline-text">네이버로 로그인하기.</span></a></td>
+						<span style="text-decoration:none; color:black;" class="inline-text">네이버로 로그인하기.</span></a></td>
 					<td><a href="${pageContext.request.contextPath}/oauth2/authorization/kakao"><img class="inline-img" alt=""
 						src="${pageContext.request.contextPath}/assets/images/kakao.png">
-						<span class="inline-text">카카오로 로그인하기.</span></a></td>
+						<span style="text-decoration:none; color:black;" class="inline-text">카카오로 로그인하기.</span></a></td>
 				</tr>
 				<tr>
-					<td><a href="/member/findID">아이디 찾기</a></td>
-					<td><a href="/member/findPasswd">비밀번호 찾기</a></td>
+					<td><a style="text-decoration:none; color:black;" href="/member/findID">아이디 찾기</a></td>
+					<td><a style="text-decoration:none; color:black;" href="/member/findPasswd">비밀번호 찾기</a></td>
 				</tr>
 			</table>
 			<input type="submit" value="로그인">
