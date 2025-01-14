@@ -286,6 +286,8 @@ $(function(){
 						<form:input path="name" type="text" placeholder="이름" />
 						<form:errors path="name" cssClass="error-color" />
 						<form:input id="group_name" path="group_name" type="text" placeholder="그룹이름" />
+						<form:input id="intro" path="intro" type="text" placeholder="자기소개 글" />
+<form:input id="debut_date" path="debut_date" type="date" placeholder="데뷔날자" />
 					
 						
 					
