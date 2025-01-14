@@ -6,7 +6,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/artistPage.js"></script>
 <sec:authorize access="isAuthenticated()"><sec:authentication property="principal" var="principal" /></sec:authorize>
 
-
+ 
 <div class="artist-main background-black">
 	<div class="member-selection-container">
 		<div class="member-selection-header align-center">

@@ -48,7 +48,7 @@ $(document).ready(function() {
     }
     </script>
     
-
+ 
 <div class="page-main">
 
   <h2>형성된 채팅방</h2>

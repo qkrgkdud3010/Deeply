@@ -167,7 +167,7 @@ public class ChatController {
 		//데이터의 형태로 전달
 		redirect.addFlashAttribute("result","success");
 		redirect.addFlashAttribute("chat_kind",0);
-
+ 
 
 		return "redirect:/chat/userChatroom";
 	}

@@ -9,12 +9,12 @@
 <!-- 채팅방 형성 시작
 채팅방 형성 폼 -->
 <div class="page-main">
-
+ 
 	<h2>채팅방</h2>
 	${param.artist_num}
 	
-	<c:if test="${ch_kind==1}">
-	
+	<c:if test="${ch_kind==1}"> 
+	 
 	<div>
 	<form:form modelAttribute="chatVO" action="chWrite" id = "makeChatroom"
 	enctype="multipart/form-data">

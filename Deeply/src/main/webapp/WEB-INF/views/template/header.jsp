@@ -7,7 +7,7 @@
 	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
 <!-- 상단 시작 -->
-<header>
+<header> 
 	<div class="align-left header-left">
 			<c:if test="${empty principal || principal.memberVO.auth < 9}"><%-- 사용자 화면 링크 --%>
 	<a href="${pageContext.request.contextPath}/main/main"><img alt=""
