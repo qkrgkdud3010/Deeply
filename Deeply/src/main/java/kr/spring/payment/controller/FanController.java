@@ -28,14 +28,18 @@ public class FanController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/selectFan")
-	public String selectFan(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
+	public String selectFan(long fan_artist,@AuthenticationPrincipal PrincipalDetails principal, Model model) {
 		//회원정보
 		Long user_num = principal.getMemberVO().getUser_num();
 		
-		FanVO fan = fanService.selectFan(user_num);
+		Map<String,Long> map = new HashMap<String,Long>();
+		map.put("user_num", user_num);
+		map.put("fan_artist",fan_artist);
+	
+		FanVO fan = fanService.selectFan(map);
+		log.debug("fanVO"+fan);
 		
 		model.addAttribute("fan",fan);
-		model.addAtr
 		
 		return "fan";
 	}
