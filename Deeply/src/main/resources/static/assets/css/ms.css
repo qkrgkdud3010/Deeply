@@ -75,6 +75,7 @@
   .inline-img {
     display: inline-block; /* 이미지를 인라인 블록 요소로 설정 */
     vertical-align: middle; /* 세로 중앙 정렬 */
+    width:30px;
 
   }
 
@@ -88,22 +89,24 @@
     flex-wrap: nowrap;         /* 박스들이 줄 바꿈 없이 한 줄에 나열되도록 설정 */
     justify-content: flex-start; /* 박스를 왼쪽에 정렬 */
     align-items: center;  
+    margin-bottom:50px;
         /* 박스를 세로 중앙에 정렬 */
 }
 .register-image{
-width:800px;
+width:1000px;
 height:563px;
 background-color:gray;
 float:left;
 flex-shrink: 0; 
 }
 .register-content{
+
 width:400px;
 height:563px;
 
 float:left;
 flex-shrink: 0; 
- margin-left:20px;
+ margin-left:100px;
 }
 .register-content .logo-img{
 	width:178px;
@@ -249,6 +252,7 @@ margin-left:7px;
 	opacity:75%;
 	padding-top:10px;
 		float:left;
+		flex-shrink: 0; 
 }
 .admin-one ul li{
 		margin-top:40px;
@@ -262,6 +266,7 @@ margin-left:7px;
 
 .admin-two{
 	float:left;
+	flex-shrink: 0; 
 }
 /*관리자 부분 끝*/
 /*마이페이지 시작*/
@@ -281,4 +286,52 @@ margin-left:7px;
 	background-color:black;
 	margin:0 auto;
 }
+.artist_register{
+	margin-top:20px;
+	width:290px;
+	height:30px;
+	margin-bottom:7px;
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.18);
+	border-radius:5px;
+	border:1px solid #B0ADAD;
+	text-align:center;
+	line-height:30px;
+}
+.artist_register a{
+	color:black;
+	text-decoration:none;
+
+}
+
 /*마이페이지 끝*/
+/*footer 시작*/
+footer{
+	width:85%;
+	height:219px;
+	margin:0 auto;
+}
+footer .link{
+		width:150px;
+		display:inline-block;
+
+}
+footer a{
+	color:white;
+	text-decoration:none;
+}
+footer .ft-1{
+	float:left;
+}
+footer .ft-2{
+	float:right;
+}
+footer .line{
+	width:100%;
+	height:2px;
+	background-color:white;
+	margin-top:40px;
+}
+footer .footer-img{
+	text-align:right;
+}
+/*footer 끝*/

@@ -8,7 +8,7 @@
 
 <!-- 회원가입 시작 -->
 
-<div class="main-div">
+<div class="main-div" style="justify-content: center; width:1400px; margin-top: 80px;">
 	<script type="text/javascript">
 
 var csrfToken = $('meta[name="_csrf"]').attr('content');
@@ -253,7 +253,9 @@ $(function(){
 
 </script>
 	<div class="register-wrap">
-		<div class="register-image"></div>
+		<div class="register-image">
+			<img alt="" src="${pageContext.request.contextPath}/assets/image_bundle/register.png">
+		</div>
 
 		<div class="register-content">
 

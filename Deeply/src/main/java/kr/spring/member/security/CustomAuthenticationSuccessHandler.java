@@ -35,7 +35,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
        
 		if(user!=null && user.getAuth() == 9) {//관리자					
 			setDefaultTargetUrl("/main/admin");
-		}else if(user!=null && user.getAuth() == 1) {//정지회원	
+		}else if(user!=null && user.getAuth() == 2) {//정지회원	
 			log.debug("[Spring Security Login Check 2] 정지회원 : " + user.getId());
 			//정지회원일 경우 로그아웃 처리
 			new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());

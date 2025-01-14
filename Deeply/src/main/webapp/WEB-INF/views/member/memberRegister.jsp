@@ -8,7 +8,7 @@
 
 <!-- 회원가입 시작 -->
 
-<div class="main-div">
+
 	<script type="text/javascript">
 
 var csrfToken = $('meta[name="_csrf"]').attr('content');
@@ -262,8 +262,11 @@ $(function(){
 
 
 </script>
-	<div class="register-wrap">
-		<div class="register-image"></div>
+<div class="main-div" style="justify-content: center; width:1400px; margin-top: 80px; margin-bottom:50px;" >
+	<div class="register-wrap" style="margin:0 auto;">
+		<div class="register-image">
+		<img alt="" src="${pageContext.request.contextPath}/assets/image_bundle/register.png">
+		</div>
 
 		<div class="register-content">
 
@@ -335,7 +338,7 @@ $(function(){
 					<div class="register-submit" id="member_register2" onclick="registerUser()">회원가입</div>
 				</form:form>
 				<div id="errorMessage" class="error"></div>
-				<a class="artist_register" href="/artistMember/artistRegister">아티스트 회원가입 바로가기></a>
+				<div class="artist_register"><a href="/artistMember/artistRegister">아티스트 회원가입 바로가기</a></div>
 			</div>
 			
 		</div>

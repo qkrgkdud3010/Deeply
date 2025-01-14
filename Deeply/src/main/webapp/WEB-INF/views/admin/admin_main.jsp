@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<hr>
-<div class="main-div" style="height:1000px;">
+<div class="main-div" style="height:1000px; display: flex;">
 
 	<div class="admin-one">
 		<ul>
@@ -14,7 +14,7 @@
 		</ul>
 	</div>
 	<div class="admin-two">
-<div style="width:900px;"><canvas id="userStatisticsChart"></canvas></div>
+<div style="width:1000px; margin-left:100px;"><canvas id="userStatisticsChart"></canvas></div>
 <div style="clear:both;"></div>
 <script>
     // 데이터를 Spring에서 JSON 형식으로 받아옵니다.

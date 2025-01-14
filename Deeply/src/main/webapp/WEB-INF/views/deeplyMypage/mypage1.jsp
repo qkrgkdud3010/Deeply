@@ -273,7 +273,7 @@ $(function(){
 <c:if test="${isMemberVO}">
 <div class="main-div" style="text-align: center">
 	<h2>
-		회원상세정보 
+		유저 정보 수정 
 	</h2>
 	<div class="profile-image">
 		<img src="${pageContext.request.contextPath}/member/photoView"
@@ -363,7 +363,7 @@ $(function(){
 <c:if test="${!isMemberVO}">
 <div class="main-div" style="text-align: center">
 	<h2>
-		회원상세정보 
+		아티스트 정보 수정
 	</h2>
 	<div class="profile-image">
 		<img src="${pageContext.request.contextPath}/member/photoView"

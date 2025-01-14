@@ -91,9 +91,79 @@
             padding: 8px;
         }
     }
+    
+    /* 전체 검색 폼 스타일 */
+#search_form {
+    max-width: 600px; /* 최대 너비 */
+    margin: 20px auto; /* 중앙 정렬 */
+    padding: 20px;
+    background-color: #f9f9f9; /* 배경색 */
+    border: 1px solid #ddd; /* 테두리 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+}
+
+/* 검색 리스트 스타일 */
+.search {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding: 0;
+    margin: 0;
+    display: flex; /* 플렉스 박스 */
+    gap: 10px; /* 아이템 간격 */
+    flex-wrap: wrap; /* 반응형: 줄바꿈 가능 */
+}
+
+.search li {
+    flex: 1; /* 아이템의 너비를 균등 분배 */
+    min-width: 150px; /* 최소 너비 */
+}
+
+/* 드롭다운 스타일 */
+.search select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* 검색창 스타일 */
+.search input[type="search"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* 버튼 스타일 */
+.search input[type="submit"],
+.search input[type="button"] {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff; /* 파란색 버튼 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search input[type="button"] {
+    background-color: #6c757d; /* 회색 버튼 */
+}
+
+.search input[type="submit"]:hover {
+    background-color: #0056b3; /* 파란색 호버 */
+}
+
+.search input[type="button"]:hover {
+    background-color: #5a6268; /* 회색 호버 */
+}
+    
 </style>
 	<hr>
-<div class="main-div" style="height:1000px;">
+<div class="main-div" style="height:1000px;  display: flex;">
 
 	<div class="admin-one">
 		<ul>

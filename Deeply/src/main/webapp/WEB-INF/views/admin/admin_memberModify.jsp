@@ -122,7 +122,7 @@ background-color: #007bff;
 	</style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <hr>
-<div class="main-div" style="height: 1000px;">
+<div class="main-div" style="height: 1000px;  display: flex;">
 
 	<div class="admin-one" >
 		<ul>
