@@ -29,7 +29,7 @@ public interface ChatMapper {
 	//ipublic Long selectChatnum(Long auser_num);
 	
 	
-	@Update("UPDATE chat_room SET chat_status=0 WHERE chat_num=#{chat_num}")
+	//@Update("UPDATE chat_room SET chat_status=0 WHERE chat_num=#{chat_num}")
 	//@Select("SELECT fan_artist FROM FAN WHERE user_num=#{duser_num}")
 	//public Long selectAusernum(Long duser_num);
 	

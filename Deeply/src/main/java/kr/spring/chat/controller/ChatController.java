@@ -116,8 +116,6 @@ public class ChatController {
 		return "chatWrite";
 	}
 	
-	
-
 	/*========================
 	 채팅방 들어가기 form
 	 *========================*/	
@@ -143,18 +141,14 @@ public class ChatController {
 		if(result.hasErrors()) {
 			return formUser();
 		}
-		//아티스트 페이지에서 방을 만들 수 있도록 설정
+		//유저 정보 유저 챗 테이블에 넣기
 		MemberVO memberVO = principal.getMemberVO();
 		chatVO.setDuser_num(memberVO.getUser_num());
 		chatVO.setDuser_id(memberVO.getId());
-		
-		
-	
 
-		//제목(title=chat_name은 jsp에서 써서 전송할 예정)
 		chatService.insertDuserInfo(chatVO);
 		
-
+		
 
 		//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
 		//데이터의 형태로 전달
