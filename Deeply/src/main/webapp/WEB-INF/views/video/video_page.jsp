@@ -5,10 +5,10 @@
 <!-- video_page.jsp -->
 <style>
 .youtube-frame {
-   border: none; /* 기본 테두리 제거 */
-   border-radius: 15px; /* 둥근 모서리 */
-   width: 100%;
-   height: 600px
+	border: none; /* 기본 테두리 제거 */
+	border-radius: 15px; /* 둥근 모서리 */
+	width: 100%;
+	height: 600px
 }
 
 .post-container {
@@ -194,7 +194,8 @@
 <div class="post-container">
 	<!-- 유튜브 프레임 -->
 
-	<iframe src="${youtubeLink}" class="youtube-frame" allow="fullscreen"></iframe>
+	<iframe src="${youtubeLink}?autoplay=1&mute=1" class="youtube-frame"
+		allow="autoplay; fullscreen"> </iframe>
 
 	<!-- 댓글 입력 섹션 -->
 	<div class="reply-section">
