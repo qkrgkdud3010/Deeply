@@ -13,7 +13,7 @@
     <div class="heading-container">
         <h2 class="section-heading">멤버십 전용</h2>
         <div class="right-container">
-            <div class="upload-button">영상 업로드</div>
+            <div class="upload-button" onclick="location.href='${pageContext.request.contextPath}/videos/upload'">영상 업로드</div>
             <p>멤버십 영상 페이지 바로가기 &gt;</p>
         </div>
     </div>
@@ -39,7 +39,7 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <div class="video-card">
+                        <div class="video-card" onclick="location.href='${pageContext.request.contextPath}/videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
                             <img src="${thumbnailUrl}" alt="썸네일" />
                             <div class="video-card-title">${video.title}</div>
                             <div class="video-card-description">${video.description}</div>
@@ -82,7 +82,7 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <div class="video-card">
+                        <div class="video-card" onclick="location.href='${pageContext.request.contextPath}/videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
                             <img src="${thumbnailUrl}" alt="썸네일" />
                             <div class="video-card-title">${video.title}</div>
                             <div class="video-card-description">${video.description}</div>

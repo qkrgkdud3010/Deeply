@@ -135,4 +135,25 @@ public class VideoController {
 
         return "groupVideoList"; // JSP 파일 이름
     }
+    
+    @GetMapping("/videos/page")
+    public String showVideoPage(
+        @RequestParam("videoId") Long videoId,
+        @RequestParam("group_num") Long groupNum,
+        Model model
+    ) {
+        // 1. 영상 정보 조회
+        VideoVO video = videoService.selectVideo(videoId);
+
+        // 2. 댓글 데이터 조회
+        //List<CommentVO> comments = commentService.getCommentsByVideoId(videoId);
+
+        // 3. 데이터 모델에 추가
+        model.addAttribute("video", video);       // 영상 정보
+        //model.addAttribute("comments", comments); // 댓글 리스트
+        model.addAttribute("groupNum", groupNum); // 그룹 번호
+
+        return "video_page"; // JSP 파일 이름
+    }
+
 }
