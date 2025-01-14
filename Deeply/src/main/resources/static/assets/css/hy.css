@@ -9,8 +9,15 @@
 	box-sizing: border-box;
 }
 
+input, textarea, .reply-input {
+    user-select: auto; /* 입력 필드에서는 선택 허용 */
+    caret-color: auto; /* 커서 표시 */
+}
+
 /* 공통 스타일 */
 body {
+	user-select: none; /* 텍스트 선택 방지 */
+    caret-color: transparent; /* 커서 숨김 */
     font-family: 'Inter', 'Manrope', sans-serif;
     margin: 0;
     padding: 0;
