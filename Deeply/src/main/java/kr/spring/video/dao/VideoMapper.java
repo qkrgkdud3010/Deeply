@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -20,8 +19,10 @@ public interface VideoMapper {
 	@Select("SELECT COUNT(*) FROM video")
 	public Integer selectRowCount(Map<String, Object> map);
 
-	@Select("SELECT * FROM video WHERE video_id = #{videoId}")
-	public VideoVO selectVideo(Long videoId);
+	@Select("SELECT video_id AS videoId, artist_id AS artistId, title, description, is_exclusive AS isExclusive, " +
+            "media_url AS mediaUrl, created_at AS createdAt, views, likes, comments_count AS commentsCount, " +
+            "category_id AS categoryId, group_num AS groupNum FROM video WHERE video_id = #{videoId}")
+    public VideoVO selectVideo(@Param("videoId") Long videoId);
 
 	public void insertVideo(VideoVO video);
 

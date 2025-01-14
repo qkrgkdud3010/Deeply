@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.spring.video.service.VideoCategoryService;
 import kr.spring.video.service.VideoService;
 import kr.spring.video.vo.VideoCategoryVO;
@@ -25,6 +28,8 @@ import kr.spring.member.vo.PrincipalDetails;
 @Controller
 public class VideoController {
 
+	private static final Logger logger = LoggerFactory.getLogger(VideoController.class);
+	
     @Autowired
     private VideoService videoService;
     
@@ -145,15 +150,53 @@ public class VideoController {
         // 1. 영상 정보 조회
         VideoVO video = videoService.selectVideo(videoId);
 
-        // 2. 댓글 데이터 조회
-        //List<CommentVO> comments = commentService.getCommentsByVideoId(videoId);
+        // 2. YouTube URL 변환
+        String youtubeLink = video.getMediaUrl();
+        
+        youtubeLink = convertToEmbedUrl(youtubeLink);
+        
+        model.addAttribute("youtubeLink", youtubeLink);
 
         // 3. 데이터 모델에 추가
         model.addAttribute("video", video);       // 영상 정보
-        //model.addAttribute("comments", comments); // 댓글 리스트
         model.addAttribute("groupNum", groupNum); // 그룹 번호
 
         return "video_page"; // JSP 파일 이름
+    }
+
+    /**
+     * 일반 YouTube URL을 embed URL로 변환
+     * @param youtubeUrl 일반 YouTube URL (e.g., https://youtu.be/abc123, https://www.youtube.com/watch?v=abc123)
+     * @return embed URL (e.g., https://www.youtube.com/embed/abc123)
+     */
+    private String convertToEmbedUrl(String youtubeUrl) {
+        try {
+            String videoLink = null;
+
+            // 예: https://www.youtube.com/watch?v=abc123
+            if (youtubeUrl.contains("v=")) {
+                videoLink = youtubeUrl.split("v=")[1].split("&")[0];
+            }
+            // 예: https://youtu.be/abc123
+            else if (youtubeUrl.contains("youtu.be/")) {
+                videoLink = youtubeUrl.substring(youtubeUrl.lastIndexOf("/") + 1);
+            }
+            // 예: https://www.youtube.com/embed/abc123
+            else if (youtubeUrl.contains("youtube.com/embed/")) {
+                videoLink = youtubeUrl.substring(youtubeUrl.indexOf("embed/") + 6);
+            }
+
+            if (videoLink != null && !videoLink.isEmpty()) {
+                // embed URL 생성
+                return "https://www.youtube.com/embed/" + videoLink;
+            } else {
+                logger.warn("Unable to extract video ID from URL: {}", youtubeUrl);
+                return youtubeUrl; // 원래 URL 반환
+            }
+        } catch (Exception e) {
+            logger.error("Error converting YouTube URL to embed URL: {}", youtubeUrl, e);
+            return youtubeUrl; // 변환 실패 시 원래 URL 반환
+        }
     }
 
 }
