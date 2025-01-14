@@ -43,13 +43,16 @@ public class ChatController {
 	/*========================
 	 * 채팅방 만들기
 	 *========================*/
+
 	//채팅방 등록 폼
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/chWrite")
-	public String form() {
-		return "chatWrite";
+	public String returnFormAtrist(Model model) {
+		// 파라미터 값을 모델에 추가
+		model.addAttribute("ch_kind", 1); 
+		return "chat/chattingEnter";  // JSP 경로
 	}
-	
+
 	/*========================
 	 * 아티스트 - 채팅방
 	 *========================*/
@@ -64,10 +67,13 @@ public class ChatController {
              PrincipalDetails principal)throws IllegalStateException, IOException{
 		
 		log.debug("<<채팅방 형성>>" + chatVO);
-		//유효성 체크결과 오류가 있으면 폼 호출
-		if(result.hasErrors()) {
-			return form();
-		}
+		
+		
+		/*========================
+		 * 유효성 체크 부분!!!!!!
+		 *========================*/
+		
+		
 		//아티스트 페이지에서 방을 만들 수 있도록 설정
 		ArtistVO artistVO= principal.getArtistVO();
 		chatVO.setAuser_num(artistVO.getUser_num());
@@ -109,11 +115,9 @@ public class ChatController {
 	//채팅방 닫기
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/closeChatroom")
-	public String closeRoomArtist() {
+	public String closeRoomArtist(){
 		
-		
-		
-		return "chatWrite";
+		return "chat/chattingEnter";
 	}
 	
 	/*========================
@@ -122,9 +126,10 @@ public class ChatController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/chatting")
-	public String formUser() {
-		
-		return "chat/chattingUser";
+	public String returnFormUser(Model model) {
+		// 파라미터 값을 모델에 추가
+		model.addAttribute("ch_kind", 0); 
+		return "chat/chattingEnter";  // JSP 경로
 	}
 
 	//형성된 채팅방 데이터 처리
@@ -137,10 +142,11 @@ public class ChatController {
 			PrincipalDetails principal)throws IllegalStateException, IOException{
 
 		log.debug("<<채팅방 들어가기>>" + chatVO);
-		//유효성 체크결과 오류가 있으면 폼 호출
-		if(result.hasErrors()) {
-			return formUser();
-		}
+		
+		/*========================
+		 * 유효성 체크 부분!!!!!!
+		 *========================*/
+	
 		//유저 정보 유저 챗 테이블에 넣기
 		MemberVO memberVO = principal.getMemberVO();
 		chatVO.setDuser_num(memberVO.getUser_num());
@@ -148,11 +154,19 @@ public class ChatController {
 
 		chatService.insertDuserInfo(chatVO);
 		
-		
-
+		Long auser_num = Long.parseLong(request.getParameter("auser_num"));
+		 
+		Long chat_num = chatService.selectChatnum(auser_num);
+		chatVO.setChat_num(chat_num);
+		System.out.println("방 번호 "+chat_num);
+		 
+		//중간테이블로 전송
+		chatService.insertDuserChat(chatVO);
+		 
 		//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
 		//데이터의 형태로 전달
 		redirect.addFlashAttribute("result","success");
+		redirect.addFlashAttribute("chat_kind",0);
 
 
 		return "redirect:/chat/userChatroom";

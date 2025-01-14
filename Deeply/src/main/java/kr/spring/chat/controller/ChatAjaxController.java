@@ -14,4 +14,8 @@ public class ChatAjaxController {
 	@Autowired
 	private ChatService chatService;
 
+	
+	
+	
+	
 }
