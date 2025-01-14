@@ -17,4 +17,6 @@ public interface LetterService {
 	//아티스트
 	public int countLetterForArtist(Map<String,Object> map);
 	public List<LetterVO> selectLetterForArtist(Map<String, Object> map);
+	public int countReplyForArtist(long artist_num);
+	public List<ReplyVO> showReplyForArtist(Map<String, Object> map);
 }

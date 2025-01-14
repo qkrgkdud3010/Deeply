@@ -29,29 +29,30 @@
 	</div>
 	<div class="letter-body">
 		<div class="letter-box">
-			<div id="letter_item" class="letter-item font-white bold-title font-1 left-5 vertical-center">
-					<div class="width-10">아티스트</div>
-					<div class="width-80">제목</div>
-					<div class="width-10 align-center">발송일</div>
-					<div class="width-10 align-center">수신자</div>
+			<div id="letter_item"
+				class="letter-item font-white bold-title font-1 left-5 vertical-center">
+				<div class="width-10">아티스트</div>
+				<div class="width-80">제목</div>
+				<div class="width-10 align-center">발송일</div>
+				<div class="width-10 align-center">수신자</div>
 			</div>
 			<hr>
-		<c:forEach var="letter" items="${letters}">
-				<a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">
-				<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
-					<div class="width-10">${letter.nick_name}</div>
-					<div class="width-80">${letter.letter_title}</div>
-					<div class="width-10 align-center">${letter.post_date}</div>
-					<c:if test="${letter.replied == 0}">
-					<div class="width-10 align-center">X</div>
-					</c:if>
-					<c:if test="${letter.replied == 1}">
-					<div class="width-10 align-center">O</div>
-					</c:if>
-				</div>
-				</a>
-				<hr>
-		</c:forEach>
+			<c:if test="${count <= 0}">
+				<div class="no-reply font-white bold-title align-center">작성한 답장이 없습니다</div>
+			</c:if>
+			<c:if test="${count > 0}">
+				<c:forEach var="reply" items="${replies}">
+					<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
+						<a href="${pageContext.request.contextPath}/letter/reply_detail?reply_num=${reply.reply_num}">
+						<div class="width-10">${reply.nick_name}</div>
+						<div class="width-80">${reply.letter_title}</div>
+						<div class="width-10 align-center">${reply.post_date}</div>
+						</a>
+					</div>
+					<hr>
+				</c:forEach>
+			</c:if>
+
 		</div>
 		<div class="page-box space-10vw align-center">${page}</div>
 	</div>

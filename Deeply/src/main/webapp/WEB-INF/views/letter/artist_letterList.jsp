@@ -33,24 +33,17 @@
 					<div class="width-10">닉네임</div>
 					<div class="width-80">제목</div>
 					<div class="width-10 align-center">발송일</div>
-					<div class="width-10 align-center">답장 여부</div>
+					<div class="width-10 align-center">답장</div>
 			</div>
 			<hr>
 		<c:forEach var="letter" items="${letters}">
-				<a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">
-				<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
-					<div class="width-10">${letter.nick_name}</div>
-					<div class="width-80">${letter.letter_title}</div>
-					<div class="width-10 align-center">${letter.post_date}</div>
-					<c:if test="${letter.replied == 0}">
-					<div class="width-10 align-center">X</div>
-					</c:if>
-					<c:if test="${letter.replied == 1}">
-					<div class="width-10 align-center">O</div>
-					</c:if>
-				</div>
-				</a>
-				<hr>
+			<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
+				<div class="width-10">${letter.nick_name}</div>
+				<div class="width-80"><a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
+				<div class="width-10 align-center">${letter.post_date}</div>
+				<div class="width-10 align-center"><button class="reply-btn" onclick="location.href='${pageContext.request.contextPath}/letter/artist_write?artist_num=${artist.user_num}&letter_num=${letter.letter_num}'">답장</button></div>
+			</div>
+			<hr>
 		</c:forEach>
 		</div>
 		<div class="page-box space-10vw align-center">${page}</div>

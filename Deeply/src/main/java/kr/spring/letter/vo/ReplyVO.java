@@ -1,5 +1,12 @@
 package kr.spring.letter.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class ReplyVO {
 	private long reply_num;
 	private long user_num;

@@ -186,7 +186,9 @@ a {
 .width-90{
 	width:90%;
 }
-
+.width-100{
+	width:100%;
+}
 
 .height-50{
 	height:50%;
@@ -235,6 +237,7 @@ a {
 	display:none;
 }
 .z-3{
+	position:relative;
 	z-index:3;
 }
 
@@ -1129,6 +1132,16 @@ a {
 .no-reply{
 	width:100%;
 	min-height:30vw;
+}
+
+.reply-btn{
+	background:white;
+	font-weight:bold;
+	border:2px solid black;
+	border-radius:10px;
+	width:4vw;
+	height:2vw;
+	cursor:pointer;
 }
 
  

@@ -59,4 +59,14 @@ public class LetterServiceImpl implements LetterService{
 		return letterMapper.selectLetterForArtist(map);
 	}
 
+	@Override
+	public int countReplyForArtist(long artist_num) {
+		return letterMapper.countReplyForArtist(artist_num);
+	}
+
+	@Override
+	public List<ReplyVO> showReplyForArtist(Map<String, Object> map) {
+		return letterMapper.showReplyForArtist(map);
+	}
+
 }

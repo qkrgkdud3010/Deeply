@@ -230,20 +230,19 @@ public class LetterController {
 	@GetMapping("/artist_reply")
 	public String showArtistReplyList(long artist_num,@RequestParam(defaultValue="1") int pageNum, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
 		
-ArtistVO artist = artistService.selectMember(artist_num);
+		ArtistVO artist = artistService.selectMember(artist_num);
 		
-		if(principal.getArtistVO() != null) {
-			model.addAttribute("message", "아티스트 계정 전용 페이지로 이동합니다");
+		if(principal.getMemberVO() != null) {
+			model.addAttribute("message", "유저 계정 전용 페이지로 이동합니다");
 		    model.addAttribute("url",request.getContextPath() + "/artist/list");
 			
 			return "common/resultAlert";
 		}
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("user_num", principal.getMemberVO().getUser_num());
 		map.put("artist_num", artist_num);
 		
-		int count = letterService.countReply(map);
+		int count = letterService.countReplyForArtist(artist_num);
 		PagingUtil page = new PagingUtil(pageNum,count,11,5,"reply");
 		
 		List<ReplyVO> replies = new ArrayList<ReplyVO>();
@@ -251,7 +250,7 @@ ArtistVO artist = artistService.selectMember(artist_num);
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
-			replies = letterService.showReplyForUser(map);
+			replies = letterService.showReplyForArtist(map);
 		}
 		
 		model.addAttribute("count", count);
@@ -263,7 +262,11 @@ ArtistVO artist = artistService.selectMember(artist_num);
 	}
 	
 	@GetMapping("/artist_write")
-	public String writeReply() {
+	public String writeReply(long artist_num, long letter_num, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request, Model model) {
+		
+		 ReplyVO replyVO = new ReplyVO();
+		 model.addAttribute("replyVO", replyVO);
+		
 		return "artist_writeReply";
 	}
 }

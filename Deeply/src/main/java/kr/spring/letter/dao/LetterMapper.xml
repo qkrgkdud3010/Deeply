@@ -75,7 +75,7 @@
     	]]>
   	</select>
   	
-  	<select id="countReplyForArtist" parameterType="map">
+  	<select id="countReplyForArtist" parameterType="long">
   		SELECT COUNT(*) FROM reply WHERE artist_num=#{artist_num}
   	</select>
   	<select id="showReplyForArtist" parameterType="map">

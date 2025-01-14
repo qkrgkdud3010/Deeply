@@ -6,7 +6,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/artistPage.js"></script>
 <sec:authorize access="isAuthenticated()"><sec:authentication property="principal" var="principal" /></sec:authorize>
 
-  
+
 <div class="artist-main background-black">
 	<div class="member-selection-container">
 		<div class="member-selection-header align-center">
@@ -81,7 +81,9 @@
 			<c:if test="${!empty principal.artistVO && principal.artistVO.group_name != vo.group_name}">
 			<div class="wrong-artist-div align-center font-white font-0_8">접근 권한이 없습니다</div>
 			</c:if>
-			
+			<c:if test="${empty principal.artistVO && empty principal.memberVO}">
+				<div class="wrong-artist-div align-center font-white font-0_8">로그인이 필요합니다</div>
+			</c:if>
 		</div>
 		
 		<div class="a-profile font-white bold-title vertical-center">PROFILE</div>
@@ -99,15 +101,21 @@
 					<c:forEach var="member" items="${members}">
 					<ul class="member-info" data-member="${member.user_num}">
 						<li>
-							<label>아티스트</label><span>${member.name}</span>
+							<label>아티스트</label><span> ${member.name}</span>
 						</li>
 						<li>
-							<label>데뷔일</label><span>xxxx.xx.xx</span>
+							<label>데뷔일</label>
+							<span>
+								<c:if test="${!empty member.debut_date}">${member.debut_date}</c:if>
+								<c:if test="${empty member.debut_date}">등록 정보 없음</c:if>
+							</span>
 						</li>
 						
 						<li>
 							<hr>
-							<div class="member-desc font-white vertical-center left-3">멤버 소개글</div>
+							<div class="member-desc font-white vertical-center left-3">
+								${member.intro}
+							</div>
 						</li>
 					</ul>
 					</c:forEach>
