@@ -17,7 +17,7 @@
 			<c:forEach var="member" items="${members}">
 				<a href="${pageContext.request.contextPath}/letter/list?artist_num=${member.user_num}">
 				<div class="member-selection">
-					<img class="member-profile-img">
+					<img class="member-profile-img" src="/member/photoView2?user_num=${member.user_num}">
 					<div class="align-center font-white bold-title top-5">${member.name}</div>
 				</div>
 				</a>
@@ -61,7 +61,7 @@
 			<div class="member-list">
 				<c:forEach var="member" items="${members}">
 					<div class="member-item" data-value="${member.user_num}">
-					<img class="member-profile-img">
+					<img class="member-profile-img" src="/member/photoView2?user_num=${member.user_num}">
 					<div class="align-center font-white bold-title top-5">${member.name}</div>
 					</div>
 				</c:forEach>	
