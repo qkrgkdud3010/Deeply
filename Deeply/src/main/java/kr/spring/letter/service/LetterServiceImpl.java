@@ -1,5 +1,6 @@
 package kr.spring.letter.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class LetterServiceImpl implements LetterService{
 	LetterMapper letterMapper;
 	
 	@Override
-	public void selectLetterByUser(Map<String, Object> map) {
-		letterMapper.selectLetterByUser(map);
+	public List<LetterVO> selectLetterByUser(Map<String, Object> map) {
+		return letterMapper.selectLetterByUser(map);
 		
 	}
 
@@ -30,6 +31,11 @@ public class LetterServiceImpl implements LetterService{
 	@Override
 	public void postLetter(LetterVO letterVO) {
 		letterMapper.postLetter(letterVO);
+	}
+
+	@Override
+	public LetterVO showLetterDetail(long letter_num) {
+		return letterMapper.showLetterDetail(letter_num);
 	}
 
 }

@@ -48,4 +48,23 @@
 		FROM video
 		ORDER BY created_at DESC
 	</select>
+	<select id="selectVideosByCategoryAndGroup" resultType="kr.spring.video.vo.VideoVO">
+        SELECT
+            video_id       AS videoId,
+            artist_id      AS artistId,
+            title,
+            description,
+            is_exclusive   AS isExclusive,
+            media_url      AS mediaUrl,    <!-- media_url alias 매핑 -->
+            created_at     AS createdAt,
+            views,
+            likes,
+            comments_count AS commentsCount,
+            category_id    AS categoryId,
+            group_num      AS groupNum
+        FROM video
+        WHERE category_id = #{categoryId}
+          AND group_num = #{groupNum}
+        ORDER BY video_id
+    </select>
 </mapper>

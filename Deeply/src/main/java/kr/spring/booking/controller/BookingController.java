@@ -70,8 +70,14 @@ public class BookingController {
 			String[] dates = dateRange.split(" ~ ");
 			startDate = dates[0];
 			endDate = dates[1];
+		}else {
+			dateRange = startDate + " ~ " + endDate;
+			log.debug("Default dateRange : " + dateRange);
 		}
 		
+		if(status != null) {
+			map.put("status", status);
+		}
 		
 		log.debug("dateRange: " + dateRange);
 		map.put("startDate", startDate);
@@ -98,6 +104,7 @@ public class BookingController {
 		AgroupVO group = artistService.selectArtistDetail(artist_num);
 		String group_name = group.getGroup_name();
 		
+		model.addAttribute("dateRange",dateRange);
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());

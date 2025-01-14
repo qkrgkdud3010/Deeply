@@ -22,18 +22,26 @@ public class VideoCategoryController {
     @Autowired
     private VideoCategoryService videoCategoryService;
 
-    // 카테고리 목록 불러오기
     @GetMapping("/list")
     @ResponseBody
     public List<VideoCategoryVO> listCategories(@AuthenticationPrincipal PrincipalDetails principal) {
-        Long artistId = principal.getArtistVO().getUser_num();
-        List<VideoCategoryVO> categories = videoCategoryService.getCategoriesByArtist(artistId);
+        // 로그인한 사용자의 user_num으로 group_num 가져오기
+        Long userNum = principal.getArtistVO().getUser_num();
+        Long groupNum = videoCategoryService.getGroupNumByUserNum(userNum); // group_num 추출
+
+        if (groupNum == null) {
+            throw new IllegalStateException("사용자의 그룹 정보가 없습니다.");
+        }
+
+        // group_num으로 카테고리 조회
+        List<VideoCategoryVO> categories = videoCategoryService.getCategoriesByGroupNum(groupNum);
 
         // 디버깅용 로그 출력
-        System.out.println("Categories: " + categories);
+        System.out.println("GroupNum: " + groupNum + ", Categories: " + categories);
 
         return categories;
     }
+
 
 
     // 새로운 카테고리 추가

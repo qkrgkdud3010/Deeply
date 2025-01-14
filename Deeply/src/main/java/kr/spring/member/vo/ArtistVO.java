@@ -1,6 +1,7 @@
 package kr.spring.member.vo;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -35,7 +36,7 @@ import lombok.ToString;
 	    private String id;
 	    @NotBlank(message = "비밀번호 확인은 필수 입력 값입니다.")
 	    private String confirmPassword;
-	    
+		private Date debut_date;
 	    private String intro;
 	    private String Photo_name;
 		private byte[] photo;

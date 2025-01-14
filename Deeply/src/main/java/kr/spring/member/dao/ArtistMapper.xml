@@ -10,14 +10,18 @@
             name,
             passwd_hash,
             email,
-            group_name
+            group_name,
+            intro,
+            debut_date
         )
         VALUES (
             #{user_num},
             #{name},
             #{passwd_hash},
             #{email},
-            #{group_name}
+            #{group_name},
+            #{intro},
+            #{debut_date}
         )
     </insert>
       	<select id="selectCheckMember" parameterType="string"

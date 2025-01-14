@@ -17,14 +17,16 @@
 			<form id="booking_filter" action="list" method="get">
 			<input type="hidden" name="artist_num" value="${artist_num}">
 			<div class="booking-date-container vertical-center">
-				<img class="left-1" src="${pageContext.request.contextPath}/assets/image_bundle/calendar.svg">
+				<img class="left-1" id="calendar_img" src="${pageContext.request.contextPath}/assets/image_bundle/calendar.svg">
 				<div class="booking-date left-1">
-				<input type="text" id="date-range" name="dateRange" class="dateSelect-btn align-center" value="${defaultRange}" placeholder="날짜를 선택하세요">
+				<input type="text" id="date-range" name="dateRange" value="${dateRange}" class="dateSelect-btn align-center" placeholder="${dateRange}">
 				</div>
 				<div class="booking-category left-3">
-					<button class="booking-btn white-btn left-1">예매 전</button>
-					<button class="booking-btn white-btn left-1">예매 중</button>
-					<button class="booking-btn white-btn left-1">마감/종료</button>
+					<button class="booking-btn white-btn left-1" data-value="before">예매 전</button>
+					<button class="booking-btn white-btn left-1" data-value="ongoing">예매 중</button>
+					<button class="booking-btn white-btn left-1" data-value="over">마감/종료</button>
+					<button class="booking-btn white-btn left-1" data-value="membership">선예매 중</button>
+					<input type="hidden" id="event_status" name="status">
 				</div>
 				<button class="register-event-btn align-center bold-title" onclick="location.href='register?group_num=${artist_num}'">공연 등록</button>
 			</div>

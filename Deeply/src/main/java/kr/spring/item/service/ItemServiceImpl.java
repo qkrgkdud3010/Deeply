@@ -19,6 +19,11 @@ public class ItemServiceImpl implements ItemService{
 	public List<ItemVO> selectList(Map<String, Object> map) {
 		return itemMapper.selectList(map);
 	}
+	
+	@Override
+	public List<ItemVO> selectListByUserNum(Long user_num) {
+		return itemMapper.selectListByUserNum(user_num);
+	}
 
 	@Override
 	public int selectRowCount(Map<String, Object> map) {
@@ -55,12 +60,6 @@ public class ItemServiceImpl implements ItemService{
 		return itemMapper.selectGroup(group_name);
 	}
 
-	
-	
-
-	
-	
-	
 	
 
 	

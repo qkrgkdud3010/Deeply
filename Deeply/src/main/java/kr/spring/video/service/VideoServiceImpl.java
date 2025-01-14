@@ -67,4 +67,9 @@ public class VideoServiceImpl implements VideoService {
 		return 0;
 	}
 
+	@Override
+	public List<VideoVO> getVideosByCategoryAndGroup(Long category_id, Long groupNum) {
+		 return videoMapper.selectVideosByCategoryAndGroup(category_id, groupNum);
+	}
+
 }

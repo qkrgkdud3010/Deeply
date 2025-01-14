@@ -38,6 +38,10 @@ public class ArtistServiceImple implements kr.spring.member.service.ArtistServic
 	        }
 		   long user_num = artistMapper.selectUser_num(); 
 			artist.setUser_num(user_num);
+			  if (artist.getIntro() == null || artist.getIntro().isEmpty()) {
+				  artist.setIntro((artist.getName() + "의 자기소개입니다."));
+		        }
+			
         // 회원 정보를 삽입
         artistMapper.insertMember(artist);
         artistMapper.insertMember_detail(artist);

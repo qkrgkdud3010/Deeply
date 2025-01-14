@@ -9,6 +9,13 @@
     }
 </script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/customjs.js"></script>
+<script type="text/javascript">
+	$('#item_price').keyup(function(){
+ 	   customNumberLocale($(this),false);    
+	});
+</script>
+
 <div class="write-main main-container">
 	
 	
@@ -36,7 +43,7 @@
                 <li>
                     <form:label path="item_price">가격</form:label>
                     <!-- 수정: path="item_price" 추가 -->
-                    <form:input type="number" min="1" max="9999999" path="item_price" placeholder="가격을 입력하세요." />
+                    <form:input type="number" min="1" max="9999999" id="item_price" path="item_price" placeholder="가격을 입력하세요." />
                     <form:errors path="item_price" cssClass="error-color" />
                 </li>
                 <li>

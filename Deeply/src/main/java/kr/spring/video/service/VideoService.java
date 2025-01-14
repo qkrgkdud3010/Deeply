@@ -16,5 +16,5 @@ public interface VideoService {
     Long getNextVideoId();
 	List<VideoVO> selectListByGroup(Map<String, Object> map);
 	int selectRowCountByGroup(Map<String, Object> map);
-
+	List<VideoVO> getVideosByCategoryAndGroup(Long category_id, Long groupNum);
 }

@@ -323,6 +323,17 @@ public class MemberController {
 	}
 
 
+	
+	@GetMapping("/photoView2")
+	public String getProfile2(HttpServletRequest request, Model model,@RequestParam long user_num ) {
+
+			MemberVO user=memberService.selectMember(user_num);
+			ArtistVO artistVO = 
+					artistService.selectMember(user_num);
+			viewProfile(user,artistVO,request,model);			
+			log.debug("1");
+		return "imageView";
+	}
 
 	//프로필 사진 출력(회원번호 지정)
 	@GetMapping("/viewProfile")
@@ -347,8 +358,11 @@ public class MemberController {
 		}else {
 			model.addAttribute("imageFile", artistVO.getPhoto());
 			model.addAttribute("filename", artistVO.getPhoto_name());
+			log.debug("3");
 		}
 	}
+	
+
 
 	//기본 이미지 읽기
 	public void getBasicProfileImage(HttpServletRequest request, Model model) {
