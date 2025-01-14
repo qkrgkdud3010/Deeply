@@ -93,6 +93,29 @@
     	  value="/WEB-INF/views/deeplyMypage/mypage1.jsp"/>                         
     </definition>
     
+     <definition name="payment" extends="main">
+    	<put-attribute name="title" value="결제창"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/payment.jsp"/>                         
+    </definition>
+    
+    <definition name="payment" extends="main">
+    	<put-attribute name="title" value="충전"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/payment/payment.jsp"/>                         
+    </definition>
+
+	    <definition name="chargeMoney" extends="main">
+    	<put-attribute name="title" value="충전"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/payment/chargeMoney.jsp"/>                         
+    </definition>
 </tiles-definitions>
 
 
