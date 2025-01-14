@@ -89,19 +89,8 @@ public class ItemController {
 	    AgroupVO agroupVO = itemService.selectGroup(group_name);
 	    itemVO.setUser_num(agroupVO.getGroup_num());
 	    // 파일 업로드
-	   
-	    
 	    itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
 	    
-	    if(itemVO.getUpload1() != null) {
-	    	 itemVO.setDesc_photo1(FileUtil.createFile(request, itemVO.getUpload1()));
-	    }
-	    if(itemVO.getUpload2() != null) {
-	    	 itemVO.setDesc_photo2(FileUtil.createFile(request, itemVO.getUpload2()));
-	    }
-	    if(itemVO.getUpload3() != null) {
-	    	 itemVO.setDesc_photo3(FileUtil.createFile(request, itemVO.getUpload3()));
-	    }
 	    
 	    // 상품 등록하기
 	    itemService.insertItem(itemVO);
@@ -267,30 +256,91 @@ public class ItemController {
 		log.debug("<<등록된 상품 정보>> : " +itemVO);
 		log.debug("<<list에서 받아온 item_num>> : " +item_num);
 		log.debug("<<상품 작성자 유저 번호>> : " + itemVO.getUser_num());
-		log.debug("<<등록 시 ItemVO filename>>: " + itemVO.getFilename());
+		log.debug("<<등록할 떄 ItemVO filename>>: " + itemVO.getFilename());
 		
-		
-
-
 		
 		//DB에 저장된 파일 정보 구하기
-		
 		if(agroupVO.getGroup_num() != itemVO.getUser_num()) {
 			return "redirect:common/accessDenied";
 		}else {		
 		model.addAttribute("item",itemVO);
 		log.debug("<<등록된 상품 정보>> : " +itemVO);
-		log.debug("<<등록완료한 ItemVO filename>>: " + itemVO.getFilename());
+		log.debug("<<등록 완료한 ItemVO filename>>: " + itemVO.getFilename());
 		return "itemModify";
 		}	
 	}
+	
+	
 	//수정폼에서 전송된 데이터 처리
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/update")
-	public String submitUpdate(){
+	public String submitUpdate(@Valid ItemVO itemVO,
+					            BindingResult result,
+					            @RequestParam("item_num") long item_num,
+					            Long user_num,
+					            HttpServletRequest request,
+					            Model model,
+					            @AuthenticationPrincipal
+					            PrincipalDetails principal)
+					            		throws IllegalStateException, IOException{
 		
-		return "common/resultAlert";
-	}
+		if(principal != null) {
+			//아티스트 계정으로 접속
+			if(principal.getArtistVO() != null) {
+				ArtistVO artist = principal.getArtistVO();
+				Long auser_num = artist.getUser_num();
+			
+			
+			}
+			
+			
+		}
+		log.debug("<<글 수정 item_num>> : " + item_num);
+		log.debug("<<글 수정>> : " + itemVO);
+		
+		 //DB에 저장된 파일 정보 구하기
+        ItemVO db_item = itemService.selectitem(itemVO.getItem_num());
+        log.debug("<<db_item 정보>> : " + db_item);
+        
+        //파일 유효성 체크
+       if(itemVO.getUpload() == null || itemVO.getUpload().isEmpty()) {
+    	   if(db_item.getFilename() != null) {
+    		   itemVO.setFilename(db_item.getFilename());
+    	   }
+       }else {
+    	   itemVO.setFilename(FileUtil.createFile(request, itemVO.getUpload()));
+       }
+	    
+	   
+	    
+	    // 유효성 체크 결과 오류가 있으면 폼 호출
+	    if (result.hasErrors()) {
+	    	ValidationUtil.printErrorFields(result);
+	  	log.debug("<<FORM 리다이렉트>>");
+	        //return form();
+	  		model.addAttribute("item", db_item); // 기존 데이터 유지
+	  		return "itemModify"; // 수정 폼 반환
+	    }
+	    
+        
+        
+
+
+        //파일을 교체했을 경우 기존 파일을 삭제
+       // if(itemVO.getFilename() != null && !itemVO.getUpload().isEmpty()) {
+            //기존 파일(수정 작업 전 파일) 삭제 처리
+            //FileUtil.removeFile(request, db_item.getFilename());
+        //}
+        
+        //view에 표시할 메세지
+        model.addAttribute("message","글 수정 완료!!");
+        model.addAttribute("url",request.getContextPath() + "/item/detail?item_num=" + itemVO.getItem_num());
+
+        //글 수정
+        itemService.updateItem(itemVO);
+
+        return "common/resultAlert";
+    }
 	
 	
 	/*==============================
@@ -299,6 +349,7 @@ public class ItemController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/delete")
 	public String submitDelete(@RequestParam("item_num") long item_num,
+								Model model,
 								HttpServletRequest request,
 								@AuthenticationPrincipal 
 								PrincipalDetails principal) 
@@ -308,8 +359,15 @@ public class ItemController {
 		//DB에 저장된 파일 정보 구하기
 		ItemVO db_item = itemService.selectitem(item_num);
 		
-		//로그인 일치시에 삭제하기->principal.getAgroupVO().getGroup_num() != itemVO.getUser_num()이거로 고치기
-		if(principal.getArtistVO().getUser_num() != db_item.getUser_num()) {
+		long artist_num = principal.getArtistVO().getUser_num();
+		AgroupVO agroupVO = artistService.selectAgroupByArtistNum(artist_num);
+		
+		//로그인 일치시에 삭제하기->
+		if(agroupVO.getGroup_num() != db_item.getUser_num()) {
+		//if(principal.getArtistVO().getUser_num() != db_item.getUser_num()) {
+			
+			log.debug("<<getAgroupVO>> : " + agroupVO.getGroup_num());
+			log.debug("<<getItemVO user_num>> : " + db_item.getUser_num());
 			return "redirect:/common/accessDenied";
 		}
 		
@@ -323,8 +381,9 @@ public class ItemController {
 		
 		//삭제 후 알람 메시지 띄우기 -> Ajax에서 
 		
-		
-		return "redirect:/item/list";
+		model.addAttribute("message","글 삭제 완료");
+	    model.addAttribute("url",request.getContextPath() + "/item/main");
+		return "common/resultAlert";
 	}
 	
 }

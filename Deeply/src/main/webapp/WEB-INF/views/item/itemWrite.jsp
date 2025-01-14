@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/uploadAdapter.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
     let result = '${result}';
@@ -56,19 +59,25 @@
                     <form:errors path="item_stock" cssClass="error-color" />
                 </li>
                 <li>
-                    <form:label path="item_description">상품 설명</form:label>
-                    <img src="default1.jpg" class="preview_photo1" alt="Preview 1">
-                    <button class="upload-btn" id="desc_btn1">설명 사진1</button>
-                    <img src="default1.jpg" class="preview_photo2" alt="Preview 2">
-                    <button class="upload-btn" id="desc_btn2">설명 사진2</button>
-                    <img src="default1.jpg" class="preview_photo3" alt="Preview 3">
-                    <button class="upload-btn" id="desc_btn3">설명 사진3</button>
-                    <input type="file" class="file-submit" id="desc_photo1" name="upload1">
-                    <input type="file" class="file-submit" id="desc_photo2" name="upload2">
-                    <input type="file" class="file-submit" id="desc_photo3" name="upload3">
-                    <!-- 수정: path="item_description" 추가 -->
-                    <form:textarea path="item_description" placeholder="상품 설명을 입력하세요."></form:textarea>
+                    <form:textarea path="item_description" placeholder="상품 설명을 입력하세요."/>
                     <form:errors path="item_description" cssClass="error-color" />
+                    <%-- CKEditor 셋팅 --%>
+                <script>
+                    function MyCustomUploadAdapterPlugin(editor){
+                        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                            return new UploadAdapter(loader);
+                        }
+                    }
+                    ClassicEditor.create(document.querySelector('#item_description'),{
+                        extraPlugins:[MyCustomUploadAdapterPlugin]
+                    })
+                    .then(editor => {
+                        window.editor = editor;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                </script>
                 </li>
             </ul>
         </form:form>

@@ -13,10 +13,7 @@
 			item_name,
 			item_price,
 			item_description,
-			item_stock,
-			desc_photo1,
-			desc_photo2,
-			desc_photo3)
+			item_stock)
 		VALUES (
 			shop_item_seq.nextval,
 			#{user_num},
@@ -24,10 +21,7 @@
 			#{item_name},
 			#{item_price},
 			#{item_description},
-			#{item_stock},
-			#{desc_photo1, jdbcType=VARCHAR},
-       		#{desc_photo2, jdbcType=VARCHAR},
-        	#{desc_photo3, jdbcType=VARCHAR})
+			#{item_stock})
 	</insert>
 	
 	<!-- sql태그와 include 태그를 이용해 sql문을 재사용 -->
@@ -102,10 +96,7 @@
 				item_price = #{item_price},
 				item_description = #{item_description},
 				item_stock = #{item_stock},
-				item_modifydate = SYSDATE,
-				#{desc_photo1, jdbcType=VARCHAR},
-       			#{desc_photo2, jdbcType=VARCHAR},
-        		#{desc_photo3, jdbcType=VARCHAR}
+				item_modifydate = SYSDATE
 		WHERE item_num = #{item_num}
 	</update>
 	
@@ -124,8 +115,9 @@
 		  i.item_stock,
 		  i.filename,
 		  i.user_num,
+		  i.item_regdate,
 		  b.group_cnt,
-		  ROW_NUMBER() OVER (PARTITION BY g.group_name ORDER BY i.item_modifydate DESC) AS rnum 
+		  ROW_NUMBER() OVER (PARTITION BY g.group_name ORDER BY i.item_regdate DESC) AS rnum 
 		 FROM agroup g 
 		 JOIN shop_item i on g.group_num=i.user_num
 		 JOIN (SELECT user_num, COUNT(*) group_cnt FROM shop_item GROUP BY user_num)b ON g.group_num=b.user_num

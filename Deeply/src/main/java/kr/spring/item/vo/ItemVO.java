@@ -23,13 +23,6 @@ public class ItemVO {
 	private int item_price;     			    // 상품 가격
 	@NotBlank
 	private String item_description; 		// 상품 상세 설명 (CLOB)
-	private String desc_photo1;
-	private String desc_photo2;
-	private String desc_photo3;
-	private MultipartFile upload1;	
-	private MultipartFile upload2;	
-	private MultipartFile upload3;	
-	
 	private java.util.Date item_regdate;		// 상품 등록일 (자동 설정)
 	private java.util.Date item_modifydate;	// 상품 수정일
 	@NotNull

@@ -19,26 +19,9 @@
 
 <div class="item-main main-container">
 	<div class="button page-action">
-		
-		
-		<!-- 검색창 트리거 -->
-		<span id="search-trigger" class="search-trigger">아티스트 검색</span>
-
-		<!-- 검색창 -->
-		<div id="artist-search-modal" class="search-modal hidden">
-			<div class="search-header">
-				<input type="text" id="artist-search"
-					placeholder="Search for an artist" />
-				<button id="close-search">X</button>
-			</div>
-			<div class="search-list" id="artist-list">
-				<!-- 아티스트 목록이 동적으로 추가됩니다 -->
-			</div>
-		</div>
 
 
-
-		<c:if test="${!empty principal}">
+		<c:if test="${!empty principal.artistVO}">
 			<input type="button" value="등록하기" onclick="location.href='/item/write'">
 		</c:if>
 	</div>

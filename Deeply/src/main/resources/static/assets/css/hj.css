@@ -88,6 +88,16 @@ a {
 	gap:2rem;	
 }
 
+.ck-editor__editable_inline{
+min-height:250px;
+}
+
+
+
+.ckeditor-img{
+	width:40vw;
+	height:40vw;
+}
 /*
 상품 수정
 */
