@@ -16,4 +16,6 @@ public class PaymentVO {
 	private int pay_type;
 	private int pay_money;
 	private Long user_num;
+	
+	private Long user_bal;
 }
