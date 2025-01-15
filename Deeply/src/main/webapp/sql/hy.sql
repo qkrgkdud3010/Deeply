@@ -32,3 +32,19 @@ CREATE SEQUENCE CATEGORY_SEQ
     START WITH 1       -- 초기 값
     INCREMENT BY 1     -- 증가 값
     NOCACHE;           -- 캐시 사용 안 함
+    
+CREATE TABLE video_comments (
+    comment_id NUMBER PRIMARY KEY, -- 댓글을 구별하는 고유 ID
+    user_num NUMBER NOT NULL, -- 유저 ID (DUSER_DETAIL 테이블의 user_num 참조)
+    video_id NUMBER NOT NULL, -- 댓글이 달린 영상 ID (video 테이블 참조)
+    parent_comment_id NUMBER NULL, -- 상위 댓글 ID (NULL이면 일반 댓글, 값이 있으면 대댓글)
+    comment_content VARCHAR2(500) NOT NULL, -- 댓글 내용
+    likes NUMBER DEFAULT 0 NOT NULL, -- 댓글의 좋아요 수
+    dislikes NUMBER DEFAULT 0 NOT NULL, -- 댓글의 싫어요 수
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 댓글 작성 시점
+    CONSTRAINT fk_user_num FOREIGN KEY (user_num) REFERENCES DUSER_DETAIL(user_num), -- 유저 테이블 참조
+    CONSTRAINT fk_video_id FOREIGN KEY (video_id) REFERENCES video(video_id), -- 영상 테이블 참조
+    CONSTRAINT fk_parent_comment_id FOREIGN KEY (parent_comment_id) REFERENCES video_comments(comment_id) -- 대댓글 참조
+);
+
+    

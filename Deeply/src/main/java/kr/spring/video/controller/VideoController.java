@@ -159,6 +159,7 @@ public class VideoController {
 
         // 3. 데이터 모델에 추가
         model.addAttribute("video", video);       // 영상 정보
+        model.addAttribute("title", video.getTitle()); 
         model.addAttribute("groupNum", groupNum); // 그룹 번호
 
         return "video_page"; // JSP 파일 이름
