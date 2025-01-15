@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,7 +10,8 @@
 </sec:authorize>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 
-<div class="item-main main-container">
+<div class="item-main main-container">검정색 큰 박스
+	<%-- 아티스트 계정으로 로그인 시작 --%>
 	<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
 	${item.item_num}
 	<input type="button" value="수정하기" onclick="location.href='/item/update?item_num=${item.item_num}'"/>
@@ -22,7 +24,6 @@
 					location.replace('delete?item_num=${item.item_num}');
 				}
 			};
-			
 			function goHistory(n) {
 		        if (window.history.length > Math.abs(n)) {
 		            history.go(n);
@@ -32,23 +33,36 @@
 		        }
 		    }
 		</script>
-		
 		<input type="button" value="등록하기" onclick="location.href='/item/write'">
 		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 	</c:if>
-		<div class="content-container">
-			<div class="artist-name">반갑습니다. ${item.group_name}
-				<span class="date">등록일 : 
-					<fmt:formatDate value="${item.item_regdate}" pattern="yyyy년 MM월 dd일" />
-					<c:if test="${!empty item.item_modifydate}">수정일 : 
-						<fmt:formatDate value="${item.item_modifydate}" pattern="yyyy년 MM월 dd일" />
+	<%-- 아티스트 계정으로 로그인 끝--%>
+	
+	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
+		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
+	<%-- 유저 계정으로 로그인 끝 --%>
+	
+	
+		<div class="content-container"> 흰색 박스
+	<%-- 아티스트 계정으로 로그인 시작 --%>
+		<c:if
+			test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
+			<div class="text-title">
+				반갑습니다. ${item.group_name} <span class="date">등록일 : <fmt:formatDate
+						value="${item.item_regdate}" pattern="yyyy년 MM월 dd일" /> <c:if
+						test="${!empty item.item_modifydate}">수정일 : 
+						<fmt:formatDate value="${item.item_modifydate}"
+							pattern="yyyy년 MM월 dd일" />
 					</c:if>
 				</span>
 			</div>
-		<div class="item-info">
-			<div class="box-shadow">
-				<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="items-img">
-			</div>
+
+			<div class="item-info">
+				<div class="box-shadow">
+					<img
+						src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
+						class="items-img">
+				</div>
 				<div class="box-shadow">
 					<ul>
 						<li>상품명 : ${item.item_name}</li>
@@ -56,11 +70,40 @@
 						<li>수량 : ${item.item_stock}개</li>
 					</ul>
 				</div>
-		</div>
-		
+			</div>
+		</c:if>
+	<%-- 아티스트 계정으로 로그인 끝--%>
+
+	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
+			<div class="text-title">반갑습니다. 유저의 닉네임</div>
+			<div class="item-info">
+				<div class="box-shadow">
+					<img
+						src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
+						class="items-img">
+				</div>
+				<div class="box-shadow">
+					<ul>
+						<li>단독판매</li>
+						<li>상품명 : ${item.item_name}</li>
+						<li>가격 : ${item.item_price}원</li>
+						<li>회원당 최대 3개까지 구매가능합니다.</li>
+						<form:form modelAttribute="orderVO" method="post" action="order"
+							id="item_order" enctype="multipart/form-data">
+							<li><form:label path="total_price">가격</form:label>
+								<form:input type="number" min="1" max="3" id="item_price"
+									path="item_price"/> <form:errors
+									path="item_price" cssClass="error-color" /></li>
+						</form:form>
+					</ul>
+					<input type="button" value="장바구니 추가" onclick="location.href='/item/main'">
+					<input type="button" value="바로 구매하기" onclick="location.href='/item/order?user_num=${item.user_num}'">
+				</div>
+			</div>
+	<%-- 유저 계정으로 로그인 끝 --%>
 	
-	<div>
-	<div>상품설명
+	<%-- 아티스트, 유저계정 공통 --%>
+	<div class="text-title">상품설명
 		</div>
 	<c:if test="${fn:endsWith(item.filename,'.jpg') ||
                     fn:endsWith(item.filename,'.JPG') ||
@@ -77,12 +120,10 @@
     </c:if>
 		
 
-	<!-- 반품/교환 규정 포함 -->
-  		  <div class="item-policy title">반품/교환 규정</div>
-   			 <div class="item-policy">
+	<%-- 반품/교환 규정 포함--%>  		  <div class="policy-title">반품/교환 규정</div>
+   			<div class="item-policy">
      		   <%@ include file="returnPolicy.jsp" %> <!-- 수정: include 유지 -->
   		  </div>
 	</div>
-</div>
 
 </div>

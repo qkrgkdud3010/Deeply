@@ -64,6 +64,14 @@ a {
    
 }
 
+.text-title{
+	font-size: 18px;
+}
+
+.order-info{
+	background:black;
+	height:30vx;
+}
 
 /* 교환/반품 규정  */
 .policy-title {
@@ -72,7 +80,7 @@ a {
 }
 
 .policy-content {
-    font-size: 16px; /* 폰트 크기 16px */
+    font-size: 14px; /* 폰트 크기 14px */
     line-height: 1.6; /* 줄 간격 */
 }
 
@@ -88,16 +96,6 @@ a {
 	gap:2rem;	
 }
 
-.ck-editor__editable_inline{
-min-height:250px;
-}
-
-
-
-.ckeditor-img{
-	width:40vw;
-	height:40vw;
-}
 /*
 상품 수정
 */

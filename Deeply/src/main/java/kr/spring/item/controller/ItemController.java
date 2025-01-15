@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.item.service.ItemService;
 import kr.spring.item.vo.ItemVO;
+import kr.spring.item.vo.OrderVO;
 import kr.spring.member.service.ArtistService;
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
@@ -220,13 +221,13 @@ public class ItemController {
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<상품 상세 - item_num>> : " + item_num);
 		
+		
 		Map<String,Object> map = new HashMap<String,Object>();
-		
-		
 		
 		ItemVO item = itemService.selectitem(item_num);
 		AgroupVO agroup = artistService.selectArtistDetail(item.getUser_num());
 		
+		model.addAttribute("orderVO",new OrderVO());
 		model.addAttribute("item",item);
 		model.addAttribute("agroup", agroup);
 		
@@ -289,8 +290,6 @@ public class ItemController {
 			if(principal.getArtistVO() != null) {
 				ArtistVO artist = principal.getArtistVO();
 				Long auser_num = artist.getUser_num();
-			
-			
 			}
 			
 			
@@ -379,18 +378,39 @@ public class ItemController {
 			FileUtil.removeFile(request, db_item.getFilename());
 		}
 		
-		//삭제 후 알람 메시지 띄우기 -> Ajax에서 
-		
 		model.addAttribute("message","글 삭제 완료");
 	    model.addAttribute("url",request.getContextPath() + "/item/main");
 		return "common/resultAlert";
 	}
 	
+
+
+
+	/*==============================
+	 * 			주문 등록
+	 * =============================*/
+	//주문 폼(ItemView.jsp)
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/order")
+	public String order(@RequestParam("item_num") long item_num,
+						MemberVO memberVO,
+						long Order_num,
+						Model model,
+						HttpServletRequest request,
+						@AuthenticationPrincipal 
+						PrincipalDetails principal) 
+									
+								throws IllegalStateException, IOException{
+		
+		
+		
+		
+		return "itemOrder";
+	}
+	//주문 폼에서 주문 데이터 전송
+
+
 }
-
-
-
-
 
 
 

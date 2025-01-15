@@ -44,6 +44,14 @@
     	  value="/WEB-INF/views/item/itemModify.jsp"/>
     </definition>
     
+    <definition name="itemOrder" extends="main">
+    	<put-attribute name="title" value="상품 구매 정보 배송지 정보"/>
+    	<put-attribute name="css"
+    	       value="/WEB-INF/views/item/itemCSS.jsp"/>                            
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/item/itemOrder.jsp"/>
+    </definition>
+    
     
 </tiles-definitions>
 
