@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.ArtistVO;
 
@@ -36,11 +37,25 @@ public interface ChatMapper {
 	//중간테이블에 2가지 유저정보를 정보를 업데이트 시킨다.	
 	public void insertAuserChat(ChatVO chvo);
 	public void insertDuserChat(ChatVO chvo);
+	//중간테이블에 한 번만 들어갈 수 있도록!
+	@Select("SELECT COUNT(chat_user_num) FROM chat WHERE chat_num = #{chat_num} AND chat_kind=1")
+	public int checkAuserCondition(Long chat_num);
+	@Select("SELECT COUNT(chat_user_num) FROM chat WHERE chat_num = #{chat_num} AND chat_kind=0")
+	public int checkDuserCondition(Long chat_num);
+	
 	
 	//아티스트면 유저 종류를 1로 업데이트 시킨다.
 	@Update("UPDATE chat SET chat_kind=1 WHERE chat_num=#{chat_num}")
-	public void updateAuserKind(Long chat_num);
+	public int updateAuserKind(Long chat_num);
+	
+	
 
+
+	/*****************
+	메세지 관련
+	*******************/
+	
 	//메세지 주고 받기
+	public void insertMsg(ChatMsgVO chmVO);
 
 }

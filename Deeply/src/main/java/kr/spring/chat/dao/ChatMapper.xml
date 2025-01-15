@@ -45,6 +45,24 @@
 	<insert id ="insertDuserChat" parameterType="chatVO" >
 	INSERT INTO chat (chat_user_num, chat_id, chat_num) VALUES (#{duser_num},#{duser_id},#{chat_num})
 	</insert>
+	
+	
+	<!-- 메세지 주고받는 부분 -->
+	<!-- 메세지 등록 -->
+  	<insert id="insertMsg" parameterType="chatMsgVO">
+		INSERT INTO spboard_reply(
+			chatmsg_num,
+			chat_num,
+			chat_user_num,
+			chat_msg,
+			reply_status)
+		VALUES (
+			chatmsg_seq.nextval,
+			#{chat_num},
+			#{chat_user_num},
+			#{chat_msg},
+			#{reply_status})  	
+  	</insert>
 
 
 

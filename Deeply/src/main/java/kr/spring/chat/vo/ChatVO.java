@@ -20,12 +20,7 @@ public class ChatVO {
 	
 	private String chat_name; //채팅방 이름
 	private int chat_status; //채팅방 상태(on : 1/off : 0)
-	
-	//메세지 정보
-	private long chatmsg_num; // 채팅 메세지 번호
-	private String chat_msg; //채팅 메세지ㅐ
-	private int reply_status; // 채팅 메세지 개수 상한선
-	
+
 	//채팅에 참여하는 아티스트 정보
 	private long auser_num; //아티스트 번호
 	private String auser_id; //아티스트 아이디

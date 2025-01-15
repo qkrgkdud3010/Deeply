@@ -25,7 +25,7 @@
 	</div>
 	
 	 <div>
-	 	<button type="submit" onclick="location.href='artistChatroom'">채팅방 형성</button>
+	 	<button type="submit" >채팅방 형성</button>
 	 </div>
 	</form:form>
 	</div>
@@ -33,14 +33,16 @@
 	</c:if>
 
 	<c:if test="${ch_kind==0}">
-	
-	<form:form modelAttribute="chatVO" action="chatting" id="enterChatroom" enctype="multipart/form-data">
-    <form:hidden path="auser_num" value="${param.artist_num}" />
-    <div>
-        <button type="submit">채팅방 들어가기</button>
-    </div>
-</form:form>
+	<div>
+    <form:form modelAttribute="chatVO" action="${pageContext.request.contextPath}/chat/chatting" id="enterChatroom" method="post" enctype="multipart/form-data">
+       
+        <form:hidden path="auser_num" value="${param.artist_num}" />
+         <button type="submit">채팅방 들어가기</button>
+       
+    </form:form>
+	</div>	
 	</c:if>
+	
 	
 </div>
 

@@ -2,11 +2,15 @@ package kr.spring.chat.service;
 
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.ArtistVO;
 
 public interface ChatService {
-	
+
+	/*
+	 * 채팅방 관련
+	 * */
 	//채팅방 형성하기
 	public void insertChatroom(ChatVO chvo);
 	
@@ -20,11 +24,19 @@ public interface ChatService {
 	//중간테이블에 넣기
 	public void insertAuserChat(ChatVO chvo);
 	public void insertDuserChat(ChatVO chvo);
+	//중간테이블에 한 번만 들어갈 수 있도록 관리
+	public int checkAuserCondition(Long chat_num);
+	public int checkDuserCondition(Long chat_num);
 	//아티스트면 chat_kind = 1
 	public void updateAuserKind(Long chat_num);
 	
 	
 	
-
-
+	/*
+	 * 메세지 관련
+	 * */
+	
+	//메세지 DB에 메시지 등록하기
+	public void insertMsg(ChatMsgVO chmVO);
+	
 }

@@ -3,6 +3,7 @@ package kr.spring.chat.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class ChatController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/chWrite")
 	public String submitRoom(@Valid ChatVO chatVO, BindingResult result,
-			HttpServletRequest request, RedirectAttributes redirect,
+			HttpServletRequest request, RedirectAttributes redirect, HttpSession session,
 			 @AuthenticationPrincipal 
              PrincipalDetails principal)throws IllegalStateException, IOException{
 		
@@ -88,18 +89,25 @@ public class ChatController {
 		chatVO.setChat_num(chat_num);
 		System.out.println(chat_num);
 		
-		//중간테이블로 전송
-		chatService.insertAuserChat(chatVO);
-	
-		//아티스트의 경우 유저 정보가 1로 바뀜
-		chatService.updateAuserKind(chat_num);
+		if(chatService.checkAuserCondition(chat_num)==0) {
+			
+			//중간테이블로 전송
+			chatService.insertAuserChat(chatVO);
 		
-		//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
-		//데이터의 형태로 전달
-		redirect.addFlashAttribute("chat_num",chat_num);
-		redirect.addFlashAttribute("auser_num",artistVO.getUser_num());
-		redirect.addFlashAttribute("chat_kind",1);
-		
+			//아티스트의 경우 유저 정보가 1로 바뀜
+			chatService.updateAuserKind(chat_num);
+			
+			//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
+			//데이터의 형태로 전달
+			redirect.addFlashAttribute("chat_num",chat_num);
+			redirect.addFlashAttribute("auser_num",artistVO.getUser_num());
+			
+			session.setAttribute("chat_kind", 1);
+			
+				
+		}else {
+			session.setAttribute("chat_condition", "이미 채팅방에 들어와 있습니다.");
+		}
 
 		return "redirect:/chat/artistChatroom";
 	}
@@ -137,12 +145,13 @@ public class ChatController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/chatting")
 	public String enterRoomUser(@Valid ChatVO chatVO, BindingResult result,
-			HttpServletRequest request, RedirectAttributes redirect,
+			HttpServletRequest request, RedirectAttributes redirect, HttpSession session,
 			@AuthenticationPrincipal 
 			PrincipalDetails principal)throws IllegalStateException, IOException{
 
 		log.debug("<<채팅방 들어가기>>" + chatVO);
 		
+
 		/*========================
 		 * 유효성 체크 부분!!!!!!
 		 *========================*/
@@ -154,20 +163,32 @@ public class ChatController {
 
 		chatService.insertDuserInfo(chatVO);
 		
-		Long auser_num = Long.parseLong(request.getParameter("auser_num"));
-		 
+		Long auser_num = chatVO.getAuser_num();	
 		Long chat_num = chatService.selectChatnum(auser_num);
-		chatVO.setChat_num(chat_num);
-		System.out.println("방 번호 "+chat_num);
-		 
-		//중간테이블로 전송
-		chatService.insertDuserChat(chatVO);
-		 
-		//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
-		//데이터의 형태로 전달
-		redirect.addFlashAttribute("result","success");
-		redirect.addFlashAttribute("chat_kind",0);
- 
+		
+		
+		
+		if(chatService.checkDuserCondition(chat_num)==0) {
+			
+			//중간테이블로 전송
+			
+			chatVO.setChat_num(chat_num);
+			
+			//중간테이블로 전송
+			chatService.insertDuserChat(chatVO);
+			 
+			//브라우저에 데이터를 전송하지만 URI상에는 보이지 않는 숨겨진
+			//데이터의 형태로 전달
+			redirect.addFlashAttribute("result","success");
+			session.setAttribute("chat_kind", 0);
+			
+				
+		}else {
+			session.setAttribute("chat_condition", "이미 채팅방에 들어와 있습니다.");
+		}
+		
+		
+	
 
 		return "redirect:/chat/userChatroom";
 	}
