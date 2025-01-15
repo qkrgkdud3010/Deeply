@@ -47,26 +47,23 @@
 	</div>
 	<div class="letter-body">
 	<div class="letter-box">
-		<div class="font-white height-3 bold-white font-1 vertical-center left-3 z-3">To. ${artist.name}</div>
-		<c:if test="${!empty letter.letter_photo}">
-		
-		</c:if>
+		<div class="font-white height-3 bold-white font-1 vertical-center left-3 z-3">To. ${reply.nick_name}</div>
 		<div class="letter-background">
-			<img class="preview-img" src="${pageContext.request.contextPath}/assets/upload/${letter.letter_photo}">
+			<c:if test="${!empty reply.img}">
+			<img class="preview-img" src="${pageContext.request.contextPath}/assets/upload/${reply.img}">
+			</c:if>
 			<div class="letter-title height-5 vertical-center left-3 font-1_5">
-				${letter.letter_title}
+				${reply.letter_title}
 			</div>
 			<hr class="width-90">
 			<div class="letter-content letter-detail left-3 top-1">
-				${letter.letter_content}
+				${reply.letter_content}
 			</div>
 		</div>
 		<div class="align-right top-1">
 		<c:if test="${!empty principal.artistVO}">
-			<button class="letter-buttons font-red">신고</button>
-			<button class="letter-buttons" onclick="location.href='${pageContext.request.contextPath}/letter/artist_write?artist_num=${artist.user_num}&letter_num=${letter.letter_num}'">답장</button>
-		</c:if>
 			<button class="letter-buttons">삭제</button>
+		</c:if>
 		</div>
 	</div>
 		<div class="page-box space-10vw align-center">${page}</div>

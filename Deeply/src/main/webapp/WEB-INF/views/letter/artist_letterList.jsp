@@ -23,7 +23,7 @@
 		<div class="width-80 background-darkblue height-0_2 top-2"></div>
 	</div>
 	<div class="space-10vw"></div>
-	<div class="letter-btn-div vertical-center">
+	<div id="letter_form" class="letter-btn-div vertical-center">
 		<button class="letter-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist.user_num}'">받은 편지</button>
 		<button class="letter-btn font-white bold-title align-center"  onclick="location.href='${pageContext.request.contextPath}/letter/artist_reply?artist_num=${artist.user_num}'">보낸 답장</button>
 	</div>
@@ -41,7 +41,12 @@
 				<div class="width-10">${letter.nick_name}</div>
 				<div class="width-80"><a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
 				<div class="width-10 align-center">${letter.post_date}</div>
+				<c:if test="${letter.replied == 0}">
 				<div class="width-10 align-center"><button class="reply-btn" onclick="location.href='${pageContext.request.contextPath}/letter/artist_write?artist_num=${artist.user_num}&letter_num=${letter.letter_num}'">답장</button></div>
+				</c:if>
+				<c:if test="${letter.replied == 1}">
+				<div class="width-10 align-center font-0_8">답장완료</div>
+				</c:if>
 			</div>
 			<hr>
 		</c:forEach>

@@ -7,7 +7,10 @@ $(function () {
 	    window.scrollTo(0, elementPosition); // 즉시 스크롤 이동
 	}
 	
-	
+	$('#letterFiles_btn').click(function(e){
+		e.preventDefault();
+		$('#letterFiles_upload').click();
+	});
 	
 	$('#letterPhoto_btn').click(function(e){
 		e.preventDefault();

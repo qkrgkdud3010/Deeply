@@ -231,6 +231,18 @@ a {
  	background:none;
  	border-radius:10px;
 }
+.letter-buttons{
+	background:white;
+	border:none;
+	border-radius:10px;
+	width:5vw;
+	height:1.6vw;
+	font-weight:bold;
+	font-size:0.5vw;
+	cursor:pointer;
+	position:relative;
+	z-index:3;
+}
 
 /* UI 표시 설정 ===================*/
 .display-none{
@@ -1052,6 +1064,7 @@ a {
 	border-radius:10px;
 	background:white;
 	border:none;
+	cursor:pointer;
 }
 
 .letter-form{
@@ -1086,6 +1099,7 @@ a {
 	height:30vw;
 	margin:0 auto;
 	position:relative;
+	overflow:hidden;
 }
 
 .preview-img{
@@ -1143,5 +1157,6 @@ a {
 	height:2vw;
 	cursor:pointer;
 }
+
 
  

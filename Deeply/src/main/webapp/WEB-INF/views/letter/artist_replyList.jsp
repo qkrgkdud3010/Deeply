@@ -23,7 +23,7 @@
 		<div class="width-80 background-darkblue height-0_2 top-2"></div>
 	</div>
 	<div class="space-10vw"></div>
-	<div class="letter-btn-div vertical-center">
+	<div id="letter_form" class="letter-btn-div vertical-center">
 		<button class="letter-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist.user_num}'">받은 편지</button>
 		<button class="letter-btn font-white bold-title align-center"  onclick="location.href='${pageContext.request.contextPath}/letter/artist_reply?artist_num=${artist.user_num}'">보낸 답장</button>
 	</div>
@@ -43,11 +43,10 @@
 			<c:if test="${count > 0}">
 				<c:forEach var="reply" items="${replies}">
 					<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
-						<a href="${pageContext.request.contextPath}/letter/reply_detail?reply_num=${reply.reply_num}">
-						<div class="width-10">${reply.nick_name}</div>
-						<div class="width-80">${reply.letter_title}</div>
+						<div class="width-10">${artist.name}</div>
+						<div class="width-80"><a href="${pageContext.request.contextPath}/letter/reply_detail?reply_num=${reply.reply_num}">${reply.letter_title}</a></div>
 						<div class="width-10 align-center">${reply.post_date}</div>
-						</a>
+						<div class="width-10 align-center">${reply.nick_name}</div>
 					</div>
 					<hr>
 				</c:forEach>

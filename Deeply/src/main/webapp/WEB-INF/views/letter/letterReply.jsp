@@ -38,16 +38,15 @@
 			<div id="letter_item" class="letter-item font-white bold-title font-1 left-5 vertical-center">
 					<div class="width-80">제목</div>
 					<div class="width-10 align-center">발송일</div>
-					<div class="width-10 align-center">답장 여부</div>
+					<div class="width-10 align-center">아티스트</div>
 			</div>
 			<hr>
 		<c:forEach var="reply" items="${replies}">
-				<a href="${pageContext.request.contextPath}/letter/detail?letter_num=${reply.reply_num}">
 				<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
-					<div class="width-80">${reply.letter_title}</div>
+					<div class="width-80"><a href="${pageContext.request.contextPath}/letter/reply_detail?reply_num=${reply.reply_num}">${reply.letter_title}</a></div>
 					<div class="width-10 align-center">${reply.post_date}</div>
+					<div class="width-10 align-center">${artist.name}</div>
 				</div>
-				</a>
 				<hr>
 		</c:forEach>
 		</c:if>

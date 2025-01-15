@@ -96,6 +96,13 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/letter/artist_writeReply.jsp"/>
     </definition>
+    <definition name="replyDetail" extends="main">
+    	<put-attribute name="title" value="아티스트 답장 상세"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/letter/letterCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/letter/replyDetail.jsp"/>
+    </definition>
 </tiles-definitions>
 
 

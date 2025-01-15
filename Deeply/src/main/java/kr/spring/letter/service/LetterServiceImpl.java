@@ -38,7 +38,13 @@ public class LetterServiceImpl implements LetterService{
 	public LetterVO showLetterDetail(long letter_num) {
 		return letterMapper.showLetterDetail(letter_num);
 	}
-
+	
+	@Override
+	public void updateReplied(long letter_num) {
+		letterMapper.updateReplied(letter_num);
+		
+	}
+	//reply-------------------------------------------------------------------------------------
 	@Override
 	public int countReply(Map<String, Object> map) {
 		return letterMapper.countReply(map);
@@ -48,7 +54,7 @@ public class LetterServiceImpl implements LetterService{
 	public List<ReplyVO> showReplyForUser(Map<String, Object> map) {
 		return letterMapper.showReplyForUser(map);
 	}
-
+	//아티스트
 	@Override
 	public int countLetterForArtist(Map<String, Object> map) {
 		return letterMapper.countLetterForArtist(map);
@@ -68,5 +74,18 @@ public class LetterServiceImpl implements LetterService{
 	public List<ReplyVO> showReplyForArtist(Map<String, Object> map) {
 		return letterMapper.showReplyForArtist(map);
 	}
+	//아티스트 답장-------------------------------------------------------------------------------------
+	@Override
+	public void postReply(ReplyVO replyVO) {
+		letterMapper.postReply(replyVO);
+		updateReplied(replyVO.getLetter_num());
+	}
+
+	@Override
+	public ReplyVO showReplyDetail(long reply_num) {
+		return letterMapper.showReplyDetail(reply_num);
+	}
+
+	
 
 }

@@ -11,6 +11,7 @@ public interface LetterService {
 	public int countLetterByUser(Map<String,Object> map);
 	public void postLetter(LetterVO letterVO);
 	public LetterVO showLetterDetail(long letter_num);
+	public void updateReplied(long letter_num);
 	//reply
 	public int countReply(Map<String,Object> map);
 	public List<ReplyVO> showReplyForUser(Map<String,Object> map);
@@ -19,4 +20,7 @@ public interface LetterService {
 	public List<LetterVO> selectLetterForArtist(Map<String, Object> map);
 	public int countReplyForArtist(long artist_num);
 	public List<ReplyVO> showReplyForArtist(Map<String, Object> map);
+	//아티스트 답장
+	public void postReply(ReplyVO replyVO);
+	public ReplyVO showReplyDetail(long reply_num);
 }

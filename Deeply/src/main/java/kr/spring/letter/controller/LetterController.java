@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.letter.service.LetterService;
@@ -227,6 +228,7 @@ public class LetterController {
 		return "artist_letterList";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/artist_reply")
 	public String showArtistReplyList(long artist_num,@RequestParam(defaultValue="1") int pageNum, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
 		
@@ -253,6 +255,8 @@ public class LetterController {
 			replies = letterService.showReplyForArtist(map);
 		}
 		
+		log.debug("<<replies : >>" + replies);
+		
 		model.addAttribute("count", count);
 		model.addAttribute("artist", artist);
 		model.addAttribute("replies", replies);
@@ -261,12 +265,79 @@ public class LetterController {
 		return "artist_replyList";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/artist_write")
 	public String writeReply(long artist_num, long letter_num, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request, Model model) {
 		
-		 ReplyVO replyVO = new ReplyVO();
-		 model.addAttribute("replyVO", replyVO);
-		
+		ArtistVO artist = artistService.selectMember(artist_num);
+		LetterVO letter = letterService.showLetterDetail(letter_num);
+		ReplyVO replyVO = new ReplyVO();
+		model.addAttribute("replyVO", replyVO);
+		model.addAttribute("artist",artist);
+		model.addAttribute("letter", letter);
+		log.debug("<<letterVO: >> :" + letter);                                
 		return "artist_writeReply";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/artist_write")
+	public String postReply(@ModelAttribute("replyVO") @Valid ReplyVO replyVO, BindingResult result, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request, Model model) throws IllegalStateException, IOException {
+		
+		model.addAttribute("replyVO", replyVO);
+		log.debug("<<replyVO>> : " + replyVO);
+		
+		if(result.hasErrors()) {
+		    model.addAttribute("replyVO", replyVO);
+		    model.addAttribute("errors", result.getAllErrors());
+		    return "artist_writeReply"; // 유효성 검증 실패 시 다시 작성 화면으로 이동
+		}
+		
+		if(replyVO.getUpload() != null) {
+			replyVO.setImg(FileUtil.createFile(request, replyVO.getUpload()));
+		}
+		
+		if (replyVO.getFile_upload() != null) {
+		    MultipartFile[] mf = replyVO.getFile_upload();
+		    List<byte[]> fileDataList = new ArrayList<>(); // 여러 파일 데이터를 저장
+
+		    for (MultipartFile file : mf) {
+		        if (!file.isEmpty()) {
+		            byte[] fileData = file.getBytes(); // MultipartFile의 데이터를 byte[]로 변환
+		            fileDataList.add(fileData); // 파일 데이터를 리스트에 추가
+		        }
+		    }
+
+		   
+		}
+		
+		letterService.postReply(replyVO);
+		
+		
+		model.addAttribute("message", "답장이 전송되었습니다");
+	    model.addAttribute("url",request.getContextPath() + "/letter/artist_list?artist_num="+replyVO.getArtist_num());
+		
+		return "common/resultAlert";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/reply_detail")
+	public String showReplyDetail(long reply_num, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
+		
+		ReplyVO reply = letterService.showReplyDetail(reply_num);
+		ArtistVO artist = artistService.selectMember(reply.getArtist_num());
+		
+		
+		if(principal.getMemberVO() == null || principal.getMemberVO().getUser_num() != reply.getUser_num()) {
+			if(principal.getMemberVO() == null) {
+				model.addAttribute("message", "로그인이 필요합니다");
+			}else {
+				model.addAttribute("message", "접근이 불가합니다");
+			}
+			model.addAttribute("url",request.getContextPath() + "/artist/detail?artist_num="+reply.getArtist_num());
+		}
+		
+		model.addAttribute("reply", reply);
+		model.addAttribute("artist", artist);
+		return "replyDetail";
 	}
 }

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
-//자바코드 기반 설정 클래스
+//자바코드 기반 설정 클래스s
 @Configuration
 public class AppConfig implements WebMvcConfigurer{
 	@Bean
