@@ -18,7 +18,6 @@
 	        height: 300
 	    });
 	});
-	
 </script>
 
 <div class="write-main main-container">
