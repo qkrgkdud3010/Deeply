@@ -4,18 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Getter
 @Setter
-@ToString
 public class PaymentVO {
-	private Long pay_num;
-	private int pay_status;
-	private int pay_product;
-	private int pay_price;
-	private String pay_bank;
-	private int pay_type;
-	private int pay_money;
-	private Long user_num;
-	
-	private Long user_bal;
+    private String PAY_NUM;    // 결제 고유 ID
+    private int totalAmount;     // 결제 금액
+    private String status;       // 결제 상태 (예: 성공, 실패)
+    private int USER_NUM;   // 고객 ID   // 기타 필요한 필드들
 }

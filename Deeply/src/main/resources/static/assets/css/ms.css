@@ -335,3 +335,23 @@ footer .footer-img{
 	text-align:right;
 }
 /*footer 끝*/
+
+/*결제창 시작*/
+.payment-1{
+	width:800px;
+	height:1000px;
+	margin:0 auto;
+}
+.payment-2{
+	width:600px;
+	margin:0 auto;
+}
+.submit-1{
+	width:300px; height:50px; background-color:black; color:white;
+	border-radius:9px;
+	line-height:50px;
+	text-align:center;
+	font-size:30px;
+	margin:0 auto;
+}
+/*결제창 끝*/
