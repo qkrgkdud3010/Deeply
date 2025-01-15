@@ -52,7 +52,12 @@
 		
 		</c:if>
 		<div class="letter-background">
+			<c:if test="${!empty letter.letter_photo}">
 			<img class="preview-img" src="${pageContext.request.contextPath}/assets/upload/${letter.letter_photo}">
+			</c:if>
+			<c:if test="${empty letter.letter_photo}">
+			<img class="preview-img" src="${pageContext.request.contextPath}/assets/images/${default_img}">
+			</c:if>
 			<div class="letter-title height-5 vertical-center left-3 font-1_5">
 				${letter.letter_title}
 			</div>
@@ -64,7 +69,9 @@
 		<div class="align-right top-1">
 		<c:if test="${!empty principal.artistVO}">
 			<button class="letter-buttons font-red">신고</button>
+			<c:if test="${letter.replied == 0}">
 			<button class="letter-buttons" onclick="location.href='${pageContext.request.contextPath}/letter/artist_write?artist_num=${artist.user_num}&letter_num=${letter.letter_num}'">답장</button>
+			</c:if>
 		</c:if>
 			<button class="letter-buttons">삭제</button>
 		</div>

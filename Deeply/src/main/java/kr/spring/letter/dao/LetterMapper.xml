@@ -97,8 +97,14 @@
   			artist_num,
   			letter_title,
   			letter_content,
-  			post_date,
-  			img)
+  			post_date
+  			<if test="img != null">
+            , img
+        	</if>
+        	<if test="file_name != null">
+            , file_name
+       	 	</if>
+        	)
   		VALUES(
   			reply_seq.nextval,
   			#{user_num},
@@ -106,8 +112,14 @@
   			#{artist_num},
   			#{letter_title},
   			#{letter_content},
-  			sysdate,
-  			#{img})
+  			sysdate
+  			<if test="img != null">
+            , #{img}
+        	</if>
+        	<if test="file_name != null">
+            , #{file_name}
+        	</if>
+  			)
   	</insert>
   	
 </mapper>

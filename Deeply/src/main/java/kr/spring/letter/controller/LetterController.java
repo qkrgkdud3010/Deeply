@@ -147,6 +147,11 @@ public class LetterController {
 			model.addAttribute("url",request.getContextPath() + "/artist/detail?artist_num="+letter.getArtist_num());
 		}
 		
+		if(letter.getLetter_photo() == null) {
+			String default_img = "default_img.png";
+			model.addAttribute("default_img", default_img);
+		}
+		
 		model.addAttribute("letter", letter);
 		model.addAttribute("artist", artist);
 		return "letterDetail";
@@ -296,19 +301,30 @@ public class LetterController {
 			replyVO.setImg(FileUtil.createFile(request, replyVO.getUpload()));
 		}
 		
-		if (replyVO.getFile_upload() != null) {
-		    MultipartFile[] mf = replyVO.getFile_upload();
-		    List<byte[]> fileDataList = new ArrayList<>(); // 여러 파일 데이터를 저장
-
-		    for (MultipartFile file : mf) {
-		        if (!file.isEmpty()) {
-		            byte[] fileData = file.getBytes(); // MultipartFile의 데이터를 byte[]로 변환
-		            fileDataList.add(fileData); // 파일 데이터를 리스트에 추가
-		        }
-		    }
-
-		   
+		String fileNames = "";
+		
+		if(replyVO.getFile_upload() != null) {
+			
+			if(replyVO.getFile_upload().size() > 3) {
+				model.addAttribute("message", "이미지 파일은 최대 3개까지 등록이 가능합니다");
+			    model.addAttribute("url",request.getContextPath() + "/letter/artist_list?artist_num="+replyVO.getArtist_num());
+				
+				return "common/resultAlert";
+			}
+			
+			for(MultipartFile file : replyVO.getFile_upload()) {
+				if(!file.isEmpty()) {
+					String file_name = FileUtil.createFile(request, file);
+					if(fileNames.equals("")) {
+						fileNames += file_name;
+					}else {
+						fileNames = fileNames + "," + file_name;  
+					}
+				}
+			}
 		}
+		
+		replyVO.setFile_name(fileNames);
 		
 		letterService.postReply(replyVO);
 		
@@ -326,6 +342,19 @@ public class LetterController {
 		ReplyVO reply = letterService.showReplyDetail(reply_num);
 		ArtistVO artist = artistService.selectMember(reply.getArtist_num());
 		
+		if(reply.getFile_name() != null) {
+			
+			List<String> file_name = new ArrayList<String>();
+			
+			String[] f_names = reply.getFile_name().split(",");
+			int file_count = f_names.length;
+			for(String s : f_names) {
+				file_name.add(s);
+			}
+			
+			model.addAttribute("file_name", file_name);
+			model.addAttribute("file_count",file_count);
+		}
 		
 		if(principal.getMemberVO() == null || principal.getMemberVO().getUser_num() != reply.getUser_num()) {
 			if(principal.getMemberVO() == null) {

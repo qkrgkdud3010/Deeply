@@ -46,7 +46,7 @@
 				<form:errors path="letter_title" cssClass="error-color"/>
 			</div>
 			<div class="letter-content">
-				<form:textarea path="letter_content" class="lcontent-input" vplaceholder="편지 내용 입력"/>
+				<form:textarea path="letter_content" class+="lcontent-input" vplaceholder="편지 내용 입력"/>
 			</div>
 			<div class="left-3"><form:errors class="left-3" path="letter_content" cssClass="error-color"/></div>
 			</div>

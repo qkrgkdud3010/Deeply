@@ -1,5 +1,7 @@
 package kr.spring.letter.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -21,6 +23,5 @@ public class ReplyVO {
 	private MultipartFile upload;
 	private String nick_name;
 	private String file_name;
-	private byte[] file_data;
-	private MultipartFile[] file_upload;
+	private List<MultipartFile> file_upload;
 }

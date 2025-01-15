@@ -52,6 +52,9 @@
 			<c:if test="${!empty reply.img}">
 			<img class="preview-img" src="${pageContext.request.contextPath}/assets/upload/${reply.img}">
 			</c:if>
+			<c:if test="${empty reply.img}">
+			<img class="preview-img" src="${pageContext.request.contextPath}/assets/images/default_img.png">
+			</c:if>
 			<div class="letter-title height-5 vertical-center left-3 font-1_5">
 				${reply.letter_title}
 			</div>
@@ -66,8 +69,18 @@
 		</c:if>
 		</div>
 	</div>
+	<h2 class="font-white bold-title">${artist.name}의 선물</h2>
+	<div class="upload-files-div vertical-center">
+		<c:forEach var="name" items="${file_name}">
+			<div class="upload-item-container">
+				<img class="upload-files-img" src="${pageContext.request.contextPath}/assets/upload/${name}">
+				<button class="download-btn" onclick="location.href='${pageContext.request.contextPath}/download/file?file_name=${name}'"><img src="${pageContext.request.contextPath}/assets/images/download.svg"></button>
+			</div>
+		</c:forEach>
+	</div>
 		<div class="page-box space-10vw align-center">${page}</div>
 	
 	</div>
-	<div class="space-10vw align-center"></div>
+	<div class="space-30vw align-center"></div>
+
 </div>
