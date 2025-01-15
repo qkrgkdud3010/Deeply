@@ -24,7 +24,7 @@ spring:
     basename: messages.ms,messages.hj,messages.hy,messages.hr1,messages.hr2,messages.sw
     encoding: UTF-8
     
-  devtools: #View reloads    livereload:      enabled: true
+  devtools: #View reload    livereload:      enabled: true
     
     restart: #컨트롤러, 모델단이 바뀌었을 때 프로젝트 재시작 설정 (정확히는 classpath에 있는 모든 파일)      enabled: true 
 
