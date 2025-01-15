@@ -7,7 +7,6 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/videoAdapter.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 
 <div class="item-main main-container">

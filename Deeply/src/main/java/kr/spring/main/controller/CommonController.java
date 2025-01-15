@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -58,10 +59,15 @@ public class CommonController {
 		Map<String,Object> map = new HashMap<String,Object>();
 
 		String sub_path;//중간 경로
-		MemberVO user = (MemberVO)principal.getMemberVO();
-		if(user != null) {
+		if(principal != null) {
+			MemberVO user = (MemberVO)principal.getMemberVO();
+			ArtistVO artist = (ArtistVO)principal.getArtistVO();
 			log.debug("<<로그인>>");
-			sub_path = String.valueOf(user.getUser_num());
+			if(user!=null) {
+				sub_path = String.valueOf(user.getUser_num());
+			}else {
+				sub_path = String.valueOf(artist.getUser_num());
+			}
 			String file_path = realFolder + "/" + sub_path + "/" + str_filename;
 			log.debug("<<파일경로>> : " + file_path);
 

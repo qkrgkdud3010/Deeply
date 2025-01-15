@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ckeditor.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/uploadAdapter.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
     let result = '${result}';
@@ -11,13 +8,17 @@
         alert('글 등록이 완료되었습니다.');
     }
 </script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/customjs.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/shop.js"></script>
 <script type="text/javascript">
-	$('#item_price').keyup(function(){
- 	   customNumberLocale($(this),false);    
+	$(function(){
+		$('#item_description').summernote({
+	        height: 300
+	    });
 	});
+	
 </script>
 
 <div class="write-main main-container">
@@ -61,23 +62,6 @@
                 <li>
                     <form:textarea path="item_description" placeholder="상품 설명을 입력하세요."/>
                     <form:errors path="item_description" cssClass="error-color" />
-                    <%-- CKEditor 셋팅 --%>
-                <script>
-                    function MyCustomUploadAdapterPlugin(editor){
-                        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-                            return new UploadAdapter(loader);
-                        }
-                    }
-                    ClassicEditor.create(document.querySelector('#item_description'),{
-                        extraPlugins:[MyCustomUploadAdapterPlugin]
-                    })
-                    .then(editor => {
-                        window.editor = editor;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-                </script>
                 </li>
             </ul>
         </form:form>
