@@ -391,24 +391,35 @@ public class ItemController {
 	 * =============================*/
 	//주문 폼(ItemView.jsp)
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping("/order")
-	public String order(@RequestParam("item_num") long item_num,
-						MemberVO memberVO,
-						long Order_num,
-						Model model,
-						HttpServletRequest request,
-						@AuthenticationPrincipal 
-						PrincipalDetails principal) 
-									
-								throws IllegalStateException, IOException{
+	@GetMapping("/order")
+	public String order(long item_num, int quantity, MemberVO memberVO,
+						Model model,HttpServletRequest request,@AuthenticationPrincipal 
+						PrincipalDetails principal) throws IllegalStateException, IOException{
+		ItemVO item = itemService.selectitem(item_num);
 		
+		//유저 계정으로 로그인 하지 않았을 시에 로그인 창을 호출함
+		if(principal.getMemberVO() == null) {
+			model.addAttribute("message", "사용자 로그인 후 구매가 가능합니다.");
+			model.addAttribute("url",request.getContextPath() + "/item/main");
+			return "common/resultAlert";
+		}
 		
+		OrderVO orderVO = new OrderVO();
+		
+		model.addAttribute("orderVO", orderVO);
+		model.addAttribute("item", item);
+		model.addAttribute("quantity", quantity);
 		
 		
 		return "itemOrder";
 	}
 	//주문 폼에서 주문 데이터 전송
-
+	
+	@PostMapping("/order")
+	public void submitOrder(@ModelAttribute("orderVO") @Valid OrderVO orderVO){
+		
+	}
+	
 
 }
 

@@ -35,6 +35,7 @@ public interface ItemMapper {
 	//----------구매자(사용자)-------------
 	public void insertOrder(OrderVO ordervo); //주문등록
 	public int selectOrderRowCount(Map<String,Object> map);//전체 주문 개수/검색 주문 개수
+	
 	public List<OrderVO> selectOrder(Map<String,Object> map);//주문 목록(List형태)
 	public OrderVO selectOrderDetail(OrderVO ordervo);//1건으로 불러올 개별 상품 목록
 	public MemberVO selectUserInfo(MemberVO memberVO);//배송지 정보 가져오기

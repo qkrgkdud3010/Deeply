@@ -13,6 +13,20 @@ a {
     text-decoration: none;
     color: inherit;       
 }
+li{
+	list-style:none;
+}
+
+.v-center{
+	display:flex;
+	align-items:center;
+}
+
+.a-center{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
 
 .btn-back{
 	color:white;
@@ -20,12 +34,12 @@ a {
 .main-container {
   background-color: black;
   height: auto;
-  
+  width:80%;
 }
 
 .content-container {
   background-color: white;
-  width: 86.8vw;
+
   height: auto;
 }
 
@@ -41,6 +55,8 @@ a {
   margin: 0 auto; 
   padding: 1vw; 
 }
+
+
 
 .item-card {
    object-fit: cover;
@@ -116,6 +132,75 @@ a {
 .items-img{
 	width:20vw;
 	height:20vw;
+}
+
+.order-img{
+	width:10vw;
+	height:10vw;
+}
+
+/*
+상품 상세
+*/
+
+.item-info{
+	display:flex;
+	align-items:center;
+	gap:5rem;
+}
+
+.box-shadow{
+	 box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); /* 뷰포트 비율 기반 */
+	 height:20vw;
+	 width:33vw;
+}
+
+.box-shadow:first-of-type{
+	width:20vw;
+	margin-left:5%;
+}
+.quantity-container{
+	margin-left:8%;
+	width:20vw;
+	height:4vw;
+	position:relative;
 	border:1px solid black;
+	border-radius:5px;
+}
+
+.quantity-box{
+	display:flex;
+	align-items:center;
+	border:1px solid black;
+	width:6vw;
+	border-radius:5px;
+	margin-left:3%;
+}
+.quantity-btn{
+	width:1.5vw;
+	height:1.5vw;
+	border-radius:5px;
+	border:none;
+	background:none;
+}
+
+.quantity-name{
+	width:6vw;
+	margin-top:2%;
+	margin-left:3%;
+}
+
+.quantity-number{
+	width:4vw;
+	height:1.5vw;
+	border-left:1px solid black;
+	border-right:1px solid black;
+}
+
+.price-box{
+	width:7vw;
+	height:1.5vw;
+	margin-left:35%;
+	font-weight:bold;
 }
 

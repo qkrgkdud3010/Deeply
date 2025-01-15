@@ -9,8 +9,9 @@
 	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/shop.js"></script>
 
-<div class="item-main main-container">검정색 큰 박스
+<div class="main-div item-main main-container">검정색 큰 박스
 	<%-- 아티스트 계정으로 로그인 시작 --%>
 	<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
 	${item.item_num}
@@ -43,10 +44,10 @@
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
 	
-		<div class="content-container"> 흰색 박스
-	<%-- 아티스트 계정으로 로그인 시작 --%>
+		<div class="main-div content-container"> 흰색 박스
+	<%-- 비로그인, 아티스트 계정으로 로그인 시작 --%>
 		<c:if
-			test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
+			test="${!empty principal.artistVO}">
 			<div class="text-title">
 				반갑습니다. ${item.group_name} <span class="date">등록일 : <fmt:formatDate
 						value="${item.item_regdate}" pattern="yyyy년 MM월 dd일" /> <c:if
@@ -75,6 +76,7 @@
 	<%-- 아티스트 계정으로 로그인 끝--%>
 
 	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
+		<c:if test="${empty principal.artistVO}">
 			<div class="text-title">반갑습니다. 유저의 닉네임</div>
 			<div class="item-info">
 				<div class="box-shadow">
@@ -88,18 +90,28 @@
 						<li>상품명 : ${item.item_name}</li>
 						<li>가격 : ${item.item_price}원</li>
 						<li>회원당 최대 3개까지 구매가능합니다.</li>
-						<form:form modelAttribute="orderVO" method="post" action="order"
-							id="item_order" enctype="multipart/form-data">
-							<li><form:label path="total_price">가격</form:label>
-								<form:input type="number" min="1" max="3" id="item_price"
-									path="item_price"/> <form:errors
-									path="item_price" cssClass="error-color" /></li>
-						</form:form>
 					</ul>
+					<div class="quantity-container">
+						<div class="quantity-name">${item.item_name}</div>
+						<div class="v-center">
+							<div class="quantity-box">
+								<button class="quantity-btn a-center" id="minus_btn">-</button>
+								<span class="quantity-number a-center" id="quantity" data-value="1">1</span>
+								<button class="quantity-btn a-center" id="plus_btn">+</button>
+							</div>
+							<div class="price-box">
+								<div class="price-div" id="price_total" data-price="${item.item_price}">
+    								<fmt:formatNumber value="${item.item_price}" type="number" groupingUsed="true" />원
+								</div>
+							</div>
+						</div>
+						<input type="hidden" name="item_num" id="item_num" data-num="${item.item_num}">
+					</div>
 					<input type="button" value="장바구니 추가" onclick="location.href='/item/main'">
-					<input type="button" value="바로 구매하기" onclick="location.href='/item/order?user_num=${item.user_num}'">
+					<input type="button" id="order_btn" value="바로 구매하기">
 				</div>
 			</div>
+		</c:if>
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
 	<%-- 아티스트, 유저계정 공통 --%>

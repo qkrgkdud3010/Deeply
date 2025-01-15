@@ -1,4 +1,6 @@
 $(function () {
+	let quantity = 1;
+	
 	$('#upload_btn').click(function(e){
 		e.preventDefault();
 		$('#upload').click();
@@ -21,4 +23,43 @@ $(function () {
 						
 		};		
 	});
+	
+	$('#minus_btn').click(function(){
+	    
+	    if (quantity <= 1) {
+	        quantity = 1;
+	    } else {
+	        quantity--;
+	    }
+	    $('#quantity').data('value', quantity);
+	    $('#quantity').html(quantity);
+
+	    const totalPrice = $('#price_total').data('price') * quantity;
+	    $('#price_total').html(formatNumber(totalPrice) + '원');
+	});
+
+	$('#plus_btn').click(function(){
+	    
+	    if (quantity >= 3) {
+	        quantity = 3;
+	    } else {
+	        quantity++;
+	    }
+	    $('#quantity').data('value', quantity);
+	    $('#quantity').html(quantity);
+
+	    const totalPrice = $('#price_total').data('price') * quantity;
+	    $('#price_total').html(formatNumber(totalPrice) + '원');
+	});
+
+	// 숫자에 쉼표를 추가하는 함수
+	function formatNumber(num) {
+	    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	}
+	
+	$('#order_btn').click(function(){
+		const item_num = $('#item_num').data('num');
+		location.href='../item/order?item_num='+item_num+'&quantity='+quantity;
+	});
+	
 });
