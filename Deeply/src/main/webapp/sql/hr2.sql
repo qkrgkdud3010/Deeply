@@ -106,6 +106,7 @@ CREATE TABLE FAN (
     fan_end DATE,
     fan_artist NUMBER NOT NULL,
     user_num NUMBER NOT NULL,
+    fan_status NUMBER DEFAULT 1 NOT NULL,
     CONSTRAINT fan_pk PRIMARY KEY (fan_num),
     CONSTRAINT fan_fk1 FOREIGN KEY (fan_artist) REFERENCES auser (user_num),
     CONSTRAINT fan_fk2 FOREIGN KEY (user_num) REFERENCES duser (user_num)

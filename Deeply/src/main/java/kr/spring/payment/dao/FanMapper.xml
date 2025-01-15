@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.payment.dao.FanMapper">
-	<!-- 내가 팬 맺은 아티스트 리스트 -->
+	<!-- ========================
+			정보 불러오기
+	========================= -->
+	<select id="selectArtist" parameterType="Long" resultType="FanVO">
+		SELECT * FROM AUSER
+		JOIN auser_detail USING (user_num)
+		WHERE user_num=#{user_num}
+	</select>
+	
+	<!-- ========================
+			팬 구독하기/해제
+	========================= -->
+    <!-- 팬 가입 정보 삽입 -->
+    <insert id="joinFan">
+        INSERT INTO fan (fan_num, fan_start, fan_end, fan_artist, user_num)
+        VALUES (fan_seq.nextval, sysdate, sysdate + interval '1' month, #{fan_artist}, #{user_num})
+    </insert>
+
+	<!-- 내가 팬 맺은 아티스트 리스트
 	<select id="getMyArtist" parameterType="map" resultType="FanVO">
 		SELECT
 			*
@@ -20,12 +38,13 @@
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]>
 	</select>
-	<select id="selectFan" parameterType="long" resultType="FanVO">
-	    SELECT * FROM fan f
-		JOIN duser d ON f.user_num=d.user_num
-		LEFT OUTER JOIN duser_detail dd ON f.user_num=dd.user_num
-		JOIN auser a ON f.fan_artist=a.user_num
-		LEFT OUTER JOIN auser_detail ad ON f.fan_artist=ad.user_num
-		WHERE f.user_num = #{user_num} and fan_artist=fan_artist
+	<select id="selectFan" parameterType="map" resultType="fanVO">
+	    select * from fan f
+		join auser a on f.fan_artist=a.user_num
+		join auser_detail ad on f.fan_artist=ad.user_num
+		join duser du on f.user_num=du.user_num
+		join duser_detail dt on du.user_num=dt.user_num
+		WHERE f.user_num = #{user_num} and f.fan_artist=#{fan_artist}
 	</select>
+	-->
 </mapper>

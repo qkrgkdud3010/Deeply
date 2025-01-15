@@ -13,17 +13,17 @@
     </definition>
     
 	<!-- 회원 마이페이지 -->
-	<definition name="myPage" template="/WEB-INF/views/template/layout_mypage.jsp">
-    	<put-attribute name="title" value="MyPage"/>
-    	<put-attribute name="css" 
-    	       value="/WEB-INF/views/member/memberCSS.jsp"/>
+	<definition name="myPage2" template="/WEB-INF/views/template/layout_mypage.jsp">
         <put-attribute name="header"
                value="/WEB-INF/views/template/header.jsp"/>
+        <put-attribute name="info" 
+    	       value="/WEB-INF/views/mypage/myInfo.jsp"/> 
         <put-attribute name="body" 
-    	       value="/WEB-INF/views/follow/followList.jsp"/> 
+    	       value="/WEB-INF/views/mypage/myPageLink.jsp"/> 
     	<put-attribute name="footer"
                value="/WEB-INF/views/template/footer.jsp"/>                    
     </definition>
+    
     <definition name="follow">
     	<put-attribute name="title" value="팔로우리스트"/>
     	<put-attribute name="css" value="/WEB-INF/views/follow/followCSS.jsp"/>
@@ -57,8 +57,8 @@
     
     <!-- 아티스트 멤버십 -->
      <definition name="fan" extends="main">
-    	<put-attribute name="title" value="아티스트 멤버십"/>
-    	<put-attribute name="body" value="/WEB-INF/views/payment/fan.jsp"/>
+    	<put-attribute name="title" value="아티스트 팬"/>
+    	<put-attribute name="body" value="/WEB-INF/views/payment/artistFanJoin.jsp"/>
     </definition>
     
 </tiles-definitions>

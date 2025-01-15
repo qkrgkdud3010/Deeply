@@ -1,3 +1,6 @@
+/* ================
+	팬클럽 가입
+================ */
 .profile-list {
 	display: flex;
 	flex-wrap: wrap;
@@ -36,20 +39,55 @@
 	display: block;
 }
 
-/* 멤버십 가입부분 */
-.membership-title {
-    font-size: 16pt;
-    color: black;
+/* ================
+	팬클럽 가입
+================ */
+.join-fan{
+	text-align: center;
+	margin: 50px;
+	
 }
 
-.artist-name {
-    font-size: 20pt;
-    color: skyblue;
-    font-weight: bold; /* 추가적으로 강조하려면 bold를 추가할 수 있습니다. */
+.blue-artiname{
+	color: #00A2CF;
 }
 
-.individual-name {
-    font-size: 20pt;
-    color: skyblue;
-    font-weight: bold;
+.fan-blue-text{
+	color: #00A2CF;
+}
+
+.blue-fan-btn{
+	padding: 13px;
+	margin: 5px;
+	width: 200px;
+	background-color: #00A2CF;
+	color: #FFFFFF;
+	border:none;
+	border-radius: 8px;
+	font-weight: bold;
+	font-size: 16px;
+}
+.grey-fan-btn{
+	padding: 15px;
+	margin: 0;
+	width: 150px;
+	background-color: #FFFFFF;
+	color: #999999;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+}
+.my-bal{
+	margin-bottom: -5px;
+}
+hr {
+    border: 0; /* 기본 border 제거 */
+    border-top: 3px solid #000; /* 2px 두께의 검은색 선 추가 */
+}
+
+.my-photo2 {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;      /* 원형으로 만들기 */
+    background-color: black;
 }
