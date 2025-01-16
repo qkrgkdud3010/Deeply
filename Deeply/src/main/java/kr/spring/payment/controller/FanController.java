@@ -2,9 +2,11 @@ package kr.spring.payment.controller;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -124,10 +126,10 @@ public class FanController {
     	return mapJson;
     }
     
-    //탈퇴완료
+    //즉시탈퇴
     @PostMapping("/deleteFan")
     @ResponseBody
-    public Map<String,Object> deleteFan(@RequestParam Long user_num,
+    public Map<String,Object> deleteNowFan(@RequestParam Long user_num,
             @RequestParam Long fan_artist){
     	
     	//DB에 저장된 만기된 팬 정보 구하기
@@ -146,6 +148,7 @@ public class FanController {
     	return mapJson;
     }
     
+    /*
     
     /*
 	@PreAuthorize("isAuthenticated()")

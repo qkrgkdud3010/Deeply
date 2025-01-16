@@ -65,6 +65,26 @@ public class FanServiceImpl implements FanService{
 		return fanMapper.noMoreFan(user_num, fan_artist);
 	}
 
+	@Override
+	public List<FanVO> selectNoMoney(FanVO fan) {
+		return fanMapper.selectNoMoney(fan);
+	}
+
+	@Override
+	public List<FanVO> selectKeepFan(FanVO fan) {
+		return fanMapper.selectKeepFan(fan);
+	}
+
+	@Override
+	public void keepFan(FanVO fan) {
+		fanMapper.keepFan(fan);
+	}
+
+	@Override
+	public void noMoney(FanVO fan) {
+		fanMapper.noMoney(fan);
+	}
+
 
 
 

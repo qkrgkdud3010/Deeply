@@ -93,6 +93,9 @@
 					<div class="member-item" data-value="${member.user_num}">
 					<img class="member-profile-img" src="/member/photoView2?user_num=${member.user_num}">
 					<div class="align-center font-white bold-title top-5">${member.name}</div>
+					<a href="${pageContext.request.contextPath}/fan/selectArtist?user_num=${member.user_num}">
+					    <button type="button">멤버십 가입</button>
+					</a>
 					</div>
 				</c:forEach>	
 			</div>

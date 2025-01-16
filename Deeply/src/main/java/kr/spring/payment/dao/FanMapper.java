@@ -1,6 +1,7 @@
 package kr.spring.payment.dao;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -41,6 +42,20 @@ public interface FanMapper {
 	//탈퇴 신청하고 만기일 된 팬정보 조회
 	@Select("SELECT * FROM fan WHERE user_num=${user_num} and fan_artist=${fan_artist} and fan_status=2")
 	public FanVO noMoreFan(Long user_num, Long fan_artist);
+	
+	//만기일
+	//만기일인데 돈 없는 사람 구하기
+	@Select("SELECT * FROM fan JOIN duser_detail USING (user_num) WHERE user_bal<6500 and TO_CHAR(fan_end,'YYYY/MM/DD') = TO_CHAR(SYSDATE,'YYYY/MM/DD')")
+	public List<FanVO> selectNoMoney(FanVO fan);
+	//만기일인데 돈 있는 사람 구하기
+	@Select("SELECT * FROM fan JOIN duser_detail USING (user_num) WHERE user_bal>=6500 and TO_CHAR(fan_end,'YYYY/MM/DD') = TO_CHAR(SYSDATE,'YYYY/MM/DD')")
+	public List<FanVO> selectKeepFan(FanVO fan);
+	//정기결제
+	@Update("UPDATE duser_detail SET user_bal = user_bal - 6500 WHERE user_num=${user_num}")
+	public void keepFan(FanVO fan);
+	//돈 없으면
+	@Delete("DELETE FROM fan WHERE user_num=${user_num}")
+	public void noMoney(FanVO fan);
 	//만기일되면 탈퇴완료
 	@Delete("DELETE FROM fan WHERE TO_CHAR(fan_end,'YYYY/MM/DD') = TO_CHAR(SYSDATE,'YYYY/MM/DD') and fan_status=2")
 	public void deleteFan(FanVO fan);

@@ -123,7 +123,7 @@ $(function() {
 
 	      // Ajax 요청 보내기
 	      $.ajax({
-	        url: 'deleteFan', // 서버의 URL (컨트롤러)
+	        url: 'deleteNowFan', // 서버의 URL (컨트롤러)
 	        type: 'POST',
 	        data: {
 				user_num: user_num,
