@@ -32,10 +32,10 @@
 		<%--=============사용자 비로그인 영역 끝=========--%>
 		<%--=============사용자 로그인 영역 시작=========--%>
 		<c:if test="${!empty principal && principal.memberVO.auth < 9}">
-			<a href="${pageContext.request.contextPath}/member/myPage1">MY페이지</a>
+			<a href="${pageContext.request.contextPath}/member/mypage">MY페이지</a>
 		</c:if>
 		<c:if test="${!empty principal && principal.artistVO!=null}">
-			<a href="${pageContext.request.contextPath}/member/myPage1">MY페이지</a>
+			<a href="${pageContext.request.contextPath}/member/mypage">MY페이지</a>
 		</c:if>
 		<%--=============사용자 로그인 영역 끝=========--%>
 		<%--=====사용자,관리자 공통 로그인 영역 시작======--%>

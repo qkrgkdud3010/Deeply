@@ -264,6 +264,42 @@ public class MemberController {
 	 * 마이페이지
     =================*/
 	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/mypage")
+	public String myPageMain(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+		// 멤버와 아티스트 정보를 각각 조회
+		MemberVO member = null;
+		ArtistVO artist = null;
+		
+		// principalDetails가 null이 아니고 memberVO가 null이 아니면 member 정보 조회
+		if (principalDetails != null) {
+			// memberVO가 존재하면 member 정보 조회
+			if (principalDetails.getMemberVO() != null) {
+				member = memberService.selectMember(principalDetails.getMemberVO().getUser_num());
+				log.debug("<<회원상세 정보>> : " + member);
+			}
+			// memberVO가 없고 artistVO가 존재하면 artist 정보 조회
+			else if (principalDetails.getArtistVO() != null) {
+				artist = artistService.selectMember(principalDetails.getArtistVO().getUser_num());
+				log.debug("<<아티스트상세 정보>> : " + artist);
+			}
+		}
+		
+		// member와 artist 중 하나라도 존재하면 해당 정보를 모델에 담음
+		if (member instanceof MemberVO) {
+			model.addAttribute("member", member);
+		} else {
+			model.addAttribute("member", artist);
+		}
+		if (member instanceof MemberVO) {
+			model.addAttribute("isMemberVO", true);
+		} else {
+			model.addAttribute("isMemberVO", false);
+			model.addAttribute("artistVO", artist); // artistVO를 추가
+		}
+		return "mypage";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myPage1")
 	public String myInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 	    // 멤버와 아티스트 정보를 각각 조회
@@ -283,7 +319,6 @@ public class MemberController {
 	            log.debug("<<아티스트상세 정보>> : " + artist);
 	        }
 	    }
-
 	  
 	    // member와 artist 중 하나라도 존재하면 해당 정보를 모델에 담음
 	    if (member instanceof MemberVO) {

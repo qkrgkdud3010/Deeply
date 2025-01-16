@@ -86,23 +86,6 @@ private ArtistService artistService;
 		return null;
 		
 	}
-	
-	/*=================
-     * 마이페이지
-    =================*/
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/artiInfo")
-    public String artiInfo(@AuthenticationPrincipal 
-    		PrincipalDetails principalDetails,
-    		Model model) {
-    	
-    	//회원정보
-    	ArtistVO artiInfo = artistService.selectMember(principalDetails.getArtistVO().getUser_num());
-    	log.debug("<<회원상세 정보>> : " + artiInfo);
-    	
-    	model.addAttribute("artiInfo", artiInfo);
-    	return "artiInfo";
-    }
 
 	
 }
