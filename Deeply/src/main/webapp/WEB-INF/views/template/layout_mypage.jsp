@@ -19,7 +19,7 @@
 			<tiles:insertAttribute name="nav"/>
 		</div>
 		<div id="page_body">
-			<tiles:insertAttribute name="body"/>
+			<tiles:insertAttribute name="myInfo"/>
 		</div>
 	</div>
 	<div id="main_footer" class="page-clear">
