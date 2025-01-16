@@ -35,6 +35,6 @@ public interface ItemService {
 	
 	//----------장바구니-------------
 	public void deleteCart(Long Cart_num);
-	public int insertCart(CartVO cartVO);
-	public List<CartVO> selectCart(Map<String,Object> map);
+	public int insertCart(CartVO cart);
+	public List<CartVO> selectCart(long user_num);
 }

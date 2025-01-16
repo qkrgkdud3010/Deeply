@@ -30,9 +30,7 @@
 <c:if test="${!empty cart.item_num}">
 <div class="item-info">
 	<div class="box-shadow">
-		<img
-			src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-			class="items-img">
+		<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="items-img">
 	</div>
 	<div class="box-shadow">
 		<ul>
@@ -41,7 +39,8 @@
 			<li>가격 : ${item.item_price}원</li>
 			<li>회원당 최대 3개까지 구매가능합니다.</li>
 		</ul>
-		<div class="quantity-container">
+		<c:forEach var="item" items="${carts}">
+			<div class="quantity-container">
 			<div class="quantity-name">${item.item_name}</div>
 			<div class="v-center">
 				<div class="quantity-box">
@@ -50,19 +49,14 @@
 					<button class="quantity-btn a-center" id="plus_btn">+</button>
 				</div>
 				<div class="price-box">
-					<div class="price-div" id="price_total"
-						data-price="${item.item_price}">
-						<fmt:formatNumber value="${item.item_price}" type="number"
-							groupingUsed="true" />원
+					<div class="price-div" id="price_total" data-price="${item.total_price}">
+						<fmt:formatNumber value="${item.item_price}" type="number" groupingUsed="true" />원
 					</div>
 				</div>
 			</div>
-			<input type="hidden" name="item_num" id="item_num"
-				data-num="${item.item_num}">
-		</div>
-		<input type="button" value="장바구니 추가"
-			onclick="location.href='/item/main'"> <input type="button"
-			id="order_btn" value="바로 구매하기">
+			<input type="hidden" name="item_num" id="item_num" data-num="${item.item_num}">
+			</div>
+		</c:forEach>
 	</div>
 </div>
 </c:if>

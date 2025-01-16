@@ -151,17 +151,23 @@
 			cart_num,
 			item_num,
 			user_num,
+			reg_date,
 			order_quantity)
 		VALUES(
 			cart_num_seq.nextval,
 			#{item_num},
 			#{user_num},
+			sysdate,
 			#{order_quantity})
 	</insert>
 	
 	<!-- 장바구니 목록 가져오기 -->
 	<select id="selectCart" resultType="cartVO">
-		SELECT 
+		SELECT *
+		FROM shop_cart 
+		JOIN shop_item
+		USING (item_num)
+		WHERE shop_cart.user_num = #{user_num}
 	</select>
 
 

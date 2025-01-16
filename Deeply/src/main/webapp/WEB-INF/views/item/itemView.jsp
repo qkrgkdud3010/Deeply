@@ -10,8 +10,15 @@
 </sec:authorize>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/shop.js"></script>
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 
 <div class="main-div item-main main-container">
+	<div class="addCart-alert" id="addCart_alert">
+		<div class="x-btn" id="alert_x_btn">x</div>
+		<div>상품을 장바구니에 추가하였습니다</div>
+		<a href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기-></a>
+	</div>
 	<%-- 아티스트 계정으로 로그인 시작 --%>
 	<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
 	${item.item_num}
@@ -44,7 +51,7 @@
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
 	
-		<div class="main-div content-container"> <input type="button" value="장바구니" onclick="location.href='/item/cart'">
+		<div class="main-div content-container"> <input type="button" value="장바구니" onclick="location.href='/item/cart?user_num=${principal.memberVO.user_num}'">
 	<%-- 비로그인, 아티스트 계정으로 로그인 시작 --%>
 		<c:if
 			test="${!empty principal.artistVO}">
@@ -105,9 +112,11 @@
 								</div>
 							</div>
 						</div>
-						<input type="hidden" name="item_num" id="item_num" data-num="${item.item_num}">
+						<input type="hidden" name="item_num" id="item_num" value="${item.item_num}" data-num="${item.item_num}">
 					</div>
-					<input type="button" value="장바구니 추가" onclick="location.href='/item/main'">
+					<input type="button" value="장바구니 추가" id="add_cart">
+					
+					
 					<input type="button" id="order_btn" value="바로 구매하기">
 				</div>
 			</div>

@@ -251,3 +251,30 @@ flex-direction:column;
 	width:100%;
 }
 
+.addCart-alert{
+	background:blue;
+	height:5vw;
+	width:25vw;
+	border-radius:10px;
+	opacity:70%;
+	color:white;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
+	position:absolute;
+	top:70%;
+	left:38%;
+	gap:1rem;
+	display:none;
+}
+
+.x-btn{
+	color:white;
+	font-size:1.2vw;
+	position:absolute;
+	right:5%;
+	top:3%;
+	cursor:pointer;
+}
+

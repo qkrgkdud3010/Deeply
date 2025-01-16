@@ -105,12 +105,12 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public int insertCart(CartVO cart) {
-		return 0;
+		return itemMapper.insertCart(cart);
 	}
 
 	@Override
-	public List<CartVO> selectCart(Map<String, Object> map) {
-		return null;
+	public List<CartVO> selectCart(long user_num) {
+		return itemMapper.selectCart(user_num);
 	}
 
 	

@@ -426,12 +426,12 @@ public class ItemController {
 	/*==============================
 	 * 			장바구니 
 	 * =============================*/
+	
+	//장바구니 목록
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/cart")
 	public String cart(
-	    @RequestParam(value = "item_num", required = false) Long item_num,
-	    @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
-	    CartVO cartVO,
+		long user_num,
 	    Model model,
 	    HttpServletRequest request,
 	    @AuthenticationPrincipal PrincipalDetails principal) throws IllegalStateException, IOException {
@@ -442,25 +442,16 @@ public class ItemController {
 			model.addAttribute("url",request.getContextPath() + "/item/main");
 			return "common/resultAlert";
 		}
-				
-	    Map<String, Object> map = new HashMap<>();
-
-	    if (item_num != null) {
-	        // cart_num 존재 시 해당 상품 추가
-	        map.put("item_num", item_num);
-	        map.put("quantity", quantity);
-	        
-	        model.addAttribute("cart",cartVO);
-
-	        // 장바구니에 해당 상품 추가 또는 업데이트 처리
-	        itemService.insertCart(cartVO);
-
+		
+		List<CartVO> carts = itemService.selectCart(user_num);
+		
+		model.addAttribute("carts", carts);
 	    
-	}
 
 	    return "itemCart"; // 장바구니 페이지로 이동
 	
 	}
+	
 }
 	
 	

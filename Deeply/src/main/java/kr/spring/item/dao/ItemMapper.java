@@ -47,7 +47,7 @@ public interface ItemMapper {
 	public void deleteCart(Long Cart_num);//장바구니에 담긴 상품 삭제
 	public int insertCart(CartVO cart);//장바구니 정보 등록
 	public List<CartVO> selectCart(long user_num);//장바구니 목록가져오기
-	
+
 	
 	//----------관리자(아티스트)-------------
 	//전체 주문 개수/검색 주문 개수
