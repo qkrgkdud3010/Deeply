@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.spring.item.dao.ItemMapper;
+import kr.spring.item.vo.CartVO;
 import kr.spring.item.vo.ItemVO;
 import kr.spring.item.vo.OrderVO;
 import kr.spring.member.vo.AgroupVO;
@@ -101,6 +102,18 @@ public class ItemServiceImpl implements ItemService{
 	public void deleteCart(Long Cart_num) {
 		
 	}
+
+	@Override
+	public int insertCart(CartVO cart) {
+		return 0;
+	}
+
+	@Override
+	public List<CartVO> selectCart(Map<String, Object> map) {
+		return null;
+	}
+
+	
 
 	
 

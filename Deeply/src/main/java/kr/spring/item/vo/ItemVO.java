@@ -30,7 +30,7 @@ public class ItemVO {
 	
 	private long group_num;
 	private String group_name; 				//아티스트 이름
-	private String group_photo;	//아티스크 사진
+	private String group_photo;	//아티스트 사진
 	private int rnum;
 	private int group_cnt;
 	

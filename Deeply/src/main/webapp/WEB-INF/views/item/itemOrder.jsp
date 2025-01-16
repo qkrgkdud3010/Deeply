@@ -9,11 +9,11 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
-<div class="main-div">
+<div class="order-div">
 	<span class="text-title">상품정보</span>
 	<hr class="custom-hr" noshade="noshade" width="100%">
-	<div class="quantity-container">
-		<div class="box-shadow">
+	<div class="order-quantity-container">
+		<div class="box-shadow2">
 			<img
 				src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
 				class="order-img">
@@ -30,15 +30,15 @@
 </div>
 
 <div class="order-info">
-
-
 	<span> 총 상품 금액 <fmt:formatNumber
-			value="${quantity * item.item_price}" type="number" groupingUsed="true" />원 
-			<c:if test="${quantity * item.item_price < 50000}"> + 배송비 3,000원</c:if>
+			value="${quantity * item.item_price}" type="number" groupingUsed="true" />원 + 배송비 
+			<c:if test="${quantity * item.item_price < 50000}"> + 3,000원</c:if>
+			<c:if test="${quantity * item.item_price >= 50000}">0원</c:if>
 	</span> 
 	<br>
 	<c:if test="${quantity * item.item_price < 50000}">
-		<span> 총 결제 금액 : <fmt:formatNumber
+		<span> 총 결제 금액 : </span>
+			<span class="order-info"><fmt:formatNumber
 				value="${quantity * item.item_price + 3000}" type="number" groupingUsed="true" />원
 		</span>
 	</c:if>
@@ -47,14 +47,14 @@
 				value="${quantity * item.item_price}" type="number" groupingUsed="true" />원
 		</span>
 	</c:if>
-
 </div>
+
 <form:form modelAttribute="orderVO" action="order" id="order_item" enctype="multipart/form-data">
 <form:hidden path="user_num" value="${principal.memberVO.user_num}"/>
 <form:hidden path="item_num" value="${item.item_num}"/>
 <form:hidden path="item_quantity" value="${quantity}"/>
 <form:hidden path="total_price" value="${quantity * item.item_price}"/>
-<div>
+<div class="order-div">
 	<span class="text-title">배송지 정보</span>
 	<hr class="custom-hr" noshade="noshade" width="100%">
 	<div>

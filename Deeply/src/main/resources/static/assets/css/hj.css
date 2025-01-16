@@ -71,13 +71,21 @@ li{
 
 
 .custom-hr{
-   border: none;
+    border: none;
     height: 1px;
     background: rgb(216, 216, 216); 
     position: relative;
     width: 100%;
     box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
-   
+}
+
+.custom-hr2{
+    border: none;
+    height: 1px;
+    background: rgb(216, 216, 216); 
+    position: relative;
+    width: 60%;
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
 }
 
 .text-title{
@@ -86,7 +94,25 @@ li{
 
 .order-info{
 	background:black;
-	height:30vx;
+	height:80px;
+	color:white;
+	font-size: 14px; 
+}
+
+.box-shadow2{
+	 box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); /* 뷰포트 비율 기반 */
+	 height:10vw;
+	 width:10vw;
+}
+
+.order-div{
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+
 }
 
 /* 교환/반품 규정  */
@@ -112,6 +138,16 @@ li{
 	gap:2rem;	
 }
 
+.order-quantity-container{
+	margin-left:8%;
+	width:45vw;
+	height:15vw;
+	position:relative;
+	border:1px solid black;
+	border-radius:5px;
+	display:flex;
+	align-items:center;
+}
 /*
 상품 수정
 */
@@ -202,5 +238,16 @@ li{
 	height:1.5vw;
 	margin-left:35%;
 	font-weight:bold;
+}
+
+/* 장바구니 */
+.cart-img{
+	width:4vw;
+	height:4vw;
+}
+
+.empty-div{
+	height:5vw;
+	width:100%;
 }
 

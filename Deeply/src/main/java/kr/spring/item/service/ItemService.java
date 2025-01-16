@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.item.vo.CartVO;
 import kr.spring.item.vo.ItemVO;
 import kr.spring.item.vo.OrderVO;
 import kr.spring.member.vo.AgroupVO;
@@ -34,4 +35,6 @@ public interface ItemService {
 	
 	//----------장바구니-------------
 	public void deleteCart(Long Cart_num);
+	public int insertCart(CartVO cartVO);
+	public List<CartVO> selectCart(Map<String,Object> map);
 }

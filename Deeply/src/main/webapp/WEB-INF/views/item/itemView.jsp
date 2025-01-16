@@ -11,7 +11,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/shop.js"></script>
 
-<div class="main-div item-main main-container">검정색 큰 박스
+<div class="main-div item-main main-container">
 	<%-- 아티스트 계정으로 로그인 시작 --%>
 	<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
 	${item.item_num}
@@ -44,7 +44,7 @@
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
 	
-		<div class="main-div content-container"> 흰색 박스
+		<div class="main-div content-container"> <input type="button" value="장바구니" onclick="location.href='/item/cart'">
 	<%-- 비로그인, 아티스트 계정으로 로그인 시작 --%>
 		<c:if
 			test="${!empty principal.artistVO}">

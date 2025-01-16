@@ -1,4 +1,7 @@
 $(function () {
+	/* =========================
+	 *  사진 등록시 이미지 바로 띄우기
+	 * ========================= */
 	let quantity = 1;
 	
 	$('#upload_btn').click(function(e){
@@ -23,6 +26,10 @@ $(function () {
 						
 		};		
 	});
+	
+	/* ======================
+	 *  상품 수량 변경 +,- 이용
+	 * ====================== */
 	
 	$('#minus_btn').click(function(){
 	    
@@ -52,7 +59,9 @@ $(function () {
 	    $('#price_total').html(formatNumber(totalPrice) + '원');
 	});
 
-	// 숫자에 쉼표를 추가하는 함수
+	/* ======================
+	 *  숫자 세자리마다 , 넣어짐
+	 * ====================== */
 	function formatNumber(num) {
 	    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
@@ -61,5 +70,9 @@ $(function () {
 		const item_num = $('#item_num').data('num');
 		location.href='../item/order?item_num='+item_num+'&quantity='+quantity;
 	});
+	
+	/* ======================
+	 *  장바구니 바로 추가
+	 * ====================== */
 	
 });

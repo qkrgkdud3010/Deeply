@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.item.vo.CartVO;
 import kr.spring.item.vo.ItemVO;
 import kr.spring.item.vo.OrderVO;
 import kr.spring.member.vo.AgroupVO;
@@ -44,6 +45,8 @@ public interface ItemMapper {
 	
 	//----------장바구니-------------
 	public void deleteCart(Long Cart_num);//장바구니에 담긴 상품 삭제
+	public int insertCart(CartVO cart);//장바구니 정보 등록
+	public List<CartVO> selectCart(long user_num);//장바구니 목록가져오기
 	
 	
 	//----------관리자(아티스트)-------------
