@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace ="kr.spring.alarm.dao.AlarmMapper">
+
+<!--채팅방 만들기 -->
+	<insert id ="insertReplyAlarm" parameterType="alarmVO">
+	
+		INSERT INTO alarm(
+		al_num,
+		user_num,
+		al_title, 
+		al_kind)
+		SELECT
+			alarm_seq.nextval,
+			#{user_num},
+			letter_title,
+			3
+		FROM(
+			SELECT user_num, letter_title
+			FROM reply
+			ORDER BY post_date ASC
+			FETCH FIRST 2 ROWS ONLY
+		)
+		
+	</insert>
+
+
+</mapper>
