@@ -89,7 +89,7 @@ console.log(userNum);  // 제대로 값이 출력되는지 확인
 	        const response = await PortOne.requestPayment({
 	            storeId: "store-e9d5634a-49fe-4954-a880-a860d3b70483",  // 상점 ID
 	            channelKey: "channel-key-dc06b7ca-d864-444d-987b-349a97f1be61",  // 채널 키
-	            paymentId: `23`,  // 결제 고유 ID (랜덤 생성)
+	            paymentId: crypto.randomUUID(),  // 결제 고유 ID (랜덤 생성)
 	            orderName: "Deeply카드결제",  // 상품명
 	            totalAmount: finalPrice,  // 결제 총 금액을 finalPrice로 설정
 	            currency: "CURRENCY_KRW",  // 통화 (KRW)

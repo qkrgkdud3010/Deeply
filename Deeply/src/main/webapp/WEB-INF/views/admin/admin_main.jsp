@@ -8,7 +8,7 @@
 		<ul>
 			<li><a href="admin_list">사용자 조회</a></li>
 			<li><a href="admin_artist">아티스트 정보 조회</a></li>
-			<li><a href="#">이벤트 관리</a></li>
+			<li><a href="/charge/payment?pay_price=1">이벤트 관리</a></li>
 			<li><a href="#">사이트 관리</a></li>
 			<li><a href="#">1대1문의 관리</a></li>
 		</ul>
