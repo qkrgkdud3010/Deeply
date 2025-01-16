@@ -49,7 +49,6 @@ public class VideoController {
     ) {
         // 1. group_num으로 카테고리 조회
         List<VideoCategoryVO> categories = videoCategoryService.getCategoriesByGroupNum(groupNum);
-        System.out.println("Categories fetched: " + (categories != null ? categories.size() : 0));
         categories.forEach(category -> System.out.println("Category: " + category));
 
         // 2. 카테고리별 영상 조회
@@ -70,7 +69,15 @@ public class VideoController {
         return "groupVideoList"; // JSP 파일 이름
     }
 
-    // POST /artist/videos/upload (로그인 필요)
+ // 영상 업로드 페이지 (로그인 필요)
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/upload_form")
+    public String showUploadPage() {
+        System.out.println("==> showUploadPage called");
+        return "videoUpload"; // Tiles 정의 이름
+    }
+
+    // 영상 업로드 처리 (로그인 필요)
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/upload")
     public String uploadVideo(
@@ -79,36 +86,36 @@ public class VideoController {
         @RequestParam(value = "isExclusive", defaultValue = "0") int isExclusive,
         @AuthenticationPrincipal PrincipalDetails principal) {
 
-        log.info("==> uploadVideo called with mediaUrl: {}", mediaUrl);
+        System.out.println("==> uploadVideo called with mediaUrl: " + mediaUrl);
 
-        // 로그인 사용자 정보 가져오기
+        // 1) 로그인 사용자 정보 가져오기
         ArtistVO artist = principal.getArtistVO();
-        if (artist == null) {
-            log.warn("Authenticated user does not have ArtistVO");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용자 정보가 유효하지 않습니다.");
-        }
-        log.debug("Logged-in artist: {}", artist);
+        System.out.println("Logged-in artist: " + artist);
 
-        // group_name으로 agroup 정보(AgroupVO) 조회
+        // 2) group_name으로 agroup 정보(AgroupVO) 조회
         AgroupVO agroup = artistMapper.findByGroupName(artist.getGroup_name());
         if (agroup == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 group_name이 agroup 테이블에 존재하지 않습니다.");
+            throw new IllegalArgumentException("해당 group_name이 agroup 테이블에 존재하지 않습니다.");
         }
-        log.debug("Agroup: {}", agroup);
+        System.out.println("Agroup: " + agroup);
 
-        // video에 필요한 값 채우기
+        // 3) video에 필요한 값 채우기
         video.setArtistId(artist.getUser_num());
         video.setGroupNum(agroup.getGroup_num());
         video.setIsExclusive(isExclusive);
 
         // mediaUrl 설정
-        video.setMediaUrl((mediaUrl != null && !mediaUrl.trim().isEmpty()) ? mediaUrl.trim() : "");
-        log.debug("Final video object before save: {}", video);
+        if (mediaUrl != null && !mediaUrl.trim().isEmpty()) {
+            video.setMediaUrl(mediaUrl.trim());
+        } else {
+            video.setMediaUrl("");
+        }
+        System.out.println("Final video object before save: " + video);
 
-        // DB에 영상 정보 저장
+        // 4) DB에 영상 정보 저장
         videoService.insertVideo(video);
 
-        return "redirect:/artist/videos"; // 리디렉션 경로 변경
+        return "redirect:/videos";
     }
 
     // GET /artist/videos/page?videoId=37&group_num=61 (로그인 필요)
@@ -126,10 +133,6 @@ public class VideoController {
 
         // 영상 정보 조회
         VideoVO video = videoService.selectVideo(videoId);
-        if (video == null) {
-            log.warn("Video not found with videoId: {}", videoId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Video not found");
-        }
 
         // YouTube URL 변환
         String youtubeLink = convertToEmbedUrl(video.getMediaUrl());
@@ -166,6 +169,6 @@ public class VideoController {
     @GetMapping("/test")
     public String testPage(Model model) {
         model.addAttribute("message", "Test Page Loaded");
-        return "test_page"; // JSP 파일 이름
+        return "videoUpload"; // JSP 파일 이름
     }
 }
