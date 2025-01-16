@@ -59,4 +59,19 @@ create sequence chatmsg_seq;
 
 ALTER TABLE chatroom
 ADD CONSTRAINT fk_auser_num FOREIGN KEY (auser_num)references
- auser (user_num);s
+ auser (user_num);
+ 
+ 
+ create table alarm(
+ 
+ al_num number not null,
+ user_num number not null, 
+ al_title varchar2(100) not null,
+ al_kind number(5) not null,
+ al_status number(1) default 0 not null,
+ constraint alarm_pk primary key (al_num),
+ constraint alarm_fk foreign key (user_num) references duser (user_num)
+
+ );
+ 
+ create sequence alarm_seq;
