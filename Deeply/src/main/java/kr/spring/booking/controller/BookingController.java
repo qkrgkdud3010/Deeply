@@ -75,10 +75,6 @@ public class BookingController {
 			log.debug("Default dateRange : " + dateRange);
 		}
 		
-		if(status != null) {
-			map.put("status", status);
-		}
-		
 		log.debug("dateRange: " + dateRange);
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
@@ -213,7 +209,7 @@ public class BookingController {
 		bookingService.registerEvent(eventVO);
 		
 		model.addAttribute("message", "공연 등록을 성공하였습니다");
-		model.addAttribute("url",request.getContextPath() + "/booking/list?artist_num="+group_num);
+		model.addAttribute("url",request.getContextPath() + "/booking/list?group_num="+group_num);
 		    
 		return "common/resultAlert";
 	}

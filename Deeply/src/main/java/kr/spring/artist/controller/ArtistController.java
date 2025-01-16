@@ -114,14 +114,14 @@ public class ArtistController {
 		
 		if(!origin_name.equals(agroupVO.getGroup_name())) {
 			model.addAttribute("message", "아티스트 정보를 수정하였습니다. 아티스트 이름이 변경되었으니 정상적인 이용을 위해 로그아웃 후 재 로그인 해주세요");
-			model.addAttribute("url",request.getContextPath() + "/artist/detail?artist_num="+agroupVO.getGroup_num());
+			model.addAttribute("url",request.getContextPath() + "/artist/detail?group_num="+agroupVO.getGroup_num());
 			    
 			return "common/resultAlert"; 
 		}
 		
 		
 		model.addAttribute("message", "아티스트 정보를 수정하였습니다");
-		model.addAttribute("url",request.getContextPath() + "/artist/detail?artist_num="+agroupVO.getGroup_num());
+		model.addAttribute("url",request.getContextPath() + "/artist/detail?group_num="+agroupVO.getGroup_num());
 		    
 		return "common/resultAlert"; // 성공 시 리다이렉트
 	}

@@ -1,6 +1,29 @@
 $(function () {
 	let total = 0;
 	
+	$('.perf-img-btn').click(function(event){
+		event.preventDefault();
+		$('#event_upload').click();
+	 });
+	
+	 $('#event_upload').change(function(){
+		let my_photo = this.files[0];
+		if(!my_photo){
+		//선택을 취소하면 원래 처음 화면으로 되돌림
+			$('#preview_perfImg').attr('src',photo_path);
+			alert('파일 선택 안됨');
+			return;
+		}
+		//화면에서 이미지 미리보기
+		const reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+										
+		reader.onload=function(){
+			$('#preview_perfImg').attr('src',reader.result);		
+		};	
+	 });
+	 
+	
     $('.booking-item').click(function(){
 		$('.event-detail').css('display', 'block');
 		$.ajax({
@@ -33,7 +56,11 @@ $(function () {
 		$('.e-title').text(event.perf_title);
 		$('.e-date').text(event.perf_date);
 		$('.e-time').text(event.perf_time +" ~ "+event.end_time);
-		$('.e-period').text(event.perf_date + ' ~ ' + event.end_date);
+		if(event.end_date == null){
+			$('.e-period').text(event.perf_date);
+		}else{
+			$('.e-period').text(event.perf_date + ' ~ ' + event.end_date);	
+		}
 		$('.e-membership').text(event.mem_date);
 		$('.e-place').text(event.hall_name);
 		$('.e-desc').text(event.perf_desc);
@@ -186,4 +213,6 @@ $(function () {
 	 $('.register-event-btn').click(function(e){
 		e.preventDefault();
 	 });
+	 
+	 
 });

@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/booking.js"></script>
+<sec:authorize access="isAuthenticated()"><sec:authentication property="principal" var="principal" /></sec:authorize>
 <!-- Flatpickr -->
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -15,7 +17,7 @@
 		<div class="booking-title bold-title vertical-center">공연 예매</div>
 		<div class="booking-list-container">
 			<form id="booking_filter" action="list" method="get">
-			<input type="hidden" name="artist_num" value="${artist_num}">
+			<input type="hidden" name="group_num" value="${artist_num}">
 			<div class="booking-date-container vertical-center">
 				<img class="left-1" id="calendar_img" src="${pageContext.request.contextPath}/assets/image_bundle/calendar.svg">
 				<div class="booking-date left-1">
@@ -28,7 +30,9 @@
 					<button class="booking-btn white-btn left-1" data-value="membership">선예매 중</button>
 					<input type="hidden" id="event_status" name="status">
 				</div>
+				<c:if test="${!empty principal.artistVO && principal.artistVO.group_name == group_name}">
 				<button class="register-event-btn align-center bold-title" onclick="location.href='register?group_num=${artist_num}'">공연 등록</button>
+				</c:if>
 			</div>
 			</form>
 			<div class="booking-list top-1">

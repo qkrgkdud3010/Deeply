@@ -4,7 +4,13 @@
 ===============================
  */
  
- 
+
+/*그림자========================*/
+.shadow-effect{
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+
 /* 기본 태그 스타일 설정 ======================*/
 li {
     list-style-type: none; /* 기본 데코레이션 제거 */
@@ -128,7 +134,9 @@ a {
 .left-10{
 	margin-left:10%;
 }
-
+.left-13{
+	margin-left:13%;
+}
 .left-20{
 	margin-left:20%;
 }
@@ -162,6 +170,21 @@ a {
 }
 
 /* 크기 설정 ====================*/
+.width-5vw{
+	width:5vw;
+}
+.width-10vw{
+	width:10vw;
+}
+.width-15vw{
+	width:15vw;
+}
+.width-20vw{
+	width:20vw;
+}
+.width-30vw{
+	width:30vw;
+}
 .width-10{
 	width:10%;
 }
@@ -222,6 +245,12 @@ a {
 }
 .height-0_2{
 	height:0.2vw;
+}
+.height-1{
+	height:1vw;
+}
+.height-2{
+	height:2vw;
 }
 .height-3{
 	height:3vw;
@@ -297,7 +326,7 @@ a {
  .alist-img{
  	object-fit:cover;
  	width:100%;
- 	height:auto;
+ 	height:80%;
  }
  
  
@@ -801,7 +830,7 @@ a {
     width:100%;
     height:100%;
     object-fit:cover;
-    object-position:center;
+    object-position:top;
     opacity:0.4;
     filter: brightness(0.8); /* 밝기 조절 (0~1) */
     z-index: 3; /* 가장 뒤에 배치 */
@@ -963,28 +992,27 @@ a {
 .event-register-main{
 	margin:0 auto;
 	width:80%;
-	background:grey;
 }
 .register-date{
 	width:100%;
-	min-height:10vw;	
+	min-height:20vw;	
 }
 .register-detail{
 	width:100%;
-	min-height:10vw;
+	min-height:20vw;	
 }
 .register-img{
 	width:100%;
-	min-height:10vw;
+	min-height:20vw;
 }
 .register-booking{
 	width:100%;
-	min-height:10vw;
+	min-height:20vw;
 }
 
 .dur-btn{
-	width:6vw;
-	height:2vw;
+	width:7vw;
+	height:3vw;
 	background:none;
 	border:2px solid black;
 	border-radius:10px;
@@ -996,6 +1024,39 @@ a {
 
 .event-end-date{
 	display:none;
+}
+
+.perf-desc-textarea{
+	height:15vw;
+	border:1px solid black;
+}
+
+.perf-register-previewImg{
+	width:40vw;
+	height:20vw;
+	margin-top:1%;
+	overflow:hidden;
+	
+}
+
+#preview_perfImg{
+	width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:top;
+}
+
+.perf-img-btn{
+	width:6vw;
+	height:2vw;
+	background:none;
+	border:1px solid black;
+	border-radius:10px;
+	font-size:0.8vw;
+	font-weight:bold;
+}
+#event_upload{
+	display:none;	
 }
 
 /*===========================

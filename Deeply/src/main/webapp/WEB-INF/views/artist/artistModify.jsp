@@ -50,6 +50,6 @@
 	</div>
 	</form:form>
 	<div class="modify-bottom-div">
-	<button class="modify-cancel-btn" onclick="location.href='${pageContext.request.contextPath}/artist/detail?artist_num=${agroupVO.group_num}'">목록</button>
+	<button class="modify-cancel-btn" onclick="location.href='${pageContext.request.contextPath}/artist/detail?group_num=${agroupVO.group_num}'">목록</button>
 	</div>
 </div>

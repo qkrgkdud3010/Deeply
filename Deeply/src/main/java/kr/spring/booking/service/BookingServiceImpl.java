@@ -57,6 +57,13 @@ public class BookingServiceImpl implements BookingService{
 		
 	}
 
+	@Override
+	public void updatePerformanceStatus() {
+		bookingMapper.updatePerformanceStatus();
+		
+	}
+	
+
 	
 
 }

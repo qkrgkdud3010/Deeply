@@ -30,5 +30,7 @@ public interface BookingMapper {
 	public List<SeatVO> selectSeatByHallNum(long hall_num);
 	//공연 정보 등록
 	public void registerEvent(EventVO eventVO);
+	//공연 상태 자동 업데이트
+	public void updatePerformanceStatus();
 }
  
