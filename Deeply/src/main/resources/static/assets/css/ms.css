@@ -347,7 +347,7 @@ footer .footer-img{
 	margin:0 auto;
 }
 .submit-1{
-	width:300px; height:50px; background-color:black; color:white;
+	width:600px; height:50px; background-color:black; color:white;
 	border-radius:9px;
 	line-height:50px;
 	text-align:center;
@@ -355,3 +355,23 @@ footer .footer-img{
 	margin:0 auto;
 }
 /*결제창 끝*/
+.userBal{
+	width:800px;
+	margin:0 auto;
+}
+.userBal button{
+	width:800px;
+	height:50px;
+	background-color:white;
+margin-bottom:30px;
+font-size:16px;
+}
+.myUserBal{
+	text-align:center;
+}
+/*예치금 충전 시작*/
+.userBalForm{
+	margin:0 auto;
+	width:800px;
+}
+/*예치금 충전 끝*/

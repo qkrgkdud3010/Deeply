@@ -9,7 +9,7 @@
 	<hr>
 	<h2>결제 방식</h2>
 	<form>
-		<div>
+		<div style="display:none;">
 			<label for="usePoints">사용할 포인트: </label> <input type="number"
 				step="1000" id="usePoints" value="0" min="0" /> 원
 		</div>
@@ -22,12 +22,12 @@
 		<div class="payment-2">
 			<h2>합계금액</h2>
 <div id="payment-info" data-user-num="${memberVO.user_num}"></div>
-			<div style="width: 300px;">
-				<div style="float: left;">기본 결제 금액:</div>
+			<div style="width: 300px; display:none;">
+			
 				<div style="float: left;" id="originalPrice">${payPrice}원</div>
 			</div>
 
-			<p style="clear: both;">
+			<p style="clear: both; display:none;">
 				사용한 포인트: <span id="usedPoints">0</span> 원
 			</p>
 			<p style="clear: both;">
@@ -113,32 +113,36 @@ console.log(userNum);  // 제대로 값이 출력되는지 확인
 
 	        if (response.code !== undefined) {
 	            // 오류 발생 시
-	            alert(response.message);
+	            alert("거래 취소 ");
+	            const notified = await fetch(`${pageContext.request.contextPath}/charge/complete`, {
+		            method: "POST",
+		            headers: { "Content-Type": "application/json",
+		                'X-CSRF-TOKEN': csrfToken },
+		            body: JSON.stringify({
+		                totalAmount: finalPrice,
+		                user_num: userNum
+		            }),
+		        });
+		        window.location.href = "/main/main";
 	        } else {
 	            // 결제 요청이 성공한 경우
-	            alert("결제 요청이 성공적으로 전송되었습니다.");
+	            alert("결제 성공 메인으로 이동합니다!");
+	            // 결제 완료 후 서버 처리 부분
+		     
 	        }
 	    
-	        // 결제 완료 후 서버 처리 부분
-	        const notified = await fetch(`${pageContext.request.contextPath}/charge/complete`, {
-	            method: "POST",
-	            headers: { "Content-Type": "application/json",
-	                'X-CSRF-TOKEN': csrfToken },
-	            body: JSON.stringify({
-	                totalAmount: finalPrice,
-	                user_num: userNum
-	            }),
-	        });
+	      
 
 	        if (notified.ok) {
-	            alert("결제 완료 후 서버 처리 성공!");
+	            alert("결제 성공 메인으로 이동합니다");
+	          
+
 	        } else {
 	        	 const errorResponse = await notified.json();
 	        	    console.error("Error Response:", errorResponse);
 	            alert("결제 완료 후 서버 처리 실패!");
 	        }
 	    } catch (error) {
-	        alert("에러가 발생했습니다: " + error.message);
 	    }
 	});
 	console.log(finalPrice, userNum); // 실제 값이 어떻게 전달되는지 확인

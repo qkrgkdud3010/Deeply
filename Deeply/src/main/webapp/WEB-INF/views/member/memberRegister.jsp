@@ -262,7 +262,7 @@ $(function(){
 
 
 </script>
-<div class="main-div" style="justify-content: center; width:1400px; margin-top: 80px; margin-bottom:50px;" >
+<div class="main-div" style="justify-content: center; width:1400px; margin-top: 80px; margin-bottom:185px;" >
 	<div class="register-wrap" style="margin:0 auto;">
 		<div class="register-image">
 		<img alt="" src="${pageContext.request.contextPath}/assets/image_bundle/register.png">

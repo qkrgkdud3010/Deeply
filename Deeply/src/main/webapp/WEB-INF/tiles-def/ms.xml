@@ -102,13 +102,15 @@
     </definition>
     
 
-	    <definition name="chargeMoney" extends="main">
+	    <definition name="userBal" extends="main">
     	<put-attribute name="title" value="충전"/>
     	<put-attribute name="css"
     	       value="/WEB-INF/views/member/memberCSS.jsp"/>  
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/payment/chargeMoney.jsp"/>                         
+    	  value="/WEB-INF/views/payment/userBal.jsp"/>                         
     </definition>
+    
+    
 </tiles-definitions>
 
 

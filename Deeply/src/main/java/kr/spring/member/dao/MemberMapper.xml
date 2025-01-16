@@ -34,9 +34,9 @@
   		  id,
   		  auth,
   		  nick_name,
-  		 
   		  passwd_hash,
-  		  email
+  		  email,
+  		  user_bal
   		FROM duser JOIN duser_detail
   		USING (user_num)
   		WHERE id= #{id}                       

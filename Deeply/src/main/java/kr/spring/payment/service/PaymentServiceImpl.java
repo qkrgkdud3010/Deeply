@@ -24,5 +24,13 @@ public class PaymentServiceImpl implements PaymentService{
         payment.setPAY_NUM(pay_num);
 		paymentMapper.insertOrder(payment);
 	}
+
+
+
+	@Override
+	public void updateBal(PaymentVO payment) {
+		paymentMapper.updateBal(payment);
+		
+	}
 	
 	}

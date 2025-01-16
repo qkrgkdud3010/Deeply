@@ -1,6 +1,10 @@
 package kr.spring.payment.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -10,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
@@ -33,7 +39,6 @@ public class PaymentController {
 	 MemberVO memberVO = principal.getMemberVO();
 		model.addAttribute("memberVO", memberVO);
 		model.addAttribute("payPrice", payPrice);
-		
 		return "payment";
 	}
 	
@@ -45,12 +50,12 @@ public class PaymentController {
 	            PaymentVO payment = new PaymentVO();
 	           
 	            payment.setTotalAmount(request.getTotalAmount());
-	 
 	            payment.setUSER_NUM(request.getUser_num());
-
+	            paymentService.updateBal(payment);
 	            // 결제 처리 서비스 호출
 	            paymentService.insertOrder(payment);
-
+	            
+	           
 	            return ResponseEntity.ok("결제 완료 처리 성공");
 	        } catch (Exception e) {
 	        	  e.printStackTrace(); // 예외 출력
@@ -58,6 +63,15 @@ public class PaymentController {
 	        }
 	    }
 	
+	@GetMapping("/userBal")
+	public String userBal(@AuthenticationPrincipal PrincipalDetails principal,Model model) {
+		 	MemberVO memberVO = principal.getMemberVO();
+		 	 int userBal = memberVO.getUser_bal();
+			model.addAttribute("memberVO", memberVO);
+			model.addAttribute("user_bal",userBal);
+			log.debug("User balance: " + userBal);
+		return "userBal";
+	}
 	
-	
+
 }

@@ -8,7 +8,7 @@
 
 <!-- 회원가입 시작 -->
 
-<div class="main-div" style="justify-content: center; width:1400px; margin-top: 80px;">
+<div class="main-div" style="justify-content: center; width:1400px; margin-top: 80px;margin-bottom:185px;">
 	<script type="text/javascript">
 
 var csrfToken = $('meta[name="_csrf"]').attr('content');
