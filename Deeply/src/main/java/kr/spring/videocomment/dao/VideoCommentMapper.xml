@@ -5,31 +5,5 @@
 
 <mapper namespace="kr.spring.videocomment.dao.VideoCommentMapper">
 
-    <!-- 댓글 추가 -->
-    <insert id="insertComment" parameterType="kr.spring.videocomment.vo.VideoCommentVO">
-        INSERT INTO video_comments
-        (comment_id, user_num, video_id, parent_comment_id, comment_content, likes, dislikes, created_at)
-        VALUES
-        (video_comments_seq.NEXTVAL, #{userNum}, #{videoId}, #{parentCommentId}, #{commentContent}, #{likes}, #{dislikes}, CURRENT_TIMESTAMP)
-    </insert>
-
-    <!-- 특정 비디오의 댓글 목록 조회 -->
-    <select id="getCommentsByVideoId" parameterType="long" resultType="kr.spring.videocomment.vo.VideoCommentVO">
-        SELECT 
-            comment_id AS commentId,
-            user_num AS userNum,
-            video_id AS videoId,
-            parent_comment_id AS parentCommentId,
-            comment_content AS commentContent,
-            likes,
-            dislikes,
-            created_at AS createdAt
-        FROM 
-            video_comments
-        WHERE 
-            video_id = #{videoId}
-        ORDER BY 
-            created_at DESC
-    </select>
 
 </mapper>

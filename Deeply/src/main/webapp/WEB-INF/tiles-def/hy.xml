@@ -26,7 +26,7 @@
 	</definition>
 	
 	<!-- video_page 정의 -->
-    <definition name="video_page" extends="main">
+    <definition name="videoPage" extends="main">
     	<put-attribute name="title" value="영상 페이지" />
 	    <put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp" />
         <put-attribute name="body" value="/WEB-INF/views/video/video_page.jsp" />

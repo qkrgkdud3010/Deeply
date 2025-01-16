@@ -1,17 +1,15 @@
 package kr.spring.videocomment.dao;
 
-import java.util.List;
-
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import kr.spring.videocomment.vo.VideoCommentVO;
 
 @Mapper
 public interface VideoCommentMapper {
-    // 댓글 추가
-    void insertComment(VideoCommentVO comment);
-    
-    // 특정 비디오의 댓글 목록 조회
-    List<VideoCommentVO> getCommentsByVideoId(@Param("videoId") Long videoId);
+	
+	@Insert("INSERT INTO video_comments (comment_id, video_id, user_num, comment_content, parent_comment_id, likes, dislikes) " +
+            "VALUES (video_comments_seq.NEXTVAL, #{videoId}, #{userNum}, #{commentContent}, #{parentCommentId}, #{likes}, #{dislikes})")
+    void insertComment(VideoCommentVO commentVO);
+	
 }

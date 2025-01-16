@@ -172,8 +172,8 @@
     
     <!--양방향 통신을 위한 웹소켓 추가-->
     <dependency>
-    	<groupId>org.springframework.boot</groupId>
-   		 <artifactId>spring-boot-starter-websocket</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-websocket</artifactId>
 	</dependency>
     
     <!--김혜림 추가 부분 끝-->
