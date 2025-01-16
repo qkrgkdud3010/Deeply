@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,7 @@ import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.payment.service.FanService;
 import kr.spring.payment.vo.FanVO;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -149,8 +149,6 @@ public class FanController {
     }
     
     /*
-    
-    /*
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myArtistList")
 	public String getMyArtist(@RequestParam(defaultValue="1")int pageNum,
@@ -165,7 +163,7 @@ public class FanController {
 		int count = fanService.countMyArtist(user_num);
 
 		//페이지 처리
-		PagingUtil page = new PagingUtil(null,null,pageNum, count, 20, 10, "myArtistList");
+		PagingUtil page = new PagingUtil(null,null,pageNum, count, 20, 5, "myArtistList");
 
 		List<FanVO> myArtistList = null;
 

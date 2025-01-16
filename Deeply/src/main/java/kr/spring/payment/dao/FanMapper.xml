@@ -19,7 +19,7 @@
         VALUES (fan_seq.nextval, sysdate, sysdate + interval '1' month, #{fan_artist}, #{user_num})
     </insert>
 
-	<!-- 내가 팬 맺은 아티스트 리스트
+	<!-- 내가 팬 맺은 아티스트 리스트 -->
 	<select id="getMyArtist" parameterType="map" resultType="FanVO">
 		SELECT
 			*
@@ -29,8 +29,8 @@
 			FROM (SELECT
 					*
 				FROM fan f
-				JOIN duser d ON f.user_num=d.user_num
-				LEFT OUTER JOIN duser_detail dd ON f.user_num=dd.user_num
+				JOIN duser d USING (user_num)
+				LEFT OUTER JOIN duser_detail dd USING (user_num)
 				JOIN auser a ON f.fan_artist=a.user_num
 				LEFT OUTER JOIN auser_detail ad ON f.fan_artist=ad.user_num
 				WHERE f.user_num=#{user_num} ORDER BY fan_start DESC)a)
@@ -38,13 +38,4 @@
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]>
 	</select>
-	<select id="selectFan" parameterType="map" resultType="fanVO">
-	    select * from fan f
-		join auser a on f.fan_artist=a.user_num
-		join auser_detail ad on f.fan_artist=ad.user_num
-		join duser du on f.user_num=du.user_num
-		join duser_detail dt on du.user_num=dt.user_num
-		WHERE f.user_num = #{user_num} and f.fan_artist=#{fan_artist}
-	</select>
-	-->
 </mapper>

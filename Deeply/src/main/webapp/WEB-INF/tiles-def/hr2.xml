@@ -60,6 +60,10 @@
     	<put-attribute name="title" value="아티스트 팬"/>
     	<put-attribute name="body" value="/WEB-INF/views/payment/artistFanJoin.jsp"/>
     </definition>
+     <definition name="myArtiList" extends="main">
+    	<put-attribute name="title" value="유저 멤버십 구독 내역"/>
+    	<put-attribute name="body" value="/WEB-INF/views/payment/myArtistList.jsp"/>
+    </definition>
     
 </tiles-definitions>
 

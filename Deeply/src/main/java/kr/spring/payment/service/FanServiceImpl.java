@@ -85,6 +85,16 @@ public class FanServiceImpl implements FanService{
 		fanMapper.noMoney(fan);
 	}
 
+	@Override
+	public List<FanVO> getMyArtist(Map<String, Object> map) {
+		return fanMapper.getMyArtist(map);
+	}
+
+	@Override
+	public Integer countMyArtist(Long user_num) {
+		return fanMapper.countMyArtist(user_num);
+	}
+
 
 
 
