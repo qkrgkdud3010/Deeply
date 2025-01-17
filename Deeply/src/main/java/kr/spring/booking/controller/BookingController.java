@@ -105,6 +105,7 @@ public class BookingController {
 			
 			list = bookingService.selectEventByArtistId(map);
 		}
+		
 		AgroupVO group = artistService.selectArtistDetail(group_num);
 		String group_name = group.getGroup_name();
 		
