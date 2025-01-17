@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import kr.spring.booking.vo.BookingVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
@@ -35,10 +36,15 @@ public class PaymentController {
 	private PaymentService paymentService;
 	
 	@GetMapping("/payment")
-	public String paymentMain(@RequestParam("pay_price") int payPrice ,@AuthenticationPrincipal PrincipalDetails principal,Model model) {
+	public String paymentMain(@RequestParam("pay_price") int payPrice ,
+							  @RequestParam(required=false) Long booking_num,					
+			@AuthenticationPrincipal PrincipalDetails principal,Model model) {
 	 MemberVO memberVO = principal.getMemberVO();
 		model.addAttribute("memberVO", memberVO);
 		model.addAttribute("payPrice", payPrice);
+		if(booking_num != null) {
+			model.addAttribute("booking_num", booking_num);
+		}
 		return "payment";
 	}
 	

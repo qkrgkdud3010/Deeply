@@ -21,8 +21,8 @@
 			<button class="dur-btn left-1" id="event_dur2">기간 공연</button>
 		</div>
 		<div class="top-5">
-			<p class="height-2"><form:label class="width-10vw bold-title" path="perf_date">공연 시작일</form:label><form:input class="white-btn height-2 width-15vw" path="perf_date"/><form:errors path="perf_date" cssClass="error-color"/></p>
-			<p class="event-end-date height-2"><form:label class="width-10vw bold-title" path="perf_date">공연 종료일</form:label><form:input class="white-btn height-2 width-15vw" path="end_date"/><form:errors path="end_date" cssClass="error-color"/></p>
+			<p class="height-2"><form:label class="width-10vw bold-title" path="perf_date">공연 시작일</form:label><form:input type="date" class="white-btn height-2 width-15vw" path="perf_date"/><form:errors path="perf_date" cssClass="error-color"/></p>
+			<p class="event-end-date height-2"><form:label class="width-10vw bold-title" path="perf_date">공연 종료일</form:label><form:input type="date" class="white-btn height-2 width-15vw" path="end_date"/><form:errors path="end_date" cssClass="error-color"/></p>
 			<p class="height-2"><form:label class="width-10vw bold-title" path="perf_time">공연 시작시간</form:label><form:input class="white-btn height-2 width-15vw" path="perf_time"/><form:errors path="perf_time" cssClass="error-color"/></p>
 			<p class="height-2"><form:label class="width-10vw bold-title" path="end_time">공연 종료시간</form:label><form:input class="white-btn height-2 width-15vw" path="end_time"/><form:errors path="end_time" cssClass="error-color"/></p>
 			<div class="height-2 vertical-center">
@@ -68,9 +68,9 @@
 	<div class="register-booking top-5">
 		<div class="font-1_5 width-15vw bold-title height-3 border-bottom vertical-center">예매 정보</div>
 		<div>
-			<p><form:label class="width-10vw bold-title top-5" path="book_date">예매 시작일</form:label><form:input class="white-btn height-2 width-15vw" path="book_date"/><form:errors path="book_date" cssClass="error-color"/></p>
-			<p><form:label class="width-10vw bold-title" path="booking_deadline">예매 종료일</form:label><form:input class="white-btn height-2 width-15vw" path="booking_deadline"/><form:errors path="booking_deadline" cssClass="error-color"/></p>
-			<p><form:label class="width-10vw bold-title" path="mem_date">선예매 시작일</form:label><form:input class="white-btn height-2 width-15vw" path="mem_date"/><form:errors path="mem_date" cssClass="error-color"/></p>
+			<p><form:label class="width-10vw bold-title top-5" path="book_date">예매 시작일</form:label><form:input type="date" class="white-btn height-2 width-15vw" path="book_date"/><form:errors path="book_date" cssClass="error-color"/></p>
+			<p><form:label class="width-10vw bold-title" path="booking_deadline">예매 종료일</form:label><form:input type="date" class="white-btn height-2 width-15vw" path="booking_deadline"/><form:errors path="booking_deadline" cssClass="error-color"/></p>
+			<p><form:label class="width-10vw bold-title" path="mem_date">선예매 시작일</form:label><form:input type="date" class="white-btn height-2 width-15vw" path="mem_date"/><form:errors path="mem_date" cssClass="error-color"/></p>
 			<p><form:label class="width-10vw bold-title" path="ticket_price">티켓 금액</form:label><form:input class="white-btn height-2 width-15vw" path="ticket_price"/><form:errors path="ticket_price" cssClass="error-color"/></p>
 			<p class="font-red">VIP좌석 금액은 기본 좌석 금액 기준 1.4배로 측정됩니다</p>
 		</div>

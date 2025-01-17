@@ -1,6 +1,18 @@
 $(function () {
 	let total = 0;
 	
+	const scrollTargetId = localStorage.getItem('scrollTarget');
+	   if (scrollTargetId) {
+	       const target = $(`.booking-category`);
+	       if (target.length) {
+				const elementPosition = target.offset().top;
+				window.scrollTo(0, elementPosition);
+	       }
+	       // 스크롤 후 로컬 스토리지에서 제거
+	       localStorage.removeItem('scrollTarget');
+	   }
+	
+	
 	$('.perf-img-btn').click(function(event){
 		event.preventDefault();
 		$('#event_upload').click();
@@ -178,7 +190,14 @@ $(function () {
 				console.log("선택된 날짜:", dateStr); // 선택된 날짜 출력
 				const formattedDate = dateStr.replace(' to ', ' ~ ');
 				$('#date-range').val(formattedDate);
-				$('#booking_filter').submit();
+				//$('#booking_filter').submit();
+				
+				// status를 전체 보기로 설정 (all)
+				const groupNum = $('#group_num').val(); // 그룹 번호 확인
+				const url = `/booking/list?group_num=${groupNum}&dateRange=${formattedDate}`;
+				window.location.href = url;
+				const targetId = $(`.booking-category`);
+				addScrollClass(targetId)
 			}
 			
 			
@@ -203,16 +222,29 @@ $(function () {
 	    const endDate = formatDate(hundredDaysLater);
 
 	    $('#date-range').val(`${startDate} ~ ${endDate}`);
-		$('#booking_filter').submit();
+		//$('#booking_filter').submit();
+		
+		// status를 전체 보기로 설정 (all)
+		const groupNum = $('#group_num').val(); // 그룹 번호 확인
+		const url = `/booking/list?group_num=${groupNum}&dateRange=${startDate} ~ ${endDate}`;
+		window.location.href = url;
+		const targetId = $(`.booking-category`);
+		addScrollClass(targetId);
 	 });
 	 
 	 $('.booking-btn').click(function(){
 		$('#event_status').val($(this).data('value'));
+		const targetId = $(`.booking-category`);
+		addScrollClass(targetId);
 	 }); 
 	 
 	 $('.register-event-btn').click(function(e){
 		e.preventDefault();
 	 });
 	 
+	 function addScrollClass(targetId) {
+	     // 로컬 스토리지에 스크롤 대상 ID 저장
+	     localStorage.setItem('scrollTarget', targetId);
+	 }
 	 
 });

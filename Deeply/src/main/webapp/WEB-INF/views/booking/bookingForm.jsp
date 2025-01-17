@@ -8,8 +8,7 @@
 
 <div class="booking-artist-container font-white bold-title background-black align-center">${group_name}</div>
 <div class="booking-title bold-title">예매 정보 입력</div>
-<div class="booking-info">
-	<img>
+<div class="booking-info" style="background-image: url('${pageContext.request.contextPath}/assets/upload/${event.perf_photo}');">
 	<div class="booking-div1 left-5">
 		<!-- 아티스트 이름 -->
 		<div class="booking-artist width-40">
@@ -40,7 +39,7 @@
 		<div>
 			<p>
 				<form:label path="booked_seat">예약 인원</form:label>
-				<form:input path="booked_seat" type="number" />
+				<form:input path="booked_seat" type="number" min="1" max="2"/>
 				<form:errors path="booked_seat" cssClass="error-color"/>
 			</p>
 			<hr>
@@ -117,8 +116,8 @@
 							<div class="seat-item" data-side="${status.index % 2 == 0 ? 'left' : 'right'}" data-price="${seats.price}">${seats.seat_num}</div>
 						</c:forEach>
 					</div>
-					<form:input id="seat_n1" path="seat_num1"/>
-					<form:input id="seat_n2" path="seat_num2"/>
+					<form:hidden id="seat_n1" path="seat_num1"/>
+					<form:hidden id="seat_n2" path="seat_num2"/>
 					<form:errors path="seat_num1" cssClass="error-color"/>
 					<form:errors path="seat_num2" cssClass="error-color"/>
 					
@@ -143,6 +142,7 @@
 				<form:hidden id="seat_price" path="total_price"/>
 			</div>
 		</div>
+		
 		<div class="align-center">
 			<form:button>결제</form:button>
 		</div>

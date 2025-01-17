@@ -73,6 +73,9 @@
   			#{address2},
   			#{request, jdbcType=VARCHAR})
   	</insert>
+  	
+  	
+  	
   	<insert id="registerEvent" parameterType="EventVO">
   		INSERT INTO performance_detail(
   			perf_num,
@@ -114,15 +117,17 @@
   	<update id="updatePerformanceStatus">
     	<![CDATA[ 
     	UPDATE performance_detail
-    	SET perf_status = 
-        CASE
-        
-            WHEN TO_DATE(perf_date, 'YYYY-MM-DD') = TRUNC(SYSDATE) THEN 'ongoing'
-            WHEN NVL(TO_DATE(end_date, 'YYYY-MM-DD'), TO_DATE(perf_date, 'YYYY-MM-DD')) < TRUNC(SYSDATE) THEN 'over'
-            WHEN TO_DATE(mem_date, 'YYYY-MM-DD') = TRUNC(SYSDATE) THEN 'membership'
-            ELSE perf_status
+			SET perf_status = 
+    		CASE
+        	WHEN TRUNC(SYSDATE) < TO_DATE(book_date, 'YYYY-MM-DD') THEN 
+        	CASE
+        	WHEN TRUNC(SYSDATE) = TO_DATE(mem_date, 'YYYY-MM-DD') THEN 'membership'
+        	ELSE 'before'
+        	END
+        	WHEN TRUNC(SYSDATE) BETWEEN TO_DATE(book_date, 'YYYY-MM-DD') AND NVL(TO_DATE(booking_deadline, 'YYYY-MM-DD'), TO_DATE(book_date, 'YYYY-MM-DD')) THEN 'ongoing'
+        	WHEN TRUNC(SYSDATE) > NVL(TO_DATE(end_date, 'YYYY-MM-DD'), TO_DATE(perf_date, 'YYYY-MM-DD')) THEN 'over'
+        	ELSE perf_status
         END
-    	WHERE TO_DATE(perf_date, 'YYYY-MM-DD') <= TRUNC(SYSDATE)
     	]]>
 	</update>
 </mapper>

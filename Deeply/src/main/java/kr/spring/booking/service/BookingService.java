@@ -3,6 +3,8 @@ package kr.spring.booking.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Update;
+
 import kr.spring.booking.vo.BookingVO;
 import kr.spring.booking.vo.BookingVO;
 import kr.spring.event.vo.EventVO;
@@ -17,4 +19,7 @@ public interface BookingService {
 	public List<SeatVO> selectSeatByHallNum(long hall_num);
 	public void registerEvent(EventVO eventVO);
 	public void updatePerformanceStatus();
+	public void deleteBookingBeforePay(long booking_num);
+	public void updateBookingPaymentStatus(long booking_num);
+
 }

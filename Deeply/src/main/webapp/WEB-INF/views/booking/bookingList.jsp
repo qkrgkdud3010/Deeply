@@ -17,7 +17,7 @@
 		<div class="booking-title bold-title vertical-center">공연 예매</div>
 		<div class="booking-list-container">
 			<form id="booking_filter" action="list" method="get">
-			<input type="hidden" name="group_num" value="${artist_num}">
+			<input type="hidden" id="group_num" name="group_num" value="${artist_num}">
 			<div class="booking-date-container vertical-center">
 				<img class="left-1" id="calendar_img" src="${pageContext.request.contextPath}/assets/image_bundle/calendar.svg">
 				<div class="booking-date left-1">
@@ -41,16 +41,16 @@
 					<div class="booking-item" data-num="${list.perf_num}">
 						<img src="${pageContext.request.contextPath}/assets/upload/${list.perf_photo}">
 						<div class="perf-status font-white bold-title right-align">
-							<c:if test="${not empty list and list.perf_status == 'over'}">
+							<c:if test="${list.perf_status == 'over'}">
 								종료된 이벤트
 							</c:if>
-							<c:if test="${not empty list and list.perf_status == 'ongoing'}">
+							<c:if test="${list.perf_status == 'ongoing'}">
 								예매 기간
 							</c:if>
-							<c:if test="${not empty list and list.perf_status == 'before'}">
+							<c:if test="${list.perf_status == 'before'}">
 								예매 전
 							</c:if>
-							<c:if test="${not empty list and list.perf_status == 'membership'}">
+							<c:if test="${list.perf_status == 'membership'}">
 								선예매 기간
 							</c:if>
 						</div>

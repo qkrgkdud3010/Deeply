@@ -62,6 +62,19 @@ public class BookingServiceImpl implements BookingService{
 		bookingMapper.updatePerformanceStatus();
 		
 	}
+
+	@Override
+	public void deleteBookingBeforePay(long booking_num) {
+		bookingMapper.deleteBookingBeforePay(booking_num);
+		
+	}
+
+	@Override
+	public void updateBookingPaymentStatus(long booking_num) {
+		bookingMapper.updateBookingPaymentStatus(booking_num);
+		
+	}
+
 	
 
 	

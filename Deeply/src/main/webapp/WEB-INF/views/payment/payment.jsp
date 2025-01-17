@@ -7,27 +7,27 @@
 
 <div class="payment-1">
 	<hr>
-	<h2>결제 방식</h2>
+	<h2>결제 방식, ${booking_num}</h2>
 	<form>
-		<div style="display:none;">
+		<div style="display: none;">
 			<label for="usePoints">사용할 포인트: </label> <input type="number"
 				step="1000" id="usePoints" value="0" min="0" /> 원
 		</div>
 		<h4>주의사항</h4>
-		
+
 		<h5>- 무통장 입금시 이체실수에는 책임지지 않습니다.</h5>
 		<h5>- 체결 후 결제 정보 변경은 불가능하며 분할 납부 변경은 카드사 문의 바랍니다. 단, 카드사별 정책에 따라
 			분할 납부 변경 시 수수료가 발생할 수 있습니다.</h5>
 		<h4>주문 정보</h4>
 		<div class="payment-2">
 			<h2>합계금액</h2>
-<div id="payment-info" data-user-num="${memberVO.user_num}"></div>
-			<div style="width: 300px; display:none;">
-			
+			<div id="payment-info" data-user-num="${memberVO.user_num}"></div>
+			<div style="width: 300px; display: none;">
+
 				<div style="float: left;" id="originalPrice">${payPrice}원</div>
 			</div>
 
-			<p style="clear: both; display:none;">
+			<p style="clear: both; display: none;">
 				사용한 포인트: <span id="usedPoints">0</span> 원
 			</p>
 			<p style="clear: both;">
@@ -36,7 +36,7 @@
 
 
 		</div>
-		<div class="submit-1" >결제하기</div>
+		<div class="submit-1">결제하기</div>
 	</form>
 </div>
 

@@ -3,8 +3,10 @@ package kr.spring.booking.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.booking.vo.BookingVO;
 import kr.spring.event.vo.EventVO;
@@ -22,6 +24,9 @@ public interface BookingMapper {
 	public EventVO showEventDetail(long perf_num);
 	//예매 정보 등록
 	public void registerBookingInfo(BookingVO bookingVO);
+
+	
+
 	//공연장에 따른 좌석 개수
 	@Select("SELECT COUNT(*) FROM seat WHERE hall_num=#{hall_num}")
 	public int countSeatByHallNum(long hall_num);
@@ -32,5 +37,11 @@ public interface BookingMapper {
 	public void registerEvent(EventVO eventVO);
 	//공연 상태 자동 업데이트
 	public void updatePerformanceStatus();
+	//공연 결제 전 취소
+	@Delete("DELETE FROM booking WHERE payment_status=0 AND booking_num=#{booking_num}")
+	public void deleteBookingBeforePay(long booking_num);
+	@Update("UPDATE booking SET payment_status=1 WHERE booking_num=#{booking_num}")
+	public void updateBookingPaymentStatus(long booking_num);
+	
 }
  

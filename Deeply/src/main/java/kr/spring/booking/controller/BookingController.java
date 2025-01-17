@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.member.service.ArtistService;
@@ -29,6 +32,9 @@ import kr.spring.event.vo.EventVO;
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+import kr.spring.payment.service.PaymentService;
+import kr.spring.payment.vo.PaymentCompletionRequest;
+import kr.spring.payment.vo.PaymentVO;
 import kr.spring.seat.vo.SeatVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
@@ -45,14 +51,14 @@ public class BookingController {
 	private BookingService bookingService;
 	@Autowired
 	private ArtistService artistService;
-	
+	@Autowired
+	private PaymentService paymentService;
 	
 	//아티스트 예매 목록
 	@GetMapping("/list")
 	public String getList(long group_num, @RequestParam(defaultValue="1") int pageNum,
-										   @RequestParam(defaultValue="before") String status, 
+										   @RequestParam(required=false) String status, 
 										   @RequestParam(required=false) String dateRange, HttpServletRequest request, Model model) {
-		
 		
 		
 		log.debug("<<예매 페이지 아티스트 번호>> : " + group_num);
@@ -79,7 +85,9 @@ public class BookingController {
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
 		map.put("user_num", group_num);
-		if(status != null) {
+		if (status == null || "all".equals(status)) {
+			status = null; // 쿼리에서 필터링되지 않도록 처리
+		} else {
 			map.put("status", status);
 		}
 		
@@ -93,6 +101,7 @@ public class BookingController {
 			
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
+			
 			
 			list = bookingService.selectEventByArtistId(map);
 		}
@@ -154,10 +163,10 @@ public class BookingController {
 	    
 	    bookingService.registerBookingInfo(bookingVO);
 	    
-	    model.addAttribute("message", "예매를 성공하였습니다");
-	    model.addAttribute("url",request.getContextPath() + "/main/main");
-	    
-	    return "common/resultAlert"; // 성공 시 리다이렉트
+	    model.addAttribute("message", "결제 페이지로 이동합니다");
+		model.addAttribute("url",request.getContextPath() + "/charge/payment?pay_price=" + bookingVO.getTotal_price());
+		    
+		return "common/resultAlert";
 	}
 	
 	@GetMapping("/register")
@@ -213,6 +222,34 @@ public class BookingController {
 		    
 		return "common/resultAlert";
 	}
+	
+	@PostMapping("/complete")
+    public ResponseEntity<String> completePayment(@RequestBody PaymentCompletionRequest request) {
+		log.debug("<<complete 주소 이동 성공>>");
+        try {
+        	log.debug("<<complete 주소 이동 성공>> : try");
+            // 결제 정보 객체 생성
+            PaymentVO payment = new PaymentVO();
+           
+            payment.setTotalAmount(request.getTotalAmount());
+            payment.setUSER_NUM(request.getUser_num());
+            paymentService.updateBal(payment);
+            // 결제 처리 서비스 호출
+            paymentService.insertOrder(payment);
+            
+            bookingService.updateBookingPaymentStatus(request.getBooking_num());
+            
+           
+            return ResponseEntity.ok("결제 완료 처리 성공");
+        } catch (Exception e) {
+        	  log.debug("<<complete 주소 이동 성공>> : catch");
+        	  e.printStackTrace(); // 예외 출력
+        	  bookingService.deleteBookingBeforePay(request.getBooking_num());
+        	  return ResponseEntity.status(500).body("결제 처리 실패: " + e.getMessage());
+        }
+    }
+	
+	
 	
 	public void loadBookingContents(long perf_num, Model model) {
 		EventVO event = bookingService.showEventDetail(perf_num);
