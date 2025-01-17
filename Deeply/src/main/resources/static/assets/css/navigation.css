@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+/*==========================
+네비게이션 버튼 모양 CSS
+============================/*
+
+
+/* 네비게이션 바 위치 */
+nav {
+    position: fixed; /* 화면에 고정 */
+    bottom: 20px; /* 아래쪽에서 20px 간격 */
+    right: 20px; /* 오른쪽에서 20px 간격 */
+    z-index: 1000; /* 다른 요소보다 위에 배치 */
+}
+
+/* 리스트 스타일 제거 */
+.nav-menu {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 리스트 아이템 스타일 */
+.nav-menu li {
+    display: inline-block;
+}
+
+/* 이미지 버튼 스타일 */
+.alarm-button {
+    width: 60px; /* 버튼 너비 */
+    height: 60px; /* 버튼 높이 */
+    border-radius: 50%; /* 동그란 버튼 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 호버 애니메이션 */
+}
+
+/* 버튼 호버 효과 */
+.alarm-button:hover {
+    transform: scale(1.1); /* 크기 확대 */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* 그림자 강조 */
+}
+
+
+
+/*==========================
+알람 네비게이션 CSS
+============================/*
+/* 기본 스타일 초기화 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* 연한 배경색 */
+}
+
+/* 메인 영역 스타일 */
+main {
+    max-width: 800px;
+    margin: 50px auto; /* 화면 중앙에 정렬 */
+    padding: 20px;
+    background-color: #fff; /* 흰색 배경 */
+    border-radius: 10px; /* 부드러운 모서리 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 섹션 제목 스타일 */
+section h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center; /* 중앙 정렬 */
+}
+
+/* 알람 리스트 스타일 */
+ul {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding: 0;
+}
+
+ul li {
+    font-size: 16px;
+    color: #555;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* 리스트 구분선 */
+}
+
+/* 마지막 항목 구분선 제거 */
+ul li:last-child {
+    border-bottom: none;
+}
+
+/* 다른 내용 구분 강조 */
+ul li:nth-child(even) {
+    background-color: #f1f1f1; /* 짝수 항목 배경 */
+}
+
+/* 빈 알람 메시지 */
+p {
+    font-size: 16px;
+    color: #888;
+    text-align: center; /* 중앙 정렬 */
+    margin-top: 20px;
+}
+
+/* 링크 스타일 (옵션) */
+a {
+    color: #007bff; /* 파란색 */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3; /* 진한 파란색 */
+}

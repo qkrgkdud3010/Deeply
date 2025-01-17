@@ -14,6 +14,6 @@ public class AlarmVO {
 	private String al_title; //알람 제목(e.g. 굿즈라면 굿즈 제목 등)
 	private int al_kind; //알람 종류
 	private int al_status ; //알람을 읽었는지에 대한 유무
-
+	private long artist_num;
 
 }
