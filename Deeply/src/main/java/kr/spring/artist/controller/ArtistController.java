@@ -1,6 +1,7 @@
 package kr.spring.artist.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,23 +60,32 @@ public class ArtistController {
 	@GetMapping("/detail")
 	public String getDetail(long group_num, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
 		AgroupVO vo = artistService.selectArtistDetail(group_num);
-		Long user = principal.getMemberVO().getUser_num();
-		log.debug("<<로그인한 회원>> : " + user);
-		
 		Map<String,Long> map = new HashMap<String,Long>();
 		map.put("group_num", group_num);
-		map.put("user_num",user);
 		
-		List<ArtistVO> members = artistService.selectGroupMembersForFollower(map);
+		List<ArtistVO> members = new ArrayList<ArtistVO>();
+		
+		if(principal.getMemberVO() != null) {
+			Long user = principal.getMemberVO().getUser_num();
+			log.debug("<<로그인한 회원>> : " + user);
+			map.put("user_num",user);
+			MemberVO users = memberService.selectMember(user);
+			model.addAttribute("me",users);
+			model.addAttribute("login_num", user);
+			members = artistService.selectGroupMembersForFollower(map);
+		}
+		
+		
+		members = artistService.selectGroupMembers(group_num);
 		log.debug("<<아티스트 상세>> : " + members); 
-		MemberVO users = memberService.selectMember(user);
+		
 		
 		List<ItemVO> shops = itemService.selectListByUserNum(group_num);
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);
-		model.addAttribute("me",users);
-		model.addAttribute("login_num", user);
+		
+		
 		
 		return "artistDetail";
 	}

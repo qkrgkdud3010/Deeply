@@ -99,7 +99,9 @@
 						</div>
 					</div>
 					<div class="e-submit right-align vertical-center top-5">
+						<c:if test="${!empty principal.memberVO && bookingVO.}">
 						<button id="booking_submit_btn" class="white-btn">예매</button>
+						</c:if>
 					</div>
 				</div>
 			</div>

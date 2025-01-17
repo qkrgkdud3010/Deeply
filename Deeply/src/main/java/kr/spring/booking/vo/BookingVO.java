@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BookingVO {
-	private long booking_num;
+	private Long booking_num;
 	private long perf_num;
 	private long user_num;
 	@Min(value = 1, message = "예약 인원은 최소 1명 이상이어야 합니다.")

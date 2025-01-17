@@ -105,7 +105,6 @@ public class BookingController {
 			
 			list = bookingService.selectEventByArtistId(map);
 		}
-		
 		AgroupVO group = artistService.selectArtistDetail(group_num);
 		String group_name = group.getGroup_name();
 		
@@ -163,8 +162,12 @@ public class BookingController {
 	    
 	    bookingService.registerBookingInfo(bookingVO);
 	    
+	    Long booking_num = bookingVO.getBooking_num();
+	    log.debug("<<booking_num>> :" + booking_num);
+	    
+	    
 	    model.addAttribute("message", "결제 페이지로 이동합니다");
-		model.addAttribute("url",request.getContextPath() + "/charge/payment?pay_price=" + bookingVO.getTotal_price());
+		model.addAttribute("url",request.getContextPath() + "/charge/payment?pay_price=" + bookingVO.getTotal_price()+"&booking_num="+booking_num);
 		    
 		return "common/resultAlert";
 	}

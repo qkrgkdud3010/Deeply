@@ -36,6 +36,7 @@ public class BookingServiceImpl implements BookingService{
 
 	@Override
 	public void registerBookingInfo(BookingVO bookingVO) {
+		bookingVO.setBooking_num(bookingMapper.selectBook_num());
 		bookingMapper.registerBookingInfo(bookingVO);
 		
 	}
@@ -72,6 +73,12 @@ public class BookingServiceImpl implements BookingService{
 	@Override
 	public void updateBookingPaymentStatus(long booking_num) {
 		bookingMapper.updateBookingPaymentStatus(booking_num);
+		
+	}
+
+	@Override
+	public BookingVO getBookingNumBeforePay(long user_num, long perf_num) {
+		return bookingMapper.getBookingNumBeforePay(user_num, perf_num);
 		
 	}
 

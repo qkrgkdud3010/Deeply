@@ -55,7 +55,7 @@
   			address2,
   			request)
   		VALUES (
-  			booking_seq.nextval,
+  			#{booking_num},
   			#{perf_num},
   			#{user_num},
   			#{booked_seat},

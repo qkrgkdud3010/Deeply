@@ -21,5 +21,6 @@ public interface BookingService {
 	public void updatePerformanceStatus();
 	public void deleteBookingBeforePay(long booking_num);
 	public void updateBookingPaymentStatus(long booking_num);
+	public BookingVO getBookingNumBeforePay(long user_num, long perf_num);
 
 }

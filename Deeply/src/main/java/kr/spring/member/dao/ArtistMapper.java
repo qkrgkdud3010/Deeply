@@ -38,10 +38,11 @@ public interface ArtistMapper {
 	@Select("SELECT * FROM agroup WHERE group_num=#{group_num}")
 	public AgroupVO selectArtistDetail(long group_num); 
 	
-	@Select("SELECT * FROM agroup g JOIN auser_detail d ON g.group_name = d.group_name WHERE g.group_num=#{artist_num}")
+
 	public List<ArtistVO> selectGroupMembers(long group_num);
 	
 	public List<ArtistVO> selectGroupMembersForFollower(Map<String,Long> map);
+
 	
 	@Select("SELECT * FROM auser JOIN auser_detail USING (user_num) WHERE user_num=#{user_num}")
 	public ArtistVO selectMember(long artist_num);
@@ -57,4 +58,5 @@ public interface ArtistMapper {
 	public void updateArtistGroup(AgroupVO agroupVO);
 	@Update("UPDATE auser_detail SET group_name = #{agroupVO.group_name} WHERE group_name = #{origin_name}")
 	public void updateArtistMemberGroupName(Map<String,Object> map);
+	
 }

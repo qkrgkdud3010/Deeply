@@ -63,6 +63,11 @@
 		LEFT OUTER JOIN (SELECT follow_num,COUNT(*) follow_cnt FROM follow GROUP BY follow_num) cn ON d.user_num=cn.follow_num
 		WHERE g.group_num=#{group_num}
 	</select>
-
+	<select id="selectGroupMembers" parameterType="long" resultType="artistVO">
+		SELECT * FROM agroup g 
+		JOIN auser_detail d ON g.group_name = d.group_name 
+		LEFT OUTER JOIN (SELECT follow_num,COUNT(*) follow_cnt FROM follow GROUP BY follow_num) cn ON d.user_num=cn.follow_num
+		WHERE g.group_num=#{group_num}
+	</select>
    
 </mapper>

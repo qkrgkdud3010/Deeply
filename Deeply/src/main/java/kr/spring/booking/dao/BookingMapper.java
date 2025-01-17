@@ -42,6 +42,11 @@ public interface BookingMapper {
 	public void deleteBookingBeforePay(long booking_num);
 	@Update("UPDATE booking SET payment_status=1 WHERE booking_num=#{booking_num}")
 	public void updateBookingPaymentStatus(long booking_num);
+	@Select("SELECT * FROM booking WHERE user_num=#{user_num} AND perf_num=#{perf_num}")
+	public BookingVO getBookingNumBeforePay(long user_num, long perf_num);
+	@Select("SELECT booking_seq.nextval FROM dual")
+	public Long selectBook_num();
+	
 	
 }
  

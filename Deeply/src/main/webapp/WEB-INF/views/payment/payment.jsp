@@ -6,8 +6,9 @@
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 
 <div class="payment-1">
+	<input type="hidden" id="booking_info" data-book-num="${booking_num}">
 	<hr>
-	<h2>결제 방식, ${booking_num}</h2>
+	<h2>결제 방식</h2>
 	<form>
 		<div style="display: none;">
 			<label for="usePoints">사용할 포인트: </label> <input type="number"
@@ -45,6 +46,7 @@
 var csrfToken = $('meta[name="_csrf"]').attr('content');
 var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
 const userNum = parseInt(document.querySelector("#payment-info").getAttribute("data-user-num"));
+const bookingNum = BigInt(document.querySelector("#booking_info").getAttribute("data-book-num"));
 console.log(userNum);  // 제대로 값이 출력되는지 확인
 
 	document
@@ -74,75 +76,71 @@ console.log(userNum);  // 제대로 값이 출력되는지 확인
 						document.getElementById('usedPoints').textContent = usePoints;
 					});
 
-	document.querySelector('.submit-1').addEventListener('click', async function() {
-	    // finalPrice 아이디를 가진 HTML 요소에서 값을 가져옵니다.
-	    const finalPrice = parseInt(document.getElementById('finalPrice').textContent);
+	document.querySelector('.submit-1').addEventListener('click', async function () {
+	    const finalPrice = parseInt(document.getElementById('finalPrice').textContent, 10);
 
 	    if (finalPrice === 0) {
-	        // 가격이 0일 때 수행할 작업
-	        // 추가로 다른 작업을 수행하려면 이곳에 코드를 추가할 수 있습니다.
-	        return;  // 결제 요청을 막고 함수 종료
+	        alert("결제 금액이 0원입니다. 다시 확인해주세요.");
+	        return;
 	    }
 
 	    try {
-	        // PortOne.requestPayment 호출
+	        // PortOne 결제 요청
 	        const response = await PortOne.requestPayment({
-	            storeId: "store-e9d5634a-49fe-4954-a880-a860d3b70483",  // 상점 ID
-	            channelKey: "channel-key-dc06b7ca-d864-444d-987b-349a97f1be61",  // 채널 키
-	            paymentId: crypto.randomUUID(),  // 결제 고유 ID (랜덤 생성)
-	            orderName: "Deeply카드결제",  // 상품명
-	            totalAmount: finalPrice,  // 결제 총 금액을 finalPrice로 설정
-	            currency: "CURRENCY_KRW",  // 통화 (KRW)
-	            payMethod: "CARD",  // 결제 방법 (카드)
-	            customer: { // 구매자 정보
-	                customerId: "customer-12345", // 구매자 고유 ID
-	                fullName: "John Doe", // 구매자 전체 이름
-	                phoneNumber: "010-1234-5678", // 구매자 연락처
-	                email: "test@portone.io", // 구매자 이메일
-	                address: { // 선택 사항: 구매자 주소
-	                    street: "123 Main Street",
-	                    city: "Seoul",
-	                    state: "Seoul",
-	                    postalCode: "12345",
-	                    country: "KR",
-	                    addressLine1: "123 Main Street", // 일반주소
-	                    addressLine2: "Apt 101", // 상세주소
-	                }
-	            }
+	            storeId: "store-e9d5634a-49fe-4954-a880-a860d3b70483",
+	            channelKey: "channel-key-dc06b7ca-d864-444d-987b-349a97f1be61",
+	            paymentId: crypto.randomUUID(),
+	            orderName: "Deeply카드결제",
+	            totalAmount: finalPrice,
+	            currency: "CURRENCY_KRW",
+	            payMethod: "CARD",
+	            customer: {
+	                customerId: "customer-12345",
+	                fullName: "John Doe",
+	                phoneNumber: "010-1234-5678",
+	                email: "test@portone.io",
+	            },
 	        });
 
+	        // 결제 성공 여부 확인
 	        if (response.code !== undefined) {
-	            // 오류 발생 시
-	            alert("거래 취소 ");
-	            const notified = await fetch(`${pageContext.request.contextPath}/charge/complete`, {
-		            method: "POST",
-		            headers: { "Content-Type": "application/json",
-		                'X-CSRF-TOKEN': csrfToken },
-		            body: JSON.stringify({
-		                totalAmount: finalPrice,
-		                user_num: userNum
-		            }),
-		        });
-		        window.location.href = "/main/main";
-	        } else {
-	            // 결제 요청이 성공한 경우
-	            alert("결제 성공 메인으로 이동합니다!");
-	            // 결제 완료 후 서버 처리 부분
-		     
-	        }
-	    
-	      
+	            const bookingNum = document.querySelector("#booking_info").getAttribute("data-book-num");
+	            const endpoint = bookingNum
+	                ? `${pageContext.request.contextPath}/booking/complete`
+	                : `${pageContext.request.contextPath}/charge/complete`;
 
-	        if (notified.ok) {
-	            alert("결제 성공 메인으로 이동합니다");
-	          
+	            const body = {
+	                totalAmount: finalPrice,
+	                user_num: parseInt(document.querySelector("#payment-info").getAttribute("data-user-num"), 10),
+	            };
 
+	            if (bookingNum) {
+	                body.booking_num = parseInt(bookingNum, 10);
+	            }
+
+	            const notified = await fetch(endpoint, {
+	                method: "POST",
+	                headers: {
+	                    "Content-Type": "application/json",
+	                    "X-CSRF-TOKEN": csrfToken,
+	                },
+	                body: JSON.stringify(body),
+	            });
+
+	            if (notified.ok) {
+	                alert("결제가 성공적으로 완료되었습니다.");
+	                window.location.href = "/main/main";
+	            } else {
+	                const errorResponse = await notified.json();
+	                console.error("결제 처리 실패:", errorResponse);
+	                alert("결제 처리 중 문제가 발생했습니다.");
+	            }
 	        } else {
-	        	 const errorResponse = await notified.json();
-	        	    console.error("Error Response:", errorResponse);
-	            alert("결제 완료 후 서버 처리 실패!");
+	            alert("결제가 실패했습니다. 다시 시도해주세요.");
 	        }
 	    } catch (error) {
+	        console.error("결제 요청 중 오류 발생:", error);
+	        alert("결제 요청 중 문제가 발생했습니다. 다시 시도해주세요.");
 	    }
 	});
 	console.log(finalPrice, userNum); // 실제 값이 어떻게 전달되는지 확인
