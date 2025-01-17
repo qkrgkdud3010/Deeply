@@ -13,7 +13,7 @@
 
 <%-- 장바구니에 상품 없을 때 --%>
 <c:if test="${empty cart.item_num}">
-	<div class="order-div">
+	<div class="cart-div">
 	<hr class="custom-hr2" noshade="noshade" width="100%">
 	<div class="empty-div"></div>
 	<span>장바구니가 비었습니다.</span><br>
