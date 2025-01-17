@@ -31,12 +31,18 @@
 		</c:if>
 		<%--=============사용자 비로그인 영역 끝=========--%>
 		<%--=============사용자 로그인 영역 시작=========--%>
+		
 		<c:if test="${!empty principal && principal.memberVO.auth < 9}">
 			<a href="${pageContext.request.contextPath}/member/mypage">MY페이지</a>
 		</c:if>
 		<c:if test="${!empty principal && principal.artistVO!=null}">
 			<a href="${pageContext.request.contextPath}/member/mypage">MY페이지</a>
 		</c:if>
+		<c:if test="${empty principal.artistVO && !empty principal.memberVO}">
+    <a href="/item/cart?user_num=${principal.memberVO.user_num}">
+        <img class="cart-img" src="${pageContext.request.contextPath}/assets/images/hj/cart.png" style="width: 1.8vw; height: 1.8vw;">
+    </a>
+</c:if>
 		<%--=============사용자 로그인 영역 끝=========--%>
 		<%--=====사용자,관리자 공통 로그인 영역 시작======--%>
 		<c:if test="${!empty principal}">
