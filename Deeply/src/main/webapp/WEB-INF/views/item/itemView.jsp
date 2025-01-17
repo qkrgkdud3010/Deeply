@@ -50,8 +50,12 @@
 		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
-	
-		<div class="main-div content-container"> <input type="button" value="장바구니" onclick="location.href='/item/cart?user_num=${principal.memberVO.user_num}'">
+		
+		<div class="main-div content-container"> 
+		
+		<c:if test="${empty principal.artistVO && !empty principal.memberVO}">
+		<input type="button" value="장바구니" onclick="location.href='/item/cart?user_num=${principal.memberVO.user_num}'">
+		</c:if>
 	<%-- 비로그인, 아티스트 계정으로 로그인 시작 --%>
 		<c:if
 			test="${!empty principal.artistVO}">
@@ -84,7 +88,7 @@
 
 	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
 		<c:if test="${empty principal.artistVO}">
-			<div class="text-title">반갑습니다. 유저의 닉네임</div>
+			<div class="text-title">반갑습니다.</div>
 			<div class="item-info">
 				<div class="box-shadow">
 					<img
