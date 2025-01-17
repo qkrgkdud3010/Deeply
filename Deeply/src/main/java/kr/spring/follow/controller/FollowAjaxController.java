@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +55,7 @@ public class FollowAjaxController {
 		return mapJson;
 	};
 	
+	
 	//아티스트 페이지에서의 팔로우/언팔로우
 	@PostMapping("/follow")
 	@ResponseBody
@@ -78,7 +80,6 @@ public class FollowAjaxController {
 				mapJson.put("status", "following");
 			}
 			mapJson.put("result", "success");
-			mapJson.put("count", followService.countMyFollow(userNum));
 		}catch(NullPointerException e) {
 			mapJson.put("result", "logout");
 		}

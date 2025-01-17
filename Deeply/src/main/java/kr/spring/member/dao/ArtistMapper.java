@@ -41,6 +41,8 @@ public interface ArtistMapper {
 	@Select("SELECT * FROM agroup g JOIN auser_detail d ON g.group_name = d.group_name WHERE g.group_num=#{artist_num}")
 	public List<ArtistVO> selectGroupMembers(long group_num);
 	
+	public List<ArtistVO> selectGroupMembersForFollower(Map<String,Long> map);
+	
 	@Select("SELECT * FROM auser JOIN auser_detail USING (user_num) WHERE user_num=#{user_num}")
 	public ArtistVO selectMember(long artist_num);
 	

@@ -31,10 +31,6 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/deeplyMypage/mypage.jsp"/>                         
     </definition>
-     <definition name="artiInfo" extends="main">
-    	<put-attribute name="title" value="아티스트 정보"/>
-    	<put-attribute name="body" value="/WEB-INF/views/mypage/artiInfo.jsp"/>
-    </definition>
      <definition name="modifyArtiInfo" extends="main">
     	<put-attribute name="title" value="아티스트 정보 수정"/>
     	<put-attribute name="body" value="/WEB-INF/views/mypage/modifyArtiInfo.jsp"/>

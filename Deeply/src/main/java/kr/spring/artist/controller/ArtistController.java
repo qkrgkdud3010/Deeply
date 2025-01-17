@@ -24,8 +24,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.spring.item.service.ItemService;
 import kr.spring.item.vo.ItemVO;
 import kr.spring.member.service.ArtistService;
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,8 @@ public class ArtistController {
 	ArtistService artistService;
 	@Autowired
 	ItemService itemService;
+	@Autowired
+	MemberService memberService;
 	
 	//아티스트 목록
 	@GetMapping("/list")
@@ -51,15 +55,27 @@ public class ArtistController {
 		return "artistList";
 	}
 	//아티스트 상세
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
-	public String getDetail(long group_num, Model model) {
+	public String getDetail(long group_num, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
 		AgroupVO vo = artistService.selectArtistDetail(group_num);
-		List<ArtistVO> members = artistService.selectGroupMembers(group_num);
+		Long user = principal.getMemberVO().getUser_num();
+		log.debug("<<로그인한 회원>> : " + user);
+		
+		Map<String,Long> map = new HashMap<String,Long>();
+		map.put("group_num", group_num);
+		map.put("user_num",user);
+		
+		List<ArtistVO> members = artistService.selectGroupMembersForFollower(map);
+		log.debug("<<아티스트 상세>> : " + members); 
+		MemberVO users = memberService.selectMember(user);
 		
 		List<ItemVO> shops = itemService.selectListByUserNum(group_num);
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);
+		model.addAttribute("me",users);
+		model.addAttribute("login_num", user);
 		
 		return "artistDetail";
 	}

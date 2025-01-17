@@ -56,5 +56,13 @@
         </if>
 </select>
 
+	<select id="selectGroupMembersForFollower" parameterType="map" resultType="artistVO">
+		SELECT * FROM agroup g 
+		JOIN auser_detail d ON g.group_name = d.group_name 
+		LEFT OUTER JOIN (SELECT follow_num,follower_num FROM follow WHERE follower_num=#{user_num}) c ON d.user_num=c.follow_num
+		LEFT OUTER JOIN (SELECT follow_num,COUNT(*) follow_cnt FROM follow GROUP BY follow_num) cn ON d.user_num=cn.follow_num
+		WHERE g.group_num=#{group_num}
+	</select>
+
    
 </mapper>

@@ -1,29 +1,13 @@
 $(function(){
-	//팔로우 상태 읽기(팔로우 선택 여부)
-	function selectFollow(follower_num,follow_num){
-		//서버와 통신
-		$.ajax({
-			url:'/follow/follow',
-			type:'get',
-			data:{follower_num:follower_num,follow_num:follow_num},
-			dataType:'json',
-			success:function(param){
-				displayFollow(param);
-			},
-			error:function(){
-				alert('네트워크 오류');
-			}
-		})
-	}
 	
 	$('.output_follow').on('click', function(){
 		    const followNum = $(this).attr('data-num');
-		    const followerNum = $(this).attr('data-rnum');
+		    const followerNum = $(this).attr('data-unum');
 
 		    $.ajax({
 		        url: '/follow/follow',
 		        type: 'post',
-		        data: { follow_num: followNum, follower_num:followerNum },
+		        data: { follow_num: followNum, follower_num:followerNum},
 		        dataType: 'json',
 		        beforeSend: function(xhr) {
 		            xhr.setRequestHeader($('table').attr('data-header'), $('table').attr('data-token'));
@@ -43,7 +27,7 @@ $(function(){
 		    });
 		});
 
-	function displayFollow(param, followNum) {
+	function displayFollow(param, followNum, followerNum) {
 	    let output;
 	    if(param.status === 'following') {
 	        output = '../assets/images/hr2/follow.png';

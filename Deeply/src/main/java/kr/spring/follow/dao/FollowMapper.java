@@ -21,8 +21,12 @@ public interface FollowMapper {
 	//팔로우
 	@Select("SELECT * FROM follow WHERE follower_num=#{follower_num} AND follow_num=#{follow_num}")
 	public FollowVO selectFollow(FollowVO follow);
-	@Insert("INSERT INTO follow (follower_num, follow_num, follow_date) VALUES (${follower_num},#{follow_num},sysdate)")
+	@Insert("INSERT INTO follow (follower_num, follow_num, follow_date) VALUES (#{follower_num},#{follow_num},sysdate)")
 	public void following(FollowVO follow);
 	@Delete("DELETE FROM follow WHERE follower_num=#{follower_num} AND follow_num=#{follow_num}")
 	public void unfollow(FollowVO follow);
+	
+	//아티스트 입장에서 나를 팔로우하는 사람 명수
+	@Select("SELECT COUNT(*) FROM follow WHERE follow_num=#{follow_num}")
+	public Integer countMyFollower(long follow_num);
 }

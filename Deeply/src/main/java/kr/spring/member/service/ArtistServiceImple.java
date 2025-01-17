@@ -83,6 +83,10 @@ public class ArtistServiceImple implements kr.spring.member.service.ArtistServic
 	public AgroupVO selectAgroupByArtistNum(long artist_num) {
 		return artistMapper.selectAgroupByArtistNum(artist_num);
 	}
+	@Override
+	public List<ArtistVO> selectGroupMembersForFollower(Map<String, Long> map) {
+		return artistMapper.selectGroupMembersForFollower(map);
+	}
 
 	
 	

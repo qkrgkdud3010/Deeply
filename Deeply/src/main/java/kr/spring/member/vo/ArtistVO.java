@@ -40,6 +40,11 @@ import lombok.ToString;
 	    private String intro;
 	    private String Photo_name;
 		private byte[] photo;
+		
+		private int follow_cnt;
+		private Long follow_num;
+		private Long follower_num;
+		
 		public void setUpload(MultipartFile upload) 
 	            throws IOException {
 	//MultipartFile -> byte[]

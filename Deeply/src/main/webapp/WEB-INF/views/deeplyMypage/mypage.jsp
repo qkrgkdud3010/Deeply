@@ -76,8 +76,7 @@
 			</tr>
 			<tr>
 				<td colspan="2"><b>주소 </b>${member.zipcode} ${member.address1}
-					${member.address2}</td>
-				<td><a href="${pageContext.request.contextPath}/member/myPage1"><img
+					${member.address2}  <a href="${pageContext.request.contextPath}/member/myPage1"><img
 						src="${pageContext.request.contextPath}/assets/images/hr2/follow.png"
 						width="20px" height="20px"></a></td>
 			</tr>
@@ -129,8 +128,8 @@
 				<td><b>이메일 </b>${member.email}</td>
 			</tr>
 			<tr>
-				<td colspan="2"><b>소개글 </b>${member.intro}</td>
-				<td><a href="${pageContext.request.contextPath}/member/myPage1"><img
+				<td colspan="2"><b>소개글 </b>${member.intro}
+						<a href="${pageContext.request.contextPath}/member/myPage1"><img
 						src="${pageContext.request.contextPath}/assets/images/hr2/follow.png"
 						width="20px" height="20px"></a></td>
 			</tr>

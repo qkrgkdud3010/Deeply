@@ -40,5 +40,10 @@ public class FollowServiceImpl implements FollowService{
 	public void unfollow(FollowVO follow) {
 		followMapper.unfollow(follow);
 	}
+
+	@Override
+	public Integer countMyFollower(long follow_num) {
+		return followMapper.countMyFollower(follow_num);
+	}
 	
 }
