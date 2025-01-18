@@ -60,7 +60,7 @@ const itemQuantityElement = document.querySelector("#item_quantity");
 const bookingNum = bookingInfoElement ? bookingInfoElement.getAttribute("data-book-num") : null;
 const orderNum = orderInfoElement ? orderInfoElement.getAttribute("data-order-num") : null;
 const itemQuantity = itemQuantityElement ? itemQuantityElement.getAttribute("data-order-num") : null;
-console.log(userNum);  // 제대로 값이 출력되는지 확인
+console.log(userNum,orderNum);  // 제대로 값이 출력되는지 확인
 
 	document
 			.getElementById('usePoints')
@@ -116,24 +116,32 @@ console.log(userNum);  // 제대로 값이 출력되는지 확인
 	        });
 
 	        // 결제 성공 여부 확인
-	        if (response.code !== undefined) {
-	            const bookingNum = document.querySelector("#booking_info").getAttribute("data-book-num");
-	            const orderNum = document.querySelector("#order_info").getAttribute("data-order-num");
-	            const itemQuantity = document.querySelector("#item_quantity").getAttribute("data-order-num");
-	            const endpoint = bookingNum
-	            ? `${pageContext.request.contextPath}/booking/complete`
-	            : orderNum
-	            ? `${pageContext.request.contextPath}/item/complete`
-	            : `${pageContext.request.contextPath}/charge/complete`;
+	   if (response.code !== undefined) {
+    const bookingElement = document.querySelector("#booking_info");
+    const orderElement = document.querySelector("#order_info");
+    const itemElement = document.querySelector("#item_quantity");
+
+    const bookingNum = bookingElement ? bookingElement.getAttribute("data-book-num") : null;
+    const orderNum = orderElement ? orderElement.getAttribute("data-order-num") : null;
+    const itemQuantity = itemElement ? itemElement.getAttribute("data-order-num") : null;
+
+    const endpoint = bookingNum
+        ? `${pageContext.request.contextPath}/booking/complete`
+        : orderNum
+        ? `${pageContext.request.contextPath}/item/complete`
+        : `${pageContext.request.contextPath}/charge/complete`;
+
+
 
 	            const body = {
 	                totalAmount: finalPrice,
-	                user_num: parseInt(document.querySelector("#payment-info").getAttribute("data-user-num"), 10),
+	                user_num: userNum
+	                
 	            };
 
-	            if (bookingNum) {
+	            if (bookingNum!=null) {
 	                body.booking_num = parseInt(bookingNum, 10);
-	            }else if(orderNum){
+	            }else if(orderNum!=null){
 	            	body.order_num = parseInt(orderNum, 10);
 	            	body.item_quantity = parseInt(itemQuantity, 10);
 	            }
