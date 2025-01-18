@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -39,7 +39,7 @@
 	border: 1px solid #d1d5db;
 }
 
-/* form.reply-input 스타일 추가 */
+/* form.reply-input 스타일 */
 .reply-input {
 	height: auto;
 	align-self: stretch;
@@ -57,7 +57,7 @@
 	box-shadow: 0 0 0 2px #d1d5db;
 }
 
-/* textarea 스타일 추가 */
+/* textarea 스타일 */
 .reply-textarea {
 	resize: none;
 	border: none;
@@ -74,20 +74,6 @@
 /* textarea 포커스 시 스타일 */
 .reply-textarea:focus {
 	outline: none;
-}
-
-.reply-placeholder {
-	color: #6b7280;
-	font-size: 13px;
-	font-weight: 400;
-	margin: 0 0 0 18px;
-}
-
-.reply-input:focus, .reply-input:focus-within {
-	outline: none;
-	border-color: #d1d5db;
-	box-shadow: 0 0 0 2px #d1d5db;
-	border-radius: 6px;
 }
 
 .action-bar {
@@ -121,10 +107,7 @@
 	gap: 18px;
 	padding: 7px 9px 7px 21px;
 	cursor: pointer;
-}
-
-.post-button div {
-	color: #fff; /* 흰색 */
+	color: #fff; /* 텍스트 흰색 */
 }
 
 .post-button:hover {
@@ -134,10 +117,10 @@
 .post-icon {
 	width: 16px;
 	height: 16px;
-	aspect-ratio: 1;
 	object-fit: contain;
 }
 
+/* 구분선 */
 .separator {
 	align-self: center;
 	margin-top: 15px;
@@ -147,13 +130,33 @@
 	border: 1px solid #e3e3e3;
 }
 
+/* 댓글 목록 */
+.comments-list {
+	margin-top: 20px;
+	width: 100%;
+	padding: 10px;
+	background-color: #f9f9f9;
+	border-radius: 6px;
+}
+
+/* 각 댓글 */
+.comment {
+	padding: 0px 0;
+	margin-bottom: 10px;
+}
+
+.comment:last-child {
+	border-bottom: none;
+}
+
+/* 댓글 상단 유저 정보 */
 .user-info {
 	display: flex;
 	width: 272px;
 	max-width: 100%;
 	gap: 20px;
-	justify-content: space-between;
-	margin: 20px 0 0 18px;
+	justify-content: start;
+	margin: 10px 0 10px 18px;
 }
 
 .user-meta {
@@ -183,11 +186,14 @@
 	margin: auto 0;
 }
 
+/* 스레드 라인 + 컨테이너 */
 .thread-container {
 	display: flex;
 	margin-left: 33px;
 	gap: 19px;
 	flex-wrap: wrap;
+    border-left: 4px solid #ccc; /* 두께: 4px, 색상: 연한 회색 */
+    padding-left: 15px; /* 필요에 따라 값을 조정하세요 */
 }
 
 .thread-line {
@@ -209,6 +215,7 @@
 	color: #1f2937;
 	font-size: 13px;
 	font-weight: 400;
+	margin: 0 18px 10px 0;
 }
 
 .interaction-bar {
@@ -217,7 +224,7 @@
 	font-size: 12px;
 	color: #4b5563;
 	font-weight: 600;
-	margin: 16px 0 -30px 80px;
+	margin: 16px 0 10px 0px;
 }
 
 .action-button {
@@ -231,27 +238,19 @@
 	text-decoration: underline;
 }
 
-.comments-list {
-	margin-top: 20px;
-	width: 100%;
-	padding: 10px;
-	background-color: #f9f9f9;
-	border-radius: 6px;
+/* 대댓글(답글) */
+.sub-comment {
+	margin-top: 15px;
+	margin-left: 30px; /* 부모 댓글과 구분을 위해 들여쓰기 추가 */
+	border-left: 2px dotted #ccc;
+	padding-left: 15px;
 }
 
-.comment {
-	border-bottom: 1px solid #e3e3e3;
-	padding: 10px 0;
-}
-
-.comment:last-child {
-	border-bottom: none;
-}
-
-.comment-text {
-	margin: 5px 0 0 0;
-	font-size: 14px;
-	color: #333;
+/* 대댓글 입력 폼 (기본 숨김) */
+.replyForm {
+	display: none;
+	margin: 10px 0 0 18px;
+	width: 80%;
 }
 </style>
 
@@ -263,16 +262,16 @@
 	<iframe src="${youtubeLink}?autoplay=1&mute=1" class="youtube-frame"
 		allow="autoplay; fullscreen"></iframe>
 
+	<!-- 최상위 댓글 입력 섹션 -->
 	<div class="reply-section">
-		<form id="re_form" role="textbox" tabindex="0"
-			aria-label="댓글을 입력하세요...">
-            <input type="hidden" name="videoId" value="${video.videoId}">
-			<!-- textarea에 name 속성 추가 -->
-			<textarea id="re_content" name="commentContent"
-				placeholder="댓글을 입력하세요..." class="reply-textarea"></textarea>
+		<form id="re_form">
+			<input type="hidden" name="videoId" value="${video.videoId}">
+			<textarea id="re_content" name="commentContent" placeholder="댓글을 입력하세요..."
+				class="reply-textarea"></textarea>
 
-			<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}"> 
-			<input type="hidden"id="csrfTokenValue" value="${_csrf.token}">
+			<!-- CSRF 토큰 -->
+			<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}">
+			<input type="hidden" id="csrfTokenValue" value="${_csrf.token}">
 
 			<div class="action-bar">
 				<div class="divider"></div>
@@ -286,116 +285,239 @@
 		</form>
 	</div>
 
-
 	<!-- 구분선 -->
 	<div class="separator"></div>
 
-	<!-- 사용자 정보 섹션 -->
-	<div class="user-info">
-		<div class="user-meta">
-			<img
-				src="https://cdn.builder.io/api/v1/image/assets/TEMP/53eaa26f84ec76d03c516471430ad2cd3bcdad1e5edd32a44225a107e88f3a47?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450"
-				class="avatar" alt="User Avatar" />
-			<div class="username">${user.username}</div>
-			<div class="timestamp">${user.timestamp}</div>
-		</div>
-	</div>
-
-	<!-- 스레드 컨텐츠 -->
-	<div class="thread-container">
-		<div class="thread-line"></div>
-		<div class="post-content">
-			<p class="post-text">${postContent}</p>
-			<div class="interaction-bar">
-				<!-- Comment Icon and Text -->
-				<div class="action-button" role="button" tabindex="0"
-					onclick="replyToPost()">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/comment.svg"
-						class="post-icon" alt="Comment Icon">
-					<div>Reply</div>
-				</div>
-
-				<!-- Boost Icon and Text -->
-				<div class="action-button" role="button" tabindex="0"
-					onclick="boostPost()">
-					<img
-						src="https://cdn.builder.io/api/v1/image/assets/TEMP/a2792805d54f608f2ffd8a4e021264f6b7d2f11455a059cfab9a9e0183cf3782?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450"
-						class="post-icon" alt="Boost Icon">
-					<div>Boost</div>
-				</div>
-
-				<!-- Like Icon and Text -->
-				<div class="action-button" role="button" tabindex="0"
-					onclick="likePost()">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/star.svg"
-						class="post-icon" alt="Like Icon">
-					<div>Like</div>
-				</div>
-
-				<!-- More Icon and Text -->
-				<div class="action-button" role="button" tabindex="0"
-					onclick="moreOptions()">
-					<img
-						src="https://cdn.builder.io/api/v1/image/assets/TEMP/969b6a12fe21c1d1769e8ed4b2ff5b28f481984b7f0b46d426588e1a95cdf523?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450"
-						class="post-icon" alt="More Options Icon">
-					<div>More</div>
-				</div>
-			</div>
-		</div>
+	<!-- (1) 댓글 리스트 컨테이너 -->
+	<div id="commentListContainer" class="comments-list">
+		<!-- Ajax로 불러온 댓글이 여기 append 됩니다 -->
 	</div>
 </div>
 
-<!-- JavaScript -->
-
-<!-- jQuery 스크립트 추가 -->
-<script
-	src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<!-- jQuery -->
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script>
-	//댓글 등록
-	$('#re_form').submit(
-			function(event) {
-				if ($('#re_content').val().trim() == '') {
-					alert('내용을 입력하세요');
-					$('#re_content').val('').focus();
-					return false;
-				}
+var allComments = []; // 모든 댓글을 저장할 전역 변수
 
-				let form_data = $(this).serialize();
-				//서버와 통신
-				$.ajax({
-					url : '/videos/writeReply',
-					type : 'post',
-					data : form_data,
-					dataType : 'json',
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader($('#csrfHeaderName').val(), $(
-								'#csrfTokenValue').val());
-					},
-					success : function(param) {
-						if (param.result == 'logout') {
-							alert('로그인해야 작성할 수 있습니다.');
-						} else if (param.result == 'success') {
-							//폼 초기화
-							initForm();
-							//댓글 작성이 성공하면 새로 삽입한 글을 포함해서
-							//첫 번째 페이지의 게시글들을 다시 호출함
-							selectList(1);
-						} else {
-							alert('댓글 등록 오류 발생');
-						}
-					},
-					error : function() {
-						alert('네트워크 오류 발생');
-					}
-				});
-				//기본 이벤트 제거
-				event.preventDefault();
-			});
-	//댓글 작성 폼 초기화
-	function initForm() {
-		$('textarea').val('');
-		$('#re_first .letter-count').text('300/300');
-	}
+$(document).ready(function(){
+    loadCommentList();
+});
+
+// (1) 댓글 목록 로드
+function loadCommentList(){
+    let currentVideoId = '${video.videoId}';
+    $.ajax({
+        url : '${pageContext.request.contextPath}/videos/commentList',
+        type : 'GET',
+        data : { videoId : currentVideoId },
+        dataType : 'json',
+        success : function(response){
+            if(response.result === 'success'){
+                $('#commentListContainer').empty();
+                allComments = response.comments; // 모든 댓글을 전역 변수에 저장
+
+                // 최상위 댓글(부모가 없는 댓글)만 필터링
+                let topComments = allComments.filter(comment => !comment.parentCommentId || comment.parentCommentId === 0);
+
+                $.each(topComments, function(index, comment) {
+                    let html = buildCommentHtml(comment);
+                    $('#commentListContainer').append(html);
+                });
+
+                if(topComments.length === 0){
+                    $('#commentListContainer').append('<div>등록된 댓글이 없습니다.</div>');
+                }
+            } else {
+                alert('댓글 목록을 불러오는 중 오류가 발생했습니다!');
+            }
+        },
+        error : function(){
+            alert('네트워크 또는 서버 오류');
+        }
+    });
+}
+
+// (2) 최상위 댓글 작성
+$('#re_form').submit(function(event) {
+    event.preventDefault();
+
+    if ($('#re_content').val().trim() === '') {
+        alert('내용을 입력하세요');
+        $('#re_content').focus();
+        return;
+    }
+    
+    let formData = $(this).serialize(); // videoId, commentContent 등
+    $.ajax({
+        url: '${pageContext.request.contextPath}/videos/writeReply',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($('#csrfHeaderName').val(), $('#csrfTokenValue').val());
+        },
+        success: function(param) {
+            if (param.result === 'logout') {
+                alert('로그인해야 작성할 수 있습니다.');
+            } else if (param.result === 'success') {
+                // 댓글 등록 후 목록 다시 조회
+                $('#re_content').val('');
+                loadCommentList();
+            } else {
+                alert('댓글 등록 오류 발생');
+            }
+        },
+        error: function() {
+            alert('네트워크 오류 발생');
+        }
+    });
+});
+
+// (3) 댓글 HTML 생성 함수 (대댓글 포함)
+function buildCommentHtml(comment) {
+    // (A) 부모 댓글 영역
+    let html = 
+        '<div class="comment">' +
+            '<div class="user-info">' +
+                '<div class="user-meta">' +
+                    '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/53eaa26f84ec76d03c516471430ad2cd3bcdad1e5edd32a44225a107e88f3a47?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
+                          'class="avatar" alt="User Avatar" />' +
+                    '<div class="username">UserNum: ' + comment.userNum + '</div>' +
+                    '<div class="timestamp">' + formatTimestamp(comment.createdAt) + '</div>' +
+                '</div>' +
+            '</div>' +
+
+            '<div class="thread-container">' +
+                '<div class="post-content">' +
+                    '<p class="post-text">' + escapeHtml(comment.commentContent) + '</p>' +
+                    '<div class="interaction-bar">' +
+                        '<div class="action-button" onclick="toggleReplyForm(' + comment.commentId + ')">' +
+                            '<img src="' + '${pageContext.request.contextPath}' + '/assets/images/comment.svg" ' +
+                                'class="post-icon" alt="Comment Icon">' +
+                            '<div>Reply</div>' +
+                        '</div>' +
+
+                        '<div class="action-button" onclick="boostPost()">' +
+                            '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a2792805d54f608f2ffd8a4e021264f6b7d2f11455a059cfab9a9e0183cf3782?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
+                                'class="post-icon" alt="Boost Icon">' +
+                            '<div>Boost</div>' +
+                        '</div>' +
+
+                        '<div class="action-button" onclick="likePost()">' +
+                            '<img src="' + '${pageContext.request.contextPath}' + '/assets/images/star.svg" ' +
+                                'class="post-icon" alt="Like Icon">' +
+                            '<div>Like</div>' +
+                        '</div>' +
+
+                        '<div class="action-button" onclick="moreOptions()">' +
+                            '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/969b6a12fe21c1d1769e8ed4b2ff5b28f481984b7f0b46d426588e1a95cdf523?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
+                                'class="post-icon" alt="More Options Icon">' +
+                            '<div>More</div>' +
+                        '</div>' +
+
+                        '<div style="margin-left:30px; font-size:13px; color:#666;">' +
+                            '좋아요: ' + comment.likes + ' | 싫어요: ' + comment.dislikes +
+                        '</div>' +
+                    '</div>' + // .interaction-bar
+
+                    // (B) 대댓글 입력 폼 - 기본 숨김
+                    '<div class="replyForm" id="replyForm_' + comment.commentId + '" style="margin-bottom:40px; ">' +
+                        '<textarea id="subReplyContent_' + comment.commentId + '" ' +
+                            'class="reply-textarea" style="height:80px; border: 1px solid #d1d5db;" ' +
+                            'placeholder="대댓글을 입력하세요..." aria-label="대댓글 입력"></textarea>' +
+                        '<button type="button" style="margin:5px 0; padding:5px 10px; background:#000; color:#fff; border-radius:4px;" ' +
+                                'onclick="submitSubReply(' + comment.commentId + ')" aria-label="대댓글 등록">등록</button>' +
+                    '</div>';
+
+    // (C) 대댓글(자식 댓글) 목록이 있으면 추가
+    let childComments = allComments.filter(child => child.parentCommentId === comment.commentId);
+    if (childComments.length > 0) {
+        $.each(childComments, function(idx, child) {
+            html += 
+                '<div class="comment">' +
+                    '<div class="user-info">' +
+                        '<div class="user-meta">' +
+                            '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/53eaa26f84ec76d03c516471430ad2cd3bcdad1e5edd32a44225a107e88f3a47?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
+                                  'class="avatar" alt="User Avatar" />' +
+                            '<div class="username">UserNum: ' + child.userNum + '</div>' +
+                            '<div class="timestamp">' + formatTimestamp(child.createdAt) + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="post-text">' + escapeHtml(child.commentContent) + '</div>' +
+                '</div>';
+        });
+    }
+
+    html += '</div></div></div>'; // .post-content, .thread-container, .comment 닫기
+    return html;
+}
+
+// (4) 대댓글 폼 토글
+function toggleReplyForm(commentId){
+    $('#replyForm_' + commentId).slideToggle();
+}
+
+// (5) 대댓글 등록
+function submitSubReply(parentCommentId){
+    let content = $('#subReplyContent_' + parentCommentId).val().trim();
+    if(content === ''){
+        alert('대댓글 내용을 입력하세요.');
+        return;
+    }
+
+    // CSRF 값 가져오기
+    let csrfHeader = $('#csrfHeaderName').val();
+    let csrfToken = $('#csrfTokenValue').val();
+
+    $.ajax({
+        url: '${pageContext.request.contextPath}/videos/writeReply',
+        type: 'POST',
+        data: {
+            videoId: '${video.videoId}',
+            commentContent: content,
+            parentCommentId: parentCommentId
+        },
+        dataType: 'json',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function(param){
+            if(param.result === 'logout'){
+                alert('로그인해야 작성할 수 있습니다.');
+            } else if(param.result === 'success'){
+                $('#subReplyContent_' + parentCommentId).val('');
+                toggleReplyForm(parentCommentId);
+                loadCommentList(); // 목록 다시 갱신
+            } else {
+                alert('대댓글 등록 오류 발생');
+            }
+        },
+        error: function(){
+            alert('네트워크 오류 발생');
+        }
+    });
+}
+
+/* 아래 함수들은 임시 예시 */
+function boostPost() {
+    alert('Boost 기능은 아직 구현되지 않았습니다.');
+}
+function likePost() {
+    alert('Like 기능은 아직 구현되지 않았습니다.');
+}
+function moreOptions() {
+    alert('More 기능은 아직 구현되지 않았습니다.');
+}
+
+// (7) XSS 방지 함수
+function escapeHtml(text) {
+    return $('<div>').text(text).html();
+}
+
+// (8) 타임스탬프 포맷 함수
+function formatTimestamp(timestamp) {
+    let date = new Date(timestamp);
+    return date.toLocaleString();
+}
 </script>
+
