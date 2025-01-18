@@ -147,7 +147,45 @@ $(function () {
 	 *  장바구니 수량 변경
 	 * ====================== */
 
+	$('.quantity-btn').click(function(){
+		let item_num = $('#item_num').data('num');
+		let order_quantity = $(this).closest('.quantity-container').find('.quantity').data('value');
+		let cart_num = $(this).closest('.quantity-container').find('input[id^="this_cart_num_"]').data('value');
+		
+		let csrfToken = $("meta[name='_csrf']").attr("content");
+		let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+		$.ajax({
+		        url: '/item/modifyStock',
+		        type: 'POST', // POST 요청
+		        contentType: 'application/json', // JSON 데이터 전달
+		        data: JSON.stringify({ item_num: item_num, order_quantity: order_quantity, cart_num: cart_num }),
+		        beforeSend: function (xhr) {
+		            xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 포함
+		        },
+		        dataType: 'json',
+		        success: function (param) {
+		            if (param.result == 'logout') {
+		                alert('사용자 계정으로 로그인 후 이용해 주세요');
+		            } else if (param.result == 'success') {
+						
+		            }else {
+		                alert('장바구니 등록 오류 발생');
+		            }
+		        },
+		        error: function () {
+		            alert('네트워크 오류');
+		        }
+		    });
+	});
 	
+	$('.item-premium-btn').click(function(event){
+		event.preventDefault();
+		$('.item-premium-btn').css('background', 'none');
+		let item_category = $(this).data('num');
+		$(this).css('background', 'yellow');
+		$('#category_val').val(item_category);
+	});
 
 	
 });

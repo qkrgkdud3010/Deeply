@@ -13,7 +13,8 @@
 			item_name,
 			item_price,
 			item_description,
-			item_stock)
+			item_stock,
+			category)
 		VALUES (
 			shop_item_seq.nextval,
 			#{user_num},
@@ -21,7 +22,8 @@
 			#{item_name},
 			#{item_price},
 			#{item_description},
-			#{item_stock})
+			#{item_stock},
+			#{category})
 	</insert>
 	
 	<!-- sql태그와 include 태그를 이용해 sql문을 재사용 -->
@@ -96,7 +98,8 @@
 				item_price = #{item_price},
 				item_description = #{item_description},
 				item_stock = #{item_stock},
-				item_modifydate = SYSDATE
+				item_modifydate = SYSDATE,
+				category = #{category}
 		WHERE item_num = #{item_num}
 	</update>
 	

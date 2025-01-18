@@ -29,7 +29,7 @@
         	<form:hidden path="user_num" value="${item.user_num}"/>
             <div class="button form-actions">
 		<form:button>수정</form:button>
-		<input type="button" value="취소" onclick="location.href='/item/list'" />
+		<input type="button" value="취소" onclick="location.href='/item/list?user_num=${item.user_num}'" />
 		
 	</div>
             <ul>
@@ -47,6 +47,14 @@
                     <form:label path="item_name">상품명</form:label>
                     <!-- 수정: path="item_name" 추가 -->
                     <form:input type="text" maxlength="20" path="item_name" />
+                    <form:errors path="item_name" cssClass="error-color" />
+                </li>
+                <li>
+                    <form:label path="item_name">상품 등급</form:label>
+                    <!-- 수정: path="item_name" 추가 -->
+                    <button class="item-premium-btn" data-num="0">일반 상품</button>
+                    <button class="item-premium-btn" data-num="1">프리미엄 상품</button>
+                    <form:hidden path="category" id="category_val"/>
                     <form:errors path="item_name" cssClass="error-color" />
                 </li>
                 <li>
