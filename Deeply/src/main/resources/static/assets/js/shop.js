@@ -58,6 +58,36 @@ $(function () {
 	    const totalPrice = $('#price_total').data('price') * quantity;
 	    $('#price_total').html(formatNumber(totalPrice) + '원');
 	});
+	/* ======================
+     *  장바구니
+     * ====================== */
+	$('.cminus_btn').click(function(){
+		    let cquantity = $(this).parent().find('.quantity').data('value');
+		    if (cquantity <= 1) {
+		        cquantity = 1;
+		    } else {
+		        cquantity--;
+		    }
+		    $(this).parent().find('.quantity').data('value', cquantity);
+		    $(this).parent().find('.quantity').html(cquantity);
+
+		    const totalPrice = $(this).parents('.v-center').find('.price_total').data('price') * cquantity;
+		    $(this).parents('.v-center').find('.price_total').html(formatNumber(totalPrice) + '원');
+		});
+
+		$('.cplus_btn').click(function(){
+			let cquantity = $(this).parent().find('.quantity').data('value');
+		    if (cquantity >= 3) {
+		        cquantity = 3;
+		    } else {
+		        cquantity++;
+		    }
+		    $(this).parent().find('.quantity').data('value', cquantity);
+		    $(this).parent().find('.quantity').html(cquantity);
+		    const totalPrice = $(this).parents('.v-center').find('.price_total').data('price') * cquantity;
+		    $(this).parents('.v-center').find('.price_total').html(formatNumber(totalPrice) + '원');
+		});
+
 
 	/* ======================
 	 *  숫자 세자리마다 , 넣어짐
@@ -95,8 +125,12 @@ $(function () {
 	            if (param.result == 'logout') {
 	                alert('사용자 계정으로 로그인 후 이용해 주세요');
 	            } else if (param.result == 'success') {
-	               	$('#addCart_alert').show();
-	            } else {
+					$('#addCart_alert').html('장바구니에 성공적으로 담았습니다');
+					$('#addCart_alert').show();
+	            } else if (param.result == 'over'){
+					$('#addCart_alert').html('동일한 제품의 수량은 3개까지만 담을 수 있습니다');
+					$('#addCart_alert').show();
+				}else {
 	                alert('장바구니 등록 오류 발생');
 	            }
 	        },
@@ -108,6 +142,12 @@ $(function () {
 	$('#alert_x_btn').click(function(){
 		$('#addCart_alert').hide();
 	});
+	
+	/* ======================
+	 *  장바구니 수량 변경
+	 * ====================== */
+
+	
 
 	
 });

@@ -70,6 +70,8 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public void insertOrder(OrderVO ordervo) {
+		ordervo.setOrder_num(itemMapper.selectBook_num());
+		itemMapper.insertOrder(ordervo);
 		
 	}
 
@@ -112,6 +114,40 @@ public class ItemServiceImpl implements ItemService{
 	public List<CartVO> selectCart(long user_num) {
 		return itemMapper.selectCart(user_num);
 	}
+
+	@Override
+	public int updateCartByItem_num(long item_num, long user_num, long order_quantity) {
+		return itemMapper.updateCartByItem_num(item_num, user_num, order_quantity);
+	}
+
+	@Override
+	public CartVO getCurrentQuantity(long user_num, long item_num) {
+		return itemMapper.getCurrentQuantity(user_num, item_num);
+	}
+
+	@Override
+	public void updateTotalQuantity(int total_quantity, long cart_num) {
+		itemMapper.updateTotalQuantity(total_quantity, cart_num);
+		
+	}
+
+	@Override
+	public void updateStock(int quantity, long item_num) {
+		itemMapper.updateStock(quantity, item_num);
+		
+	}
+
+	@Override
+	public void updatePayNum(long pay_num, long order_num) {
+		itemMapper.updatePayNum(pay_num, order_num);
+		
+	}
+
+	
+
+	
+	
+	
 
 	
 

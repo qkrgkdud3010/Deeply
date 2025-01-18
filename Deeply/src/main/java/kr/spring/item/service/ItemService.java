@@ -31,10 +31,14 @@ public interface ItemService {
 	public OrderVO selectOrderDetail(OrderVO ordervo);
 	public MemberVO selectUserInfo(MemberVO memberVO);
 	public void deleteOrder(Long Order_num);
-	
+	public void updateStock(int quantity, long item_num);
+	public void updatePayNum(long pay_num, long order_num);
 	
 	//----------장바구니-------------
 	public void deleteCart(Long Cart_num);
 	public int insertCart(CartVO cart);
 	public List<CartVO> selectCart(long user_num);
+	public int updateCartByItem_num(long item_num, long user_num, long order_quantity);
+	public CartVO getCurrentQuantity(long user_num, long item_num);
+	public void updateTotalQuantity(int total_quantity, long cart_num);
 }

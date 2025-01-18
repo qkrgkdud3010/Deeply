@@ -2,6 +2,7 @@ package kr.spring.item.controller;
 
 import java.net.http.HttpRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,8 @@ public class ItemAjaxController {
 	@ResponseBody
 	public Map<String, Object> addCart(@RequestBody CartVO cartVO,
 	                                   @AuthenticationPrincipal PrincipalDetails principal,
-	                                   Model model, HttpServletRequest request) {
+	                                   Model model, HttpServletRequest request
+	                                   ) {
 
 	    Map<String, Object> mapJson = new HashMap<>();
 
@@ -54,16 +56,48 @@ public class ItemAjaxController {
 
 	    // 사용자 정보 설정
 	    cartVO.setUser_num(principal.getMemberVO().getUser_num());
-
+	    
 	    try {
-	        // 장바구니 삽입
-	        itemService.insertCart(cartVO);
+	    	CartVO db_cart = itemService.getCurrentQuantity(cartVO.getUser_num(), cartVO.getItem_num());
+	    	log.debug("<<db_cart>> : " + db_cart);
+	    	int quantity = cartVO.getOrder_quantity();
+	    	
+	    	
+	    	if(db_cart != null) {
+	    		int db_quantity = db_cart.getOrder_quantity();
+	    		int total_quantity = db_quantity + quantity;
+	    		if(total_quantity > 3) {
+		    		mapJson.put("result","over");
+		    		return mapJson;
+		    	}
+	    		
+	    		itemService.updateTotalQuantity(total_quantity, db_cart.getCart_num());
+	    	}else {
+	    		cartVO.setItem_quantity(quantity);
+	    		itemService.insertCart(cartVO);
+	    	}
+	    	
+	        
 	        mapJson.put("result", "success");
+	        
 	    } catch (Exception e) {
 	        mapJson.put("result", "error");
 	    }
+	    
+	    // 사용자 장바구니 목록 가져오기
+	    List<CartVO> cartList = itemService.selectCart(principal.getMemberVO().getUser_num());
+	    log.debug("Cart List from DB: " + cartList);
+	    log.debug("<<cart목록>> :" + cartList);
 
+	    // Model에 데이터 추가
+	    model.addAttribute("cart", cartList);
+	    log.debug("<<cart목록>> :" + cartList);
+	    
 	    return mapJson;
 	}
 
+	
+
+
+	
 }

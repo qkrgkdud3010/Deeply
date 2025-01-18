@@ -222,6 +222,16 @@ flex-direction:column;
 	border-radius:5px;
 	margin-left:3%;
 }
+
+.quantity-box{
+	display:flex;
+	align-items:center;
+	border:1px solid black;
+	width:6vw;
+	border-radius:5px;
+	margin-left:3%;
+}
+
 .quantity-btn{
 	width:1.5vw;
 	height:1.5vw;
@@ -231,7 +241,6 @@ flex-direction:column;
 }
 
 .quantity-name{
-	width:6vw;
 	margin-top:2%;
 	margin-left:3%;
 }
@@ -288,3 +297,22 @@ flex-direction:column;
 	cursor:pointer;
 }
 
+.purchase-btn{
+	position:absolute;
+	top:40%;
+	right:-30%;
+	cursor:pointer;
+	font-weight:bold;
+}
+.purchase-all-btn{
+	width:8vw;
+	height:3vw;
+	border:1px solid black;
+	border-radius:5px;	
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	cursor:pointer;
+}
+
+/*구매*/

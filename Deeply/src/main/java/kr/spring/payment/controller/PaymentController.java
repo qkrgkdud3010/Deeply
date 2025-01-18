@@ -37,13 +37,19 @@ public class PaymentController {
 	
 	@GetMapping("/payment")
 	public String paymentMain(@RequestParam("pay_price") int payPrice ,
-							  @RequestParam(required=false) Long booking_num,					
+							  @RequestParam(required=false) Long booking_num,
+							  @RequestParam(required=false) Long order_num,
+							  @RequestParam(required=false) Integer item_quantity,
 			@AuthenticationPrincipal PrincipalDetails principal,Model model) {
 	 MemberVO memberVO = principal.getMemberVO();
 		model.addAttribute("memberVO", memberVO);
 		model.addAttribute("payPrice", payPrice);
 		if(booking_num != null) {
 			model.addAttribute("booking_num", booking_num);
+		}
+		if(order_num != null) {
+			model.addAttribute("order_num", order_num);
+			model.addAttribute("item_quantity",item_quantity);
 		}
 		return "payment";
 	}

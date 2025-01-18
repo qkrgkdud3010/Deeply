@@ -51,12 +51,9 @@
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
 		
-		<div class="main-div content-container"> 
-		
-		<c:if test="${empty principal.artistVO && !empty principal.memberVO}">
-		<input type="button" value="장바구니" onclick="location.href='/item/cart?user_num=${principal.memberVO.user_num}'">
-		</c:if>
-	<%-- 비로그인, 아티스트 계정으로 로그인 시작 --%>
+		<div class="main-div content-container">
+
+	<%-- 아티스트 계정으로 로그인 시작 --%>
 		<c:if
 			test="${!empty principal.artistVO}">
 			<div class="text-title">

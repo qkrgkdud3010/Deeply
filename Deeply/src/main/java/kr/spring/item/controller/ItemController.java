@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,6 +34,9 @@ import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+import kr.spring.payment.service.PaymentService;
+import kr.spring.payment.vo.PaymentCompletionRequest;
+import kr.spring.payment.vo.PaymentVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.ValidationUtil;
@@ -45,7 +50,9 @@ public class ItemController {
 	private ItemService itemService;
 	@Autowired
 	private ArtistService artistService;
-	
+	@Autowired
+	private PaymentService paymentService;
+
 	//자바빈(VO)초기화
 	@ModelAttribute
 	public ItemVO initCommand() {
@@ -405,6 +412,12 @@ public class ItemController {
 			return "common/resultAlert";
 		}
 		
+		if(item.getItem_stock() < quantity) {
+			model.addAttribute("message", "재고가 부족합니다, 현재 상품은 " + item.getItem_stock() +"개 남았습니다");
+			model.addAttribute("url",request.getContextPath() + "/item/detail?item_num="+item_num);
+			return "common/resultAlert";
+		}
+		
 		OrderVO orderVO = new OrderVO();
 		
 		model.addAttribute("orderVO", orderVO);
@@ -417,8 +430,24 @@ public class ItemController {
 	//주문 폼에서 주문 데이터 전송
 	
 	@PostMapping("/order")
-	public void submitOrder(@ModelAttribute("orderVO") @Valid OrderVO orderVO){
+	public String submitOrder(@ModelAttribute("orderVO") @Valid OrderVO orderVO, 
+							BindingResult result,
+			 				HttpServletRequest request,
+			 				Model model){
+		if (result.hasErrors()) {
+			model.addAttribute("errors", result.getAllErrors());
+			model.addAttribute("orderVO", orderVO);
+			return "itemOrder"; // 유효성 검증 실패 시 JSP로 이동
+		}
 		
+		itemService.insertOrder(orderVO);
+		long order_num = orderVO.getOrder_num();
+		
+		model.addAttribute("message", "결제 페이지로 이동합니다");
+		model.addAttribute("url",request.getContextPath() + "/charge/payment?pay_price=" + 
+							orderVO.getTotal_price()+"&order_num="+order_num+"&item_quantity="+orderVO.getItem_quantity());
+		    
+		return "common/resultAlert";
 	}
 	
 
@@ -444,13 +473,40 @@ public class ItemController {
 		}
 		
 		List<CartVO> carts = itemService.selectCart(user_num);
-		
-		model.addAttribute("carts", carts);
+		log.debug("<<장바구니 목록>> : " + carts);
+		model.addAttribute("cart", carts);
 	    
-
 	    return "itemCart"; // 장바구니 페이지로 이동
 	
 	}
+	
+	@PostMapping("/complete")
+    public ResponseEntity<String> completePayment(@RequestBody PaymentCompletionRequest request) {
+		
+        try {
+        	
+            // 결제 정보 객체 생성
+            PaymentVO payment = new PaymentVO();
+           
+            payment.setTotalAmount(request.getTotalAmount());
+            payment.setUSER_NUM(request.getUser_num());
+            paymentService.updateBal(payment);
+            // 결제 처리 서비스 호출
+            paymentService.insertOrder(payment);
+            
+            //재고 quantity만큼 감소
+            itemService.updateStock(request.getItem_quantity(),request.getOrder_num());
+            //paynum 넣기
+            itemService.updatePayNum(payment.getPAY_NUM(), request.getOrder_num());
+           
+            return ResponseEntity.ok("결제 완료 처리 성공");
+        } catch (Exception e) {
+        	  log.debug("<<complete 주소 이동 성공>> : catch");
+        	  e.printStackTrace(); // 예외 출력
+        	  //예매 정보 삭제
+        	  return ResponseEntity.status(500).body("결제 처리 실패: " + e.getMessage());
+        }
+    }
 	
 }
 	

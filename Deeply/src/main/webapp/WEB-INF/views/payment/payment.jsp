@@ -1,14 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--  -->
 <script
 	src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 
 <div class="payment-1">
+	<c:if test="${!empty booking_num}">
 	<input type="hidden" id="booking_info" data-book-num="${booking_num}">
+	</c:if>
+	<c:if test="${!empty order_num}">
+	<input type="hidden" id="order_info" data-order-num="${order_num}">
+	<input type="hidden" id="item_quantity" data-order-num="${item_quantity}">
+	</c:if>
 	<hr>
-	<h2>결제 방식</h2>
+	<h2>결제 방식, ${booking_num}, ${order_num}, ${item_quantity}</h2>
 	<form>
 		<div style="display: none;">
 			<label for="usePoints">사용할 포인트: </label> <input type="number"
@@ -46,7 +53,13 @@
 var csrfToken = $('meta[name="_csrf"]').attr('content');
 var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
 const userNum = parseInt(document.querySelector("#payment-info").getAttribute("data-user-num"));
-const bookingNum = BigInt(document.querySelector("#booking_info").getAttribute("data-book-num"));
+const bookingInfoElement = document.querySelector("#booking_info");
+const orderInfoElement = document.querySelector("#order_info");
+const itemQuantityElement = document.querySelector("#item_quantity");
+
+const bookingNum = bookingInfoElement ? bookingInfoElement.getAttribute("data-book-num") : null;
+const orderNum = orderInfoElement ? orderInfoElement.getAttribute("data-order-num") : null;
+const itemQuantity = itemQuantityElement ? itemQuantityElement.getAttribute("data-order-num") : null;
 console.log(userNum);  // 제대로 값이 출력되는지 확인
 
 	document
@@ -105,9 +118,13 @@ console.log(userNum);  // 제대로 값이 출력되는지 확인
 	        // 결제 성공 여부 확인
 	        if (response.code !== undefined) {
 	            const bookingNum = document.querySelector("#booking_info").getAttribute("data-book-num");
+	            const orderNum = document.querySelector("#order_info").getAttribute("data-order-num");
+	            const itemQuantity = document.querySelector("#item_quantity").getAttribute("data-order-num");
 	            const endpoint = bookingNum
-	                ? `${pageContext.request.contextPath}/booking/complete`
-	                : `${pageContext.request.contextPath}/charge/complete`;
+	            ? `${pageContext.request.contextPath}/booking/complete`
+	            : orderNum
+	            ? `${pageContext.request.contextPath}/item/complete`
+	            : `${pageContext.request.contextPath}/charge/complete`;
 
 	            const body = {
 	                totalAmount: finalPrice,
@@ -116,6 +133,9 @@ console.log(userNum);  // 제대로 값이 출력되는지 확인
 
 	            if (bookingNum) {
 	                body.booking_num = parseInt(bookingNum, 10);
+	            }else if(orderNum){
+	            	body.order_num = parseInt(orderNum, 10);
+	            	body.item_quantity = parseInt(itemQuantity, 10);
 	            }
 
 	            const notified = await fetch(endpoint, {

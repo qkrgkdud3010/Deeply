@@ -171,4 +171,49 @@
 	</select>
 
 
+	<update id="updateCartByItem_num" parameterType="cartVO">
+	    <![CDATA[
+	    UPDATE shop_cart
+	    	SET order_quantity = 
+	        	CASE
+	           	 WHEN (order_quantity + #{input_quantity}) > 3 THEN 3
+	           	 ELSE (order_quantity + #{input_quantity})
+	       	 END
+	    	WHERE item_num = #{item_num}
+	      	AND user_num = #{user_num};
+	  	  ]]>
+	</update>
+	<insert id="insertOrder" parameterType="orderVO">
+		INSERT INTO shop_order(
+			order_num,
+			item_num,
+			user_num,
+			item_quantity,
+			total_price,
+			order_date,
+			item_status,
+			order_notice,
+			name,
+			phone,
+			zipcode,
+			address1,
+			address2
+		)VALUES(
+			#{order_num},
+			#{item_num},
+			#{user_num},
+			#{item_quantity},
+			#{total_price},
+			sysdate,
+			1,
+			#{order_notice},
+			#{name},
+			#{phone},
+			#{zipcode},
+			#{address1},
+			#{address2}	
+		)
+	</insert>
+
+
 </mapper>
