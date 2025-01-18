@@ -47,6 +47,14 @@
                     <form:errors path="item_name" cssClass="error-color" />
                 </li>
                 <li>
+                    <form:label path="item_name">상품 등급</form:label>
+                    <!-- 수정: path="item_name" 추가 -->
+                    <button class="item-premium-btn" data-num="0">일반 상품</button>
+                    <button class="item-premium-btn" data-num="1">프리미엄 상품</button>
+                    <form:hidden path="category" id="category_val"/>
+                    <form:errors path="item_name" cssClass="error-color" />
+                </li>
+                <li>
                     <form:label path="item_price">가격</form:label>
                     <!-- 수정: path="item_price" 추가 -->
                     <form:input type="number" min="1" max="9999999" id="item_price" path="item_price" placeholder="가격을 입력하세요." />

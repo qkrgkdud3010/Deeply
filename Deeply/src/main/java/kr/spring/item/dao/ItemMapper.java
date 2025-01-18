@@ -42,14 +42,16 @@ public interface ItemMapper {
 	public List<OrderVO> selectOrder(Map<String,Object> map);//주문 목록(List형태)
 	public OrderVO selectOrderDetail(OrderVO ordervo);//1건으로 불러올 개별 상품 목록
 	public MemberVO selectUserInfo(MemberVO memberVO);//배송지 정보 가져오기
-	public void deleteOrder(Long Order_num); //주문 취소
+	@Delete("DELETE FROM shop_order WHERE item_num = #{item_num}")
+	public void deleteOrder(Long item_num); //주문 취소
 	@Update("UPDATE shop_item SET item_stock=item_stock-#{quantity} WHERE item_num=#{item_num}")
 	public void updateStock(int quantity, long item_num); // 재고 수 업데이트
 	@Update("UPDATE shop_order SET pay_num=#{pay_num} WHERE order_num=#{order_num}")
 	public void updatePayNum(long pay_num, long order_num);
 	
 	//----------장바구니-------------
-	public void deleteCart(Long Cart_num);//장바구니에 담긴 상품 삭제
+	@Delete("DELETE FROM shop_cart WHERE item_num = #{item_num}")
+	public void deleteCart(Long item_num);//장바구니에 담긴 상품 삭제
 	public int insertCart(CartVO cart);//장바구니 정보 등록
 	public List<CartVO> selectCart(long user_num);//장바구니 목록가져오기
 	int updateCartByItem_num(@Param("item_num") long item_num, 
@@ -62,7 +64,11 @@ public interface ItemMapper {
 	@Update("UPDATE shop_cart SET order_quantity=#{total_quantity} WHERE cart_num=#{cart_num}")
 	public void updateTotalQuantity(int total_quantity, long cart_num);
 	
+	@Delete("DELETE FROM shop_cart WHERE cart_num=#{cart_num}")
+	public void deleteCartByCartNum(long cart_num);//개별 카트 삭제
 	
+	@Select("SELECT * FROM shop_cart WHERE cart_num=#{cart_num}")
+	public CartVO selectCartDetail(long cart_num);
 
 	
 	//----------관리자(아티스트)-------------

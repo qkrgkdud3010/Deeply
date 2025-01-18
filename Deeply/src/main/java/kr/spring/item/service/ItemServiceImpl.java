@@ -50,6 +50,8 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public void deleteItem(Long item_num) {
+		itemMapper.deleteCart(item_num);
+		itemMapper.deleteOrder(item_num);
 		itemMapper.deleteItem(item_num);
 	}
 
@@ -96,13 +98,13 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public void deleteOrder(Long Order_num) {
-		
+	public void deleteOrder(Long item_num) {
+		itemMapper.deleteOrder(item_num);
 	}
 
 	@Override
-	public void deleteCart(Long Cart_num) {
-		
+	public void deleteCart(Long item_num) {
+		itemMapper.deleteCart(item_num);
 	}
 
 	@Override
@@ -140,6 +142,18 @@ public class ItemServiceImpl implements ItemService{
 	@Override
 	public void updatePayNum(long pay_num, long order_num) {
 		itemMapper.updatePayNum(pay_num, order_num);
+		
+	}
+
+	@Override
+	public void deleteCartByCartNum(long cart_num) {
+		itemMapper.deleteCartByCartNum(cart_num);
+		
+	}
+
+	@Override
+	public CartVO selectCartDetail(long cart_num) {
+		return itemMapper.selectCartDetail(cart_num);
 		
 	}
 

@@ -27,6 +27,7 @@ public class ItemVO {
 	private java.util.Date item_modifydate;	// 상품 수정일
 	@NotNull
 	private int item_stock;      			// 상품 재고 수량
+	private int category;					//일반상품--0 유료회원 전용 상품 표시--1
 	
 	private long group_num;
 	private String group_name; 				//아티스트 이름

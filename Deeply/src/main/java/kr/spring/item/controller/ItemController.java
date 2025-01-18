@@ -503,10 +503,31 @@ public class ItemController {
         } catch (Exception e) {
         	  log.debug("<<complete 주소 이동 성공>> : catch");
         	  e.printStackTrace(); // 예외 출력
-        	  //예매 정보 삭제
+        	  //결제 정보 삭제
         	  return ResponseEntity.status(500).body("결제 처리 실패: " + e.getMessage());
         }
     }
+	
+	@GetMapping("/delete_cart")
+	public String deleteCart(long cart_num, Model model,
+						   HttpServletRequest request,
+						   @AuthenticationPrincipal PrincipalDetails principal) {
+		CartVO cartVO = itemService.selectCartDetail(cart_num);
+		
+		if(principal.getMemberVO() != null && principal.getMemberVO().getUser_num() == cartVO.getUser_num()) {
+			itemService.deleteCartByCartNum(cart_num);
+			
+			model.addAttribute("message", "장바구니 상품을 삭제하였습니다");
+			model.addAttribute("url",request.getContextPath() + "/item/cart?user_num="+principal.getMemberVO().getUser_num());
+			    
+			return "common/resultAlert";
+		}
+		//카트 vo에 저장된 유저 번호와 로그인된 유저번호가 일치하지 않을 경우 삭제 방지
+		model.addAttribute("message", "삭제 권한이 없습니다");
+		model.addAttribute("url",request.getContextPath() + "/item/cart?user_num="+principal.getMemberVO().getUser_num());
+		    
+		return "common/resultAlert";
+	}
 	
 }
 	

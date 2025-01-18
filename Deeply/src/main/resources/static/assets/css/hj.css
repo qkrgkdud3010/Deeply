@@ -47,22 +47,32 @@ li{
   display: flex; 
   flex-wrap: wrap; 
   gap: 1vw; 
-  justify-content: space-between; 
+  justify-content: flex-start;
+  
   align-items: flex-start; 
   background-color: white;
-  width: 86.8vw;
+  width: 80vw;
   height: auto;
   margin: 0 auto; 
   padding: 1vw; 
 }
 
+.group-text{
+	font-size:1.4vw;
+}
 
+.item-img{
+	width: 100%;
+  height: auto;
+  object-fit: cover; /* 또는 contain */
+}
 
 .item-card {
-   object-fit: cover;
-    width: 13vw; /* 화면 너비의 13% */
-    height: 35vh; /* 화면 높이의 35% */
-    padding: 1vw; /* 화면 너비의 1% */
+    object-fit: cover;
+    width: 18%; /* 화면 너비의 13% */
+    height: auto; /* 화면 높이의 35% */
+    padding: 1rem; /* 화면 너비의 1% */
+    margin: 1%;
     background-color: #fff;
     border-radius: 1vw; /* 화면 너비의 1% */
     box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); /* 뷰포트 비율 기반 */
@@ -313,6 +323,14 @@ flex-direction:column;
 	align-items:center;
 	justify-content:center;
 	cursor:pointer;
+}
+
+.cart-delete-img{
+	position:absolute;
+	right:-40%;
+	top:40%;
+	cursor:pointer;
+	
 }
 
 /*구매*/

@@ -19,50 +19,52 @@
 		<div>상품을 장바구니에 추가하였습니다</div>
 		<a href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기-></a>
 	</div>
+	
 	<%-- 아티스트 계정으로 로그인 시작 --%>
-	<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
-	${item.item_num}
-	<input type="button" value="수정하기" onclick="location.href='/item/update?item_num=${item.item_num}'"/>
-	<input type="button" value="삭제하기" id="delete_btn"/>
-		<script type="text/javascript">
-			const delete_btn = document.getElementById('delete_btn')
-			delete_btn.onclick = function() {
-				const choice = confirm('삭제하시겠습니까?');
-				if (choice) {
-					location.replace('delete?item_num=${item.item_num}');
-				}
-			};
-			function goHistory(n) {
-		        if (window.history.length > Math.abs(n)) {
-		            history.go(n);
-		        } else {
-		            // 이동 가능한 단계가 없을 경우 기본 페이지로 이동
-		            window.location.href = '/item/main';
-		        }
-		    }
-		</script>
-		<input type="button" value="등록하기" onclick="location.href='/item/write'">
-		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
-	</c:if>
+		<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
+		<input type="button" value="수정하기" onclick="location.href='/item/update?item_num=${item.item_num}'"/>
+		<input type="button" value="삭제하기" id="delete_btn"/>
+			<script type="text/javascript">
+				const delete_btn = document.getElementById('delete_btn')
+				delete_btn.onclick = function() {
+					const choice = confirm('삭제하시겠습니까?');
+					if (choice) {
+						location.replace('delete?item_num=${item.item_num}');
+					}
+				};
+				function goHistory(n) {
+			        if (window.history.length > Math.abs(n)) {
+			            history.go(n);
+			        } else {
+			            // 이동 가능한 단계가 없을 경우 기본 페이지로 이동
+			            window.location.href = '/item/main';
+			        }
+			    }
+			</script>
+			<input type="button" value="등록하기" onclick="location.href='/item/write'">
+			<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
+		</c:if>
 	<%-- 아티스트 계정으로 로그인 끝--%>
 	
-	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
-		<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
-	<%-- 유저 계정으로 로그인 끝 --%>
 	
-		
+	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
+		<!-- <a href="javascript:history.go(-1);" class="btn-back">이전으로</a> -->
+	<%-- 비로그인, 유저 계정으로 로그인 끝 --%>
+	
+	
+	<%-- 아티스트 계정으로 로그인 시작 --%>	
 		<div class="main-div content-container">
+			<c:if test="${!empty principal.artistVO}">
+				<div class="text-title">
+					반갑습니다. ${item.group_name} 
+						<span class="date">
+						<c:if test="${!empty item.item_modifydate}">
+    						수정일 : <fmt:formatDate value="${item.item_modifydate}" pattern="yyyy년 MM월 dd일" />
+						</c:if>
+						<c:if test="${empty item.item_modifydate}">
+						    등록일 : <fmt:formatDate value="${item.item_regdate}" pattern="yyyy년 MM월 dd일" />
+						</c:if>
 
-	<%-- 아티스트 계정으로 로그인 시작 --%>
-		<c:if
-			test="${!empty principal.artistVO}">
-			<div class="text-title">
-				반갑습니다. ${item.group_name} <span class="date">등록일 : <fmt:formatDate
-						value="${item.item_regdate}" pattern="yyyy년 MM월 dd일" /> <c:if
-						test="${!empty item.item_modifydate}">수정일 : 
-						<fmt:formatDate value="${item.item_modifydate}"
-							pattern="yyyy년 MM월 dd일" />
-					</c:if>
 				</span>
 			</div>
 
@@ -77,14 +79,21 @@
 						<li>상품명 : ${item.item_name}</li>
 						<li>가격 : ${item.item_price}원</li>
 						<li>수량 : ${item.item_stock}개</li>
+							<!-- <label for="category">카테고리:</label>
+								<select name="category" id="category" required>
+	  								<option value="0">일반 상품</option>
+	 								 <option value="1">유료회원 전용 상품</option>
+							</select> -->
+						
 					</ul>
 				</div>
 			</div>
 		</c:if>
-	<%-- 아티스트 계정으로 로그인 끝--%>
+		<%-- 아티스트 계정으로 로그인 끝--%>
 
 	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
 		<c:if test="${empty principal.artistVO}">
+			<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 			<div class="text-title">반갑습니다.</div>
 			<div class="item-info">
 				<div class="box-shadow">

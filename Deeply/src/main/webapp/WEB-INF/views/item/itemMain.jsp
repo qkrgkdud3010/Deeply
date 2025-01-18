@@ -17,16 +17,13 @@
 
 
 
-<div class="item-main main-container">
 	<div class="button page-action">
-
-
 		<c:if test="${!empty principal.artistVO}">
 			<input type="button" value="등록하기" onclick="location.href='/item/write'">
 		</c:if>
 	</div>
-	<div class="listcontent-container item-container">
-		<div class="artist-name">반갑습니다. 상품의 메인 페이지 </div>
+	<div class="listcontent-container item-container main-div">
+		<div class="artist-name">반갑습니다.</div>
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
@@ -36,14 +33,14 @@
 		    <c:set var="loop_flag" value="true"/>
 				<div class="main-items">
 					<div class="value-list">
-					<div><h3>${group.group_name}</h3></div>
+					<div><h3 class="group-text">${group.group_name}</h3></div>
 						<c:forEach items="${list}" var="item" varStatus="status" begin="${group_cnt}">
 							<c:if test="${loop_flag}">
 								<div class="item-card">
 									<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
 									<img
 										src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-										width="180px" height="180px" class="item-img">
+										class="item-img">
 									</a>
 									<hr class="custom-hr" noshade="noshade" width="100%">
 									<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span>
@@ -62,4 +59,3 @@
 				</div>
 			</c:forEach>
 	</div>
-</div>
