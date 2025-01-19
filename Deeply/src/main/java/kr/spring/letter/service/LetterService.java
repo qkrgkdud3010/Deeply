@@ -3,8 +3,11 @@ package kr.spring.letter.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.ReplyVO;
+import kr.spring.payment.vo.FanVO;
 
 public interface LetterService {
 	public List<LetterVO> selectLetterByUser(Map<String,Object> map);
@@ -23,4 +26,9 @@ public interface LetterService {
 	//아티스트 답장
 	public void postReply(ReplyVO replyVO);
 	public ReplyVO showReplyDetail(long reply_num);
+	//삭제
+	public void deleteLetter(long letter_num);
+	public void deleteReply(long letter_num);
+	//유료회원 정보
+	public List<FanVO> getFanByArtistNum(long artist_num);
 }

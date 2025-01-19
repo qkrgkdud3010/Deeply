@@ -58,7 +58,8 @@ public class BookingController {
 	@GetMapping("/list")
 	public String getList(long group_num, @RequestParam(defaultValue="1") int pageNum,
 										   @RequestParam(required=false) String status, 
-										   @RequestParam(required=false) String dateRange, HttpServletRequest request, Model model) {
+										   @RequestParam(required=false) String dateRange, HttpServletRequest request, Model model,
+										   @AuthenticationPrincipal PrincipalDetails principal) {
 		
 		
 		log.debug("<<예매 페이지 아티스트 번호>> : " + group_num);
@@ -106,8 +107,39 @@ public class BookingController {
 			list = bookingService.selectEventByArtistId(map);
 		}
 		
+		for(EventVO e : list) {
+			if(e.getPerf_status().equals("before")) {
+				e.setStatus_name("예매 전");
+			}else if(e.getPerf_status().equals("ongoing")) {
+				e.setStatus_name("예매 기간");
+			}else if(e.getPerf_status().equals("membership")) {
+				e.setStatus_name("선예매 기간");
+			}else {
+				e.setStatus_name("종료된 이벤트");
+			}
+			
+		}
+		
 		AgroupVO group = artistService.selectArtistDetail(group_num);
 		String group_name = group.getGroup_name();
+		int isFan = 0;
+		
+		if(principal.getMemberVO() != null) {
+			MemberVO member = principal.getMemberVO();
+			Map<String,Object> fanMap = new HashMap<String,Object>();
+			fanMap.put("user_num", member.getUser_num());
+			fanMap.put("group_name", group_name);
+			isFan = bookingService.checkIfGroupMembership(fanMap);
+		}
+		
+		if(isFan > 0) {
+			for(EventVO e : list) {
+				if(e.getPerf_status().equals("membership")) {
+					e.setIsMembership(1);
+				}
+					
+			}
+		}
 		
 		model.addAttribute("dateRange",dateRange);
 		model.addAttribute("count", count);
@@ -115,6 +147,9 @@ public class BookingController {
 		model.addAttribute("page", page.getPage());
 		model.addAttribute("artist_num", group_num);
 		model.addAttribute("group_name", group_name);
+		
+		
+		
 		
 		return "bookingList";
 	}
@@ -218,8 +253,11 @@ public class BookingController {
 		}
 		
 		eventVO.setHall_name(hall_name);
-		
+		if(eventVO.getEnd_date() == null) {
+			eventVO.setEnd_date(eventVO.getPerf_date());
+		}
 		bookingService.registerEvent(eventVO);
+		
 		
 		model.addAttribute("message", "공연 등록을 성공하였습니다");
 		model.addAttribute("url",request.getContextPath() + "/booking/list?group_num="+group_num);
@@ -253,13 +291,55 @@ public class BookingController {
         }
     }
 	
+	@GetMapping("/manage")
+	public String bookingManagement(long group_num, @RequestParam(defaultValue="1") int pageNum,
+									HttpServletRequest request, Model model,
+									@AuthenticationPrincipal PrincipalDetails principal) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("user_num", group_num);
+		int count = bookingService.selectEventRowCount(map);
+		PagingUtil page = new PagingUtil(pageNum, count,20,10,"list");
+		List<EventVO> list = null;
+		if(count > 0) {
+
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+
+
+			list = bookingService.selectEventByArtistId(map);
+		}
+		AgroupVO group = artistService.selectArtistDetail(group_num);
+		String group_name = group.getGroup_name();
+		
+		for(EventVO e : list) {
+			if(e.getPerf_status().equals("before")) {
+				e.setStatus_name("예매 전");
+			}else if(e.getPerf_status().equals("ongoing")) {
+				e.setStatus_name("예매 기간");
+			}else if(e.getPerf_status().equals("membership")) {
+				e.setStatus_name("선예매 기간");
+			}else {
+				e.setStatus_name("종료된 이벤트");
+			}
+			
+		}
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("artist_num", group_num);
+		model.addAttribute("group_name", group_name);
+		
+		return "bookingArtistList";
+	}
 	
 	
 	public void loadBookingContents(long perf_num, Model model) {
 		EventVO event = bookingService.showEventDetail(perf_num);
     	AgroupVO group = artistService.selectArtistDetail(event.getArtist_num());
     	String group_name = group.getGroup_name();
-
+    	
 	    int seat_count = bookingService.countSeatByHallNum(event.getHall_num());
 	    List<SeatVO> seats = bookingService.selectSeatByHallNum(event.getHall_num());
 	    
@@ -268,5 +348,60 @@ public class BookingController {
 	    model.addAttribute("seat_count", seat_count);
 	    model.addAttribute("seats",seats);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/delete")
+	public String deleteEvent(long perf_num, long group_num, Model model, HttpServletRequest request) {
+		
+		bookingService.deleteEvent(perf_num);
+		
+		model.addAttribute("message", "공연을 삭제하였습니다");
+		model.addAttribute("url",request.getContextPath() + "/booking/manage?group_num="+group_num);
+		    
+		return "common/resultAlert";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/booking_list")
+	public String userBooklist(long user_num, @RequestParam(defaultValue="1") int pageNum,
+							   HttpServletRequest request, Model model,
+							   @AuthenticationPrincipal PrincipalDetails principal) {
+		
+		if(user_num != principal.getMemberVO().getUser_num()) {
+			model.addAttribute("message", "접근 권한이 없습니다");
+			model.addAttribute("url",request.getContextPath() + "/main/main");
+			return "common/resultAlert";
+		}
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("user_num", user_num);
+		int count = bookingService.countBookingByUserNum(user_num);
+		PagingUtil page = new PagingUtil(pageNum, count,20,10,"list");
+		List<BookingVO> list = null;
+		if(count > 0) {
+
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+
+			
+			list = bookingService.selectBookingByUserNum(map);
+		}
+		
+		for(BookingVO b : list) {
+			EventVO e = bookingService.showEventDetail(b.getPerf_num());
+			String group_name = bookingService.getGroupNameByEvent(b.getPerf_num());
+			b.setGroup_name(group_name);
+			b.setPerf_title(e.getPerf_title());
+		}
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("user_num", user_num);
+		
+		return "userBookingList";
+	}
+	
 	
 }

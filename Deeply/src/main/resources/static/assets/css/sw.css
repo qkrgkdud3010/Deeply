@@ -37,6 +37,10 @@ a {
 }
  
 /* 폰트 설정 ======================*/
+.font-black{
+	color:black;
+}
+
 .font-white{
 	color:white;
 }
@@ -79,10 +83,18 @@ a {
 .background-black{
 	background:black;
 }
+.background-white{
+	background:white;
+}
 .background-darkblue{
 	background:#0369A1;
 }
 /* 정렬 설정 ====================*/
+
+.margin-auto{
+	width:80%;
+	margin:0 auto;
+}
 
 .display-flex{
 	display:flex;	
@@ -185,6 +197,9 @@ a {
 .width-30vw{
 	width:30vw;
 }
+.width-5{
+	width:5%;
+}
 .width-10{
 	width:10%;
 }
@@ -258,6 +273,12 @@ a {
 .height-5{
 	height:5vw;
 }
+.height-7{
+	height:7vw;
+}
+.height-10{
+	height:10vw;
+}
 /* 버튼 디자인 ====================*/
 .white-btn{
  	background:none;
@@ -285,6 +306,9 @@ a {
 	z-index:3;
 }
 
+.cursor-pointer{
+	cursor:pointer;
+}
 
 /* 
 ===============================
@@ -1106,6 +1130,37 @@ a {
 #event_upload{
 	display:none;	
 }
+/*===========================
+		  이벤트 관리 페이지
+  ===========================*/
+.artist-manage-main{
+	width:80%;
+	margin:0 auto;
+	min-height:100px;
+}
+
+.listManager-container{
+	border-top:3px solid black;
+	width:80%;
+	height:20vw;
+	margin:2% auto;
+}
+
+.manage-list-tr:nth-child(odd){
+	background:#0369A1;
+	color:white;
+}
+.manage-list-tr:nth-child(even){
+	background:#0C4A6E;
+	color:white;
+}
+
+.group-name-design {
+    font-weight: bold;
+    color:white;
+    font-size: clamp(12px, 1vw, 20px);
+    text-shadow: 0 0 7px #0369A1, 0 0 7px #0369A1;
+}
 
 /*===========================
 		  편지 페이지
@@ -1229,6 +1284,10 @@ a {
 	position: relative;
 }
 
+.letter-title{
+	width:80%;
+}
+
 .upload-preview{
 	width:100%;
 	height:12vw;
@@ -1238,16 +1297,18 @@ a {
 .ltitle-input, .lcontent-input{
 	background:none;
 	margin-top:3%;
-	margin-left:3%;
-	border:2px solid black;
+	border:2px solid #0369A1;
+	border-radius:5px;
 }
 
 .ltitle-input{
+	margin-left:4%;
 	width:30vw;
 	height:2.5vw;
 }
 
 .lcontent-input{
+	margin-left:3%;
 	width:60vw;
 	height:20vw;
 	resize: none;
@@ -1309,4 +1370,57 @@ a {
 	height:100%;
 }
 
+.letterPhoto-btn{
+	background:none;
+	font-weight:bold;
+	height:2vw;
+	border:none;
+	border-bottom:2px solid black;
+	position:absolute;
+	top:2vw;
+	right:5%;
+	z-index:10;
+	cursor:pointer;
+}
+
+.letterPhoto-btn2{
+	background:none;
+	font-weight:bold;
+	height:2vw;
+	border:none;
+	border-bottom:2px solid black;
+	position:absolute;
+	top:2vw;
+	right:15%;
+	z-index:10;
+	cursor:pointer;
+}
+
+.submit-div{
+	width:100%;
+	height:5vw;
+	margin-top:-4%;
+	margin-left:-10%;
+}
+
+.submit-btn{
+	width:8vw;
+	height:2.4vw;
+	background:white;
+	border:none;
+	border-radius:10px;
+	font-weight:bold;
+}
+
+.fan-font-design {
+    font-weight: bold;
+    color: white;
+    font-size: clamp(12px, 1vw, 20px);
+    text-shadow: 0 0 7px #7DD3FC, 0 0 7px #7DD3FC;
+}
+
+.fan-title-design{
+	font-weight:bold;
+	color:#0EA5E9;
+}
  

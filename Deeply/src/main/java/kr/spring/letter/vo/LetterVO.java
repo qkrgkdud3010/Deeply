@@ -24,4 +24,5 @@ public class LetterVO {
 	private MultipartFile upload;
 	private String letter_photo;
 	private String nick_name;
+	private int isFan;
 }

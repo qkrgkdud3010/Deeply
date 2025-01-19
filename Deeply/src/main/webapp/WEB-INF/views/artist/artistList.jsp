@@ -23,7 +23,7 @@
 					<div class="over-hidden height-90 align-top">
 						<img class="alist-img" src="${pageContext.request.contextPath}/assets/upload/${group.group_photo}">
 					</div>
-					<div class="height-10 align-center bold-title font-1">
+					<div class="align-center bold-title font-1">
 						${group.group_name}
 					</div>
 				</div>

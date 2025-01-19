@@ -38,8 +38,18 @@
 			<hr>
 		<c:forEach var="letter" items="${letters}">
 			<div id="letter_item" class="letter-item font-white font-1 left-5 vertical-center">
+				<c:if test="${letter.isFan == 1}">
+				<div class="width-10 fan-font-design">${letter.nick_name}</div>
+				</c:if>
+				<c:if test="${letter.isFan != 1}">
 				<div class="width-10">${letter.nick_name}</div>
+				</c:if>
+				<c:if test="${letter.isFan == 1}">
+				<div class="width-80"><a class="fan-title-design" href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
+				</c:if>
+				<c:if test="${letter.isFan != 1}">
 				<div class="width-80"><a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
+				</c:if>
 				<div class="width-10 align-center">${letter.post_date}</div>
 				<c:if test="${letter.replied == 0}">
 				<div class="width-10 align-center"><button class="reply-btn" onclick="location.href='${pageContext.request.contextPath}/letter/artist_write?artist_num=${artist.user_num}&letter_num=${letter.letter_num}'">답장</button></div>

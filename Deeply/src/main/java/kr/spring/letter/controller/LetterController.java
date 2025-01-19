@@ -31,6 +31,7 @@ import kr.spring.member.service.ArtistService;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+import kr.spring.payment.vo.FanVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -225,6 +226,16 @@ public class LetterController {
 			letters = letterService.selectLetterForArtist(map);
 		}
 		
+		List<FanVO> fanList = letterService.getFanByArtistNum(artist_num);
+		
+		for(FanVO f : fanList) {
+			for(LetterVO l : letters) {
+				if(f.getUser_num() == l.getUser_num()) {
+					l.setIsFan(1);
+				}
+			}
+		}
+		
 		model.addAttribute("count", count);
 		model.addAttribute("letters", letters);
 		model.addAttribute("page", page.getPage());
@@ -368,5 +379,36 @@ public class LetterController {
 		model.addAttribute("reply", reply);
 		model.addAttribute("artist", artist);
 		return "replyDetail";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/delete")
+	public String deleteLetter(long letter_num, @AuthenticationPrincipal PrincipalDetails principal, Model model, HttpServletRequest request) {
+		
+		LetterVO letterVO = letterService.showLetterDetail(letter_num);
+		boolean isWriter = false;
+		
+		if(principal.getMemberVO() != null) {
+			if(letterVO.getUser_num() == principal.getMemberVO().getUser_num()) {
+				isWriter = true;
+			}
+		}else if(principal.getArtistVO() != null) {
+			if(letterVO.getArtist_num() == principal.getArtistVO().getUser_num()) {
+				isWriter = true;
+			}
+		}
+		
+		if(isWriter) {
+			letterService.deleteLetter(letter_num);
+		}else {
+			model.addAttribute("message","편지를 삭제할 권한이 없습니다");
+			model.addAttribute("url",request.getContextPath() + "/artist/list");
+			return "common/resultAlert";
+		}
+		
+		model.addAttribute("message","편지를 삭제하였습니다");
+		model.addAttribute("url",request.getContextPath() + "/artist/list");
+		return "common/resultAlert";
+		
 	}
 }

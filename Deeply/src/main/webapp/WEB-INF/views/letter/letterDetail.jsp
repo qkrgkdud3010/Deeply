@@ -73,7 +73,7 @@
 			<button class="letter-buttons" onclick="location.href='${pageContext.request.contextPath}/letter/artist_write?artist_num=${artist.user_num}&letter_num=${letter.letter_num}'">답장</button>
 			</c:if>
 		</c:if>
-			<button class="letter-buttons">삭제</button>
+			<button class="letter-buttons" onclick="location.href='${pageContext.request.contextPath}/letter/delete?letter_num=${letter.letter_num}'">삭제</button>
 		</div>
 	</div>
 		<div class="page-box space-10vw align-center">${page}</div>

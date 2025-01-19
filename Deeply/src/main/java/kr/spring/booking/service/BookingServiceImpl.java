@@ -59,8 +59,8 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
-	public void updatePerformanceStatus() {
-		bookingMapper.updatePerformanceStatus();
+	public void updatePerformanceStatus(long group_num) {
+		bookingMapper.updatePerformanceStatus(group_num);
 		
 	}
 
@@ -80,6 +80,38 @@ public class BookingServiceImpl implements BookingService{
 	public BookingVO getBookingNumBeforePay(long user_num, long perf_num) {
 		return bookingMapper.getBookingNumBeforePay(user_num, perf_num);
 		
+	}
+
+	@Override
+	public int checkIfGroupMembership(Map<String,Object> map) {
+		return bookingMapper.checkIfGroupMembership(map);
+	}
+
+	@Override
+	public void deleteEvent(long perf_num) {
+		deleteBooking(perf_num);
+		bookingMapper.deleteEvent(perf_num);
+		
+	}
+	@Override
+	public void deleteBooking(long perf_num) {
+		bookingMapper.deleteBooking(perf_num);
+	}
+
+	@Override
+	public int countBookingByUserNum(long user_num) {
+		return bookingMapper.countBookingByUserNum(user_num);
+	}
+
+	@Override
+	public List<BookingVO> selectBookingByUserNum(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bookingMapper.selectBookingByUserNum(map);
+	}
+
+	@Override
+	public String getGroupNameByEvent(long perf_num) {
+		return bookingMapper.getGroupNameByEvent(perf_num);
 	}
 
 	

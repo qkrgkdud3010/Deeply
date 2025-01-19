@@ -31,6 +31,7 @@
 					<input type="hidden" id="event_status" name="status">
 				</div>
 				<c:if test="${!empty principal.artistVO && principal.artistVO.group_name == group_name}">
+				<button class="register-event-btn align-center bold-title" onclick="location.href='manage?group_num=${artist_num}'">공연 관리</button>
 				<button class="register-event-btn align-center bold-title" onclick="location.href='register?group_num=${artist_num}'">공연 등록</button>
 				</c:if>
 			</div>
@@ -38,21 +39,10 @@
 			<div class="booking-list top-1">
 				<div class="booking-items height-90">
 					<c:forEach var="list" items="${list}">
-					<div class="booking-item" data-num="${list.perf_num}">
+					<div class="booking-item" data-num="${list.perf_num}" data-val="${list.isMembership}">
 						<img src="${pageContext.request.contextPath}/assets/upload/${list.perf_photo}">
 						<div class="perf-status font-white bold-title right-align">
-							<c:if test="${list.perf_status == 'over'}">
-								종료된 이벤트
-							</c:if>
-							<c:if test="${list.perf_status == 'ongoing'}">
-								예매 기간
-							</c:if>
-							<c:if test="${list.perf_status == 'before'}">
-								예매 전
-							</c:if>
-							<c:if test="${list.perf_status == 'membership'}">
-								선예매 기간
-							</c:if>
+							${list.status_name}
 						</div>
 						<div class="perf-title font-white bold-title align-center">${list.perf_title}</div>
 						<div class="perf-date font-white bold-title align-center">${list.perf_date}</div>

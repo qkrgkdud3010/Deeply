@@ -47,6 +47,20 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/booking/bookingRegister.jsp"/>
     </definition>
+    <definition name="bookingArtistList" extends="main">
+    	<put-attribute name="title" value="이벤트 관리"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/booking/bookingCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/booking/bookingArtistList.jsp"/>
+    </definition>
+    <definition name="userBookingList" extends="main">
+    	<put-attribute name="title" value="사용자 예매 관리"/>
+    	<put-attribute name="css"
+    	  value="/WEB-INF/views/booking/bookingCSS.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/booking/userBookingList.jsp"/>
+    </definition>
     <definition name="letterList" extends="main">
     	<put-attribute name="title" value="편지 목록"/>
     	<put-attribute name="css"

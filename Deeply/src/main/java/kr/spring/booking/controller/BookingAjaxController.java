@@ -29,16 +29,17 @@ public class BookingAjaxController {
 	
 	@GetMapping("/detail")
 	@ResponseBody
-	public Map<String,Object> getDetail(@RequestParam("perf_num") long perf_num){
+	public Map<String,Object> getDetail(@RequestParam("perf_num") long perf_num,
+										@RequestParam("isMembership") int isMembership){
 		
 		Map<String,Object> mapAjax = new HashMap<String,Object>();
 		mapAjax.put("result", "success");
 		EventVO event = bookingService.showEventDetail(perf_num);
-		
+		event.setIsMembership(isMembership);
 		mapAjax.put("event", event);
 		
 		log.debug("<<event 제목>> : " + event.getPerf_title());
-		
+		log.debug("<<event 멤버십 상태> : " + event.getIsMembership());
 		return mapAjax;
 	}
 	

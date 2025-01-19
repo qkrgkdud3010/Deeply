@@ -24,9 +24,10 @@ public interface BookingMapper {
 	public EventVO showEventDetail(long perf_num);
 	//예매 정보 등록
 	public void registerBookingInfo(BookingVO bookingVO);
-
 	
-
+	@Select("SELECT a.group_name FROM performance_detail p JOIN agroup a ON p.artist_num = a.group_num WHERE p.perf_num=#{perf_num}")
+	public String getGroupNameByEvent(long perf_num);
+	
 	//공연장에 따른 좌석 개수
 	@Select("SELECT COUNT(*) FROM seat WHERE hall_num=#{hall_num}")
 	public int countSeatByHallNum(long hall_num);
@@ -36,7 +37,7 @@ public interface BookingMapper {
 	//공연 정보 등록
 	public void registerEvent(EventVO eventVO);
 	//공연 상태 자동 업데이트
-	public void updatePerformanceStatus();
+	public void updatePerformanceStatus(long group_num);
 	//공연 결제 전 취소
 	@Delete("DELETE FROM booking WHERE payment_status=0 AND booking_num=#{booking_num}")
 	public void deleteBookingBeforePay(long booking_num);
@@ -47,6 +48,17 @@ public interface BookingMapper {
 	@Select("SELECT booking_seq.nextval FROM dual")
 	public Long selectBook_num();
 	
+	@Delete("DELETE FROM performance_detail WHERE perf_num=#{perf_num}")
+	public void deleteEvent(long perf_num);
+	@Delete("DELETE FROM booking WHERE booking_num=#{perf_num}")
+	public void deleteBooking(long perf_num);
+	//아티스트 번호 fan 여부 비교 + 그룹 이름 체크
+	public int checkIfGroupMembership(Map<String,Object> map);
+	
+	//회원 예매 정보 count
+	public int countBookingByUserNum(long user_num);
+	//회원 예매 정보 list
+	public List<BookingVO> selectBookingByUserNum(Map<String,Object> map);
 	
 }
  

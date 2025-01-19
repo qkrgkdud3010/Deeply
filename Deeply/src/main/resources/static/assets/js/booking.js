@@ -41,7 +41,9 @@ $(function () {
 		$.ajax({
 			url:'detail',
 			type:'get',
-			data:{perf_num:$(this).attr('data-num')},
+			data:{perf_num:$(this).attr('data-num'),
+				  isMembership:$(this).attr('data-val'),
+			},
 			dataType:'json',
 			success:function(response){
 				if ($('.event-detail').length > 0) {
@@ -49,9 +51,27 @@ $(function () {
 				}
 				displayEventDetails(response);
 				
-				$('#booking_submit_btn').click(function(){
-					const url = '/booking/book?perf_num='+response.event.perf_num; 
-					window.location.href=url;
+				$('#booking_submit_btn').off('click').click(function(e){
+					
+					if(response.event.perf_status=='over'){
+						e.preventDefault();
+						alert('예매 기간이 종료되었습니다');
+						return;
+					}else if(response.event.perf_status=='membership' && response.event.isMembership == 1){
+						const url = '/booking/book?perf_num='+response.event.perf_num; 
+						window.location.href=url;
+					}else if(response.event.perf_status=='membership' && response.event.isMembership != 1){
+						e.preventDefault();
+						alert('선예매 자격요건에 해당되지 않습니다.\n자격요건: 아티스트 구독 + 20일');
+						return;
+					}else if(response.event.perf_status=='before'){
+						e.preventDefault();
+						alert('예매 기간이 아닙니다');
+						return;
+					}else{
+						const url = '/booking/book?perf_num='+response.event.perf_num; 
+						window.location.href=url;
+					}
 				});
 				
 			},
@@ -79,6 +99,15 @@ $(function () {
 		$('.e-address').text(event.location);
 		$('.e-price').text(event.ticket_price + '원');
 		$('.e-vip-price').text(Math.round(event.ticket_price * 1.4) + '원');
+		if(event.perf_status=='over'){
+			$('#booking_submit_btn').html("예매기간 종료");
+		}else if(event.perf_status=='membership' && response.event.isMembership == 1){
+			$('#booking_submit_btn').html("선예매");
+		}else if(event.perf_status=='ongoing'){
+			$('#booking_submit_btn').html("예매");
+		}else{
+			$('#booking_submit_btn').html("예매기간 이전");
+		}
 	}
 	
 	$('.seat-item').click(function () {

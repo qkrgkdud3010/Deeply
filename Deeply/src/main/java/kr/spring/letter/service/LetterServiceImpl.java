@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.letter.dao.LetterMapper;
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.ReplyVO;
+import kr.spring.payment.vo.FanVO;
 
 @Service
 @Transactional
@@ -84,6 +85,22 @@ public class LetterServiceImpl implements LetterService{
 	@Override
 	public ReplyVO showReplyDetail(long reply_num) {
 		return letterMapper.showReplyDetail(reply_num);
+	}
+	//삭제 ------------------------------------------------------------------------------------------
+	@Override
+	public void deleteLetter(long letter_num) {
+		letterMapper.deleteLetter(letter_num);
+		letterMapper.deleteReply(letter_num);
+	}
+
+	@Override
+	public void deleteReply(long letter_num) {
+		letterMapper.deleteReply(letter_num);
+	}
+
+	@Override
+	public List<FanVO> getFanByArtistNum(long artist_num) {
+		return letterMapper.getFanByArtistNum(artist_num);
 	}
 
 	

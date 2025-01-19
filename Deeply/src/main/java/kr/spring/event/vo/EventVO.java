@@ -45,4 +45,6 @@ public class EventVO {
 	private String perf_photo;
 	private MultipartFile upload;
 	private String reg_date;
+	private int isMembership;
+	private String status_name;
 }

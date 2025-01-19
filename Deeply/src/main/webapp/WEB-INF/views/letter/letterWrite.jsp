@@ -51,7 +51,9 @@
 			<div class="left-3"><form:errors class="left-3" path="letter_content" cssClass="error-color"/></div>
 			</div>
 		</div>
-		<form:button>전송</form:button>
+		<div class="submit-div height-3 align-right">
+			<form:button class="submit-btn">전송</form:button>
+		</div>
 		</form:form>
 	</div>
 	<div class="space-10vw"></div>

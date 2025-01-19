@@ -40,5 +40,7 @@ public class BookingVO {
 	private String address1;
 	private String address2;
 	private String request;
-	
+	private int isMembership;
+	private String perf_title;
+	private String group_name;
 }

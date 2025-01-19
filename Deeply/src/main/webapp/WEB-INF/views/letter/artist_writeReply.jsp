@@ -42,7 +42,7 @@
 			<div class="letter-photo">
 				<button class="letterPhoto-btn" id="letterPhoto_btn">사진 첨부</button>
 				<input type="file" class="display-none" name="upload" id="letterPhoto_upload">
-				<button class="letterPhoto-btn" id="letterFiles_btn">파일 등록</button>
+				<button class="letterPhoto-btn2" id="letterFiles_btn">파일 등록</button>
 				<input type="file" class="display-none" multiple="multiple" name="file_upload" id="letterFiles_upload">
 			</div>
 			
