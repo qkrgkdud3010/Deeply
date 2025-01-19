@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -130,19 +130,23 @@
 	border: 1px solid #e3e3e3;
 }
 
-/* 댓글 목록 */
 .comments-list {
 	margin-top: 20px;
 	width: 100%;
 	padding: 10px;
-	background-color: #f9f9f9;
 	border-radius: 6px;
+
+	/* Flexbox 설정 */
+	display: flex;
+	flex-direction: column; /* 세로로 정렬 */
+	align-items: center;    /* 가로 가운데 정렬 */
 }
 
-/* 각 댓글 */
 .comment {
-	padding: 0px 0;
-	margin-bottom: 10px;
+	width: 80%; /* 각 댓글의 너비 */
+	background-color: #fff;
+	border-radius: 4px;
+	text-align: left; /* 텍스트는 기본 왼쪽 정렬 */
 }
 
 .comment:last-child {
@@ -190,10 +194,9 @@
 .thread-container {
 	display: flex;
 	margin-left: 33px;
-	gap: 19px;
 	flex-wrap: wrap;
-    border-left: 4px solid #ccc; /* 두께: 4px, 색상: 연한 회색 */
-    padding-left: 15px; /* 필요에 따라 값을 조정하세요 */
+	border-left: 4px solid #ccc; /* 두께: 4px, 색상: 연한 회색 */
+	padding-left: 15px; /* 필요에 따라 값을 조정하세요 */
 }
 
 .thread-line {
@@ -266,8 +269,8 @@
 	<div class="reply-section">
 		<form id="re_form">
 			<input type="hidden" name="videoId" value="${video.videoId}">
-			<textarea id="re_content" name="commentContent" placeholder="댓글을 입력하세요..."
-				class="reply-textarea"></textarea>
+			<textarea id="re_content" name="commentContent"
+				placeholder="댓글을 입력하세요..." class="reply-textarea"></textarea>
 
 			<!-- CSRF 토큰 -->
 			<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}">
@@ -295,15 +298,16 @@
 </div>
 
 <!-- jQuery -->
-<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
-<script>
+<script
+	src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
 var allComments = []; // 모든 댓글을 저장할 전역 변수
 
 $(document).ready(function(){
     loadCommentList();
 });
 
-// (1) 댓글 목록 로드
+/** (1) 댓글 목록 로드 */
 function loadCommentList(){
     let currentVideoId = '${video.videoId}';
     $.ajax({
@@ -317,14 +321,17 @@ function loadCommentList(){
                 allComments = response.comments; // 모든 댓글을 전역 변수에 저장
 
                 // 최상위 댓글(부모가 없는 댓글)만 필터링
-                let topComments = allComments.filter(comment => !comment.parentCommentId || comment.parentCommentId === 0);
-
-                $.each(topComments, function(index, comment) {
-                    let html = buildCommentHtml(comment);
-                    $('#commentListContainer').append(html);
+                let topComments = allComments.filter(function(c){
+                    return !c.parentCommentId || c.parentCommentId === 0;
                 });
 
-                if(topComments.length === 0){
+                if(topComments.length > 0){
+                    $.each(topComments, function(index, comment){
+                        // 레벨 1 (부모)
+                        let html = buildCommentHtml(comment, 1);
+                        $('#commentListContainer').append(html);
+                    });
+                } else {
                     $('#commentListContainer').append('<div>등록된 댓글이 없습니다.</div>');
                 }
             } else {
@@ -337,7 +344,7 @@ function loadCommentList(){
     });
 }
 
-// (2) 최상위 댓글 작성
+/** (2) 최상위 댓글 작성 */
 $('#re_form').submit(function(event) {
     event.preventDefault();
 
@@ -373,91 +380,107 @@ $('#re_form').submit(function(event) {
     });
 });
 
-// (3) 댓글 HTML 생성 함수 (대댓글 포함)
-function buildCommentHtml(comment) {
-    // (A) 부모 댓글 영역
-    let html = 
-        '<div class="comment">' +
-            '<div class="user-info">' +
-                '<div class="user-meta">' +
+/**
+ * (3) 댓글 HTML 생성 함수 (대댓글 포함, 3단계까지만 허용)
+ *  - comment: 현재 댓글 객체
+ *  - level: 댓글 깊이 (1=부모, 2=자식, 3=자식의 자식)
+ */
+function buildCommentHtml(comment, level) {
+    // level이 3이면 더 이상 대댓글 작성 불가 → interaction-bar 제거
+    let canReply = (level < 3);
+
+    // (A) 부모(또는 현재) 댓글 영역
+    let html =
+        '<div class="comment">' + // Open .comment
+            '<div class="user-info">' + // Open .user-info
+                '<div class="user-meta">' + // Open .user-meta
+                    // 아바타 + 사용자 정보
                     '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/53eaa26f84ec76d03c516471430ad2cd3bcdad1e5edd32a44225a107e88f3a47?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
                           'class="avatar" alt="User Avatar" />' +
                     '<div class="username">UserNum: ' + comment.userNum + '</div>' +
                     '<div class="timestamp">' + formatTimestamp(comment.createdAt) + '</div>' +
+                '</div>' + // Close .user-meta
+            '</div>' + // Close .user-info
+
+            '<div class="thread-container">' + // Open .thread-container
+                '<div class="post-content">' + // Open .post-content
+                    '<p class="post-text">' + escapeHtml(comment.commentContent) + '</p>';
+
+    // (B) interaction-bar (level<3 일 때만)
+    if(canReply) {
+        html +=
+            '<div class="interaction-bar">' +
+                '<div class="action-button" onclick="toggleReplyForm(' + comment.commentId + ')">' +
+                    '<img src="' + '${pageContext.request.contextPath}' + '/assets/images/comment.svg" ' +
+                        'class="post-icon" alt="Comment Icon">' +
+                    '<div>Reply</div>' +
                 '</div>' +
-            '</div>' +
 
-            '<div class="thread-container">' +
-                '<div class="post-content">' +
-                    '<p class="post-text">' + escapeHtml(comment.commentContent) + '</p>' +
-                    '<div class="interaction-bar">' +
-                        '<div class="action-button" onclick="toggleReplyForm(' + comment.commentId + ')">' +
-                            '<img src="' + '${pageContext.request.contextPath}' + '/assets/images/comment.svg" ' +
-                                'class="post-icon" alt="Comment Icon">' +
-                            '<div>Reply</div>' +
-                        '</div>' +
+                '<div class="action-button" onclick="boostPost()">' +
+                    '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a2792805d54f608f2ffd8a4e021264f6b7d2f11455a059cfab9a9e0183cf3782?placeholderIfAbsent=true&apiKey=..." ' +
+                        'class="post-icon" alt="Boost Icon">' +
+                    '<div>Boost</div>' +
+                '</div>' +
 
-                        '<div class="action-button" onclick="boostPost()">' +
-                            '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a2792805d54f608f2ffd8a4e021264f6b7d2f11455a059cfab9a9e0183cf3782?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
-                                'class="post-icon" alt="Boost Icon">' +
-                            '<div>Boost</div>' +
-                        '</div>' +
+                '<div class="action-button" onclick="likePost()">' +
+                    '<img src="' + '${pageContext.request.contextPath}' + '/assets/images/star.svg" ' +
+                        'class="post-icon" alt="Like Icon">' +
+                    '<div>Like</div>' +
+                '</div>' +
 
-                        '<div class="action-button" onclick="likePost()">' +
-                            '<img src="' + '${pageContext.request.contextPath}' + '/assets/images/star.svg" ' +
-                                'class="post-icon" alt="Like Icon">' +
-                            '<div>Like</div>' +
-                        '</div>' +
+                '<div class="action-button" onclick="moreOptions()">' +
+                    '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/969b6a12fe21c1d1769e8ed4b2ff5b28f481984b7f0b46d426588e1a95cdf523?placeholderIfAbsent=true&apiKey=..." ' +
+                        'class="post-icon" alt="More Options Icon">' +
+                    '<div>More</div>' +
+                '</div>' +
 
-                        '<div class="action-button" onclick="moreOptions()">' +
-                            '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/969b6a12fe21c1d1769e8ed4b2ff5b28f481984b7f0b46d426588e1a95cdf523?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
-                                'class="post-icon" alt="More Options Icon">' +
-                            '<div>More</div>' +
-                        '</div>' +
+                '<div style="margin-left:30px; font-size:13px; color:#666;">' +
+                    '좋아요: ' + comment.likes + ' | 싫어요: ' + comment.dislikes +
+                '</div>' +
+            '</div>' + // Close .interaction-bar
 
-                        '<div style="margin-left:30px; font-size:13px; color:#666;">' +
-                            '좋아요: ' + comment.likes + ' | 싫어요: ' + comment.dislikes +
-                        '</div>' +
-                    '</div>' + // .interaction-bar
+            // (C) 대댓글 입력 폼 - 기본 숨김
+            '<div class="replyForm" id="replyForm_' + comment.commentId + '" style="margin-bottom:40px; display:none;">' +
+                '<textarea id="subReplyContent_' + comment.commentId + '" ' +
+                    'class="reply-textarea" style="height:80px; border: 1px solid #d1d5db;" ' +
+                    'placeholder="대댓글을 입력하세요..." aria-label="대댓글 입력"></textarea>' +
+                '<button type="button" style="margin:5px 0; padding:5px 10px; background:#000; color:#fff; border-radius:4px;" ' +
+                        'onclick="submitSubReply(' + comment.commentId + ')" aria-label="대댓글 등록">등록</button>' +
+            '</div>';
+    } 
+    else {
+        // level이 3 => 더 이상 대댓글 불가, interaction-bar 미표시
+    }
 
-                    // (B) 대댓글 입력 폼 - 기본 숨김
-                    '<div class="replyForm" id="replyForm_' + comment.commentId + '" style="margin-bottom:40px; ">' +
-                        '<textarea id="subReplyContent_' + comment.commentId + '" ' +
-                            'class="reply-textarea" style="height:80px; border: 1px solid #d1d5db;" ' +
-                            'placeholder="대댓글을 입력하세요..." aria-label="대댓글 입력"></textarea>' +
-                        '<button type="button" style="margin:5px 0; padding:5px 10px; background:#000; color:#fff; border-radius:4px;" ' +
-                                'onclick="submitSubReply(' + comment.commentId + ')" aria-label="대댓글 등록">등록</button>' +
-                    '</div>';
+    // post-content 닫기
+    html += '</div>'; // Close .post-content
 
-    // (C) 대댓글(자식 댓글) 목록이 있으면 추가
-    let childComments = allComments.filter(child => child.parentCommentId === comment.commentId);
-    if (childComments.length > 0) {
-        $.each(childComments, function(idx, child) {
-            html += 
-                '<div class="comment">' +
-                    '<div class="user-info">' +
-                        '<div class="user-meta">' +
-                            '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/53eaa26f84ec76d03c516471430ad2cd3bcdad1e5edd32a44225a107e88f3a47?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
-                                  'class="avatar" alt="User Avatar" />' +
-                            '<div class="username">UserNum: ' + child.userNum + '</div>' +
-                            '<div class="timestamp">' + formatTimestamp(child.createdAt) + '</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="post-text">' + escapeHtml(child.commentContent) + '</div>' +
-                '</div>';
+    // (D) 자식 댓글(대댓글) 필터링 후 재귀 (단, level>=3이면 더이상 Reply 안 달리게)
+    let childComments = allComments.filter(function(c){
+        return c.parentCommentId === comment.commentId;
+    });
+    if(childComments.length > 0){
+        // 자식 댓글 수직 구조로 추가
+        $.each(childComments, function(idx, child){
+            // 자식 댓글 → buildCommentHtml(child, level+1)
+            html += buildCommentHtml(child, level + 1);
         });
     }
 
-    html += '</div></div></div>'; // .post-content, .thread-container, .comment 닫기
+    // thread-container & comment div 닫기
+    html +=
+            '</div>' + // Close .thread-container
+        '</div>'; // Close .comment
+
     return html;
 }
 
-// (4) 대댓글 폼 토글
+/** (4) 대댓글 폼 토글 */
 function toggleReplyForm(commentId){
     $('#replyForm_' + commentId).slideToggle();
 }
 
-// (5) 대댓글 등록
+/** (5) 대댓글 등록 */
 function submitSubReply(parentCommentId){
     let content = $('#subReplyContent_' + parentCommentId).val().trim();
     if(content === ''){
@@ -485,9 +508,10 @@ function submitSubReply(parentCommentId){
             if(param.result === 'logout'){
                 alert('로그인해야 작성할 수 있습니다.');
             } else if(param.result === 'success'){
+                // 대댓글 등록 성공 시
                 $('#subReplyContent_' + parentCommentId).val('');
                 toggleReplyForm(parentCommentId);
-                loadCommentList(); // 목록 다시 갱신
+                loadCommentList(); 
             } else {
                 alert('대댓글 등록 오류 발생');
             }
@@ -498,7 +522,7 @@ function submitSubReply(parentCommentId){
     });
 }
 
-/* 아래 함수들은 임시 예시 */
+/* 임시 함수들 */
 function boostPost() {
     alert('Boost 기능은 아직 구현되지 않았습니다.');
 }
@@ -509,15 +533,14 @@ function moreOptions() {
     alert('More 기능은 아직 구현되지 않았습니다.');
 }
 
-// (7) XSS 방지 함수
+// (7) XSS 방지
 function escapeHtml(text) {
     return $('<div>').text(text).html();
 }
 
-// (8) 타임스탬프 포맷 함수
+// (8) 타임스탬프 포맷
 function formatTimestamp(timestamp) {
     let date = new Date(timestamp);
     return date.toLocaleString();
 }
 </script>
-
