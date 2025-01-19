@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<div class="box-shadow3">
     <h3 class="policy-title">반품/교환 방법</h3>
     <ul>
         <li class="policy-content">My > 주문내역 > 주문 상세 항목 반품/교환 신청</li>
@@ -37,4 +37,4 @@
     <ul>
         <li class="policy-content">기타 문의 사항은 고객센터로 연락 주시기 바랍니다.</li>
     </ul>
-
+</div>
