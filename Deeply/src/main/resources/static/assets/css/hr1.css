@@ -1,0 +1,4 @@
+   #chatContainer { height: 400px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+        .chat-bubble { margin-bottom: 10px; }
+        .user { color: blue; }
+        .server { color: green; }

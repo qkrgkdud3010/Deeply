@@ -7,7 +7,7 @@
     <ul class="nav-menu">
         <li>
             <a href="${pageContext.request.contextPath}/alarm/reAlarm">
-                <img src="${pageContext.request.contextPath}/assets/image_bundle/alarm.png" alt="알람 버튼" class="alarm-button" >
+                <img src="${pageContext.request.contextPath}/assets/image_bundle/alarm.png" alt="알람 버튼" class="alarm-button" width="50px" height = "50px">
             </a>
         </li>
     </ul>

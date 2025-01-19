@@ -7,7 +7,7 @@
 	<sec:authentication property="principal" var="principal"/>
 	<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 </sec:authorize>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/navigation.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hr1.css">
 
       
    <main>
