@@ -473,7 +473,15 @@ public class ItemController {
 		}
 		
 		List<CartVO> carts = itemService.selectCart(user_num);
+		
+		//장바구니내 총 합
+		int totalAmount = 0;
+		for (CartVO cartItem : carts) {
+		    totalAmount += cartItem.getItem_price() * cartItem.getOrder_quantity();
+		}
+		
 		log.debug("<<장바구니 목록>> : " + carts);
+		model.addAttribute("totalAmount", totalAmount);
 		model.addAttribute("cart", carts);
 	    
 	    return "itemCart"; // 장바구니 페이지로 이동
@@ -507,6 +515,11 @@ public class ItemController {
         	  return ResponseEntity.status(500).body("결제 처리 실패: " + e.getMessage());
         }
     }
+	
+	
+	/*==============================
+	 * 	장바구니 삭제
+	 * =============================*/
 	
 	@GetMapping("/delete_cart")
 	public String deleteCart(long cart_num, Model model,

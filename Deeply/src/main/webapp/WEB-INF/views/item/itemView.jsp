@@ -13,17 +13,18 @@
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 
-<div class="main-div item-main main-container">
+<div class="detail-container">
 	<div class="addCart-alert" id="addCart_alert">
 		<div class="x-btn" id="alert_x_btn">x</div>
 		<div>상품을 장바구니에 추가하였습니다</div>
-		<a href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기-></a>
+		<a href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기 →</a>
 	</div>
 	
 	<%-- 아티스트 계정으로 로그인 시작 --%>
+	<div class="button page-action">
 		<c:if test="${!empty principal.artistVO && principal.artistVO.group_name.equals(agroup.group_name)}">
-		<input type="button" value="수정하기" onclick="location.href='/item/update?item_num=${item.item_num}'"/>
-		<input type="button" value="삭제하기" id="delete_btn"/>
+		<input type="button" class="nonbox-button" value="수정하기" onclick="location.href='/item/update?item_num=${item.item_num}'"/>
+		<input type="button" class="nonbox-button" value="삭제하기" id="delete_btn"/>
 			<script type="text/javascript">
 				const delete_btn = document.getElementById('delete_btn')
 				delete_btn.onclick = function() {
@@ -41,22 +42,17 @@
 			        }
 			    }
 			</script>
-			<input type="button" value="등록하기" onclick="location.href='/item/write'">
+			<input type="button" class="nonbox-button" value="등록하기" onclick="location.href='/item/write'">
 			<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 		</c:if>
+	</div>
 	<%-- 아티스트 계정으로 로그인 끝--%>
 	
-	
-	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
-		<!-- <a href="javascript:history.go(-1);" class="btn-back">이전으로</a> -->
-	<%-- 비로그인, 유저 계정으로 로그인 끝 --%>
-	
-	
 	<%-- 아티스트 계정으로 로그인 시작 --%>	
-		<div class="main-div content-container">
+		<div class="detail-content-container"> 
+		<div class="adetail-content-container">
 			<c:if test="${!empty principal.artistVO}">
 				<div class="text-title">
-					반갑습니다. ${item.group_name} 
 						<span class="date">
 						<c:if test="${!empty item.item_modifydate}">
     						수정일 : <fmt:formatDate value="${item.item_modifydate}" pattern="yyyy년 MM월 dd일" />
@@ -64,49 +60,46 @@
 						<c:if test="${empty item.item_modifydate}">
 						    등록일 : <fmt:formatDate value="${item.item_regdate}" pattern="yyyy년 MM월 dd일" />
 						</c:if>
-
-				</span>
-			</div>
-
+						</span>
+				</div>
 			<div class="item-info">
 				<div class="box-shadow">
 					<img
-						src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-						class="items-img">
+						src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="items-img">
 				</div>
-				<div class="box-shadow">
-					<ul>
-						<li>상품명 : ${item.item_name}</li>
-						<li>가격 : ${item.item_price}원</li>
-						<li>수량 : ${item.item_stock}개</li>
-							<!-- <label for="category">카테고리:</label>
-								<select name="category" id="category" required>
-	  								<option value="0">일반 상품</option>
-	 								 <option value="1">유료회원 전용 상품</option>
-							</select> -->
-						
-					</ul>
-				</div>
+					<div class="item-info3">
+						<ul>
+							<li>상품명 : ${item.item_name}</li>
+							<li>가격 : ${item.item_price}원</li>
+							<li>수량 : ${item.item_stock}개</li>
+								<!-- <label for="category">카테고리:</label>
+									<select name="category" id="category" required>
+		  								<option value="0">일반 상품</option>
+		 								 <option value="1">유료회원 전용 상품</option>
+								</select> -->
+						</ul>
+					</div>
 			</div>
 		</c:if>
+		</div>
 		<%-- 아티스트 계정으로 로그인 끝--%>
 
 	<%-- 비로그인, 유저 계정으로 로그인 시작 --%>
 		<c:if test="${empty principal.artistVO}">
 			<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
-			<div class="text-title">반갑습니다.</div>
+			<div class="text-title1">반갑습니다.</div>
 			<div class="item-info">
 				<div class="box-shadow">
 					<img
 						src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
 						class="items-img">
 				</div>
-				<div class="box-shadow">
+				<div class="item-info3">
 					<ul>
 						<li>단독판매</li>
-						<li>상품명 : ${item.item_name}</li>
-						<li>가격 : ${item.item_price}원</li>
-						<li>회원당 최대 3개까지 구매가능합니다.</li>
+						<li class="bold-text">상품명 : ${item.item_name}</li>
+						<li class="text-price">가격 : ${item.item_price}원</li>
+						<li class="max-purchase">회원당 최대 3개까지 구매가능합니다.</li>
 					</ul>
 					<div class="quantity-container">
 						<div class="quantity-name">${item.item_name}</div>
@@ -124,18 +117,19 @@
 						</div>
 						<input type="hidden" name="item_num" id="item_num" value="${item.item_num}" data-num="${item.item_num}">
 					</div>
-					<input type="button" value="장바구니 추가" id="add_cart">
+					<input type="button" class="box-button3" value="장바구니 추가" id="add_cart">
 					
 					
-					<input type="button" id="order_btn" value="바로 구매하기">
+					<input type="button" class="box-button3" id="order_btn" value="바로 구매하기">
 				</div>
 			</div>
 		</c:if>
 	<%-- 유저 계정으로 로그인 끝 --%>
 	
 	<%-- 아티스트, 유저계정 공통 --%>
-	<div class="text-title">상품설명
-		</div>
+	<div class="des-text-title">상품설명</div>
+	<div class="box-shadow note-editable">
+		
 	<c:if test="${fn:endsWith(item.filename,'.jpg') ||
                     fn:endsWith(item.filename,'.JPG') ||
                     fn:endsWith(item.filename,'.jpeg') ||
@@ -144,16 +138,17 @@
                     fn:endsWith(item.filename,'.GIF') ||
                     fn:endsWith(item.filename,'.png') ||
                     fn:endsWith(item.filename,'.PNG')}">
-    <div class="align-center">
-       <%--<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="ckeditor-img">--%>
         <c:out value="${item.item_description}" escapeXml="false"/>
-    </div>
     </c:if>
+    </div>
+    
 		
 
-	<%-- 반품/교환 규정 포함--%>  		  <div class="policy-title">반품/교환 규정</div>
+	<%-- 반품/교환 규정 포함--%>  		  
+	
    			<div class="item-policy">
-     		   <%@ include file="returnPolicy.jsp" %> <!-- 수정: include 유지 -->
+   			<div class="policy-title">반품/교환 규정</div>
+     		   <%@ include file="returnPolicy.jsp" %> 
   		  </div>
 	</div>
 

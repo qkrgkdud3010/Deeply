@@ -19,10 +19,10 @@
 
 	<div class="button page-action">
 		<c:if test="${!empty principal.artistVO}">
-			<input type="button" value="등록하기" onclick="location.href='/item/write'">
+			<input type="button" class="nonbox-button" value="등록하기" onclick="location.href='/item/write'">
 		</c:if>
 	</div>
-	<div class="listcontent-container item-container main-div">
+	<div class="listcontent-container item-container">
 		<div class="artist-name">반갑습니다.</div>
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
@@ -32,20 +32,17 @@
 		    <c:forEach items="${group}" var="group">
 		    <c:set var="loop_flag" value="true"/>
 				<div class="main-items">
+					<div class="group-text">${group.group_name}</div>
 					<div class="value-list">
-					<div><h3 class="group-text">${group.group_name}</h3></div>
 						<c:forEach items="${list}" var="item" varStatus="status" begin="${group_cnt}">
 							<c:if test="${loop_flag}">
 								<div class="item-card">
 									<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
-									<img
-										src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-										class="item-img">
+									<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="item-img">
 									</a>
 									<hr class="custom-hr" noshade="noshade" width="100%">
-									<span class="item-name list-text" style="font-size: 18px;">${item.item_name}</span>
-									<span class="item-name list-price"
-										style="font-size: 18px; color: #0369A1;">${item.item_price}</span>
+									<span class="item-name list-text">${item.item_name}</span>
+									<span class="item-name list-price">${item.item_price}</span>
 								</div>
 								<c:if test="${(item.rnum==4 and item.group_cnt >= 4) or (item.rnum==item.group_cnt and item.group_cnt < 4)}">
 									<c:set var="group_cnt" value="${group_cnt + status.count}"/>
@@ -55,7 +52,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<a class="right-align" href="list?user_num=${user_num}">-> 전체보기</a>
+					<a class="arrow" href="list?user_num=${user_num}">전체보기 →</a>
 				</div>
 			</c:forEach>
 	</div>
