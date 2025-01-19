@@ -10,7 +10,8 @@ $(function(){
 		        data: { follow_num: followNum, follower_num:followerNum},
 		        dataType: 'json',
 		        beforeSend: function(xhr) {
-		            xhr.setRequestHeader($('table').attr('data-header'), $('table').attr('data-token'));
+					xhr.setRequestHeader($('.output_follow').attr('data-header'),
+								         $('.output_follow').attr('data-token'));
 		        },
 		        success: function(param) {
 		            if(param.result === 'logout') {
@@ -26,18 +27,6 @@ $(function(){
 		        }
 		    });
 		});
-
-	function displayFollow(param, followNum, followerNum) {
-	    let output;
-	    if(param.status === 'following') {
-	        output = '../assets/images/hr2/follow.png';
-	    } else if(param.status === 'unfollow') {
-	        output = '../assets/images/hr2/unfollow.png';
-	    } else {
-	        alert('팔로우 표시 오류 발생');
-	    }
-	    $(`img[data-num="${followNum}"]`).attr('src', output);
-	}
 	
 	//팔로우 표시 공통 함수
 	function displayFollow(param){

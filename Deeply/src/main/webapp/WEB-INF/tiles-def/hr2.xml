@@ -46,6 +46,28 @@
     	<put-attribute name="body" value="/WEB-INF/views/payment/myArtistList.jsp"/>
     </definition>
     
+    
+    
+    
+    
+    <!-- 아티스트 커뮤니티 -->
+     <definition name="commuList" extends="main">
+    	<put-attribute name="title" value="커뮤니티 목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuList.jsp"/>
+    </definition>
+     <definition name="commuWrite" extends="main">
+    	<put-attribute name="title" value="글 등록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuWrite.jsp"/>
+    </definition>
+     <definition name="commuView" extends="main">
+    	<put-attribute name="title" value="상세정보"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuView.jsp"/>
+    </definition>
+     <definition name="commuModify" extends="main">
+    	<put-attribute name="title" value="글 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuModify.jsp"/>
+    </definition>
+    
 </tiles-definitions>
 
 

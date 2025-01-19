@@ -138,3 +138,118 @@ hr {
     border-radius: 50%;      /* 원형으로 만들기 */
     background-color: black;
 }
+
+/* ================
+	글 상세보기
+================ */
+.page-main {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.board-header, .post-title, .author-info, .post-content, .reply-section {
+    padding: 5px 30px 0 30px;
+}
+
+.commu-category {
+    margin: 0;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.post-meta {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.my-photo {
+    border-radius: 50%;
+}
+
+.post-content {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.post-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.grey-btn {
+    padding: 10px 20px;
+    background-color: #727272;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#delete_btn {
+    padding: 10px 20px;
+    background-color: #2e2e2e;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+.re-c_title{
+	margin:10px;
+}
+
+#cre_form{
+	margin:5px;
+}
+
+.reply-section {
+	margin:20px 10px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.crep-content {
+    width: 98%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.letter-count {
+    font-size: 12px;
+    color: #666;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.item{
+	margin:10px;
+	padding: 10px;
+}
+
+.item ul{
+	display: flex;
+	list-style: none;
+}
+.my-photo-reply{
+	width: 50px;
+	height: 50px;
+	margin: 0 10px;
+	border-radius: 50%;
+}

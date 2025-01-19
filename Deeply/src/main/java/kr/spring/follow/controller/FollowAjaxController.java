@@ -63,7 +63,6 @@ public class FollowAjaxController {
 		log.debug("<<팔로우하기 >> : " + follow);
 		
 		Map<String,Object> mapJson = new HashMap<String,Object>();
-		Long userNum = principal.getMemberVO().getUser_num();
 		
 		try {
 			//로그인된 회원번호 셋팅

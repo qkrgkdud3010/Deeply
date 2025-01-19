@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.commu.dao.CommuMapper">  
+  	<!-- 전체게시판 글 작성 -->
+  	<insert id="insertCommu" parameterType="commuVO">
+  		INSERT INTO community(
+  			c_num,
+  			c_category,
+  			c_title,
+  			c_content,
+  			c_date,
+  			c_hit,
+  			c_file,
+  			user_num)
+  		VALUES (
+  			community_seq.nextval,
+  			#{c_category},
+  			#{c_title},
+  			#{c_content},
+  			sysdate,
+  			#{c_hit},
+  			#{c_file,jdbcType=VARCHAR},
+  			#{user_num})
+  	</insert>
+  	<!-- 팬덤게시판 글 작성 -->
+  	<insert id="insertFanCommu" parameterType="commuVO">
+  		INSERT INTO community(
+  			c_num,
+  			c_category,
+  			c_title,
+  			c_content,
+  			c_date,
+  			c_hit,
+  			c_file,
+  			user_num,
+  			c_fandom)
+  		VALUES (
+  			community_seq.nextval,
+  			#{c_category},
+  			#{c_title},
+  			#{c_content},
+  			sysdate,
+  			#{c_hit},
+  			#{c_file,jdbcType=VARCHAR},
+  			#{user_num},
+  			#{c_fandom})
+  	</insert>
+  	
+  	<!-- 
+  	 sql 태그와 include 태그를 이용해 SQL문을 재사용
+  	 -->
+  	<sql id="commuSearch">
+  		<where>
+  			<if test="c_category != null and c_category != ''">
+  				c_category = #{c_category}
+  			</if>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="c_category != null and c_category != ''">
+  					AND
+  				</if>
+  				<if test="keyfield == 1">
+  					c_title LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					(id LIKE '%' || #{keyword} || '%' OR
+  					 nick_name LIKE '%' || #{keyword} || '%')
+  				</if>
+  				<if test="keyfield == 3">
+  					c_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 4">
+  					(c_title LIKE '%' || #{keyword} || '%' OR
+  					 c_content LIKE '%' || #{keyword} || '%')
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+
+  	<select id="selectRowCount" parameterType="map"
+  	                             resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM community JOIN duser USING(user_num)
+  		<include refid="commuSearch"/>                             
+  	</select>
+  	
+  	<select id="selectList" parameterType="map"
+  	                         resultType="commuVO">
+  		SELECT
+  		  *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              c_num,
+  		              c_category,
+  		              <![CDATA[
+  		              REPLACE(REPLACE(c_title,'<','&lt;'),'>','&gt;') c_title,
+  		              ]]>
+  		              c_hit,
+  		              c_file,
+  		              c_date,
+  		              user_num,
+  		              id,
+  		              nick_name
+  		            FROM community
+  		            JOIN duser USING(user_num)
+  		            <include refid="commuSearch"/>)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+  	
+  	<!-- 게시판 글 수정 -->
+  	<update id="updateCommu" parameterType="commuVO">
+  		UPDATE community SET
+  			<if test="c_file != null">
+  				c_file=#{c_file},
+  			</if>
+  			c_title=#{c_title},
+  			c_content=#{c_content},
+  			c_update=SYSDATE
+  		WHERE c_num=#{c_num}
+  	</update>
+  	
+  	<!-- ===================
+  			댓글
+  	==================== -->
+  	<!-- 댓글 등록 -->
+  	<insert id="insertReply" parameterType="commuReplyVO">
+		INSERT INTO community_reply(
+			cre_num,
+			cre_content,
+			cre_date,
+			user_num,
+			c_num)
+		VALUES (
+			community_reply_seq.nextval,
+			#{cre_content},
+			sysdate,
+			#{user_num},
+			#{c_num})
+  	</insert>
+  	<!-- 댓글 목록 -->
+  	<select id="selectListReply" parameterType="map"
+  	                         resultType="commuReplyVO">
+  		SELECT
+  			*
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              cre_num,
+  		              <![CDATA[
+  		              REPLACE(REPLACE(cre_content,'<','&lt;'),'>','&gt;') cre_content,
+  		              ]]>
+  		              cre_date,
+  		              cre_update,
+  		              c_num,
+  		              user_num,
+  		              id,
+  		              nick_name
+  		            FROM community_reply
+  		            JOIN duser USING(user_num)
+  		            WHERE c_num = #{c_num}
+  		            ORDER BY cre_num DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>            
+  	</select>
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
