@@ -13,7 +13,7 @@
     </definition>
     
 	<!-- 회원 마이페이지 -->
-    <definition name="follow">
+    <definition name="follow" extends="main">
     	<put-attribute name="title" value="팔로우리스트"/>
     	<put-attribute name="css" value="/WEB-INF/views/follow/followCSS.jsp"/>
     	<put-attribute name="body" value="/WEB-INF/views/follow/followView.jsp"/>
@@ -54,6 +54,10 @@
      <definition name="commuList" extends="main">
     	<put-attribute name="title" value="커뮤니티 목록"/>
     	<put-attribute name="body" value="/WEB-INF/views/commu/commuList.jsp"/>
+    </definition>
+     <definition name="commuMyList" extends="main">
+    	<put-attribute name="title" value="커뮤니티 목록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuMyList.jsp"/>
     </definition>
      <definition name="commuWrite" extends="main">
     	<put-attribute name="title" value="글 등록"/>

@@ -86,31 +86,99 @@
   		<include refid="commuSearch"/>                             
   	</select>
   	
+  	<select id="selectMyRowCount" parameterType="map"
+  	                             resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM community JOIN duser USING(user_num)
+  		where user_num=#{user_num}
+  		<if test="c_category != null and c_category != ''">
+  				and c_category = #{c_category}
+  			</if>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="c_category != null and c_category != ''">
+  					AND
+  				</if>
+  				<if test="keyfield == 1">
+  					c_title LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					(id LIKE '%' || #{keyword} || '%' OR
+  					 nick_name LIKE '%' || #{keyword} || '%')
+  				</if>
+  				<if test="keyfield == 3">
+  					c_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 4">
+  					(c_title LIKE '%' || #{keyword} || '%' OR
+  					 c_content LIKE '%' || #{keyword} || '%')
+  				</if>
+  			</if>                      
+  	</select>
+  	
   	<select id="selectList" parameterType="map"
   	                         resultType="commuVO">
   		SELECT
-  		  *
-  		FROM (SELECT
-  		        a.*,
-  		        rownum rnum
-  		      FROM (SELECT
-  		              c_num,
-  		              c_category,
-  		              <![CDATA[
-  		              REPLACE(REPLACE(c_title,'<','&lt;'),'>','&gt;') c_title,
-  		              ]]>
-  		              c_hit,
-  		              c_file,
-  		              c_date,
-  		              user_num,
-  		              id,
-  		              nick_name
-  		            FROM community
-  		            JOIN duser USING(user_num)
-  		            <include refid="commuSearch"/>)a)
-  		<![CDATA[
-  		WHERE rnum >= #{start} AND rnum <= #{end}
-  		]]>
+      *
+    FROM (SELECT
+            a.*,
+            rownum rnum
+          FROM (SELECT
+                  c_num,
+                  c_category,
+                  <![CDATA[
+	              REPLACE(REPLACE(c_title,'<','&lt;'),'>','&gt;') c_title,
+	              ]]>
+                  c_hit,
+                  c_file,
+                  c_date,
+                  user_num,
+                  id,
+                  nick_name,
+                  cre_cnt
+                FROM community
+                LEFT OUTER JOIN (SELECT COUNT(*) cre_cnt, c_num FROM community_reply GROUP BY c_num) USING(c_num)
+                JOIN duser USING(user_num)
+                <include refid="commuSearch"/>
+                ORDER BY c_num DESC  <!-- 이 위치에서 c_num 기준으로 오름차순 정렬 -->
+          ) a
+    )
+    <![CDATA[
+    WHERE rnum >= #{start} AND rnum <= #{end}
+    ]]>
+  	</select>
+  	
+  	<select id="selectMyList" parameterType="map"
+  	                         resultType="commuVO">
+  		SELECT
+      *
+    FROM (SELECT
+            a.*,
+            rownum rnum
+          FROM (SELECT
+                  c_num,
+                  c_category,
+                  <![CDATA[
+	              REPLACE(REPLACE(c_title,'<','&lt;'),'>','&gt;') c_title,
+	              ]]>
+                  c_hit,
+                  c_file,
+                  c_date,
+                  user_num,
+                  id,
+                  nick_name,
+                  cre_cnt
+                FROM community
+                LEFT OUTER JOIN (SELECT COUNT(*) cre_cnt, c_num FROM community_reply GROUP BY c_num) USING(c_num)
+                JOIN duser USING(user_num)
+                <include refid="commuSearch"/>
+                ORDER BY c_num DESC  <!-- 이 위치에서 c_num 기준으로 오름차순 정렬 -->
+          ) a
+    )
+    where user_num=#{user_num}
+    <![CDATA[
+    and rnum >= #{start} AND rnum <= #{end}
+    ]]>
   	</select>
   	
   	<!-- 게시판 글 수정 -->

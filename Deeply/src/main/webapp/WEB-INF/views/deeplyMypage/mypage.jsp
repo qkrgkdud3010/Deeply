@@ -65,7 +65,7 @@
 				<td><b>닉네임 </b>${member.nick_name}</td>
 				<td><b>예치금 </b>${member.user_bal}원 <a
 					href="${pageContext.request.contextPath}/charge/userBal"><img
-						src="${pageContext.request.contextPath}/assets/images/hr2/follow.png"
+						src="${pageContext.request.contextPath}/assets/images/hr2/Discount Star 4.svg"
 						width="20px" height="20px"></a></td>
 			</tr>
 			<tr>
@@ -77,19 +77,19 @@
 			<tr>
 				<td colspan="2"><b>주소 </b>${member.zipcode} ${member.address1}
 					${member.address2}  <a href="${pageContext.request.contextPath}/member/myPage1"><img
-						src="${pageContext.request.contextPath}/assets/images/hr2/follow.png"
+						src="${pageContext.request.contextPath}/assets/images/hr2/Group 97.svg"
 						width="20px" height="20px"></a></td>
 			</tr>
 		</table>
 		<div class="mypage-link" style="margin-bottom: 10px auto;">
 			<input type="button" value="나의 멤버십"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="${pageContext.request.contextPath}/fan/fanList"> <input
 				type="button" value="나의 예매"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="나의 SHOP"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="나의 아티스트"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="${pageContext.request.contextPath}/follow/followList"> <input
 				type="button" value="나의 편지"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="좋아요 영상"

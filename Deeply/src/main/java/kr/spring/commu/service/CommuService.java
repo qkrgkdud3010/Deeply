@@ -16,6 +16,9 @@ public interface CommuService {
 	//글 목록 보기
 	public List<CommuVO> selectList(Map<String,Object> map);
 	public Integer selectRowCount(Map<String,Object> map);
+	//내 글 목록
+	public List<CommuVO> selectMyList(Map<String,Object> map);
+	public Integer selectMyRowCount(Map<String,Object> map);
 	//글 조회수
 	public void updateHit(Long c_num);
 	//글 상세보기

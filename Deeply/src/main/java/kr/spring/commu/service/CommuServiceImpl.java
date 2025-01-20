@@ -96,6 +96,16 @@ public class CommuServiceImpl implements CommuService{
 	public void deleteReplyByCNum(Long c_num) {
 		commuMapper.deleteReplyByCNum(c_num);
 	}
+
+	@Override
+	public List<CommuVO> selectMyList(Map<String,Object> map) {
+		return commuMapper.selectMyList(map);
+	}
+
+	@Override
+	public Integer selectMyRowCount(Map<String,Object> map) {
+		return commuMapper.selectMyRowCount(map);
+	}
 	
 	
 	/*

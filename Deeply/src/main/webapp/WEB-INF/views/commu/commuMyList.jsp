@@ -36,11 +36,7 @@
 				<input type="submit" value="검색">
 			</li>
 		</ul>
-	</form>
-		<div class="align-right">
-				<input type="button" class="grey-btn" value="글 작성" onclick="location.href='write'" data-category="${param.c_category}">
-				<input type="button" class="brt-grey-btn" value="내 글 보기" onclick="location.href='myList'">
-		</div>                        
+	</form>                       
 	<c:if test="${count == 0}">
 		<div class="result-display">작성된 게시물이 없습니다.</div>
 	</c:if>

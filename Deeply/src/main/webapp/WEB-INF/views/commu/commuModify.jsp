@@ -7,12 +7,13 @@
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ckeditor.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/uploadAdapter.js"></script>
-<div class="page-main">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hr2.css">
+<div class="page-main-write">
 	<c:if test="${c_category==1}">
-	
+		<h2>전체게시판</h2>
 	</c:if>
-	<c:if test="${c_category==1}">
-	
+	<c:if test="${c_category==2}">
+		<h2>팬덤게시판></h2>
 	</c:if>
 	<form:form modelAttribute="commuVO" action="write"
 	  id="commu_register" enctype="multipart/form-data">
@@ -89,7 +90,7 @@
 		<div class="align-center">
 			<form:button>수정</form:button>
 			<input type="button" value="이전으로"
-			   onclick="location.href='detail?c_num=${commuVO.c_num}'">
+			   onclick="location.href='list'">
 		</div> 
 	</form:form>
 </div>

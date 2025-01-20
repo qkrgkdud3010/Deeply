@@ -3,26 +3,28 @@
 ================ */
 .myTable {
 	border-radius: 25px;
-	background-color: rgba(0,162,207,0.08);
-	padding: 25px 50px;
-	margin: 80px;
-	line-height: 150%;
-	width: 750px;
+    background-color: rgba(0, 162, 207, 0.08);
+    padding: 25px 50px;
+    margin: 25px;
+    line-height: 150%;
+    width: 750px;
+    justify-self: center;
 }
 .mypage-1{
 	width:673px;
 	height:194px;
 	border-radius:19px;
 	margin:0 auto;
+	background-color:white;
 }
-.my-photo2{
-	width:190px;
-	height:190px;
-	border-radius:100%;
-	background-color:black;
-	margin:0 auto;
+.my-photo2 {
+    width: 190px;
+    height: 190px;
+    border-radius: 100%;
+    background-color: black;
+    display: block;  /* 추가: 이미지를 block 요소로 설정 */
+    margin: 0 auto;  /* 이미지를 가운데 정렬 */
 }
-
 .mypage-link input {
     display: block;
     justify-content: space-between;
@@ -138,6 +140,107 @@ hr {
     border-radius: 50%;      /* 원형으로 만들기 */
     background-color: black;
 }
+/* ================
+	글 목록보기
+================ */
+/* 검색 폼 스타일 */
+#search_form {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    justify-content: flex-end;
+    margin: 20px 0 10px 0;
+}
+
+/* 검색 박스 스타일 */
+ul.search {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 0; /* 요소 간 간격 제거 */
+}
+
+/* select 요소 스타일 */
+ul.search li select {
+    padding: 11px;
+    border: 1px solid #000;
+    border-right: none; /* 오른쪽 경계선 제거 */
+    border-radius: 5px 0 0 5px; /* 왼쪽 둥근 모서리 */
+    background-color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 검색 입력 스타일 */
+ul.search li input[type="search"] {
+    padding: 11px;
+    border: 1px solid #000;
+    border-left: none; /* 왼쪽 경계선 제거 */
+    border-right: none; /* 오른쪽 경계선 제거 */
+    font-size: 14px;
+    width: 200px;
+}
+
+/* 검색 버튼 스타일 */
+ul.search li input[type="submit"] {
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-left: none; /* 왼쪽 경계선 제거 */
+    border-radius: 0 5px 5px 0; /* 오른쪽 둥근 모서리 */
+   	background-color: white;
+	cursor: pointer;
+    font-size: 14px;
+}
+
+/* 검색 버튼 호버 효과 */
+ul.search li input[type="submit"]:hover {
+    background-color: #ddd; /* 마우스 오버 시 배경 색상 */
+}
+
+.search{
+	display: flex;
+	list-style: none;
+}
+.commu-list{
+	padding:20px;
+	width:100%;
+	font-size: 18px;
+}
+.commu-title{
+	width:65%;
+	font-size: 24px;
+    color: lightgray;  /* 기본적으로 회색 */
+	text-decoration-line:none;
+	margin: 0 7px 0 0;
+}
+.commu-title.active {
+    color: black;  /* 클릭된 항목은 검정색 */
+    font-weight: bold;  /* 선택된 항목을 강조 */
+}
+.commu-titles a{
+	width:65%;
+	color: black;
+	text-decoration-line:none;
+}
+.commu-date{
+	width:15%;
+	color: black;
+	text-decoration-line:none;
+}
+.commu-name{
+	width:15%;
+	color: black;
+	text-decoration-line:none;
+}
+.commu-hit{
+	width:5%;
+	color: black;
+	text-decoration-line:none;
+}
+.align-center{
+	margin: 50px 0;
+}
 
 /* ================
 	글 상세보기
@@ -187,13 +290,26 @@ hr {
 }
 
 .grey-btn {
-    padding: 10px 20px;
+	margin: 0 5px 0 0;
+    padding: 11px 20px;
     background-color: #727272;
     border: none;
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
 }
+
+.brt-grey-btn{
+	padding: 11px 20px;
+    background-color: #DCDCDC;
+    border: none;
+    color: black;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 #delete_btn {
     padding: 10px 20px;
     background-color: #2e2e2e;
@@ -252,4 +368,14 @@ input[type="button"]:hover {
 	height: 50px;
 	margin: 0 10px;
 	border-radius: 50%;
+}
+/* ================
+	글 수정/삭제
+================ */
+.commu-write{
+	display: flex;
+	list-style: none;
+}
+.page-main-write{
+	margin: 20px;
 }

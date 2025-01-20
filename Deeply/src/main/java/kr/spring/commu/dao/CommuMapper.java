@@ -17,6 +17,9 @@ public interface CommuMapper {
 	//글 목록 보기
 	public List<CommuVO> selectList(Map<String,Object> map);
 	public Integer selectRowCount(Map<String,Object> map);
+	//내 글 목록
+	public List<CommuVO> selectMyList(Map<String,Object> map);
+	public Integer selectMyRowCount(Map<String,Object> map);
 	//글 조회수
 	@Update("UPDATE community SET c_hit=c_hit+1 WHERE c_num=#{c_num}")
 	public void updateHit(Long c_num);

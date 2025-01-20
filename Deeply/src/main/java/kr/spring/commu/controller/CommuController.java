@@ -168,6 +168,42 @@ public class CommuController {
 		
 		return "commuList";
 	}
+	//내 글만 보기
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/myList")
+	public String getMyList(@RequestParam(defaultValue="1") int pageNum,
+			@RequestParam(defaultValue="") String c_category,
+			String keyfield,String keyword,Model model,@AuthenticationPrincipal 
+			PrincipalDetails principal) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("user_num", principal.getMemberVO().getUser_num());
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		
+		//전체/검색 레코드수
+		int count = commuService.selectMyRowCount(map);
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,20,5,"list",null);
+		
+		List<CommuVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = commuService.selectMyList(map);
+		}
+		
+		//작성자 정보
+		MemberVO member=memberService.selectMember(principal.getMemberVO().getUser_num());
+		
+		model.addAttribute("count",count);
+		model.addAttribute("list",list);
+		model.addAttribute("page",page.getPage());
+		model.addAttribute("member", member);
+		
+		return "commuMyList";
+	}
 	/*========================
 	 * 게시판 글상세
 	 *========================*/

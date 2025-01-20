@@ -177,7 +177,7 @@ $(function(){
 		//댓글 수정폼 UI
 		let modifyUI = '<form id="mre_form">';
 		modifyUI += '<input type="hidden" name="cre_num" id="cre_num" value="'+cre_num+'">';
-		modifyUI += '<textarea rows="3" cols="50" name="mre_content" id="mre_content" class="rep-content">'+cre_content+'</textarea>';						
+		modifyUI += '<textarea rows="3" cols="50" name="cre_content" id="mre_content" class="rep-content">'+cre_content+'</textarea>';						
 		modifyUI += '<div id="mre_first"><span class="letter-count">300/300</span></div>';
 		modifyUI += '<div id="mre_second" class="align-right">';
 		modifyUI += ' <input type="submit" value="수정">';
