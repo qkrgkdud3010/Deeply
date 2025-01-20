@@ -1,7 +1,8 @@
 let username = null;
+let currentRoom = null;
 
 $(document).ready(function () {
-    // Set username and show the chat interface
+    // 유저 이름 설정
     $('#btnSetUsername').on('click', function (evt) {
         evt.preventDefault();
         username = $('#username').val().trim();
@@ -11,13 +12,32 @@ $(document).ready(function () {
             return;
         }
 
-        // Hide login container and show chat interface
+        // 로그인 관련은 숨겨놓기
         $('.login-container').hide();
-        $('#chatContainer').show();
-
-        connectStomp(); // Connect to STOMP
+        $('.room-container').show(); // 방 선택 UI 보이기
     });
 
+    // 채팅방 접속
+    $('#btnJoinRoom').on('click', function (evt) {
+        evt.preventDefault();
+        let room = $('#roomName').val().trim();
+
+        if (!room) {
+            alert("Please enter a room name.");
+            return;
+        }
+
+        currentRoom = room;
+		console.log("courrent-room:"+currentRoom);
+
+        // 방 선택 UI 숨기고 채팅 UI 보여주기
+        $('.room-container').hide();
+        $('#chatContainer').show();
+
+        connectStomp(currentRoom); // STOMP 연결
+    });
+
+    // 메시지 전송
     $('#btnSend').on('click', function (evt) {
         evt.preventDefault();
         let msg = $('input#msg').val();
@@ -27,13 +47,13 @@ $(document).ready(function () {
             return;
         }
 
-        // Display the sent message in the UI
+        // 보낸 메시지 화면에 표시
         $('#message-list').append(`<div class="chat-bubble user"><b>${username}:</b> ${msg}</div>`);
-        $('input#msg').val(''); // Clear input field
+        $('input#msg').val(''); // 입력창 초기화
 
-        // Send the message to the server using STOMP
+        // STOMP 서버에 메시지 전송
         if (socket && isStomp) {
-            socket.send("/TTT", {}, JSON.stringify({ user: username, msg: msg }));
+            socket.send(`/chat/${currentRoom}`, {}, JSON.stringify({ user: username, msg: msg }));
         }
     });
 });
@@ -41,30 +61,40 @@ $(document).ready(function () {
 var socket = null;
 var isStomp = false;
 
-function connectStomp() {
-    var sock = new SockJS("/stompChat"); // Connect to the SockJS endpoint
+// STOMP 연결 함수
+function connectStomp(room) {
+    var sock = new SockJS("/stompChat"); // SockJS 엔드포인트
     var client = Stomp.over(sock);
     isStomp = true;
     socket = client;
 
+    // 연결 시 로그를 출력
     client.connect({}, function () {
         console.log("Connected to /stompChat!");
 
-        // Subscribe to the topic '/topic/message'
-        client.subscribe('/topic/message', function (event) {
-            let message = JSON.parse(event.body); // Parse the incoming JSON message
-            console.log("Received message:", message);
+        // 방에 따라 동적으로 토픽 구독
+        const topic = `/topic/chat/${room}`;
+        console.log("Subscribing to:", topic);
 
-            // 나 자신의 메시지가 아닌 경우만 화면에 표시
-            if (message.user !== username) {
-                $('#message-list').append(`<div class="chat-bubble server"><b>${message.user}:</b> ${message.msg}</div>`);
+        client.subscribe(topic, function (event) {
+            try {
+                let message = JSON.parse(event.body); // 메시지 파싱
+                console.log("Received message:", message);
 
-                // Auto-scroll to the latest message
-                var chatContainer = document.getElementById('chatContainer');
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            } else {
-                console.log("Own message ignored:", message);
+                if (message.user !== username) {
+                    $('#message-list').append(`<div class="chat-bubble server"><b>${message.user}:</b> ${message.msg}</div>`);
+
+                    // 자동 스크롤
+                    var chatContainer = document.getElementById('chatContainer');
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                } else {
+                    console.log("Own message ignored:", message);
+                }
+            } catch (error) {
+                console.error("Error parsing message:", error, event.body);
             }
         });
+    }, function (error) {
+        console.error("STOMP connection failed:", error);  // 연결 실패 시 오류 출력
     });
 }

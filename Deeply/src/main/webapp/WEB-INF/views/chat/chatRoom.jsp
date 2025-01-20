@@ -14,6 +14,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hr1.css">
+<script src="${pageContext.request.contextPath}/assets/js/chat.js"></script>
+
 <!--  
 <div class="page-main">
 
@@ -34,23 +36,23 @@
 	
 -->
 
-<div class="login-container">
-        <h2>Enter your Username</h2>
-        <input type="text" id="username" placeholder="Username" />
-        <button id="btnSetUsername">Set Username</button>
-    </div>
+  <!-- 유저 이름 설정 -->
+   <div class="login-container">
+    <input id="username" type="text" placeholder="Enter your username" />
+    <button id="btnSetUsername">Set Username</button>
+</div>
 
-    <div id="chatContainer" style="display:none;">
-        <div id="message-list" class="message-list"></div>
-        <input type="text" id="msg" placeholder="Enter your message" />
-        <button id="btnSend">Send</button>
-    </div>
-<script src="${pageContext.request.contextPath}/assets/js/chat.js"></script>
-<!--  
-<title>Chat Room</title>
+<div class="room-container" style="display: none;">
+    <input id="roomName" type="text" placeholder="Enter room name" />
+    <button id="btnJoinRoom">Join Room</button>
+</div>
 
-<div class="chat-container" id="chatContainer">
-        <div id="message-list">
+<div id="chatContainer" style="display: none;">
+    <div id="message-list" style="height: 300px; overflow-y: auto;"></div>
+    <input id="msg" type="text" placeholder="Enter message" />
+    <button id="btnSend">Send</button>
+</div>
+
             <!-- Messages will appear here
         </div>
     </div>
