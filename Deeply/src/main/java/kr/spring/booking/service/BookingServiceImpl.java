@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +58,12 @@ public class BookingServiceImpl implements BookingService{
 		bookingMapper.registerEvent(eventVO);
 		
 	}
-
+	
+	@Scheduled(cron = "0 0 0 * * *")
 	@Override
-	public void updatePerformanceStatus(long group_num) {
-		bookingMapper.updatePerformanceStatus(group_num);
-		
+	public void updatePerformanceStatus() {
+		System.out.println("상태 변경하였습니다");
+		bookingMapper.updatePerformanceStatus();
 	}
 
 	@Override
@@ -113,6 +115,24 @@ public class BookingServiceImpl implements BookingService{
 	public String getGroupNameByEvent(long perf_num) {
 		return bookingMapper.getGroupNameByEvent(perf_num);
 	}
+
+	@Override
+	public void updateSeatStatus(String seat_num) {
+		bookingMapper.updateSeatStatus(seat_num);
+		
+	}
+
+	@Override
+	public void resetSeatStatus(long hall_num) {
+		bookingMapper.resetSeatStatus(hall_num);
+		
+	}
+
+	@Override
+	public int countIfUserBooked(long user_num, long perf_num) {
+		return bookingMapper.countIfUserBooked(user_num, perf_num);
+	}
+	
 
 	
 

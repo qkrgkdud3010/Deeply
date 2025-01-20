@@ -49,4 +49,13 @@ public interface LetterMapper {
 	//유료회원 정보
 	@Select("SELECT * FROM fan WHERE fan_artist=#{artist_num}")
 	public List<FanVO> getFanByArtistNum(long artist_num);
+	
+	@Update("UPDATE duser_detail SET letter_limit=letter_limit-1 WHERE user_num=#{user_num}")
+	public void minusLetterLimit(long user_num);
+	
+	@Update("UPDATE duser_detail SET letter_limit=3 WHERE letter_limit != 3")
+	public void resetLetterLimit();
+	
+	@Select("SELECT letter_limit FROM duser_detail WHERE user_num=#{user_num}")
+	public int getLetterLimit(long user_num);
 }

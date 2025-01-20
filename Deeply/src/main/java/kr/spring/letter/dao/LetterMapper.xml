@@ -43,7 +43,7 @@
   			#{letter_content},
   			sysdate,
   			#{replied},
-  			#{letter_photo})
+  			#{letter_photo, jdbcType=VARCHAR})
   	</insert>
   	
   	<select id="countReply" parameterType="map">

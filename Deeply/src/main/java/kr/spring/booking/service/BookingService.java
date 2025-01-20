@@ -19,7 +19,7 @@ public interface BookingService {
 	public int countSeatByHallNum(long hall_num);
 	public List<SeatVO> selectSeatByHallNum(long hall_num);
 	public void registerEvent(EventVO eventVO);
-	public void updatePerformanceStatus(long group_num);
+	public void updatePerformanceStatus();
 	public void deleteBookingBeforePay(long booking_num);
 	public void updateBookingPaymentStatus(long booking_num);
 	public BookingVO getBookingNumBeforePay(long user_num, long perf_num);
@@ -29,5 +29,8 @@ public interface BookingService {
 	public int countBookingByUserNum(long user_num);
 	public List<BookingVO> selectBookingByUserNum(Map<String,Object> map);
 	public String getGroupNameByEvent(long perf_num);
+	public void updateSeatStatus(String seat_num);
+	public void resetSeatStatus(long hall_num);
+	public int countIfUserBooked(long user_num, long perf_num);
 
 }

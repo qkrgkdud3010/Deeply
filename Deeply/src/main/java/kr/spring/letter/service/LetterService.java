@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import kr.spring.letter.vo.LetterVO;
 import kr.spring.letter.vo.ReplyVO;
@@ -31,4 +33,7 @@ public interface LetterService {
 	public void deleteReply(long letter_num);
 	//유료회원 정보
 	public List<FanVO> getFanByArtistNum(long artist_num);
+	public void minusLetterLimit(long user_num);
+	public void resetLetterLimit();
+	public int getLetterLimit(long user_num);
 }

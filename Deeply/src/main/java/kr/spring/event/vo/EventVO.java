@@ -47,4 +47,5 @@ public class EventVO {
 	private String reg_date;
 	private int isMembership;
 	private String status_name;
+	
 }

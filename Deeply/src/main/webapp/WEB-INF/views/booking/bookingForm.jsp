@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/booking.js"></script>
-
+<script src="${pageContext.request.contextPath}/assets/js/seat.js"></script>
 
 <div class="booking-artist-container font-white bold-title background-black align-center">${group_name}</div>
 <div class="booking-title bold-title">예매 정보 입력</div>
@@ -36,91 +36,159 @@
 		id="booking_process" enctype="multipart/form-data">
 		<form:hidden path="perf_num" value="${event.perf_num}"></form:hidden>
 		<form:hidden path="user_num" value="${member.user_num}"></form:hidden>
-		<div>
+		<div class="book-form-style">
 			<p>
 				<form:label path="booked_seat">예약 인원</form:label>
-				<form:input path="booked_seat" type="number" min="1" max="2"/>
+				<form:input class="small-input" id="book_member" path="booked_seat" type="number" min="1" max="2"/>
 				<form:errors path="booked_seat" cssClass="error-color"/>
 			</p>
 			<hr>
 			<!-- 예매자 정보 -->
-			<div>
-				<div class="p_info">
-					<p>예매자 1</p>
+			<div class="width-50">
+				<div class="p_info" id="book1">
+					<p class="bold-title font-1 left-1 height-3 vertical-center">예매자 1</p>
 					<p>
-						<form:label path="name">이름</form:label>
-						<form:input path="name"/>
+						<form:label class="left-1" path="name">이름</form:label>
+						<form:input class="medium-input" path="name"/>
 						<form:errors path="name" cssClass="error-color"/>
 					</p>
 					<p>
-						<form:label path="phone">전화번호</form:label>
-						<form:input path="phone" />
+						<form:label class="left-1" path="phone">전화번호</form:label>
+						<form:input class="medium-input" path="phone" />
 						<form:errors path="phone" cssClass="error-color"/>
 					</p>
+				<hr>
 				</div>
 				<div class="p_info" id="book2">
-					<p>예매자 2</p>
+					<p class="bold-title font-1 left-1 height-3 vertical-center">예매자 2</p>
 					<p>
-						<form:label path="name2">이름</form:label>
-						<form:input path="name2" />
+						<form:label class="left-1" path="name2">이름</form:label>
+						<form:input class="medium-input" path="name2" />
 						<form:errors path="name2" cssClass="error-color"/>
 					</p>
 					<p>
-						<form:label path="phone2">전화번호</form:label>
-						<form:input path="phone2" />
+						<form:label class="left-1" path="phone2">전화번호</form:label>
+						<form:input class="medium-input" path="phone2" />
 						<form:errors path="phone2" cssClass="error-color"/>
 					</p>
+				<hr>
 				</div>
 			</div>
 			<!-- 배송지 정보 -->
 			<div>
-				<h2>배송지 정보</h2>
+				<h2 class="top-5">배송지 정보</h2>
 				<p>
-					<form:label path="deliver_name">이름</form:label>
-					<form:input path="deliver_name" />
+					<form:label class="top-3" path="deliver_name">이름</form:label>
+					<form:input class="medium-input" path="deliver_name" />
 					<form:errors path="deliver_name" cssClass="error-color"/>
 					
 				</p>
 				<p>
-					<form:input path="zipcode" id="zipcode" class="Authentication2"
+					<form:label path="zipcode">우편번호</form:label>
+					<form:input path="zipcode" id="zipcode" class="Authentication2 medium-input"
 						type="text" placeholder="우편번호" />
-					<form:errors path="zipcode" cssClass="error-color" />
-					<input type="button" onclick="execDaumPostcode()" value="우편번호찾기"
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"
 						class="default-btn2">
+					<form:errors path="zipcode" cssClass="error-color" />
 				</p>
 				<p>
-					<form:input path="address1" id="address1" type="text"
+					<form:label path="address1">주소</form:label>
+					<form:input path="address1" class="medium-input" id="address1" type="text"
 						placeholder="주소" />
 					<form:errors path="address1" cssClass="error-color" />
 				</p>
 				<p>
-					<form:input path="address2" type="text" placeholder="상세주소" />
+					<form:label path="address2">상세주소</form:label>
+					<form:input path="address2" class="medium-input" type="text" placeholder="상세주소" />
 					<form:errors path="address2" cssClass="error-color" />
 				</p>
 				<p>
-					<form:label path="request">요청사항</form:label>
-					<form:input path="request"/>
-				</p>
-				<p>
-					<form:input path="more_info" />
+					<form:label class="top-3" path="request">요청사항</form:label>
+					<form:input class="big-input" path="request"/>
 				</p>
 			</div>
+			<hr class="top-5">
 			<!-- 좌석 정보 -->
-			<div>
-				<h2>좌석 정보</h2>
+			<div class="seat-div">
+				<h2 class="top-3">좌석 정보</h2>
 				<h5>${event.hall_name}</h5>
-				<div>
-					<div class="seat-div">
-						<div class="stage-div"></div>
-						<c:forEach var="seats" items="${seats}" varStatus="status">
-							<div class="seat-item" data-side="${status.index % 2 == 0 ? 'left' : 'right'}" data-price="${seats.price}">${seats.seat_num}</div>
+				<div class="seat-box">
+					<%-- <div class="stage-div">무대</div>
+					<!-- 좌석 데이터 반복 -->
+					<c:forEach var="seat" items="${seats}">
+						<div class="seat-item cursor-pointer shadow-effect" data-price="${seat.price}"> ${seat.seat_num}</div>
+					</c:forEach> --%>
+					<!-- 섹터 1 -->
+					<div class="sector1">
+						<c:forEach var="seat" items="${seats}">
+							<c:if test="${seat.srow == 'A'}">
+								<c:if test="${seat.status == 'AVAILABLE'}">
+									<div class="seat-item align-center available-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">${seat.seat_num}</div>
+								</c:if>
+								<c:if test="${seat.status == 'BOOKED'}">
+									<div class="seat-item align-center booked-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">${seat.seat_num}</div>
+								</c:if>
+								
+							</c:if>
 						</c:forEach>
 					</div>
-					<form:hidden id="seat_n1" path="seat_num1"/>
-					<form:hidden id="seat_n2" path="seat_num2"/>
-					<form:errors path="seat_num1" cssClass="error-color"/>
-					<form:errors path="seat_num2" cssClass="error-color"/>
-					
+
+					<!-- 무대와 섹터 2/3 -->
+					<div class="align-center top-3">
+						<div class="sector2">
+							<c:forEach var="seat" items="${seats}">
+								<c:if test="${seat.srow == 'B'}">
+									<c:if test="${seat.status == 'AVAILABLE'}">
+										<div class="seat-item align-center available-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">${seat.seat_num}</div>
+									</c:if>
+									<c:if test="${seat.status == 'BOOKED'}">
+										<div class="seat-item align-center booked-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">${seat.seat_num}</div>
+									</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+
+						<div class="stage-div">무대</div>
+
+						<div class="sector3">
+							<c:forEach var="seat" items="${seats}">
+								<c:if test="${seat.srow == 'C'}">
+									<c:if test="${seat.status == 'AVAILABLE'}">
+										<div class="seat-item align-center vip-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">VIP<br>${seat.seat_num}</div>
+									</c:if>
+									<c:if test="${seat.status == 'BOOKED'}">
+										<div class="seat-item align-center booked-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">VIP<br>${seat.seat_num}</div>
+									</c:if>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="space-10vw"></div>
+
+				</div>
+				<div class="seat-info-container">
+					<div class="align-center">
+						<div class="seat-type shadow-effect" id="stype1"></div>
+						<div class="seat-desc">선택한 좌석</div>
+					</div>
+					<div class="align-center">
+						<div class="seat-type shadow-effect" id="stype2"></div>
+						<div class="seat-desc">빈 좌석</div>
+					</div>
+					<div class="align-center">
+						<div class="seat-type shadow-effect" id="stype3"></div>
+						<div class="seat-desc">예매된 좌석</div>
+					</div>
+					<div class="align-center">
+						<div class="seat-type shadow-effect" id="stype4"></div>
+						<div class="seat-desc">VIP 좌석</div>
+					</div>
+
+					<!-- 숨겨진 필드와 에러 메시지 -->
+					<form:hidden id="seat_n1" path="seat_num1" />
+					<form:hidden id="seat_n2" path="seat_num2" />
+					<form:errors path="seat_num1" cssClass="error-color" />
+					<form:errors path="seat_num2" cssClass="error-color" />
 				</div>
 			</div>
 
@@ -144,9 +212,10 @@
 		</div>
 		
 		<div class="align-center">
-			<form:button>결제</form:button>
+			<form:button class="book-submit-btn shadow-effect top-5">결제</form:button>
 		</div>
 	</form:form>
+	<div class="space-10vw"></div>
 </div>
 
 <!-- 다음 우편번호 API 시작 -->

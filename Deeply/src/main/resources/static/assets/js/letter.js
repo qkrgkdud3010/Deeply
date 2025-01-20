@@ -35,4 +35,9 @@ $(function () {
 			$('.preview-img').attr('src',reader.result);		
 		};		
 	});
+	
+	$('#reject_letter').click(function(e){
+		e.preventDefault();
+		alert("오늘의 편지 가능 횟수가 모두 소비되었습니다");
+	});
 });

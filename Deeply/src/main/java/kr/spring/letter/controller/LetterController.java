@@ -51,7 +51,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/list")
 	public String getList(long artist_num,@RequestParam(defaultValue="1") int pageNum, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
-		
+		loginCheck(principal, model, request);
 		ArtistVO artist = artistService.selectMember(artist_num);
 		model.addAttribute("artist", artist);
 		
@@ -77,6 +77,9 @@ public class LetterController {
 			letters = letterService.selectLetterByUser(map);
 		}
 		
+		int letter_limit = letterService.getLetterLimit(principal.getMemberVO().getUser_num());
+		
+		model.addAttribute("letter_limit", letter_limit);
 		model.addAttribute("count", count);
 		model.addAttribute("letters", letters);
 		model.addAttribute("page", page.getPage());
@@ -88,7 +91,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/write")
 	public String form(long artist_num, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request, Model model) {
-		
+		loginCheck(principal, model, request);
 		if(principal.getArtistVO() != null) {
 			model.addAttribute("message", "아티스트 계정으로 편지를 작성할 수 없습니다");
 		    model.addAttribute("url",request.getContextPath() + "/letter/list?artist_num=" + artist_num);
@@ -97,6 +100,10 @@ public class LetterController {
 		}
 		
 		ArtistVO artist = artistService.selectMember(artist_num);
+		
+		int letter_limit = letterService.getLetterLimit(principal.getMemberVO().getUser_num());
+		
+		model.addAttribute("letter_limit", letter_limit);
 		model.addAttribute("letterVO", new LetterVO());
 		model.addAttribute("artist", artist);
 		return "letterWrite";
@@ -105,9 +112,10 @@ public class LetterController {
 	//편지 폼 전송
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/write")
-	public String writeLetter(@ModelAttribute("letterVO") @Valid LetterVO letterVO,BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
+	public String writeLetter(@ModelAttribute("letterVO") @Valid LetterVO letterVO,BindingResult result, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+							  @AuthenticationPrincipal PrincipalDetails principal) throws IllegalStateException, IOException {
 		
-		
+		loginCheck(principal, model, request);
 		log.debug("<<편지 전송>> : " + letterVO);
 		letterVO.setLetter_num(0); // 클라이언트 입력 무시		
 		
@@ -122,19 +130,19 @@ public class LetterController {
 		    return "letterWrite"; // 유효성 검증 실패 시 다시 작성 화면으로 이동
 		}
 		
-		log.debug("filename: " + letterVO.getLetter_photo());
 		letterService.postLetter(letterVO);
 		
 		model.addAttribute("message", "편지를 전송하였습니다");
 	    model.addAttribute("url",request.getContextPath() + "/letter/list?artist_num=" + letterVO.getArtist_num());
-		
+		letterService.minusLetterLimit(principal.getMemberVO().getUser_num());
+	    
 		return "common/resultAlert";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
 	public String showDetail(long letter_num, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
-		
+		loginCheck(principal, model, request);
 		LetterVO letter = letterService.showLetterDetail(letter_num);
 		ArtistVO artist = artistService.selectMember(letter.getArtist_num());
 		
@@ -153,15 +161,18 @@ public class LetterController {
 			model.addAttribute("default_img", default_img);
 		}
 		
+		int letter_limit = letterService.getLetterLimit(principal.getMemberVO().getUser_num());
+		
+		model.addAttribute("letter_limit", letter_limit);
 		model.addAttribute("letter", letter);
 		model.addAttribute("artist", artist);
 		return "letterDetail";
 	}
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/reply")
 	public String showReplyList(long artist_num,@RequestParam(defaultValue="1") int pageNum, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
 		
-		
+		loginCheck(principal, model, request);
 		ArtistVO artist = artistService.selectMember(artist_num);
 		
 		if(principal.getArtistVO() != null) {
@@ -186,6 +197,9 @@ public class LetterController {
 			replies = letterService.showReplyForUser(map);
 		}
 		
+		int letter_limit = letterService.getLetterLimit(principal.getMemberVO().getUser_num());
+		
+		model.addAttribute("letter_limit", letter_limit);
 		model.addAttribute("count", count);
 		model.addAttribute("artist", artist);
 		model.addAttribute("replies", replies);
@@ -197,7 +211,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/artist_list")
 	public String showArtistLetterList(long artist_num,@RequestParam(defaultValue="1") int pageNum, Model model, HttpServletRequest request, @AuthenticationPrincipal PrincipalDetails principal) {
-		
+		loginCheck(principal, model, request);
 		ArtistVO artist = artistService.selectMember(artist_num);
 		
 		if(principal.getMemberVO() != null) {
@@ -247,7 +261,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/artist_reply")
 	public String showArtistReplyList(long artist_num,@RequestParam(defaultValue="1") int pageNum, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
-		
+		loginCheck(principal, model, request);
 		ArtistVO artist = artistService.selectMember(artist_num);
 		
 		if(principal.getMemberVO() != null) {
@@ -284,7 +298,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/artist_write")
 	public String writeReply(long artist_num, long letter_num, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request, Model model) {
-		
+		loginCheck(principal, model, request);
 		ArtistVO artist = artistService.selectMember(artist_num);
 		LetterVO letter = letterService.showLetterDetail(letter_num);
 		ReplyVO replyVO = new ReplyVO();
@@ -298,7 +312,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/artist_write")
 	public String postReply(@ModelAttribute("replyVO") @Valid ReplyVO replyVO, BindingResult result, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request, Model model) throws IllegalStateException, IOException {
-		
+		loginCheck(principal, model, request);
 		model.addAttribute("replyVO", replyVO);
 		log.debug("<<replyVO>> : " + replyVO);
 		
@@ -349,7 +363,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/reply_detail")
 	public String showReplyDetail(long reply_num, Model model, @AuthenticationPrincipal PrincipalDetails principal, HttpServletRequest request) {
-		
+		loginCheck(principal, model, request);
 		ReplyVO reply = letterService.showReplyDetail(reply_num);
 		ArtistVO artist = artistService.selectMember(reply.getArtist_num());
 		
@@ -384,7 +398,7 @@ public class LetterController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/delete")
 	public String deleteLetter(long letter_num, @AuthenticationPrincipal PrincipalDetails principal, Model model, HttpServletRequest request) {
-		
+		loginCheck(principal, model, request);
 		LetterVO letterVO = letterService.showLetterDetail(letter_num);
 		boolean isWriter = false;
 		
@@ -410,5 +424,16 @@ public class LetterController {
 		model.addAttribute("url",request.getContextPath() + "/artist/list");
 		return "common/resultAlert";
 		
+	}
+	
+	
+	public String loginCheck(@AuthenticationPrincipal PrincipalDetails principal, Model model, HttpServletRequest request) {
+		if(principal.getArtistVO() == null && principal.getMemberVO() == null) {
+			model.addAttribute("message","로그인이 필요합니다. 로그인 화면으로 이동합니다.");
+			model.addAttribute("url",request.getContextPath() + "/member/login");
+			return "common/resultAlert";
+		}
+		
+		return null;
 	}
 }

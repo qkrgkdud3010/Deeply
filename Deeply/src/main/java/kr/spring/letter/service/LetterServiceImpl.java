@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -101,6 +102,25 @@ public class LetterServiceImpl implements LetterService{
 	@Override
 	public List<FanVO> getFanByArtistNum(long artist_num) {
 		return letterMapper.getFanByArtistNum(artist_num);
+	}
+
+	@Override
+	public void minusLetterLimit(long user_num) {
+		letterMapper.minusLetterLimit(user_num);
+		
+	}
+	
+	@Scheduled(cron = "0 0 0 * * *")
+	@Override
+	public void resetLetterLimit() {
+		letterMapper.resetLetterLimit();
+		System.out.println("편지 개수 제한을 초기화하였습니다");
+	}
+
+	@Override
+	public int getLetterLimit(long user_num) {
+		return letterMapper.getLetterLimit(user_num);
+		
 	}
 
 	

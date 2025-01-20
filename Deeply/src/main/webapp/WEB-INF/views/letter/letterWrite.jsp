@@ -13,14 +13,14 @@
 	<div class="font-white bold-title align-center top-10 font-2">나의 아티스트와의 소통</div>
 	<div class="letter-aname align-center top-10">
 		<hr class="width-60 background-darkblue">
-		<div class="aname-div bold-title font-2 align-center">아티스트 이름</div>
+		<div class="aname-div bold-title font-2 align-center">${artist.name}</div>
 		<hr class="width-60 background-darkblue">
 	</div>
 	<div>
 		<div class="font-white bold-title align-center width-20 font-2 top-10">MY LETTER</div>
 		<div class="width-80 background-darkblue height-0_2 top-2"></div>
 	</div>
-	<div class="font-white bold-title align-center width-20 font-1 top-3">잔여 발송 가능 편지 2/3</div>
+	<div class="font-white bold-title align-center width-20 font-1 top-3">잔여 발송 가능 편지 ${letter_limit}/3</div>
 	<div class="space-10vw"></div>
 	<div id="letter_form" class="letter-btn-div vertical-center">
 		<div class="letter-btn font-white bold-title align-center"><a href="${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}">보낸편지</a></div>
@@ -52,7 +52,12 @@
 			</div>
 		</div>
 		<div class="submit-div height-3 align-right">
+			<c:if test="${letter_limit > 0}">
 			<form:button class="submit-btn">전송</form:button>
+			</c:if>
+			<c:if test="${letter_limit == 0}">
+			<form:button id="reject_letter" class="submit-btn">전송</form:button>
+			</c:if>
 		</div>
 		</form:form>
 	</div>

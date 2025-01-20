@@ -1,6 +1,6 @@
 $(function () {
 	let total = 0;
-	
+	console.log($('#book_member').length);
 	const scrollTargetId = localStorage.getItem('scrollTarget');
 	   if (scrollTargetId) {
 	       const target = $(`.booking-category`);
@@ -11,6 +11,15 @@ $(function () {
 	       // 스크롤 후 로컬 스토리지에서 제거
 	       localStorage.removeItem('scrollTarget');
 	   }
+	   
+	$('#book_member').on('input change', function () {
+	     console.log('입력값 변경:', $(this).val());
+		 if($(this).val() == "2"){
+			$('#book2').show();
+		 }else{
+			$('#book2').hide();
+		 }
+	});
 	
 	
 	$('.perf-img-btn').click(function(event){
@@ -42,7 +51,7 @@ $(function () {
 			url:'detail',
 			type:'get',
 			data:{perf_num:$(this).attr('data-num'),
-				  isMembership:$(this).attr('data-val'),
+				  isMembership:$(this).attr('data-val')
 			},
 			dataType:'json',
 			success:function(response){
@@ -53,25 +62,33 @@ $(function () {
 				
 				$('#booking_submit_btn').off('click').click(function(e){
 					
-					if(response.event.perf_status=='over'){
+					if(response.isBooked > 0){
 						e.preventDefault();
-						alert('예매 기간이 종료되었습니다');
-						return;
-					}else if(response.event.perf_status=='membership' && response.event.isMembership == 1){
-						const url = '/booking/book?perf_num='+response.event.perf_num; 
-						window.location.href=url;
-					}else if(response.event.perf_status=='membership' && response.event.isMembership != 1){
-						e.preventDefault();
-						alert('선예매 자격요건에 해당되지 않습니다.\n자격요건: 아티스트 구독 + 20일');
-						return;
-					}else if(response.event.perf_status=='before'){
-						e.preventDefault();
-						alert('예매 기간이 아닙니다');
-						return;
-					}else{
-						const url = '/booking/book?perf_num='+response.event.perf_num; 
-						window.location.href=url;
+						alert('이미 예약한 공연입니다');
 					}
+					else{
+						if(response.event.perf_status=='over'){
+							e.preventDefault();
+							alert('예매 기간이 종료되었습니다');
+							return;
+						}else if(response.event.perf_status=='membership' && response.event.isMembership == 1){
+							const url = '/booking/book?perf_num='+response.event.perf_num; 
+							window.location.href=url;
+						}else if(response.event.perf_status=='membership' && response.event.isMembership != 1){
+							e.preventDefault();
+							alert('선예매 자격요건에 해당되지 않습니다.\n자격요건: 아티스트 구독 + 20일');
+							return;
+						}else if(response.event.perf_status=='before'){
+							e.preventDefault();
+							alert('예매 기간이 아닙니다');
+							return;
+						}else{
+							const url = '/booking/book?perf_num='+response.event.perf_num; 
+							window.location.href=url;
+						}	
+					}
+					
+					
 				});
 				
 			},
@@ -113,11 +130,12 @@ $(function () {
 	$('.seat-item').click(function () {
 	    const seat_num = $(this).text(); // 클릭된 좌석 번호 가져오기
 	    const seat_price = Number($(this).data('price')); // 좌석 금액 가져오기 (숫자 변환)
+	    const booked_amount = Number($('#book_member').val()); // 선택한 인원 수
 
 	    // 이미 선택된 좌석인지 확인
 	    if ($(this).hasClass('selected')) {
 	        // 선택 해제 처리
-	        $(this).removeClass('selected').css('color', ''); // 좌석 선택 스타일 제거
+	        $(this).removeClass('selected').css('background-color', ''); // 좌석 선택 스타일 제거
 
 	        // 테이블에서 해당 좌석의 행 제거
 	        $(`.receipt tbody tr[data-seat-num="${seat_num}"]`).remove();
@@ -125,29 +143,38 @@ $(function () {
 	        // 총 금액 차감
 	        total -= seat_price;
 
-	        // 총 금액 행 업데이트
-	        updateTotalRow(total);
-
-	        // 입력 필드에서도 제거
+	        // 입력 필드에서 제거
 	        if ($('#seat_n1').val() === seat_num) {
 	            $('#seat_n1').val('');
 	        } else if ($('#seat_n2').val() === seat_num) {
 	            $('#seat_n2').val('');
 	        }
+
+	        // 총 금액 행 업데이트
+	        updateTotalRow(total);
+	        $('#seat_price').val(total); // 총 금액 숨겨진 필드에 저장
 	        return; // 클릭 이벤트 종료
+	    }
+
+	    // 현재 선택된 좌석 수 확인
+	    const selectedSeats = $('.seat-item.selected').length;
+
+	    if (selectedSeats >= booked_amount) {
+	        alert('인원 수에 맞게 좌석을 선택해 주세요');
+	        return;
 	    }
 
 	    // 좌석 선택 처리
 	    if ($('#seat_n1').val() === "") {
 	        $('#seat_n1').val(seat_num); // 첫 번째 필드에 좌석 번호 저장
-	        $(this).addClass('selected').css('color', 'blue'); // 좌석 선택 스타일 추가
-	    } else if ($('#seat_n2').val() === "") {
+	    } else if ($('#seat_n2').val() === "" && booked_amount > 1) {
 	        $('#seat_n2').val(seat_num); // 두 번째 필드에 좌석 번호 저장
-	        $(this).addClass('selected').css('color', 'green'); // 좌석 선택 스타일 추가
 	    } else {
-	        alert('좌석은 최대 2개까지 선택할 수 있습니다.');
+	        alert('인원 수에 맞게 좌석을 선택해 주세요');
 	        return;
 	    }
+
+	    $(this).addClass('selected').css('background-color', '#0EA5E9'); // 좌석 선택 스타일 추가
 
 	    // 총 금액 누적
 	    total += seat_price;
@@ -164,9 +191,10 @@ $(function () {
 	    // 총 금액 행 업데이트
 	    updateTotalRow(total);
 
-	    $('#seat_price').val(total); // 숨겨진 입력 필드에 총 금액 저장
+	    $('#seat_price').val(total); // 총 금액 숨겨진 필드에 저장
 	});
 
+	// 총 금액 행 업데이트 함수
 	function updateTotalRow(total) {
 	    // 기존 총 금액 행 제거
 	    $('.receipt tbody .total-row').remove();
@@ -275,5 +303,8 @@ $(function () {
 	     // 로컬 스토리지에 스크롤 대상 ID 저장
 	     localStorage.setItem('scrollTarget', targetId);
 	 }
+	 
+	
+	 
 	 
 });

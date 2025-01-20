@@ -37,7 +37,7 @@ public interface BookingMapper {
 	//공연 정보 등록
 	public void registerEvent(EventVO eventVO);
 	//공연 상태 자동 업데이트
-	public void updatePerformanceStatus(long group_num);
+	public void updatePerformanceStatus();
 	//공연 결제 전 취소
 	@Delete("DELETE FROM booking WHERE payment_status=0 AND booking_num=#{booking_num}")
 	public void deleteBookingBeforePay(long booking_num);
@@ -59,6 +59,18 @@ public interface BookingMapper {
 	public int countBookingByUserNum(long user_num);
 	//회원 예매 정보 list
 	public List<BookingVO> selectBookingByUserNum(Map<String,Object> map);
+	//회원 예매 여부
+	@Select("SELECT COUNT(*) FROM booking WHERE user_num=#{user_num} AND perf_num=#{perf_num}")
+	public int countIfUserBooked(long user_num, long perf_num);
+	
+	
+	//좌석 정보 업데이트
+	@Update("UPDATE seat SET status='BOOKED' WHERE seat_num=#{seat_num}")
+	public void updateSeatStatus(String seat_num);
+	
+	//좌석 리셋
+	@Update("UPDATE seat SET status='AVAILABLE' WHERE hall_num=#{hall_num}")
+	public void resetSeatStatus(long hall_num);
 	
 }
  

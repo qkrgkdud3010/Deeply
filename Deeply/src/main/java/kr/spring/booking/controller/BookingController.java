@@ -130,6 +130,8 @@ public class BookingController {
 			fanMap.put("user_num", member.getUser_num());
 			fanMap.put("group_name", group_name);
 			isFan = bookingService.checkIfGroupMembership(fanMap);
+			
+			model.addAttribute("user_num", member.getUser_num());
 		}
 		
 		if(isFan > 0) {
@@ -162,6 +164,7 @@ public class BookingController {
 	    
 	    if(bookingVO == null) {
 	    	bookingVO = new BookingVO();
+	    	
 	    }
 	    
 	    MemberVO member = principal.getMemberVO();
@@ -171,7 +174,11 @@ public class BookingController {
 	    	log.debug("------------------------------------------------" + av);
 	    }
 	    
+	    
+	    
 	    loadBookingContents(perf_num, model);
+	    bookingVO.setBooked_seat(1);
+	    
 	    
 	    model.addAttribute("perf_num", perf_num);
 	    model.addAttribute("member", member);
@@ -197,6 +204,13 @@ public class BookingController {
 	    }
 	    
 	    bookingService.registerBookingInfo(bookingVO);
+	    
+	    if(bookingVO.getBooked_seat() == 1) {
+	    	bookingService.updateSeatStatus(bookingVO.getSeat_num1());
+	    }else {
+	    	bookingService.updateSeatStatus(bookingVO.getSeat_num1());
+	    	bookingService.updateSeatStatus(bookingVO.getSeat_num2());
+	    }
 	    
 	    Long booking_num = bookingVO.getBooking_num();
 	    log.debug("<<booking_num>> :" + booking_num);
@@ -343,6 +357,21 @@ public class BookingController {
 	    int seat_count = bookingService.countSeatByHallNum(event.getHall_num());
 	    List<SeatVO> seats = bookingService.selectSeatByHallNum(event.getHall_num());
 	    
+	    
+	    
+	    for(SeatVO s : seats) {
+	    	if(s.getSrow().equals("C")) {
+	    		double d = event.getTicket_price() * 1.4;
+	    		s.setPrice((int) Math.round(d));
+	    	}else {
+	    		s.setPrice(event.getTicket_price());
+	    	}
+	    	
+	    	log.debug("<<S"+s.getSrow() +"가격: >>" + s.getPrice());
+	    }
+	    
+	    
+	    
 	    model.addAttribute("group_name", group_name);
     	model.addAttribute("event", event);
 	    model.addAttribute("seat_count", seat_count);
@@ -377,8 +406,9 @@ public class BookingController {
 		
 		map.put("user_num", user_num);
 		int count = bookingService.countBookingByUserNum(user_num);
-		PagingUtil page = new PagingUtil(pageNum, count,20,10,"list");
 		List<BookingVO> list = null;
+		PagingUtil page = new PagingUtil(pageNum, count,20,10,"list");
+		
 		if(count > 0) {
 
 			map.put("start", page.getStartRow());

@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaRepositories(basePackages = {"kr.spring.repository"})
 @EntityScan(basePackages = {"domain"})
 @SpringBootApplication
+@EnableScheduling
 public class SpringPageApplication {
 
 public static void main(String[] args) {
