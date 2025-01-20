@@ -3,10 +3,12 @@ package kr.spring.faq.controller;
 import kr.spring.faq.service.FAQService;
 
 import kr.spring.faq.vo.FAQVO;
+import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.faq.vo.FAQCategoryVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +27,22 @@ public class FAQController {
         this.faqService = faqService;
     }
 
-    // FAQ 목록 페이지
     @GetMapping
-    public String listFAQs(Model model) {
+    public String listFAQs(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         List<FAQVO> faqs = faqService.getAllFAQs();
         List<FAQCategoryVO> categories = faqService.getAllCategories();
         model.addAttribute("faqs", faqs);
         model.addAttribute("categories", categories);
+
+        if (principalDetails != null && principalDetails.hasRole("ADMIN")) {
+            model.addAttribute("isAdmin", true);
+        } else {
+            model.addAttribute("isAdmin", false);
+        }
+
         return "faq"; // /WEB-INF/views/faq.jsp
     }
+
 
     // FAQ 추가 폼
     @PreAuthorize("hasRole('ADMIN')")

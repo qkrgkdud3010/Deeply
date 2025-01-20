@@ -172,6 +172,6 @@ public class VideoController {
     @GetMapping("/test")
     public String testPage(Model model) {
         model.addAttribute("message", "Test Page Loaded");
-        return "videoUpload"; // JSP 파일 이름
+        return "video/test"; // JSP 파일 이름
     }
 }

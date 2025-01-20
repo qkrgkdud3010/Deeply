@@ -127,4 +127,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		return null;
 
 	}
+	public boolean hasRole(String role) {
+        return getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_" + role));
+    }
 }

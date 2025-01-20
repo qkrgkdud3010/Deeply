@@ -45,7 +45,7 @@
   background-color: #090909;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 94%;
   max-width: 1025px;
   color: #fff;
   padding: 20px;
@@ -60,10 +60,10 @@
   transition: transform 0.3s ease;
 }
 
-.faq-question {
+.faq-question { 
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap:20px;
 }
 
 .faq-answer {
@@ -90,6 +90,34 @@
     text-decoration: none;
 }
 
+/* 공통 스타일 */
+.admin-link {
+    display: inline-block;
+    margin: 10px 5px; /* 여백 */
+    padding: 8px 16px; /* 내부 공간 */
+    font-size: 14px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: #ffffff; /* 글자 색상 (흰색) */
+    background-color: #000; /* 기본 배경색 (파란색) */
+    text-decoration: none; /* 밑줄 제거 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 호버 효과 */
+}
+
+/* 호버 효과 */
+.admin-link:hover {
+    background-color: #0056b3; /* 어두운 파란색 */
+    transform: translateY(-2px); /* 약간 위로 이동 */
+}
+
+/* 활성화 상태 */
+.admin-link:active {
+    background-color: #003f7f; /* 더 어두운 파란색 */
+    transform: translateY(0); /* 원래 위치 */
+}
+
+
+
 </style>
 </head>
 <body>
@@ -98,10 +126,12 @@
   <div class="faq-header">
     <h1 class="faq-title">자주 묻는 질문</h1>
     <a href="#contact" class="contact-link">1대1 문의 하러가기</a>
-    <!--<c:if test="${pageContext.request.userPrincipal != null and pageContext.request.isUserInRole('ADMIN')}">-->
-        <a href="${pageContext.request.contextPath}/faq/add">Add FAQ</a>
-        <a href="${pageContext.request.contextPath}/faq/categories">Manage Categories</a>
-    <!--</c:if>-->
+   	<div class="admin-button">
+   		<c:if test="${isAdmin}">
+    		<a href="${pageContext.request.contextPath}/faq/add" class="admin-link">Add FAQ</a>
+			<a href="${pageContext.request.contextPath}/faq/categories" class="admin-link">Manage Categories</a>
+		</c:if>
+	</div>
   </div>
 
   <!-- Grouping FAQs by Category -->
@@ -119,12 +149,12 @@
                 class="faq-icon"
               />
               <h2>${faq.question}</h2>
-              <!--<c:if test="${pageContext.request.isUserInRole('ADMIN')}">-->
+              <c:if test="${isAdmin}">
                   <div class="admin-actions">
-                      <a href="${pageContext.request.contextPath}/faq/edit/${faq.faqId}">Edit</a>
-                      <a href="${pageContext.request.contextPath}/faq/delete/${faq.faqId}" onclick="return confirm('Are you sure you want to delete this FAQ?');">Delete</a>
+                      <a href="${pageContext.request.contextPath}/faq/edit/${faq.faqId}">수정</a>
+                      <a href="${pageContext.request.contextPath}/faq/delete/${faq.faqId}" onclick="return confirm('Are you sure you want to delete this FAQ?');">삭제</a>
                   </div>
-             <!--</c:if>-->
+             </c:if>
             </div>
             <div class="faq-answer">
               <p>${faq.answer}</p>
