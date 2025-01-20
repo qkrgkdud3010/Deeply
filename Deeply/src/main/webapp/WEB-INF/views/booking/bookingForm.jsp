@@ -154,10 +154,10 @@
 							<c:forEach var="seat" items="${seats}">
 								<c:if test="${seat.srow == 'C'}">
 									<c:if test="${seat.status == 'AVAILABLE'}">
-										<div class="seat-item align-center vip-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">VIP<br>${seat.seat_num}</div>
+										<div class="seat-item align-center vip-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">${seat.seat_num}</div>
 									</c:if>
 									<c:if test="${seat.status == 'BOOKED'}">
-										<div class="seat-item align-center booked-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">VIP<br>${seat.seat_num}</div>
+										<div class="seat-item align-center booked-color" data-row="${seat.srow}" data-price="${seat.price}" data-number="${seat.seat_num}">${seat.seat_num}</div>
 									</c:if>
 								</c:if>
 							</c:forEach>

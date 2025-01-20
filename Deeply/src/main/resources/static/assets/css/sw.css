@@ -129,7 +129,13 @@ a {
 	align-items:center;
 }
 
+.right-1{
+	margin-right:1%;
+}
 
+.right-3{
+	margin-right:3%;
+}
 
 .left-1{
 	margin-left:1%;
@@ -1634,4 +1640,54 @@ a {
 	font-weight:bold;
 	color:#0EA5E9;
 }
+
+
+/* 관리 페이지 */
+.booking-list-img{
+	width:60%;
+ 	height:100%;
+ 	object-fit:cover;
+ 	object-position:top;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 90%, transparent);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+	
+}
+
+.perf-date-div, .perf-btn-div, .perf-title-div{
+	position:absolute;
+	width:30%;
+	display:flex;
+	align-items:center;
+	right:0;
+}
+
+.perf-date-div{
+	top:50%;
+	height:2vw;
+	font-size:0.8vw;
+}
+
+.perf-btn-div{
+	top:80%;
+	height:2vw;
+	gap:3rem;
+
+}
+
+.perf-btn-div a{
+	display:inline-block;
+	width:3.5vw;
+	height:1.7vw;
+	text-align:center;
+	border-bottom:2px solid #0369A1;
+}
+
+.perf-title-div{
+	top:20%;
+	font-weight:bold;
+	font-size:1vw;
+}
+
  

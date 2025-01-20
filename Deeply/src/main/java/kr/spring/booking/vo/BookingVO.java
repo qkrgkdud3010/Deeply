@@ -43,4 +43,5 @@ public class BookingVO {
 	private int isMembership;
 	private String perf_title;
 	private String group_name;
+	private String perf_photo;
 }

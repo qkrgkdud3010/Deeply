@@ -423,6 +423,7 @@ public class BookingController {
 			String group_name = bookingService.getGroupNameByEvent(b.getPerf_num());
 			b.setGroup_name(group_name);
 			b.setPerf_title(e.getPerf_title());
+			b.setPerf_photo(e.getPerf_photo());
 		}
 		
 		model.addAttribute("count", count);

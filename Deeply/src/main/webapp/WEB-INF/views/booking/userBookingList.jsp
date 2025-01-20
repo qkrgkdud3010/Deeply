@@ -4,26 +4,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authorize access="isAuthenticated()"><sec:authentication property="principal" var="principal" /></sec:authorize>
-<div class="">
-	
-	<div class="align-center font-2 top-3">공연 예매 내역</div>
-	<div class="width-100 background-black height-1 top-3"></div>
-	<div class="align-center top-3">
-		<button>예매 내역</button>
-		<button>취소 내역</button>
-	</div>
-	<div class="width-100 background-black height-1 top-3"></div>
-	<div class="artist-manage-main">
-		<c:forEach var="book" items="${list}">
-			 <div class="top-3 font-1">${book.booking_date}</div>
-			 <div class="top-3 font-1">받으시는 분 ${book.deliver_name}</div>
-			 <div class="vertical-align">
-			 	<div class="width-70">
-			 		<div>${book.perf_title}</div>
-			 		<div>${book.total_price}원 ${book.booked_seat}매</div> 
-			 	</div>
-			 	<div class="width-30"></div>
-			 </div>
-		</c:forEach>
-	</div>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hj.css">
+
+
+<div class="order-container">
+	<div class="text-title3">공연 예매 내역</div>
+	<hr class="custom-hr4" noshade="noshade">
+
+	<c:forEach var="book" items="${list}">
+		<div class="text-title4">예매일 : ${book.booking_date}</div>
+		<div class="text-title5">받으시는 분 : ${book.deliver_name}</div>
+		<div class="order-date-section">
+			<hr class="custom-hr2" noshade="noshade" width="100%">
+			<div class="order-quantity-container2">
+				<img class="booking-list-img"
+					src="${pageContext.request.contextPath}/assets/upload/${book.perf_photo}">
+				<div class="quantity-name2">
+					<span class="quantity-name3"><b>${book.perf_title}</b></span> <span
+						class="quantity-name3">수량 ${book.booked_seat}개</span> <span
+						class="quantity-name4">가격 ${book.total_price}원</span>
+				</div>
+			</div>
+			<hr class="custom-hr2" noshade="noshade" width="100%">
+		</div>
+		<hr class="custom-hr4" noshade="noshade">
+	</c:forEach>
+
 </div>
