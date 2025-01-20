@@ -245,8 +245,8 @@ public class ItemController {
 		ItemVO item = itemService.selectitem(item_num);
 		AgroupVO agroup = artistService.selectArtistDetail(item.getUser_num());
 		
-		model.addAttribute("orderVO",new OrderVO());
 		model.addAttribute("item",item);
+		model.addAttribute("orderVO",new OrderVO());
 		model.addAttribute("agroup", agroup);
 		
 		return "itemView";
@@ -554,9 +554,9 @@ public class ItemController {
 
 	
 	
-/*==============================
- * 	마이페이지 주문내역
- * =============================*/
+	/*==============================
+	 * 	마이페이지 주문내역
+	 * =============================*/
 	@GetMapping("/orderList")
 	public String itemOrderList(Model model,
 								HttpServletRequest request,
@@ -570,7 +570,7 @@ public class ItemController {
 
 	        log.debug("<<주문내역 리스트>> : " + orderList);
 		 
-			//장바구니내 총 합
+			//장바구니내 총 합 (장바구니 모든 상품 구매하기 후에 고치기)
 			int priceByItems = 0;
 				for (OrderVO order : orderList) {
 					priceByItems += order.getTotal_price()-(order.getItem_price()*order.getItem_quantity());

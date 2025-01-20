@@ -17,11 +17,10 @@
 
 
 
-	<div class="button page-action">
-		<c:if test="${!empty principal.artistVO}">
-			<input type="button" class="nonbox-button" value="등록하기" onclick="location.href='/item/write'">
+	
+		<c:if test="${!empty principal && empty principal.memberVO}">
+			<input type="button" class="box-button4" value="등록하기" onclick="location.href='/item/write'">
 		</c:if>
-	</div>
 	<div class="listcontent-container item-container">
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
