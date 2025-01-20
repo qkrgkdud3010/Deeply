@@ -14,9 +14,15 @@ import kr.spring.commu.vo.CommuVO;
 @Mapper
 public interface CommuMapper {
 	// ============== 글 ============== 
-	//글 목록 보기
+	//전체글 목록 보기
 	public List<CommuVO> selectList(Map<String,Object> map);
 	public Integer selectRowCount(Map<String,Object> map);
+	//전체게시판 목록 보기
+	public List<CommuVO> selectFreeList(Map<String,Object> map);
+	public Integer selectFreeRowCount(Map<String,Object> map);
+	//팬덤게시판 목록 보기
+	public List<CommuVO> selectFandomList(Map<String,Object> map);
+	public Integer selectFandomRowCount(Map<String,Object> map);
 	//내 글 목록
 	public List<CommuVO> selectMyList(Map<String,Object> map);
 	public Integer selectMyRowCount(Map<String,Object> map);

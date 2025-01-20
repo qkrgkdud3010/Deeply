@@ -87,11 +87,11 @@
 				type="button" value="나의 예매"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="나의 SHOP"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="${pageContext.request.contextPath}/item/orderList"> <input
 				type="button" value="나의 아티스트"
 				onclick="${pageContext.request.contextPath}/follow/followList"> <input
 				type="button" value="나의 편지"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="${pageContext.request.contextPath}/letter/artist_list?artist_num="${artist_num}> <input
 				type="button" value="좋아요 영상"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="고객센터"

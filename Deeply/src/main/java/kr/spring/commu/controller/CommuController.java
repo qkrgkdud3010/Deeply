@@ -168,6 +168,83 @@ public class CommuController {
 		
 		return "commuList";
 	}
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/commuFreeList")
+	public String getFreeList(@RequestParam(defaultValue="1") int pageNum,
+	                          @RequestParam(defaultValue="1") String c_category,
+	                          String keyfield, String keyword, Model model, @AuthenticationPrincipal PrincipalDetails principal) {
+	    
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    
+	    // c_category가 1일 경우만 필터링
+	    if ("1".equals(c_category)) {
+	        map.put("c_category", c_category);  // c_category가 1인 경우만 조건에 넣음
+	    }
+	    
+	    map.put("user_num", principal.getMemberVO().getUser_num());
+	    map.put("keyfield", keyfield);
+	    map.put("keyword", keyword);
+	    
+	    // 전체/검색 레코드수
+	    int count = commuService.selectFreeRowCount(map);
+	    // 페이지 처리
+	    PagingUtil page = new PagingUtil(keyfield, keyword, pageNum, count, 20, 5, "list", null);
+	    
+	    List<CommuVO> list = null;
+	    if (count > 0) {
+	        map.put("start", page.getStartRow());
+	        map.put("end", page.getEndRow());
+	        
+	        list = commuService.selectFreeList(map);  // 필터링된 리스트 반환
+	    }
+	    
+	    // 작성자 정보
+	    MemberVO member = memberService.selectMember(principal.getMemberVO().getUser_num());
+	    
+	    model.addAttribute("count", count);
+	    model.addAttribute("list", list);
+	    model.addAttribute("page", page.getPage());
+	    model.addAttribute("member", member);
+	    
+	    return "commuFreeList";
+	}
+	//팬덤게시판 보기
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/commuFandomList")
+	public String getFandomList(@RequestParam(defaultValue="1") int pageNum,
+			@RequestParam(defaultValue="2") String c_category,
+			String keyfield,String keyword,Model model,@AuthenticationPrincipal 
+			PrincipalDetails principal) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("c_category", c_category);
+		map.put("user_num", principal.getMemberVO().getUser_num());
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		
+		//전체/검색 레코드수
+		int count = commuService.selectFandomRowCount(map);
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,20,5,"list",null);
+		
+		List<CommuVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = commuService.selectFandomList(map);
+		}
+		
+		//작성자 정보
+		MemberVO member=memberService.selectMember(principal.getMemberVO().getUser_num());
+		
+		model.addAttribute("count",count);
+		model.addAttribute("list",list);
+		model.addAttribute("page",page.getPage());
+		model.addAttribute("member", member);
+		
+		return "commuFandomList";
+	}
 	//내 글만 보기
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myList")

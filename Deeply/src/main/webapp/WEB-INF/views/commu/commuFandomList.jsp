@@ -6,7 +6,7 @@
 	<table>
 		<tr>
 		    <td>
-		        <a class="commu-title ${param.c_category == null ? 'active' : ''}" href="list">전체 글</a>
+		        <a class="commu-title ${param.c_category == null ? 'active' : ''}" href="list">전체 글  </a>
 		    </td>
 		    <td>
 		        <a class="commu-title ${param.c_category == '1' ? 'active' : ''}" href="commuFreeList">전체게시판</a>
@@ -18,7 +18,7 @@
 	</table>
 	<hr size="3px">
 	<form action="list" id="search_form" method="get">
-		<input type="hidden" name="category" value="${param.c_category}">
+		<input type="hidden" name="category" value="2">
 		<ul class="search">
 			<li>
 				<select name="keyfield" id="keyfield">

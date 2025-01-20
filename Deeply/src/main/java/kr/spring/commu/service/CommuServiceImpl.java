@@ -106,6 +106,26 @@ public class CommuServiceImpl implements CommuService{
 	public Integer selectMyRowCount(Map<String,Object> map) {
 		return commuMapper.selectMyRowCount(map);
 	}
+
+	@Override
+	public List<CommuVO> selectFreeList(Map<String, Object> map) {
+		return commuMapper.selectFreeList(map);
+	}
+
+	@Override
+	public Integer selectFreeRowCount(Map<String, Object> map) {
+		return commuMapper.selectFreeRowCount(map);
+	}
+
+	@Override
+	public List<CommuVO> selectFandomList(Map<String, Object> map) {
+		return commuMapper.selectFandomList(map);
+	}
+
+	@Override
+	public Integer selectFandomRowCount(Map<String, Object> map) {
+		return commuMapper.selectFandomRowCount(map);
+	}
 	
 	
 	/*

@@ -52,11 +52,19 @@
     
     <!-- 아티스트 커뮤니티 -->
      <definition name="commuList" extends="main">
-    	<put-attribute name="title" value="커뮤니티 목록"/>
+    	<put-attribute name="title" value="전체 글 목록"/>
     	<put-attribute name="body" value="/WEB-INF/views/commu/commuList.jsp"/>
     </definition>
+     <definition name="commuFreeList" extends="main">
+    	<put-attribute name="title" value="전체게시판"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuFreeList.jsp"/>
+    </definition>
+     <definition name="commuFandomList" extends="main">
+    	<put-attribute name="title" value="팬덤게시판"/>
+    	<put-attribute name="body" value="/WEB-INF/views/commu/commuFandomList.jsp"/>
+    </definition>
      <definition name="commuMyList" extends="main">
-    	<put-attribute name="title" value="커뮤니티 목록"/>
+    	<put-attribute name="title" value="내 작성 글"/>
     	<put-attribute name="body" value="/WEB-INF/views/commu/commuMyList.jsp"/>
     </definition>
      <definition name="commuWrite" extends="main">
