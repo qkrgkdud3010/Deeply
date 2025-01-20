@@ -9,7 +9,9 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Service;
 
 import kr.spring.commu.vo.CommuReplyVO;
+import kr.spring.commu.vo.CommuResponseVO;
 import kr.spring.commu.vo.CommuVO;
+import kr.spring.follow.vo.FollowVO;
 
 public interface CommuService {
 	// ============== 글 ============== 
@@ -22,6 +24,7 @@ public interface CommuService {
 	//팬덤게시판 목록 보기
 	public List<CommuVO> selectFandomList(Map<String,Object> map);
 	public Integer selectFandomRowCount(Map<String,Object> map);
+	public void selectArtistName(FollowVO follow);
 	//내 글 목록
 	public List<CommuVO> selectMyList(Map<String,Object> map);
 	public Integer selectMyRowCount(Map<String,Object> map);
@@ -54,4 +57,18 @@ public interface CommuService {
 	public void deleteReply(Long cre_num);
 	//부모글 삭제시 댓글이 존재하면 부모글 삭제전 댓글 삭제
 	public void deleteReplyByCNum(Long c_num);
+	
+	// ============== 대댓글 ============== //
+	//대댓글(답글)
+	public List<CommuResponseVO> selectListResponse(Long cre_num);
+	//답글 삭제시 답글 개수 표시를 위해서 사용
+	public Integer selectResponseCount(Long cre_num);
+	public CommuResponseVO selectResponse(Long pe_num);
+	public void insertResponse(CommuResponseVO commuResponse);
+	public void updateResponse(CommuResponseVO commuResponse);
+	public Integer deleteResponse(Long pe_num);
+	//댓글 삭제전 대댓글 삭제
+	public void deleteResponseByCreNum(Long cre_num);
+	//부모글 삭제시 댓글의 답글이 존재하면 댓글 번호를 구해서 답글 삭제시 사용
+	public void deleteResponseByCNum(Long c_num);
 }

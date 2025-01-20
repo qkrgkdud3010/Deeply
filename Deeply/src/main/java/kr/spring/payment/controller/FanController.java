@@ -148,7 +148,7 @@ public class FanController {
     	return mapJson;
     }
     
-    /*
+    
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myArtistList")
 	public String getMyArtist(@RequestParam(defaultValue="1")int pageNum,
@@ -180,6 +180,6 @@ public class FanController {
 		model.addAttribute("count",count);
 		model.addAttribute("myArtistList",myArtistList);
 
-		return "myArtistList";
-	};*/
+		return "/payment/myArtistList";
+	};
 }

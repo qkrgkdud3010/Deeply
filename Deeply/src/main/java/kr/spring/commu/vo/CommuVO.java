@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.spring.follow.vo.FollowVO;
 import kr.spring.member.vo.MemberVO;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,9 @@ public class CommuVO {
 	private Long user_num;
 	private String nick_name;
 	private MemberVO memberVO;
+	
+	//팔로우 정보
+	private FollowVO followVO;
 	
 	//팬덤 내 상세 카테고리
 	private Long c_fandom; //DB저장

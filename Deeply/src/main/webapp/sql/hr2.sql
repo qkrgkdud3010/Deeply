@@ -1,3 +1,4 @@
+--결
 Create table payment(
 pay_num number not null,
 pay_status number not null,
@@ -12,6 +13,7 @@ Constraint payment_fk foreign key (user_num) references duser (user_num)
 );
 Create sequence payment_seq;
 
+--팔로우(무료)
 Create table follow(
 follower_num number not null,
 follow_num number not null,
@@ -31,6 +33,7 @@ Constraint notice_fk foreign key (user_num) references duser (user_num)
 );
 Create sequence notice_seq;
 
+--커뮤니티(글)
 Create table community(
 c_num number not null,
 c_category number not null,
@@ -46,9 +49,9 @@ Constraint community_fk foreign key (user_num) references duser (user_num)
 );
 Create sequence community_seq;
 
+--댓글
 Create table community_reply(
 cre_num number not null,
-cre_refe_num number,
 cre_content varchar2(450) not null,
 cre_date date default sysdate not null,
 cre_update date default sysdate,
@@ -61,6 +64,23 @@ Constraint community_reply_fk2 foreign key (c_num) references community (c_num)
 );
 Create sequence community_reply_seq;
 
+--답글(대댓글)
+create table community_response(
+ pe_num number not null,
+ pe_content varchar2(900) not null,
+ pe_date date default sysdate not null,
+ pe_update date,
+ pe_parent_num number not null, --부모글의 번호가 들어감,자식글이 아니라 부모글일 경우 0
+ pe_depth number not null, --자식글의 깊이. 부모글의 자식글A 1, 자식글A의 자식글B 2, 부모글일 경우 0
+ cre_num number not null,
+ user_num number not null,
+ constraint community_res_pk primary key (pe_num),
+ constraint community_res_fk1 foreign key (cre_num) references community_reply (cre_num),
+ constraint community_res_fk2 foreign key (user_num) references duser (user_num) 
+);
+create sequence response_seq;
+
+--커뮤니티 신고
 Create table community_report(
 report_num number not null,
 report_type varchar2(10) not null,
@@ -74,6 +94,7 @@ Constraint community_report_fk foreign key (user_num) references duser (user_num
 );
 Create sequence community_report_seq;
 
+--홍보 커뮤니티
 Create table community_promotion(
 cp_num number not null,
 cp_title varchar2(90) not null,
@@ -86,20 +107,7 @@ Constraint community_promotion_fk foreign key (user_num) references duser (user_
 );
 Create sequence community_promotion_seq;
 
-Create table community_promotion_reply(
-cpre_num number not null,
-cpre_refe_num number,
-cpre_content varchar2(450) not null,
-cpre_date date default sysdate not null,
-cpre_update date default sysdate,
-user_num number not null,
-cp_num number not null,
-Constraint community_promotion_reply_pk primary key (cpre_num),
-Constraint community_promotion_reply_fk1 foreign key (user_num) references duser (user_num),
-Constraint community_promotion_reply_fk2 foreign key (cp_num) references community_promotion (cp_num)
-);
-Create sequence community_promotion_reply_seq;
-
+--팬(유료)
 CREATE TABLE FAN (
     fan_num NUMBER NOT NULL,
     fan_start DATE DEFAULT SYSDATE NOT NULL,

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.commu.service.CommuService;
 import kr.spring.commu.vo.CommuReplyVO;
+import kr.spring.commu.vo.CommuResponseVO;
 import kr.spring.commu.vo.CommuVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
@@ -194,4 +195,117 @@ public class CommuAjaxController {
 		return mapJson;
 	}
 	
+	/*===================
+	 * 답글 등록
+	 *===================*/	
+	@PostMapping("/writeResponse")
+	@ResponseBody
+	public Map<String,String> writeResponse(
+			     CommuResponseVO commuResponseVO,
+			     @AuthenticationPrincipal
+			     PrincipalDetails principal,
+			     HttpServletRequest request){
+		log.debug("<<답글 등록>> : " + commuResponseVO);
+		
+		Map<String,String> mapJson = new HashMap<String,String>();
+		try {
+			//회원번호 저장
+			commuResponseVO.setUser_num(
+					principal.getMemberVO().getUser_num());
+			//답글 등록
+			commuService.insertResponse(commuResponseVO);
+			mapJson.put("result", "success");
+		}catch(NullPointerException e) {
+			mapJson.put("result", "logout");
+		}		
+		return mapJson;
+	}
+	/*===================
+	 * 답글 목록
+	 *===================*/		
+	@GetMapping("/listResp")
+	@ResponseBody
+	public Map<String,Object> getListResp(long cre_num,
+			                  @AuthenticationPrincipal
+			                  PrincipalDetails principal){
+		log.debug("<<cre_num>> : " + cre_num);
+		
+		List<CommuResponseVO> list = 
+				commuService.selectListResponse(cre_num);
+		Map<String,Object> mapJson = 
+				new HashMap<String,Object>();
+		mapJson.put("list", list);
+		if(principal!=null) {
+			mapJson.put("user_num", 
+					principal.getMemberVO().getUser_num());
+		}		
+		return mapJson;
+	}
+	/*===================
+	 * 답글 수정
+	 *===================*/
+	@PostMapping("/updateResponse")
+	@ResponseBody
+	public Map<String,String> modifyResponse(
+					CommuResponseVO commuResponseVO,
+			        HttpServletRequest request,
+			        @AuthenticationPrincipal
+			        PrincipalDetails principal){
+		log.debug("<<답글 수정>> : " + commuResponseVO);
+		
+		Map<String,String> mapJson = 
+				new HashMap<String,String>();
+		
+		CommuResponseVO db_response = 
+				commuService.selectResponse(
+						commuResponseVO.getPe_num());
+		if(principal==null) {
+			//로그인이 되지 않은 경우
+			mapJson.put("result", "logout");
+		}else if(principal.getMemberVO().getUser_num()==
+				       db_response.getUser_num()) {
+			//로그인 회원번호와 작성자 회원번호 일치
+			//답글 수정
+			commuService.updateResponse(commuResponseVO);
+			mapJson.put("result", "success");
+		}else {
+			//로그인 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
+	/*===================
+	 * 답글 삭제
+	 *===================*/
+	@PostMapping("/deleteResponse")
+	@ResponseBody
+	public Map<String,Object> deleteResponse(
+			             long pe_num,int user_num,
+			             @AuthenticationPrincipal
+			             PrincipalDetails principal){
+		log.debug("<<답글 삭제 - pe_num>> : " + pe_num);
+		log.debug("<<답글 삭제 - user_num>> : " + user_num);
+		
+		Map<String,Object> mapJson = 
+				new HashMap<String,Object>();
+		if(principal==null) {
+			//록그인이 되지 않은 경우
+			mapJson.put("result", "logout");
+		}else if(principal.getMemberVO().getUser_num()==user_num) {
+			//로그인 회원번호와 작성자 회원번호 일치
+			CommuResponseVO response = 
+					commuService.selectResponse(pe_num);
+			commuService.deleteResponse(pe_num);
+			int cnt = commuService.selectResponseCount(
+					                  response.getCre_num());
+			log.debug("<<답글 삭제 후 나머지 답글 개수>> : " + cnt);
+			mapJson.put("cnt", cnt);
+			mapJson.put("result", "success");
+		}else {
+			//로그인 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "success");
+		}		
+		return mapJson;
+	}
 }

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.commu.service.CommuService;
 import kr.spring.commu.vo.CommuVO;
+import kr.spring.follow.service.FollowService;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
@@ -38,6 +39,8 @@ public class CommuController {
 	CommuService commuService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	FollowService followService;
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute

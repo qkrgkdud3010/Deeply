@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.commu.dao.CommuMapper;
 import kr.spring.commu.vo.CommuReplyVO;
+import kr.spring.commu.vo.CommuResponseVO;
 import kr.spring.commu.vo.CommuVO;
+import kr.spring.follow.vo.FollowVO;
 
 @Service
 @Transactional
@@ -53,6 +55,10 @@ public class CommuServiceImpl implements CommuService{
 
 	@Override
 	public void deleteCommu(Long c_num) {
+		//답글 삭제
+		commuMapper.deleteResponseByCNum(c_num);
+		//댓글이 존재하면 댓글을 우선 삭제하고 부모글을 삭제
+		commuMapper.deleteReplyByCNum(c_num);
 		//글 삭제
 		commuMapper.deleteCommu(c_num);
 	}
@@ -89,6 +95,9 @@ public class CommuServiceImpl implements CommuService{
 
 	@Override
 	public void deleteReply(Long cre_num) {
+		//답글 삭제
+		commuMapper.deleteResponseByCreNum(cre_num);
+		//댓글 삭제
 		commuMapper.deleteReply(cre_num);
 	}
 
@@ -126,116 +135,49 @@ public class CommuServiceImpl implements CommuService{
 	public Integer selectFandomRowCount(Map<String, Object> map) {
 		return commuMapper.selectFandomRowCount(map);
 	}
-	
-	
-	/*
 
 	@Override
-	public void updateBoard(CommuVO board) {
-		// TODO Auto-generated method stub
-		
+	public List<CommuResponseVO> selectListResponse(Long cre_num) {
+		return commuMapper.selectListResponse(cre_num);
 	}
 
 	@Override
-	public void deleteBoard(Long board_num) {
-		// TODO Auto-generated method stub
-		
+	public Integer selectResponseCount(Long cre_num) {
+		return commuMapper.selectResponseCount(cre_num);
 	}
 
 	@Override
-	public void deleteFile(Long board_num) {
-		// TODO Auto-generated method stub
-		
+	public CommuResponseVO selectResponse(Long pe_num) {
+		return commuMapper.selectResponse(pe_num);
 	}
 
 	@Override
-	public List<CommuReplyVO> selectListReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public void insertResponse(CommuResponseVO commuResponse) {
+		commuMapper.insertResponse(commuResponse);
 	}
 
 	@Override
-	public Integer selectRowCountReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateResponse(CommuResponseVO commuResponse) {
+		commuMapper.updateResponse(commuResponse);
 	}
 
 	@Override
-	public void insertReply(CommuReplyVO boardReply) {
-		// TODO Auto-generated method stub
-		
+	public Integer deleteResponse(Long pe_num) {
+		return commuMapper.deleteResponse(pe_num);
 	}
 
 	@Override
-	public CommuReplyVO selectReply(Long re_num) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteResponseByCreNum(Long cre_num) {
+		commuMapper.deleteResponseByCreNum(cre_num);
 	}
 
 	@Override
-	public void updateReply(CommuReplyVO boardReply) {
-		// TODO Auto-generated method stub
-		
+	public void deleteResponseByCNum(Long c_num) {
+		commuMapper.deleteResponseByCNum(c_num);
 	}
 
 	@Override
-	public void deleteReply(Long re_num) {
-		// TODO Auto-generated method stub
-		
+	public void selectArtistName(FollowVO follow) {
+		commuMapper.selectArtistName(follow);
 	}
-
-	@Override
-	public void deleteReplyByBoardNum(Long board_num) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<CommuReplyVO> selectListResponse(Long re_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer selectResponseCount(Long re_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommuReplyVO selectResponse(Long te_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insertResponse(CommuReplyVO boardResponse) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateResponse(CommuReplyVO boardResponse) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Integer deleteResponse(Long te_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteResponseByReNum(Long re_num) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteResponseByBoardNum(Long board_num) {
-		// TODO Auto-generated method stub
-		
-	}
-	*/
 }

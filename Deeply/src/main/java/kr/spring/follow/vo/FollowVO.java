@@ -22,4 +22,5 @@ public class FollowVO {
 	//컬럼에는 없지만 저장하는 것
 	private String name;
 	private String group_name;
+	private Long user_num;
 }

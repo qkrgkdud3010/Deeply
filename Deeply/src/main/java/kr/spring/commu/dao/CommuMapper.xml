@@ -339,6 +339,58 @@
   		]]>            
   	</select>
   	
+  	<!-- ===================
+  			대댓글
+  	==================== -->
+  	<!-- 답글 등록 -->
+  	<insert id="insertResponse" 
+  	       parameterType="commuResponseVO">
+  		INSERT INTO community_response(
+  			pe_num,
+  			pe_content,
+  			pe_parent_num,
+  			pe_depth,
+  			cre_num,
+  			user_num)
+  		VALUES (
+  			response_seq.nextval,
+  			#{pe_content},
+  			#{pe_parent_num},
+  			#{pe_depth},
+  			#{cre_num},
+  			#{user_num})       
+  	</insert>
+  	<!-- 답글 목록 -->
+  	<select id="selectListResponse" parameterType="long"
+  	                         resultType="commuResponseVO">
+  		SELECT
+  			r.pe_num,
+  			r.pe_content,
+  			r.user_num,
+  			a.id,
+  			a.nick_name,
+  			r.pe_date,
+  			r.pe_update,
+  			r.cre_num,
+  			r.pe_depth,
+  			r.pe_parent_num,
+  			m.id parent_id,
+  			m.nick_name pnick_name
+  		FROM community_response r
+  		JOIN duser a ON r.user_num=a.user_num
+  		LEFT OUTER JOIN community_response s ON r.pe_parent_num=s.pe_num
+  		LEFT OUTER JOIN duser m ON s.user_num=m.user_num
+  		WHERE r.cre_num=#{cre_num}
+  		START WITH r.pe_depth=0 CONNECT BY PRIOR r.pe_num=r.pe_parent_num ORDER SIBLINGS BY r.pe_num DESC
+  	</select>
+  	<!-- 답글 삭제 -->
+  	<delete id="deleteResponse" parameterType="long">
+  		DELETE FROM community_response WHERE pe_num IN(
+  			SELECT pe_num
+  			FROM community_response
+  			START WITH pe_num = #{pe_num}
+  			CONNECT BY PRIOR pe_num = pe_parent_num)
+  	</delete>
 </mapper>
 
 

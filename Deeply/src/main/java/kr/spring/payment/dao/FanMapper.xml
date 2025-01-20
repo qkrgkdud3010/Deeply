@@ -21,21 +21,9 @@
 
 	<!-- 내가 팬 맺은 아티스트 리스트 -->
 	<select id="getMyArtist" parameterType="map" resultType="FanVO">
-		SELECT
-			*
-		FROM (SELECT
-				a.*,
-				rownum rnum
-			FROM (SELECT
-					*
-				FROM fan f
-				JOIN duser d USING (user_num)
-				LEFT OUTER JOIN duser_detail dd USING (user_num)
-				JOIN auser a ON f.fan_artist=a.user_num
-				LEFT OUTER JOIN auser_detail ad ON f.fan_artist=ad.user_num
-				WHERE f.user_num=#{user_num} ORDER BY fan_start DESC)a)
-		<![CDATA[
-  		WHERE rnum >= #{start} AND rnum <= #{end}
-  		]]>
+		SELECT *
+		FROM fan f
+		JOIN auser_detail a ON fan_artist = a.user_num
+		WHERE f.user_num = #{user_num}
 	</select>
 </mapper>

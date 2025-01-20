@@ -6,13 +6,13 @@
 	<table>
 		<tr>
 		    <td>
-		        <a class="commu-title ${param.c_category == null ? 'active' : ''}" href="list">전체 글</a>
+		        <a class="commu-title-active" href="list">전체 글</a>
 		    </td>
 		    <td>
-		        <a class="commu-title ${param.c_category == '1' ? 'active' : ''}" href="commuFreeList">전체게시판</a>
+		        <a class="commu-title" href="commuFreeList">전체게시판</a>
 		    </td>
 		    <td>
-		        <a class="commu-title ${param.c_category == '2' ? 'active' : ''}" href="commuFandomList">팬덤게시판</a>
+		        <a class="commu-title" href="commuFandomList">팬덤게시판</a>
 		    </td>
 		</tr>
 	</table>
@@ -46,15 +46,19 @@
 	</c:if>
 	<c:if test="${count > 0}">
 		<table class="commu-list">
-			<c:forEach var="commu" items="${list}">
-			<tr>
-				<td class="commu-titles"><a href="detail?c_num=${commu.c_num}">${commu.c_title} [${commu.cre_cnt}]</a></td>
-				<td class="commu-date">${commu.c_date}</td>
-				<td class="commu-name">${member.nick_name}</td>
-				<td class="commu-hit">${commu.c_hit}</td>
-			</tr>
-			</c:forEach>
-		</table>
+    <tbody>
+        <c:forEach var="commu" items="${list}">
+        <tr>
+            <td class="commu-titles">
+                <a href="detail?c_num=${commu.c_num}">${commu.c_title} [${commu.cre_cnt}]</a>
+            </td>
+            <td class="commu-date">${commu.c_date}</td>
+            <td class="commu-name">${commu.nick_name}</td>
+            <td class="commu-hit">${commu.c_hit}</td>
+        </tr>
+        </c:forEach>
+    </tbody>
+</table>
 	<div class="align-center">${page}</div>
 	</c:if>
 </div>

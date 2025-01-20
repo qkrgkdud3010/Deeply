@@ -9,7 +9,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.commu.vo.CommuReplyVO;
+import kr.spring.commu.vo.CommuResponseVO;
 import kr.spring.commu.vo.CommuVO;
+import kr.spring.follow.vo.FollowVO;
 
 @Mapper
 public interface CommuMapper {
@@ -23,6 +25,8 @@ public interface CommuMapper {
 	//팬덤게시판 목록 보기
 	public List<CommuVO> selectFandomList(Map<String,Object> map);
 	public Integer selectFandomRowCount(Map<String,Object> map);
+	@Select("SELECT follow_num,follower_num,name,group_name FROM Follow JOIN auser_detail ON follow_num=user_num WHERE follow_num=#{follow_num}")
+	public void selectArtistName(FollowVO follow);
 	//내 글 목록
 	public List<CommuVO> selectMyList(Map<String,Object> map);
 	public Integer selectMyRowCount(Map<String,Object> map);
@@ -64,4 +68,23 @@ public interface CommuMapper {
 	//부모글 삭제시 댓글이 존재하면 부모글 삭제전 댓글 삭제
 	@Delete("DELETE FROM community_reply WHERE c_num=#{c_num}")
 	public void deleteReplyByCNum(Long c_num);
+	
+	// ============== 대댓글 ============== //
+	//대댓글(답글)
+	public List<CommuResponseVO> selectListResponse(Long cre_num);
+	//답글 삭제시 답글 개수 표시를 위해서 사용
+	@Select("SELECT COUNT(*) FROM community_response WHERE cre_num=#{cre_num}")
+	public Integer selectResponseCount(Long cre_num);
+	@Select("SELECT * FROM community_response WHERE pe_num=#{pe_num}")
+	public CommuResponseVO selectResponse(Long pe_num);
+	public void insertResponse(CommuResponseVO commuResponse);
+	@Update("UPDATE community_response SET pe_content=#{pe_content},pe_update=SYSDATE WHERE pe_num=#{pe_num}")
+	public void updateResponse(CommuResponseVO commuResponse);
+	public Integer deleteResponse(Long pe_num);
+	//댓글 삭제전 대댓글 삭제
+	@Delete("DELETE FROM community_response WHERE cre_num=#{cre_num}")
+	public void deleteResponseByCreNum(Long cre_num);
+	//부모글 삭제시 댓글의 답글이 존재하면 댓글 번호를 구해서 답글 삭제시 사용
+	@Delete("DELETE FROM community_response WHERE cre_num IN (SELECT cre_num FROM community_reply WHERE c_num=#{c_num})")
+	public void deleteResponseByCNum(Long c_num);
 }

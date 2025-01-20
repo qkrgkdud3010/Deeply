@@ -6,13 +6,13 @@
 	<table>
 		<tr>
 		    <td>
-		        <a class="commu-title ${param.c_category == null ? 'active' : ''}" href="list">전체 글  </a>
+		        <a class="commu-title" href="list">전체 글  </a>
 		    </td>
 		    <td>
-		        <a class="commu-title ${param.c_category == '1' ? 'active' : ''}" href="commuFreeList">전체게시판</a>
+		        <a class="commu-title" href="commuFreeList">전체게시판</a>
 		    </td>
 		    <td>
-		        <a class="commu-title ${param.c_category == '2' ? 'active' : ''}" href="commuFandomList">팬덤게시판</a>
+		        <a class="commu-title-active" href="commuFandomList">팬덤게시판</a>
 		    </td>
 		</tr>
 	</table>
