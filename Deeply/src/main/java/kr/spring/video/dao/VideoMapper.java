@@ -49,4 +49,7 @@ public interface VideoMapper {
 		    @Param("groupNum") Long groupNum
 		);
 
+		 // 멤버십 전용 영상 조회
+	    List<VideoVO> selectMembershipVideosByGroup(Long groupNum);
+
 }

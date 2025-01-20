@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>자주 묻는 질문 (FAQ)</title>
+<title>Frequently Asked Questions (FAQ)</title>
 <style>
-/* FAQ 컨테이너 스타일 */
+/* 기존 스타일 유지 또는 개선 */
 .faq-container {
   background-color: #fff;
   display: flex;
@@ -14,35 +15,31 @@
   padding: 20px;
 }
 
-/* FAQ 헤더 */
 .faq-header {
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 수직 가운데 정렬 */
-  align-items: center; /* 수평 가운데 정렬 */
-  width: 100%; /* faq-item과 동일한 너비 */
-  max-width: 1025px; /* faq-item과 동일한 최대 너비 */
+  justify-content: center; /* Vertical center alignment */
+  align-items: center; /* Horizontal center alignment */
+  width: 100%; /* Same width as faq-item */
+  max-width: 1025px; /* Same max width as faq-item */
   font-weight: 700;
   padding: 20px 40px;
   margin-top: 20px;
 }
 
-/* 제목 */
 .faq-title {
   color: #000;
   text-align: center;
-  font: 64px/1 Red Hat Display, sans-serif;
+  font: 64px/1 'Red Hat Display', sans-serif;
 }
 
-/* 1대1 문의 링크 */
 .contact-link {
-  margin-left: auto; /* 오른쪽 끝으로 이동 */
+  margin-left: auto; /* Move to the right end */
   color: #b0adad;
-  font: 16px Manrope, sans-serif;
+  font: 16px 'Manrope', sans-serif;
 }
 
-/* FAQ 항목 */
 .faq-item {
   border-radius: 8px;
   background-color: #090909;
@@ -52,28 +49,25 @@
   max-width: 1025px;
   color: #fff;
   padding: 20px;
-  font: 600 24px/1 Inter, sans-serif;
+  font: 600 24px/1 'Inter', sans-serif;
   margin-top: 20px;
   cursor: pointer;
 }
 
-/* 아이콘 */
 .faq-icon {
   width: 25px;
   margin-right: 10px;
   transition: transform 0.3s ease;
 }
 
-/* 질문 */
 .faq-question {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* 답변 */
 .faq-answer {
-  display: none; /* 기본적으로 숨김 */
+  display: none; /* Hidden by default */
   margin-top: 15px;
   padding: 10px;
   background-color: #333;
@@ -85,60 +79,61 @@
 .faq-answer.visible {
   display: block;
 }
+
+.admin-actions {
+    margin-top: 10px;
+}
+
+.admin-actions a {
+    color: #ff0000;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
 </style>
 </head>
 <body>
 <div class="faq-container">
-  <!-- FAQ 헤더 -->
+  <!-- FAQ Header -->
   <div class="faq-header">
     <h1 class="faq-title">자주 묻는 질문</h1>
-    <a href="#contact" class="contact-link">1대1 문의하러가기</a>
+    <a href="#contact" class="contact-link">1대1 문의 하러가기</a>
+    <!--<c:if test="${pageContext.request.userPrincipal != null and pageContext.request.isUserInRole('ADMIN')}">-->
+        <a href="${pageContext.request.contextPath}/faq/add">Add FAQ</a>
+        <a href="${pageContext.request.contextPath}/faq/categories">Manage Categories</a>
+    <!--</c:if>-->
   </div>
 
-  <!-- FAQ 항목 1 -->
-  <div class="faq-item">
-    <div class="faq-question">
-      <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
-        alt="아이콘"
-        class="faq-icon"
-      />
-      <h2>멤버십 구독 혜택은 무엇인가요?</h2>
+  <!-- Grouping FAQs by Category -->
+  <c:forEach var="category" items="${categories}">
+    <div class="faq-category">
+      <h2>${category.categoryName}</h2>
+      <c:forEach var="faq" items="${faqs}">
+        <c:if test="${faq.categoryId == category.categoryId}">
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
+                alt="Icon"
+                class="faq-icon"
+              />
+              <h2>${faq.question}</h2>
+              <!--<c:if test="${pageContext.request.isUserInRole('ADMIN')}">-->
+                  <div class="admin-actions">
+                      <a href="${pageContext.request.contextPath}/faq/edit/${faq.faqId}">Edit</a>
+                      <a href="${pageContext.request.contextPath}/faq/delete/${faq.faqId}" onclick="return confirm('Are you sure you want to delete this FAQ?');">Delete</a>
+                  </div>
+             <!--</c:if>-->
+            </div>
+            <div class="faq-answer">
+              <p>${faq.answer}</p>
+            </div>
+          </div>
+        </c:if>
+      </c:forEach>
     </div>
-    <div class="faq-answer">
-      <p>멤버십 구독 시 독점 콘텐츠, 할인 혜택, 이벤트 우선권 등을 누릴 수 있습니다.</p>
-    </div>
-  </div>
-
-  <!-- FAQ 항목 2 -->
-  <div class="faq-item">
-    <div class="faq-question">
-      <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
-        alt="아이콘"
-        class="faq-icon"
-      />
-      <h2>아티스트와의 소통은 어떻게 이루어지나요?</h2>
-    </div>
-    <div class="faq-answer">
-      <p>플랫폼 내 메시징 시스템과 정기적인 라이브 Q&A 세션을 통해 소통할 수 있습니다.</p>
-    </div>
-  </div>
-
-  <!-- FAQ 항목 3 -->
-  <div class="faq-item">
-    <div class="faq-question">
-      <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12b36863eb113cecbe74e8f24b9197734fb736dd08b58a5c542ce6cdc22a1f5c"
-        alt="아이콘"
-        class="faq-icon"
-      />
-      <h2>배송은 며칠 정도 소요되나요?</h2>
-    </div>
-    <div class="faq-answer">
-      <p>주문 후 3~5일 내에 배송됩니다. 지역에 따라 다소 차이가 있을 수 있습니다.</p>
-    </div>
-  </div>
+  </c:forEach>
 </div>
 
 <script>
@@ -153,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     question.addEventListener("click", () => {
       const isVisible = answer.classList.contains("visible");
 
-      // 모든 FAQ 초기화
+      // Reset all FAQs
       document.querySelectorAll(".faq-answer").forEach((ans) => ans.classList.remove("visible"));
       document.querySelectorAll(".faq-icon").forEach((ic) => {
         ic.src =

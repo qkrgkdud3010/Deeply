@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
 
 import kr.spring.member.dao.ArtistMapper;
 import kr.spring.member.vo.AgroupVO;
@@ -61,9 +59,14 @@ public class VideoController {
             categoryVideosMap.put(category.getCategory_id(), videos);
         }
 
-        // 3. 카테고리, 영상 데이터, groupNum을 JSP로 전달
+        // 3. 멤버십 전용 영상 조회
+        List<VideoVO> membershipVideos = videoService.getMembershipVideosByGroup(groupNum);
+        membershipVideos.forEach(video -> System.out.println("Membership Video: " + video));
+        
+        // 4. 카테고리, 영상 데이터, groupNum을 JSP로 전달
         model.addAttribute("categories", categories); // 카테고리 목록
         model.addAttribute("categoryVideosMap", categoryVideosMap); // 카테고리별 영상
+        model.addAttribute("membershipVideos", membershipVideos); // 멤버십 영상 목록
         model.addAttribute("groupNum", groupNum); // 그룹 번호
 
         return "groupVideoList"; // JSP 파일 이름
