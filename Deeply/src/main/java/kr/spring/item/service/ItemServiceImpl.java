@@ -83,11 +83,6 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public List<OrderVO> selectOrder(Map<String, Object> map) {
-		return null;
-	}
-
-	@Override
 	public OrderVO selectOrderDetail(OrderVO ordervo) {
 		return null;
 	}
@@ -95,6 +90,10 @@ public class ItemServiceImpl implements ItemService{
 	@Override
 	public MemberVO selectUserInfo(MemberVO memberVO) {
 		return null;
+	}
+	@Override
+	public List<OrderVO> getOrder(Long user_num) {
+		return itemMapper.getOrder(user_num);
 	}
 
 	@Override
@@ -156,6 +155,9 @@ public class ItemServiceImpl implements ItemService{
 		return itemMapper.selectCartDetail(cart_num);
 		
 	}
+
+	
+	
 
 	
 

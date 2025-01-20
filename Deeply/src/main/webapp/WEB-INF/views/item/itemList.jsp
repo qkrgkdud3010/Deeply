@@ -32,7 +32,7 @@
 		</c:if>
 			<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
 	</div>
-		<div class="listcontent-container item-container">
+		<div class="listcontent-container2 item-container">
 			<!-- <div class="artist-name">반갑습니다. </div> -->
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
@@ -43,9 +43,10 @@
 						<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
 							<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="item-img">
 						</a>
-						<hr class="custom-hr" noshade="noshade" width="100%">
-						<span class="item-name list-text" style="font-size:18px;">${item.item_name}</span>
-						<span class="item-name list-price" style="font-size:18px; color:#0369A1;">${item.item_price}</span>
+						<hr class="custom-hr3" noshade="noshade" width="100%">
+						<span class="item-name list-text">${item.item_name}</span>
+						<span class="item-name list-price">${item.item_price}</span>
+						
 					</div>
 					
 					<c:if test="${(status.index + 1) % 4 == 0}">

@@ -10,39 +10,40 @@
 	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
 <div class="order-div">
-	<span class="text-title">상품정보</span>
+	<span class="text-title2">상품정보</span>
 	<hr class="custom-hr" noshade="noshade" width="100%">
 	<div class="order-quantity-container">
-		<div class="box-shadow2">
 			<img
 				src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-				class="order-img">
-		</div>
-		<div>
-			<span class="quantity-name">${item.item_name}</span>
-			<span class="quantity-name">수량 ${quantity}개</span>
-			<span class="quantity-name">
+				class="cart-img">
+		<div class="quantity-name2">
+			<span class="quantity-name3">${item.item_name}</span>
+			<span class="quantity-name3">수량 ${quantity}개</span>
+			<span class="quantity-name4">
 	    		<fmt:formatNumber value="${quantity * item.item_price}" type="number" groupingUsed="true" />원
 			</span>
+			</div>
 		</div>
-	</div>
+	
 	<hr class="custom-hr" noshade="noshade" width="100%">
 </div>
-
 <div class="order-info">
 	<span> 총 상품 금액 <fmt:formatNumber
 			value="${quantity * item.item_price}" type="number" groupingUsed="true" />원 + 배송비 
 			<c:if test="${quantity * item.item_price < 50000}"> + 3,000원</c:if>
 			<c:if test="${quantity * item.item_price >= 50000}">0원</c:if>
 	</span> 
-	<br>
+</div>
+<div class="order-info2">
 	<c:if test="${quantity * item.item_price < 50000}">
 		<span> 총 결제 금액 : </span>
 			<span class="order-info"><fmt:formatNumber
 				value="${quantity * item.item_price + 3000}" type="number" groupingUsed="true" />원
 		</span>
 	</c:if>
+	
 	<c:if test="${quantity * item.item_price >= 50000}">
+		
 		<span> 총 결제 금액 : <fmt:formatNumber
 				value="${quantity * item.item_price}" type="number" groupingUsed="true" />원
 		</span>
@@ -55,10 +56,9 @@
 <form:hidden path="item_quantity" value="${quantity}"/>
 <form:hidden path="total_price" value="${quantity * item.item_price}"/>
 <div class="order-div">
-	<span class="text-title">배송지 정보</span>
+	<span class="text-title2">배송지 정보</span>
 	<hr class="custom-hr" noshade="noshade" width="100%">
 	<div>
-	<span class="text-title">배송지 정보</span>
 		<p>
 			<form:label path="name">이름</form:label>
 			<form:input path="name" />
@@ -96,7 +96,7 @@
 
 	<hr class="custom-hr" noshade="noshade" width="100%">
 </div>
-<div><form:button>구매</form:button></div>
+<div class="box-button"><form:button>구매하기</form:button></div>
 </form:form>
 
 <!-- 다음 우편번호 API 시작 -->

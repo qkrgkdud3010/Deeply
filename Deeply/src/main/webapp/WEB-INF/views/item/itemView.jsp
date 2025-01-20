@@ -67,16 +67,22 @@
 					<img
 						src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="items-img">
 				</div>
-					<div class="item-info3">
+					<div class="detail-item-info">
 						<ul>
+							<li>
+								<c:choose>
+						            <c:when test="${item.category == 0}">
+						                <li class="normal">일반 상품</li>
+						            </c:when>
+						            <c:when test="${item.category == 1}">
+						                <li class="premium">구독회원 전용 상품</li>
+						            </c:when>
+						        </c:choose>
+					        </li>
 							<li>상품명 : ${item.item_name}</li>
 							<li>가격 : ${item.item_price}원</li>
 							<li>수량 : ${item.item_stock}개</li>
-								<!-- <label for="category">카테고리:</label>
-									<select name="category" id="category" required>
-		  								<option value="0">일반 상품</option>
-		 								 <option value="1">유료회원 전용 상품</option>
-								</select> -->
+							
 						</ul>
 					</div>
 			</div>
@@ -97,6 +103,9 @@
 				<div class="item-info3">
 					<ul>
 						<li>단독판매</li>
+						<c:if test="${item.category == 1}">
+						<li class="prim">구독회원전용</li>
+						</c:if>
 						<li class="bold-text">상품명 : ${item.item_name}</li>
 						<li class="text-price">가격 : ${item.item_price}원</li>
 						<li class="max-purchase">회원당 최대 3개까지 구매가능합니다.</li>
@@ -141,8 +150,6 @@
         <c:out value="${item.item_description}" escapeXml="false"/>
     </c:if>
     </div>
-    
-		
 
 	<%-- 반품/교환 규정 포함--%>  		  
 	

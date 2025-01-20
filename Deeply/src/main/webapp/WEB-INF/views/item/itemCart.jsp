@@ -11,6 +11,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/shop.js"></script>
 
+<div class="orderlist"><a href="${pageContext.request.contextPath}/item/orderList">주문내역</a></div>
 	<%-- 장바구니에 상품 없을 때 --%>
 		<c:if test="${empty cart}">
 			<div class="cart-div">
@@ -28,29 +29,29 @@
 			<div class="item-info4">
 			<div class="box-shadow4">
 				<c:forEach var="cart_item" items="${cart}">
+				<div class="cart-div">
 					<div>
-						<img src="${pageContext.request.contextPath}/assets/upload/${cart_item.filename}" class="cart-img">
+						<img src="${pageContext.request.contextPath}/assets/upload/${cart_item.filename}" class="cart-img2">
 					</div>
-					
-					<div class="quantity-container2">
-						<div class="quantity-name">${cart_item.item_name}</div>
-							<div class="v-center">
-								<div class="quantity-box">
-									<button class="quantity-btn a-center cminus_btn">-</button>
-									<span class="quantity-number a-center quantity" id="quantity" data-value="${cart_item.order_quantity}">${cart_item.order_quantity}</span>
-									<button class="quantity-btn a-center cplus_btn">+</button>
-								</div>
-								<div class="price-box">
-									<div class="price-div price_total" data-price="${cart_item.item_price}">
-										<fmt:formatNumber value="${cart_item.item_price * cart_item.order_quantity}" type="number" groupingUsed="true" />원
+						<div class="quantity-container2">
+							<div class="quantity-name">${cart_item.item_name}</div>
+								<div class="v-center">
+									<div class="quantity-box">
+										<button class="quantity-btn a-center cminus_btn">-</button>
+										<span class="quantity-number a-center quantity" id="quantity" data-value="${cart_item.order_quantity}">${cart_item.order_quantity}</span>
+										<button class="quantity-btn a-center cplus_btn">+</button>
+									</div>
+									<div class="price-box">
+										<div class="price-div price_total" data-price="${cart_item.item_price}">
+											<fmt:formatNumber value="${cart_item.item_price * cart_item.order_quantity}" type="number" groupingUsed="true" />원
+										</div>
 									</div>
 								</div>
-							</div>
-								<a href="${pageContext.request.contextPath}/item/order?item_num=${cart_item.item_num}&quantity=${cart_item.order_quantity}"><div class="purchase-btn">구매하기</div></a>
-								<a href="${pageContext.request.contextPath}/item/delete_cart?cart_num=${cart_item.cart_num}"><img class="cart-delete-img" src="${pageContext.request.contextPath}/assets/images/hj/trash.svg"></a>
-								<input type="hidden" name="item_num" id="item_num" class="cart-item-num" data-num="${cart_item.item_num}">
-								<input type="hidden" id="this_cart_num_${cart_item.cart_num}" data-value="${cart_item.cart_num}">
-								
+									<a href="${pageContext.request.contextPath}/item/order?item_num=${cart_item.item_num}&quantity=${cart_item.order_quantity}"><div class="purchase-btn2">구매하기</div></a>
+									<a href="${pageContext.request.contextPath}/item/delete_cart?cart_num=${cart_item.cart_num}"><img class="cart-delete-img" src="${pageContext.request.contextPath}/assets/images/hj/trash.svg"></a>
+									<input type="hidden" name="item_num" id="item_num" class="cart-item-num" data-num="${cart_item.item_num}">
+									<input type="hidden" id="this_cart_num_${cart_item.cart_num}" data-value="${cart_item.cart_num}">
+						</div>
 					</div>
 					<hr class="custom-hr" noshade="noshade" width="100%">
 				</c:forEach>
@@ -72,8 +73,9 @@
 								value="${totalAmount}" type="number" groupingUsed="true" />원
 						</span>
 					</c:if>
+					<div class="purchase-all-btn">구매하기</div>
 				</div>
 			
-				<div class="purchase-all-btn">구매하기</div>
+				
 			</div>
 		</c:if>

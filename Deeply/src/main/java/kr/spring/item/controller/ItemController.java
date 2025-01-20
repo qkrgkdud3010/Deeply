@@ -119,7 +119,6 @@ public class ItemController {
 			 			   String keyword,
 			 			   Model model,
 			 			   @AuthenticationPrincipal PrincipalDetails principal) {
-
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -158,7 +157,7 @@ public class ItemController {
 	@GetMapping("/list")
 	public String getList(@RequestParam(defaultValue="1") int pageNum,
 						  @RequestParam(defaultValue="1") int order,
-						  Long user_num,
+						  Long user_num,//그룹 넙
 						  String keyfield,
 						  String keyword,
 						  Model model,
@@ -167,7 +166,7 @@ public class ItemController {
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<게시판 목록 - order>> : " + order);
 		log.debug("<<user_num>> : " + user_num);
-
+		
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -209,7 +208,18 @@ public class ItemController {
 			
 			list = itemService.selectList(map);
 		}
-
+		
+		
+		//그룹 넘버를 사용해서 그룹에 포함된 모든 아티스트vo List 형태로 받아오기(List<ArtistVO> artistVO = 메서드)
+		//principal 값으로 유저넘버 받아오기 long us_num
+		//FAN VO에서 아티스트 넘버와 유저넘버를 비교하여 일치하는 값의 개수 -> XML COUNT(*) 형식으로 받기
+		//COUNT 값이 1 이상이면 구독한 상태 / 아니면 구독 안한상태
+		// 이거로 현재 로그인한 유저가 구독했는지 파악하고 ITEMVO에 PRIVATE INT is_member 이런식으로 값 하나 만들어서ㅏ
+		// set_isMember() 이렇게 vo 값에다가 임시로 현재 구독 상태 0 or 1로 저장
+		// 그 값을 model에 담아서 jsp에서 if문으로 활용
+		
+		
+		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());
@@ -520,7 +530,6 @@ public class ItemController {
 	/*==============================
 	 * 	장바구니 삭제
 	 * =============================*/
-	
 	@GetMapping("/delete_cart")
 	public String deleteCart(long cart_num, Model model,
 						   HttpServletRequest request,
@@ -542,16 +551,44 @@ public class ItemController {
 		return "common/resultAlert";
 	}
 	
-}
+
 	
 	
+/*==============================
+ * 	마이페이지 주문내역
+ * =============================*/
+	@GetMapping("/orderList")
+	public String itemOrderList(Model model,
+								HttpServletRequest request,
+								@AuthenticationPrincipal PrincipalDetails principal) {
+		 
+		if (principal != null && principal.getMemberVO() != null) {
+	        long user_num = principal.getMemberVO().getUser_num();
+
+	        // 주문 목록 가져오기
+	        List<OrderVO> orderList = itemService.getOrder(user_num);
+
+	        log.debug("<<주문내역 리스트>> : " + orderList);
+		 
+			//장바구니내 총 합
+			int priceByItems = 0;
+				for (OrderVO order : orderList) {
+					priceByItems += order.getTotal_price()-(order.getItem_price()*order.getItem_quantity());
+				}
+				
+			
+			// 주문 목록 모델에 추가
+		    model.addAttribute("orderList", orderList);
+			model.addAttribute("priceByItems", priceByItems);}
+		 
+			return "itemOrderList"; // 주문내역으로 이동
+	}
 
 
 
 
 
-
-
+	}
 
 
 

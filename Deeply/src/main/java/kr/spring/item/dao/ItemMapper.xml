@@ -218,5 +218,24 @@
 		)
 	</insert>
 
-
+	<select id="getOrder" resultType="orderVO">
+		SELECT 
+		    o.ORDER_DATE,     
+		    o.NAME,           
+		    i.FILENAME,      
+		    i.ITEM_NAME,    
+		    o.ITEM_QUANTITY,  
+		    o.TOTAL_PRICE     
+		FROM 
+		    SHOP_ORDER o
+		JOIN 
+		    SHOP_ITEM i ON o.ITEM_NUM = i.ITEM_NUM
+		WHERE 
+		    o.USER_NUM = #{user_num}
+		ORDER BY 
+		    o.ORDER_DATE DESC
+	</select>
+	
+	
+	
 </mapper>

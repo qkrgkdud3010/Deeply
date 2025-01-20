@@ -23,7 +23,6 @@
 		</c:if>
 	</div>
 	<div class="listcontent-container item-container">
-		<div class="artist-name">반갑습니다.</div>
 		<c:if test="${count == 0}">
 			<div class="result-display">표시할 게시물이 없습니다.</div>
 		</c:if>
@@ -38,7 +37,7 @@
 							<c:if test="${loop_flag}">
 								<div class="item-card">
 									<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
-									<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="item-img">
+									<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="main-item-img">
 									</a>
 									<hr class="custom-hr" noshade="noshade" width="100%">
 									<span class="item-name list-text">${item.item_name}</span>

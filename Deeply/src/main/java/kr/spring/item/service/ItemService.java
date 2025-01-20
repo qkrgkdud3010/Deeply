@@ -26,13 +26,15 @@ public interface ItemService {
 	
 	//----------구매자(사용자)-------------
 	public void insertOrder(OrderVO ordervo);
+	public void updateStock(int quantity, long item_num);
+	public void updatePayNum(long pay_num, long order_num);
+	
+	//----------구매자(사용자) 주문목록---------------
+	public List<OrderVO> getOrder(Long user_num);
 	public int selectOrderRowCount(Map<String,Object> map);
-	public List<OrderVO> selectOrder(Map<String,Object> map);
 	public OrderVO selectOrderDetail(OrderVO ordervo);
 	public MemberVO selectUserInfo(MemberVO memberVO);
 	public void deleteOrder(Long item_num);
-	public void updateStock(int quantity, long item_num);
-	public void updatePayNum(long pay_num, long order_num);
 	
 	//----------장바구니-------------
 	public void deleteCart(Long item_num);
@@ -43,5 +45,6 @@ public interface ItemService {
 	public void updateTotalQuantity(int total_quantity, long cart_num);
 	public void deleteCartByCartNum(long cart_num);
 	public CartVO selectCartDetail(long cart_num);
+	
 	
 }
