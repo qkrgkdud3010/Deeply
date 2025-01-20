@@ -395,9 +395,8 @@ function buildCommentHtml(comment, level) {
             '<div class="user-info">' + // Open .user-info
                 '<div class="user-meta">' + // Open .user-meta
                     // 아바타 + 사용자 정보
-                    '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/53eaa26f84ec76d03c516471430ad2cd3bcdad1e5edd32a44225a107e88f3a47?placeholderIfAbsent=true&apiKey=ce4da87792964033bdb1e6f244668450" ' +
-                          'class="avatar" alt="User Avatar" />' +
-                    '<div class="username">UserNum: ' + comment.userNum + '</div>' +
+                    '<img src="/member/photoView2?user_num=' + comment.userNum + '" class="avatar" alt="User Avatar" />' +
+                    '<div class="username">' + comment.userName + '</div>' +
                     '<div class="timestamp">' + formatTimestamp(comment.createdAt) + '</div>' +
                 '</div>' + // Close .user-meta
             '</div>' + // Close .user-info
@@ -432,10 +431,6 @@ function buildCommentHtml(comment, level) {
                     '<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/969b6a12fe21c1d1769e8ed4b2ff5b28f481984b7f0b46d426588e1a95cdf523?placeholderIfAbsent=true&apiKey=..." ' +
                         'class="post-icon" alt="More Options Icon">' +
                     '<div>More</div>' +
-                '</div>' +
-
-                '<div style="margin-left:30px; font-size:13px; color:#666;">' +
-                    '좋아요: ' + comment.likes + ' | 싫어요: ' + comment.dislikes +
                 '</div>' +
             '</div>' + // Close .interaction-bar
 

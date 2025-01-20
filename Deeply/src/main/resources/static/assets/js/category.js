@@ -41,6 +41,7 @@ function addCategory() {
                 // 입력 필드 초기화
                 $('#new-category-name').val('');
                 alert('새 카테고리가 추가되었습니다.');
+				loadCategories();
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);

@@ -14,7 +14,6 @@ public class VideoCommentVO {
     private Long videoId;            // 영상 ID (video 테이블 참조)
     private Long parentCommentId;    // 상위 댓글 ID (대댓글인 경우)
     private String commentContent;   // 댓글 내용
-    private Integer likes;           // 좋아요 수
-    private Integer dislikes;        // 싫어요 수
     private Timestamp createdAt;     // 댓글 작성 시점
+    private String userName;
 }
