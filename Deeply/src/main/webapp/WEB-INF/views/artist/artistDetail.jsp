@@ -153,10 +153,9 @@
 <div class="artist-main">
 	<div class="artist-contents-container">
 		<div class="artist-contents-title bold-title">HIGHLIGHTS</div>
-		<div class="artist-contents-list vertical-center">
-			<c:forEach items="${videos}" var="video" begin="0" end="3">
-			<div class="artist-contents-item shadow-effect">
-				<c:if test="${status.index < 7}">
+			<div class="scroll-track">
+                <c:forEach var="video" items="${membershipVideos}" varStatus="status">
+                    <c:if test="${status.index < 4}">
                         <!-- 유튜브 썸네일 처리 -->
                         <c:choose>
                             <c:when test="${fn:contains(video.mediaUrl, 'youtube.com/watch?v=')}">
@@ -178,8 +177,10 @@
                             <div class="video-card-description">${video.description}</div>
                         </div>
                     </c:if>
-			</div>
-			</c:forEach>
+                </c:forEach>
+            </div>
+		<div class="artist-contents-list vertical-center">
+			
 		</div>
 		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}videos/group?group_num=${vo.group_num}">->전체 영상</a></div>
 	</div>
@@ -195,3 +196,4 @@
 		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}/item/list?user_num=${vo.group_num}">->전체 상품</a></div>
 	</div>
 </div>
+

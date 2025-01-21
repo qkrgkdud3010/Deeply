@@ -103,7 +103,7 @@
             category_id AS categoryId,
             group_num AS groupNum
         FROM
-            videos
+            video
         WHERE
             group_num = #{groupNum}
         ORDER BY

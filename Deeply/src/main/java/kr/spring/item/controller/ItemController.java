@@ -473,9 +473,12 @@ public class ItemController {
 							BindingResult result,
 			 				HttpServletRequest request,
 			 				Model model){
+		
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getAllErrors());
 			model.addAttribute("orderVO", orderVO);
+			log.debug("<<errors: >> : " + result.getAllErrors());
+			log.debug("<<OrderVO >> : " + orderVO);
 			return "itemOrder"; // 유효성 검증 실패 시 JSP로 이동
 		}
 		
@@ -637,13 +640,15 @@ public class ItemController {
 	public String itemOrderList(Model model,
 								HttpServletRequest request,
 								@AuthenticationPrincipal PrincipalDetails principal) {
-		 
+		
+		
+		
 		if (principal != null && principal.getMemberVO() != null) {
 	        long user_num = principal.getMemberVO().getUser_num();
 
 	        // 주문 목록 가져오기
 	        List<OrderVO> orderList = itemService.getOrder(user_num);
-
+	        
 	        log.debug("<<주문내역 리스트>> : " + orderList);
 		 
 			//장바구니내 총 합 (장바구니 모든 상품 구매하기 후에 고치기)
@@ -651,7 +656,9 @@ public class ItemController {
 				for (OrderVO order : orderList) {
 					priceByItems += order.getTotal_price()-(order.getItem_price()*order.getItem_quantity());
 				}
+			
 				
+			
 			
 			// 주문 목록 모델에 추가
 		    model.addAttribute("orderList", orderList);

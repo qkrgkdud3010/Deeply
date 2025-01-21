@@ -84,15 +84,18 @@ public class ArtistController {
 		log.debug("<<아티스트 상세>> : " + members); 
 		
 		Map<String,Object> videoMap = new HashMap<String,Object>();
+		
 		videoMap.put("groupNum", group_num);
+		
 		List<VideoVO> videos = videoService.selectListByGroup(videoMap);
 		
 		List<ItemVO> shops = itemService.selectListByUserNum(group_num);
 		
+		model.addAttribute("video", videos);
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);
-		model.addAttribute("videos",videos);
+
 		
 		
 		

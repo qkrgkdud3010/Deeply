@@ -22,7 +22,7 @@ public class OrderVO {
 	private long item_num;
 	private long user_num;
 	@Min(value = 1, message = "구매개수는 최소 1개 이상이어야 합니다.")
-	@Max(value = 2, message = "구매개수는 최대 3개 입니다.")
+	@Max(value = 3, message = "구매개수는 최대 3개 입니다.")
 	private int item_quantity;//결제한 상품별 개수
 	private int total_price;//결제한 총 금액
 	private Date order_date;
