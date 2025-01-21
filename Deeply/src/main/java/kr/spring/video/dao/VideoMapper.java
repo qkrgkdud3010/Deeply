@@ -38,8 +38,7 @@ public interface VideoMapper {
 	@Select("SELECT VIDEO_SEQ.NEXTVAL FROM dual")
 	Long getNextVideoId();
 
-	@Select("SELECT * FROM video WHERE group_num = #{groupNum} ORDER BY video_id DESC")
-		    List<VideoVO> selectListByGroup(Map<String, Object> map);
+	List<VideoVO> selectListByGroup(Map<String, Object> map);
 
 	@Select("SELECT COUNT(*) FROM video WHERE group_num = #{groupNum}")
 		    Integer selectRowCountByGroup(Map<String, Object> map);

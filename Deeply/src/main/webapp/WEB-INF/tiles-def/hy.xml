@@ -77,5 +77,8 @@
     <put-attribute name="body" value="/WEB-INF/views/contact/viewInquiry.jsp" />
 	</definition>
     
-    
+    <definition name="chatbotList" extends="main">
+        <put-attribute name="title" value="챗봇 목록" />
+        <put-attribute name="body" value="/WEB-INF/views/chatbot/chatbotList.jsp" />
+    </definition>
 </tiles-definitions>

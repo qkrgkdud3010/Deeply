@@ -57,8 +57,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public List<VideoVO> selectListByGroup(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return videoMapper.selectListByGroup(map);
 	}
 
 	@Override
