@@ -45,7 +45,7 @@
   background-color: #090909;
   display: flex;
   flex-direction: column;
-  width: 94%;
+  width: 95%;
   max-width: 1025px;
   color: #fff;
   padding: 20px;

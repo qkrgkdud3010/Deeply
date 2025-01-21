@@ -31,9 +31,35 @@
 	    <put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp" />
         <put-attribute name="body" value="/WEB-INF/views/video/video_page.jsp" />
     </definition>
-    
+    <!-- faq 페이지 -->
     <definition name="faq" extends="main">
         <put-attribute name="title" value="자주 묻는 질문 (FAQ)" />
         <put-attribute name="body" value="/WEB-INF/views/faq/faq.jsp" />
     </definition>
+    
+    <definition name="addFaq" extends="main">
+        <put-attribute name="title" value="FAQ 질답 추가" />
+        <put-attribute name="body" value="/WEB-INF/views/faq/add_faq.jsp" />
+    </definition>
+    
+    <definition name="editFaq" extends="main">
+        <put-attribute name="title" value="FAQ 질답 수정" />
+        <put-attribute name="body" value="/WEB-INF/views/faq/edit_faq.jsp" />
+    </definition>
+    
+    <definition name="addCategory" extends="main">
+    	<put-attribute name="title" value="FAQ 카테고리 추가" />
+        <put-attribute name="body" value="/WEB-INF/views/faq/add_category.jsp" />
+    </definition>
+    
+     <definition name="manageCategories" extends="main">
+        <put-attribute name="title" value="FAQ 카테고리 관리" />
+        <put-attribute name="body" value="/WEB-INF/views/faq/manage_categories.jsp" />
+    </definition>
+    
+    <definition name="editCategory" extends="main">
+        <put-attribute name="title" value="FAQ 카테고리 수정" />
+        <put-attribute name="body" value="/WEB-INF/views/faq/edit_category.jsp" />
+    </definition>
+    
 </tiles-definitions>

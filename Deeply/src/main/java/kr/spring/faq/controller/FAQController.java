@@ -50,7 +50,7 @@ public class FAQController {
     public String addFAQForm(Model model) {
         List<FAQCategoryVO> categories = faqService.getAllCategories();
         model.addAttribute("categories", categories);
-        return "faq/add_faq"; // /WEB-INF/views/add_faq.jsp
+        return "addFaq"; // /WEB-INF/views/add_faq.jsp
     }
 
     // FAQ 추가 처리
@@ -77,7 +77,7 @@ public class FAQController {
         List<FAQCategoryVO> categories = faqService.getAllCategories();
         model.addAttribute("faq", faq);
         model.addAttribute("categories", categories);
-        return "faq/edit_faq"; // /WEB-INF/views/edit_faq.jsp
+        return "editFaq"; // /WEB-INF/views/edit_faq.jsp
     }
 
     // FAQ 수정 처리
@@ -94,14 +94,14 @@ public class FAQController {
     public String manageCategories(Model model) {
         List<FAQCategoryVO> categories = faqService.getAllCategories();
         model.addAttribute("categories", categories);
-        return "faq/manage_categories"; // /WEB-INF/views/manage_categories.jsp
+        return "manageCategories"; // /WEB-INF/views/manage_categories.jsp
     }
 
     // 카테고리 추가 폼
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/categories/add")
     public String addCategoryForm() {
-        return "faq/add_category"; // /WEB-INF/views/add_category.jsp
+        return "addCategory"; // /WEB-INF/views/add_category.jsp
     }
 
     // 카테고리 추가 처리
@@ -126,7 +126,7 @@ public class FAQController {
     public String editCategoryForm(@PathVariable int categoryId, Model model) {
         FAQCategoryVO category = faqService.getCategoryById(categoryId);
         model.addAttribute("category", category);
-        return "faq/edit_category"; // /WEB-INF/views/edit_category.jsp
+        return "editCategory"; // /WEB-INF/views/edit_category.jsp
     }
 
     // 카테고리 수정 처리
