@@ -79,8 +79,9 @@ public class ArtistController {
 			members = artistService.selectGroupMembersForFollower(map);
 		}
 		
-		
-		//members = artistService.selectGroupMembers(group_num);
+		if(principal.getArtistVO() != null) {
+			members = artistService.selectGroupMembers(group_num);
+		}
 		log.debug("<<아티스트 상세>> : " + members); 
 		
 		Map<String,Object> videoMap = new HashMap<String,Object>();
