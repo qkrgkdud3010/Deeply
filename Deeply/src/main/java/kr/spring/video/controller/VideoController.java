@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.spring.member.dao.ArtistMapper;
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
+import kr.spring.payment.controller.FanController;
+import kr.spring.payment.service.FanService;
+import kr.spring.payment.vo.FanVO;
 import kr.spring.video.service.VideoCategoryService;
 import kr.spring.video.service.VideoService;
 import kr.spring.video.vo.VideoCategoryVO;
@@ -34,12 +38,14 @@ public class VideoController {
     
     @Autowired
     private VideoCategoryService videoCategoryService;
+    
+    @Autowired
+    private FanService fanService; // FanService 주입
 
     @Autowired
     private ArtistMapper artistMapper;
 
- // 그룹별 영상 페이지
-    @PreAuthorize("isAuthenticated()")
+ // @PreAuthorize("isAuthenticated()")
     @GetMapping("/group")
     public String showGroupVideosPage(
         @RequestParam("group_num") Long groupNum,
@@ -47,17 +53,35 @@ public class VideoController {
         @AuthenticationPrincipal PrincipalDetails principal,
         Model model
     ) {
-    	
-    	// 사용자 역할 체크
+        // 사용자 역할 체크
         ArtistVO artistVO = principal.getArtistVO();
         if (artistVO != null && artistVO.getUser_num() != null) {
             model.addAttribute("isArtist", true);
+            model.addAttribute("isMembership", true);
         } else if (principal.hasRole("ADMIN")) {
             model.addAttribute("isAdmin", true);
         } else {
             model.addAttribute("isGeneralUser", true); // 일반 사용자 처리
         }
-    	
+
+        // 멤버십 상태 체크
+        if (artistVO == null && !principal.hasRole("ADMIN")) {
+            MemberVO memberVO = principal.getMemberVO(); // MemberVO를 가져옴
+            if (memberVO != null) { // Null 체크
+                Long userNum = memberVO.getUser_num(); // User의 user_num 가져오기
+                FanVO fanVO = fanService.selectFan(userNum, groupNum); // FanService를 통해 FanVO 조회
+
+                if (fanVO != null && fanVO.getFan_status() == 1) {
+                    model.addAttribute("isMembership", true);
+                } else {
+                    model.addAttribute("isMembership", false);
+                }
+            } else {
+                // MemberVO가 null일 경우 처리
+                model.addAttribute("isMembership", false);
+            }
+        }
+
         // 1. group_num으로 카테고리 조회
         List<VideoCategoryVO> categories = videoCategoryService.getCategoriesByGroupNum(groupNum);
         categories.forEach(category -> System.out.println("Category: " + category));
@@ -75,7 +99,7 @@ public class VideoController {
         // 3. 멤버십 전용 영상 조회
         List<VideoVO> membershipVideos = videoService.getMembershipVideosByGroup(groupNum);
         membershipVideos.forEach(video -> System.out.println("Membership Video: " + video));
-        
+
         // 4. 카테고리, 영상 데이터, groupNum을 JSP로 전달
         model.addAttribute("categories", categories); // 카테고리 목록
         model.addAttribute("categoryVideosMap", categoryVideosMap); // 카테고리별 영상
@@ -84,6 +108,7 @@ public class VideoController {
 
         return "groupVideoList"; // JSP 파일 이름
     }
+
 
  // 영상 업로드 페이지 (로그인 필요)
     @PreAuthorize("isAuthenticated()")
