@@ -47,7 +47,7 @@ public interface CommuMapper {
 	//삭제
 	@Delete("DELETE FROM community WHERE c_num=#{c_num}")
 	public void deleteCommu(Long c_num); //글삭제
-	@Update("UPDATE community SET c_file='' WHERE cd_num=#{c_num}")
+	@Update("UPDATE community SET c_file='' WHERE c_num=#{c_num}")
 	public void deleteFile(Long c_num); //파일삭제
 	
 	// ============== 댓글 ============== //
