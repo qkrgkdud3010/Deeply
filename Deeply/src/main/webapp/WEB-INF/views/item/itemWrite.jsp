@@ -30,7 +30,7 @@
 	        <!-- 1. 사진 업로드 영역 -->
             <div class="write-info-section">
                 <div class="write-info1">
-                    <form:label path="upload">파일 업로드</form:label>
+                    <form:label path="upload"></form:label>
                     <button class="upload-btn" id="upload_btn">파일 업로드</button>
                     <input type="file" class="file-submit" name="upload" id="upload" multiple>
                     <form:errors path="upload" cssClass="error-color" />

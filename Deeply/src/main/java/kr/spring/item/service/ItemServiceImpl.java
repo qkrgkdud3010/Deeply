@@ -156,6 +156,11 @@ public class ItemServiceImpl implements ItemService{
 		
 	}
 
+	@Override
+	public int checkMembership(Map<String, Object> map) {
+		return itemMapper.checkMembership(map);
+	}
+	
 	
 	
 

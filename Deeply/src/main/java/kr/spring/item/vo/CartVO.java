@@ -31,5 +31,6 @@ public class CartVO {
 	private int item_price;
 	private MultipartFile upload;				//파일
 	private String filename;					//파일명
-
+	private int isPremium;
+	private int isMember;
 }

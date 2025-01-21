@@ -125,7 +125,6 @@ $(function () {
 	            if (param.result == 'logout') {
 	                alert('사용자 계정으로 로그인 후 이용해 주세요');
 	            } else if (param.result == 'success') {
-					$('#addCart_alert').html('장바구니에 성공적으로 담았습니다');
 					$('#addCart_alert').show();
 	            } else if (param.result == 'over'){
 					$('#addCart_alert').html('동일한 제품의 수량은 3개까지만 담을 수 있습니다');

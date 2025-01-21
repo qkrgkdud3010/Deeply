@@ -47,4 +47,7 @@ public interface ItemService {
 	public CartVO selectCartDetail(long cart_num);
 	
 	
+	//--------유료회원----------------
+	public int checkMembership(Map<String,Object> map);
+	
 }

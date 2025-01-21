@@ -83,7 +83,8 @@ public interface ItemMapper {
 	
 	@Select("SELECT * FROM shop_cart WHERE cart_num=#{cart_num}")
 	public CartVO selectCartDetail(long cart_num);
-
+	
+	public int checkMembership(Map<String,Object> map);
 	
 	
 	
