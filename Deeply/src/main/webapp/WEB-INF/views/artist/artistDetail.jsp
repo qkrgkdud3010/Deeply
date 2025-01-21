@@ -113,8 +113,7 @@
 							</c:if>
 							<c:if
 								test="${!empty member.follower_num and member.follower_num==principal.memberVO.user_num}">
-								<span style="color: white;"><b>팔로워</b> <span
-									class="vertical-center follow-cnt">${member.follow_cnt}</span></span>
+								<span style="color: white;"><b>팔로워</b> <span class="vertical-center follow-cnt">${member.follow_cnt}</span></span>
 								<img class="output_follow" data-num="${member.follow_num}"
 									data-unum="${member.follower_num}"
 									data-header="${_csrf.headerName}" data-token="${_csrf.token}"
@@ -122,6 +121,7 @@
 									style="width: 20px; height: 20px;]">
 							</c:if>
 						</c:if>
+					</div>
 				</c:forEach>
 			</div>
 			<div class="member-detail font-white">

@@ -568,6 +568,7 @@ a {
  
  .member-detail{
  	height:15vw;
+ 	margin-top:5%;
  }
  
  .member-detail ul{
@@ -663,7 +664,7 @@ a {
  	width:5vw;
  	height:2vw;
  	position:absolute;
- 	bottom:-5%;
+ 	bottom:-15%;
  	background:#0369A1;
  	border:none;
  	color:white;
