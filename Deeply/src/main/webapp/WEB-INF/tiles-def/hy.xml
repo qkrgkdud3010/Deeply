@@ -62,4 +62,20 @@
         <put-attribute name="body" value="/WEB-INF/views/faq/edit_category.jsp" />
     </definition>
     
+    <definition name="inquiryForm" extends="main">
+    <put-attribute name="title" value="1대1 문의 작성" />
+    <put-attribute name="body" value="/WEB-INF/views/contact/inquiryForm.jsp" />
+    </definition>
+    
+    <definition name="adminInquiryList" extends="main">
+    <put-attribute name="title" value="관리자 - 1대1 문의 관리" />
+    <put-attribute name="body" value="/WEB-INF/views/contact/inquiryList.jsp" />
+    </definition>
+    
+    <definition name="adminViewInquiry" extends="main">
+    <put-attribute name="title" value="관리자 - 문의 상세 보기" />
+    <put-attribute name="body" value="/WEB-INF/views/contact/viewInquiry.jsp" />
+	</definition>
+    
+    
 </tiles-definitions>
