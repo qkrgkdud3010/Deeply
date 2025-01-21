@@ -196,7 +196,7 @@ public class ChatbotController {
 				os.write(input, 0, input.length);
 			}
 
-			// 응답 코드 확인
+			// 응답 코드  확인
 			int responseCode = connection.getResponseCode();
 			if (responseCode != HttpURLConnection.HTTP_OK) {
 				throw new IOException("Unexpected response code: " + responseCode);
