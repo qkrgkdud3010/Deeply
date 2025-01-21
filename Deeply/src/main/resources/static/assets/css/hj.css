@@ -3,12 +3,13 @@
            공통
 ===============================
  */
-
-.right-align{
+.back{
 	display:flex;
 	align-items:flex-end;
-	justify-content:flex-end;
+    
+	
 }
+
 
 a {
     text-decoration: none;
@@ -24,6 +25,9 @@ ul{
 	padding:0 1% 0 0;
 }
 
+.info{
+	padding:1%;
+}
 .v-center{
 	display:flex;
 	align-items:center;
@@ -811,6 +815,11 @@ form#item{
 	gap:1rem;
 	display:none;
 	
+	
+}
+.c-btn .c-btn2{
+	position:absolute;
+	top:10%;
 }
 
 .x-btn{

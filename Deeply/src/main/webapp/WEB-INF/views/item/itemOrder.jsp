@@ -15,7 +15,7 @@
 	<div class="order-quantity-container">
 			<img
 				src="${pageContext.request.contextPath}/assets/upload/${item.filename}"
-				class="cart-img">
+				class="cart-img2">
 		<div class="quantity-name2">
 			<span class="quantity-name3">${item.item_name}</span>
 			<span class="quantity-name3">수량 ${quantity}개</span>
@@ -36,16 +36,15 @@
 </div>
 <div class="order-info2">
 	<c:if test="${quantity * item.item_price < 50000}">
-		<span> 총 결제 금액 : </span>
-			<span class="order-info"><fmt:formatNumber
-				value="${quantity * item.item_price + 3000}" type="number" groupingUsed="true" />원
+		<span> 총 결제 금액 :
+			<span class="order-info4"><fmt:formatNumber value="${quantity * item.item_price + 3000}" type="number" groupingUsed="true" />원
 		</span>
+		 </span>
 	</c:if>
 	
 	<c:if test="${quantity * item.item_price >= 50000}">
-		
-		<span> 총 결제 금액 : <fmt:formatNumber
-				value="${quantity * item.item_price}" type="number" groupingUsed="true" />원
+		<span class="order-info4">
+			총 결제 금액 : <fmt:formatNumber value="${quantity * item.item_price}" type="number" groupingUsed="true" />원
 		</span>
 	</c:if>
 </div>
