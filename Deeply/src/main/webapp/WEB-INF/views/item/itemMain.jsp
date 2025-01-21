@@ -50,7 +50,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<a class="arrow" href="list?user_num=${user_num}">전체보기 →</a>
+					<a class="arrow" href="list?user_num=${group.group_num}">전체보기 →</a>
 				</div>
 			</c:forEach>
 	</div>

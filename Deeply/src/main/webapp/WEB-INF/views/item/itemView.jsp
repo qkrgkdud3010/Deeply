@@ -69,7 +69,7 @@
 				</div>
 					<div class="detail-item-info">
 						<ul>
-							<li>
+						<li>
 								<c:choose>
 						            <c:when test="${item.category == 0}">
 						                <li class="normal">일반 상품</li>
@@ -110,7 +110,7 @@
 						<li class="text-price">가격 : ${item.item_price}원</li>
 						<li class="max-purchase">회원당 최대 3개까지 구매가능합니다.</li>
 					</ul>
-					<div class="quantity-container">
+					<div class="quantity-container q-box">
 						<div class="quantity-name">${item.item_name}</div>
 						<div class="v-center">
 							<div class="quantity-box">

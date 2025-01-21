@@ -56,5 +56,7 @@
 			</c:if>
 		</div>
 		<!-- 페이징 -->
-				<div class=list-paging>${page}</div>
+				<div class=list-paging>
+					${page}
+				</div>
 </div>

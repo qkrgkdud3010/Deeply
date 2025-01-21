@@ -156,7 +156,6 @@ public class ItemController {
 	 * =============================*/
 	@GetMapping("/list")
 	public String getList(@RequestParam(defaultValue="1") int pageNum,
-						  @RequestParam(defaultValue="1") int order,
 						  Long user_num,//그룹 넙
 						  String keyfield,
 						  String keyword,
@@ -164,7 +163,6 @@ public class ItemController {
 						  @AuthenticationPrincipal PrincipalDetails principal) {
 
 		log.debug("<<PrincipalDetails 객체>>: " + principal);
-		log.debug("<<게시판 목록 - order>> : " + order);
 		log.debug("<<user_num>> : " + user_num);
 		
 		
@@ -196,13 +194,12 @@ public class ItemController {
 		int count = itemService.selectRowCount(map);
 
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,12,10,"list","&order="+order);
+		PagingUtil page = new PagingUtil(pageNum,count,12,10,"list", "&user_num="+user_num);
 		
 		
 		List<ItemVO> list = null;
 		
 		if(count > 0) {
-			map.put("order", order);
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
@@ -219,7 +216,7 @@ public class ItemController {
 		// 그 값을 model에 담아서 jsp에서 if문으로 활용
 		
 		
-		
+		model.addAttribute("user_num", user_num);
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("page", page.getPage());
@@ -551,8 +548,33 @@ public class ItemController {
 		return "common/resultAlert";
 	}
 	
-
-	
+	/*=============================
+	 *  장바구니 전체 구매
+	 *============================= */
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/orders")
+	public String orderItems(int price, Model model,
+							 HttpServletRequest request,
+							 @AuthenticationPrincipal PrincipalDetails principal) {
+		
+		
+		if(principal.getMemberVO() != null) {
+			long user_num = principal.getMemberVO().getUser_num();
+			List<CartVO> list = itemService.selectCart(user_num);
+			
+			for(CartVO c : list) {
+				ItemVO item = itemService.selectitem(c.getItem_num());
+				c.setFilename(item.getFilename());
+				c.setItem_name(item.getItem_name());
+			}
+			
+			model.addAttribute("list", list);
+		}
+		
+		
+		
+		return "itemTotalOrder";
+	}
 	
 	/*==============================
 	 * 	마이페이지 주문내역

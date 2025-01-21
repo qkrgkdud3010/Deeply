@@ -87,6 +87,7 @@
 			<![CDATA[
 					WHERE rnum >= #{start} 
 					AND rnum <= #{end}
+					AND user_num = #{user_num}
 			]]>
 	</select>	
 	

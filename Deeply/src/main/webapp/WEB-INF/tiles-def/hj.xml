@@ -67,6 +67,13 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/item/itemOrderList.jsp" />
 	</definition>
+	<definition name="itemTotalOrder" extends="main">
+		<put-attribute name="title" value="상품 전체주문" />
+		<put-attribute name="css"
+			value="/WEB-INF/views/item/itemCSS.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/item/itemTotalOrder.jsp" />
+	</definition>
     
 </tiles-definitions>
 
