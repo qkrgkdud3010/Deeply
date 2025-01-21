@@ -29,12 +29,12 @@
 			<c:set var="user_num" value="0"/>
 		    <c:forEach items="${group}" var="group">
 		    <c:set var="loop_flag" value="true"/>
-				<div class="main-items">
+				<div class="main-items1">
 					<div class="group-text">${group.group_name}</div>
 					<div class="value-list">
 						<c:forEach items="${list}" var="item" varStatus="status" begin="${group_cnt}">
 							<c:if test="${loop_flag}">
-								<div class="item-card">
+								<div class="item-card1">
 									<a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
 									<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="main-item-img">
 									</a>
@@ -50,7 +50,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<a class="arrow" href="list?user_num=${group.group_num}">전체보기 →</a>
+					<a class="arrow1" href="list?user_num=${group.group_num}">전체보기 →</a>
 				</div>
 			</c:forEach>
 	</div>

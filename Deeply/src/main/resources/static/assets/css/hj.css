@@ -221,7 +221,13 @@ ul{
 	background:black;
 	color:white;
 }
-
+.main-items1{
+	width:100%;
+	background:black;
+	color:white;
+	display: flex;
+    flex-direction: column;
+}
 .listcontent-container {
   display: flex; 
   flex-wrap: wrap; 
@@ -238,7 +244,7 @@ ul{
 
 .group-text{
 	font-size: clamp(16px, 2vw, 20px);
-	margin: 2% 0 1% 2%;
+	margin: 2% 0 1% 4%;
 }
 	
 .main-item-img{
@@ -270,6 +276,20 @@ ul{
     flex-direction: column;
     
 }
+.item-card1 {
+    object-fit: cover;
+    width: 14vw; 
+    height: 20vw;
+    padding: 1rem; 
+    margin: 1%;
+    background-color: #fff;
+    border-radius: 1vw;
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); 
+    color:black;
+    display: flex;
+    flex-direction: column;
+    
+}
 
 .value-list{
 	display:flex;
@@ -283,7 +303,15 @@ ul{
     
 }
 
-
+.arrow1{
+	all: unset;
+	font-size: clamp(13px, 1.3vw, 16px);
+	display: grid;
+    justify-content: end; /* 오른쪽 정렬 */
+    align-items: start;
+    margin:2%;
+    cursor:pointer;
+}
 
 .arrow{
 	all: unset;
@@ -313,11 +341,11 @@ ul{
 /* 미디어 쿼리 */
 @media (max-width: 1024px) {
   .listcontent-container {
-    justify-content: center; /* 중앙 정렬 */
+    justify-content: center;
   }
-  .item-card {
-    width: 28%; /* 카드의 너비를 28%로 조정 */
-    height: 38vh; /* 카드의 높이 조정 */
+  .item-card1 {
+    width: 14vw; 
+    height: 20vw;
   }
 }
 
@@ -325,9 +353,9 @@ ul{
   .listcontent-container {
     justify-content: center; /* 중앙 정렬 */
   }
-  .item-card {
+  .item-card1 {
     width: 42%; /* 카드의 너비를 42%로 조정 */
-    height: 35vh; /* 카드의 높이 조정 */
+    height: auto; /* 카드의 높이 조정 */
   }
 }
 
@@ -338,7 +366,7 @@ ul{
     justify-content: center; /* 카드들을 중앙으로 정렬 */
   }
 
-  .item-card {
+  .item-card1 {
     flex: 1 1 calc(50% - 1rem); /* 한 줄에 2개 */
     max-width: calc(50% - 1rem); /* 카드 간격 포함 크기 조정 */
     margin: 0.5rem; /* 카드 간의 간격 */

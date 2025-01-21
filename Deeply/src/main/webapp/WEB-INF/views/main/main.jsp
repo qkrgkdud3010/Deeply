@@ -53,7 +53,7 @@
 			<i class="bi bi-check-square">   멤버십 전용 굿즈</i>
 			<br>
 			<br>
-			<a class="check-square-text" href=""> <b>→ 아티스트 구독하기</b></a>
+			<a class="check-square-text" href="${pageContext.request.contextPath}/artist/list"> <b>→ 아티스트 구독하기</b></a>
 		</div>
 	</div>
 
@@ -91,95 +91,90 @@
 				</div>
 	</div>
 	
-	<div style="height:1800px;">
+		
 		<div class="choice">
-		<div class="name"><b>아티스트와 채팅</b><br>
-		<span style="font-size:20px; width:200px;">
-		오픈 채팅방에 참여하여<br>
-	내가 선택한 아티스트와 대화를<br>
-	이어나가 보세요.</span>
+		<div class="name">
+			<div class="c-content1">
+			<b style="font-size: clamp(40px, 1.2vw, 60px);">아티스트와 채팅</b>
+			<br>
+				<span class="choice-text">
+					오픈 채팅방에 참여하여<br>
+					내가 선택한 아티스트와 대화를<br>
+					이어나가 보세요.
+				</span>
+			</div>
+			<div>
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/chat.png">
+			</div>
 		</div>
-		<div class="line"></div>
-		<div class="img"></div>
-			 <div style="background-color:red; float:left; width:380px; height:380px;">
-		 
-		 </div>
+		<div class="name">
+			<div class="c-content">
+			<b style="font-size: clamp(40px, 1.2vw, 60px);">함께하는 커뮤니티</b>
+			<br>
+				<span class="choice-text">
+					팬들과 다양한 이야기를 나누고<br>
+					특별한 순간을 공유해 기록해보세요.
+				</span>
+			</div>
+			<div>
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/chat.png">
+			</div>
 		</div>
-	
-			<div class="choice">
-		<div class="name"><b>함께하는 커뮤니티</b><br>
-		<span style="font-size:20px; width:200px;">
-		팬들과 다양한 이야기를 나누고<br>
-	특별한 순간을 공유해 기록해보세요.</span>
-		
+		<div class="name">	
+			<div class="c-content">
+			<b style="font-size: clamp(40px, 1.2vw, 60px);">편지 쓰고 답장 받기</b>
+			<br>
+				<span class="choice-text">
+					팬들과 다양한 이야기를 나누고<br>
+					특별한 순간을 공유해 기록해보세요.
+				</span>
+			</div>
+			<div>
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/main_letter3.png">
+			</div>
 		</div>
-		<div class="line"></div>
-		<div class="img"> <img src="${pageContext.request.contextPath}/assets/image_bundle/2222.png" class="item-img" width="390px" height="420px"></div>
-			 <div style="background-color:red; float:left; width:380px; height:380px;">
-		 
-		 </div>
-		</div>
-		
-			<div class="choice">
-		<div class="name"><b>편지 쓰고 답장 받기</b><br>
-		<span style="font-size:20px; width:200px;">
-		팬들과 다양한 이야기를 나누고<br>
-	특별한 순간을 공유해 기록해보세요.</span></div>
-	
-	
-		<div class="line"></div>
-		<div class="img"></div>
-			 <div style="background-color:red; float:left; width:380px; height:380px;">
-		 <img src="${pageContext.request.contextPath}/assets/image_bundle/main_letter2.png" class="item-img" width="390px" height="420px">
-		 </div>
-		</div>
-	
-	
-			<div class="choice">
-		<div class="name"><b>하이라이트 영상 시청</b><br>
-		<span style="font-size:20px; width:200px;">
-		아티스트의 무대, 일상, 비하인드 영상까지! <br>
-	다양한 순간을 영상으로 만나보세요.</span></div>
-	
-	
-		<div class="line"></div>
-		<div class="img">
-		 <div style="background-color:red; width:380px; height:380px;">
-		 
-		 </div>
-		</div>
+		<div class="name">
+			<div class="c-content2">
+			<b style="font-size: clamp(40px, 1.2vw, 60px);">하이라이트 영상 시청</b>
+			<br>
+				<span class="choice-text">
+					아티스트의 무대, 일상, 비하인드 영상까지! <br>
+					다양한 순간을 영상으로 만나보세요.
+				</span>
+			</div>	
+			<div>
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/chat.png">
+			</div>
 		</div>
 	</div>
 <!-- </div> -->
 
 	<div class="shop">
 		<div class="shop-1"> shop</div>
-		<div class="shop-2'">new</div>
-<div style="height:250px; ">
+		<hr class="custom-hr2" noshade="noshade">
+		<div class="shop-2">new</div>
     <c:set var="loop_flag" value="true"/>
     <div class="main-items">
         <div class="value-list">
             <c:forEach items="${list}" var="item" varStatus="status">
                 <!-- 4개의 아이템만 출력 -->
                 <c:if test="${status.index < 4}">
-                <div style="width:150px; height:150px; float:left; margin-right:70px;">
+                <div class="item-cards">
                     <a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
-                        <img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="item-img" width="150px" height="150px">
+                        <img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="item-img" >
                     </a>
-                    <hr class="custom-hr" noshade="noshade" width="100%">
+                    <hr class="custom-hr3" noshade="noshade" width="100%">
                     <span class="item-name list-text">${item.item_name}</span>
                     <span class="item-price list-price">${item.item_price}</span>
-                    </div>
+                 </div>
                 </c:if>
             </c:forEach>
         </div>
-        
-    </div>
- 
-</div>
-   <a class="arrow" href="list?user_num=${user_num}">전체보기 →</a>
+     </div>
+ 	<hr class="custom-hr2" noshade="noshade" >
+   <a class="arrow" href="${pageContext.request.contextPath}/item/main">전체보기 →</a>
+	<div class="empty-div"></div>
 	</div>
-	
 	
 	
 	

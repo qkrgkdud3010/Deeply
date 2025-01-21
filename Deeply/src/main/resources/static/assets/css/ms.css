@@ -387,9 +387,8 @@ font-size:16px;
   /* Carousel 이미지 스타일 */
   .carousel-inner .carousel-item img {
     width: 100%; 
-    height: 600px; 
+    height: 38vw; 
     object-fit: cover; 
-    border-radius: 15px; 
     box-shadow: 0 0 100px 100px rgba(0, 0, 0, 1); 
     overflow: hidden;
   }
@@ -427,18 +426,18 @@ font-size:16px;
 }
 .key-box2{
 	height:auto;
-	padding:15% 15% 15% 20%;
+	padding:15% 15% 5% 15%;
 }
 .key-box2-1{
 	width:80vw;
 	margin:0 auto;
-	font-size: clamp(50px, 2vw, 80px);
+	font-size: clamp(50px, 2vw, 70px);
 	margin-bottom:5vh;
 }
 .key-box2-1-1{
 	width:80vw;
 	margin:0 auto;
-	font-size: clamp(15px, 1.2vw, 20px);
+	font-size: clamp(25px, 1.2vw,350px);
 	color:#0369A1;
 }
 
@@ -477,33 +476,119 @@ font-size:16px;
 }
 
 .choice{
-	width:900px;
-	margin:0 auto;
+	display: flex; 
+    flex-direction: column;
+    margin-bottom:10%;
 }
-.choice .name{
-	float:left;
-	width:500px;
-	font-size:40px;
+.name{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:5% 0; 
+	
+}
+.choice4{
+	width:30vw;
+	height:30vw;
+}
+.choice-text{
+	font-size: clamp(20px, 1.2vw, 40px);
+}
+.c-content1{
+	padding:0 7%; 
+}
+.c-content2{
+	padding:0 4%; 
+}
+.c-content{
+	padding:0 5%; 
 }
 
-.choice .line{
-	width:1px;
-	background-color:black;
-	height:450px;
-	float:left;
-}
 .shop{
-	width:900px;
-	margin:0 auto;
+	background-color:black;
+	height:auto;
 }
 .shop-1{
-	font-size:60px;
-	border-bottom:1px solid black;
-	width:100%;
+	font-size: clamp(60px, 1.2vw, 80px);
+	color:white;
+	padding:3% 0 0 15%;
 }
 .shop-2{
-	font-size:60px;
+	font-size: clamp(40px, 1.2vw, 60px);
+	color:#0369A1;
+	padding:0 0 0 15%;
+}
+.main-items{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:0 0 4% 0;
+}
+.custom-hr2{
+	margin-left:13%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+    border: none;
+    height: 3px;
+    background: white; 
+    width: 73%;
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
+    padding:0 0 0 8%;
+}
+.empty-div{
+	height:5vw;
 	width:100%;
+}
+.custom-hr3{
+    border: none;
+    height: 1px;
+    background: rgb(216, 216, 216); 
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
+}
+.item-cards{
+	object-fit: cover;
+    width: 15%; 
+    height: 22vw;
+    padding: 0.5rem; 
+    margin: 0.5%;
+    background-color: #fff;
+    border-radius: 1vw; 
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1); 
+    color:black;
+    display: flex;
+    flex-direction: column; 
+}
+.value-list{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	gap:2%;
+}
+.item-img{
+	width: 100%;
+  	height: auto;
+  	object-fit: cover;
+  	aspect-ratio: 1 / 1;
+  	border-radius: 0.5vw;
+}
+.list-text{
+	font-size: clamp(12px, 1vw, 18px);
+	 line-height: 1.1; /* 줄 간격 설정 */
+}
+
+.list-price{
+	font-size: clamp(12px, 1vw, 18px);
+	color: #0369A1;
+	position: relative;
+	top:1.5%;
+}
+.arrow{
+	font-size: clamp(18px, 1vw, 24px);
+	color:white;
+	text-decoration: none;
 }
 .artist{
 	margin-top:20px;
