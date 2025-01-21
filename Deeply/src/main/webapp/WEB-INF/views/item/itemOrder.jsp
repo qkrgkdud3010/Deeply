@@ -24,7 +24,6 @@
 			</span>
 			</div>
 		</div>
-	
 	<hr class="custom-hr" noshade="noshade" width="100%">
 </div>
 <div class="order-info">
@@ -59,43 +58,44 @@
 	<hr class="custom-hr" noshade="noshade" width="100%">
 	<div>
 		<p>
-			<form:label path="name">이름</form:label>
-			<form:input path="name" />
+			<form:label path="name">이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</form:label>
+			<form:input path="name" class="deli"/>
 			<form:errors path="name" cssClass="error-color" />
 
 		</p>
 		<p>
 			<form:label path="phone">전화번호</form:label>
-			<form:input path="phone" />
+			<form:input path="phone"  class="deli"/>
 			<form:errors path="phone" cssClass="error-color" />
 
 		</p>
 		<p>
-			<form:input path="zipcode" id="zipcode" class="Authentication2"
-				type="text" placeholder="우편번호" />
+			<form:label path="zipcode">우편번호</form:label>
+			<form:input path="zipcode" id="zipcode" class="Authentication2 deli" type="text"/>
 			<form:errors path="zipcode" cssClass="error-color" />
 			<input type="button" onclick="execDaumPostcode()" value="우편번호찾기"
 				class="default-btn2">
 		</p>
 		<p>
-			<form:input path="address1" id="address1" type="text"
-				placeholder="주소" />
+			<form:label path="address1">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</form:label>
+			<form:input class="deli" path="address1" id="address1" type="text"  />
 			<form:errors path="address1" cssClass="error-color" />
 		</p>
 		<p>
-			<form:input path="address2" type="text" placeholder="상세주소" />
+			<form:label path="address2">상세주소</form:label>
+			<form:input class="deli" path="address2" type="text" />
 			<form:errors path="address2" cssClass="error-color" />
 		</p>
 		<p>
 			<form:label path="order_notice">요청사항</form:label>
-			<form:input path="order_notice" />
+			<form:input class="deli" path="order_notice" />
 		</p>
 	</div>
 
 
 	<hr class="custom-hr" noshade="noshade" width="100%">
 </div>
-<div class="box-button"><form:button>구매하기</form:button></div>
+<div class="box-button1"><form:button>구매하기</form:button></div>
 </form:form>
 
 <!-- 다음 우편번호 API 시작 -->

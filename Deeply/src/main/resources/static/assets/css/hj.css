@@ -171,7 +171,9 @@ ul{
 	 margin:0 auto;
 }
 
-
+.cart-div5{
+	padding:10% 0;
+}
 
 .cart-div0{
 	width:100%;
@@ -180,7 +182,7 @@ ul{
 	align-items:center;
 	justify-content:center;
 	flex-direction:column;
-
+	
 }
 
 
@@ -677,7 +679,6 @@ form#item{
 .item-info3{
 	width: 45vw;
 	height:auto;
-    object-fit: cover; /* 이미지가 비율에 맞게 보이도록 조정 */
 	 box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.1);
 	 border-radius:5px;
 	 padding: 1rem;
@@ -798,7 +799,7 @@ form#item{
 }
 
 .addCart-alert{
-	background:#0369A1;
+	background:black;
 	border: 2px solid #fff;
 	height:10vw;
 	width:30vw;
@@ -810,7 +811,7 @@ form#item{
 	flex-direction:column;
 	position:absolute;
 	opacity: 90%;
-	top:28%;
+	top:25%;
 	left:38%;
 	gap:1rem;
 	display:none;
@@ -820,7 +821,9 @@ form#item{
 .c-btn .c-btn2{
 	position:absolute;
 	top:10%;
+	text-decoration: none;
 }
+
 
 .x-btn{
 	color:white;
@@ -882,6 +885,7 @@ form#item{
 	border-radius:5px;
 }
 .item-info4{
+	padding:3% 0;
 	width:70%;
 	margin:0 auto;
 	height:auto;
@@ -1018,6 +1022,18 @@ form#item{
     border-radius: 8px; 
     text-align: center; 
     cursor: pointer;
+}
+.box-button1 button {
+    display: inline-block; 
+    background-color: #0369A1;
+    color: white;
+    font-size: clamp(10px, 1.3vw, 14px);
+    border: none;
+    border-radius: 8px; 
+    text-align: center; 
+    cursor: pointer;
+    margin:0 10% 5% 74%;
+    padding:0.3% 1%;
 }
 
 .order-info{
@@ -1396,4 +1412,12 @@ form#item{
 	cursor:pointer;
 }
 
+.deli{
+	border-radius:5px;
+	border:1px solid grey;
+	width:17vw;
+	height:3.5vh;
+	padding:0 0 0 15vw;
+	font-size: clamp(9px, 1vw, 13px);
+}
 

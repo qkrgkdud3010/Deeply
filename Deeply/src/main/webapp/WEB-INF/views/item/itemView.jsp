@@ -15,9 +15,11 @@
 
 <div class="detail-container">
 	<div class="addCart-alert" id="addCart_alert">
+	<div class="empty-div">
 		<div class="x-btn" id="alert_x_btn">x</div>
 		<div class="c-btn">상품을 장바구니에 추가하였습니다</div>
 		<a class="c-btn2" href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기 →</a>
+	</div>
 	</div>
 	
 	<%-- 아티스트 계정으로 로그인 시작 --%>

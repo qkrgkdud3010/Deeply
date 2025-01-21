@@ -11,7 +11,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/cart.js"></script>
 
-<div class="orderlist"><a href="${pageContext.request.contextPath}/item/orderList">주문내역</a></div>
 	<%-- 장바구니에 상품 없을 때 --%>
 		<c:if test="${empty cart}">
 			<div class="cart-div0">
@@ -25,7 +24,9 @@
 			</div>
 		</c:if>
 	<%-- 장바구니에 상품 있을 때 --%>
+	<div class="cart-div5">
 		<c:if test="${!empty cart}">
+		
 			<div class="item-info4">
 			<div class="top-5"></div>
 			<c:forEach var="cart_item" items="${cart}">
@@ -98,4 +99,6 @@
 					
 				</div>
 			</div>
+			
 		</c:if>
+</div>
