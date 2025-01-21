@@ -73,10 +73,14 @@ public class FollowAjaxController {
 			
 			if(followVO!=null) {
 				followService.unfollow(follow);
+				int count = followService.countMyFollower(follow.getFollow_num());
 				mapJson.put("status", "unfollow");
+				mapJson.put("follow_cnt", count);
 			}else {
 				followService.following(follow);
+				int count = followService.countMyFollower(follow.getFollow_num());
 				mapJson.put("status", "following");
+				mapJson.put("follow_cnt", count);
 			}
 			mapJson.put("result", "success");
 		}catch(NullPointerException e) {

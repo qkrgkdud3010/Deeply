@@ -1,13 +1,13 @@
 $(function(){
 	
 	$('.output_follow').on('click', function(){
-		    const followNum = $(this).attr('data-num');
-		    const followerNum = $(this).attr('data-unum');
-
+		    let output_follow = $(this);
+		    const followNum = output_follow.attr('data-num');
+			
 		    $.ajax({
 		        url: '/follow/follow',
 		        type: 'post',
-		        data: { follow_num: followNum, follower_num:followerNum},
+		        data: { follow_num: followNum},
 		        dataType: 'json',
 		        beforeSend: function(xhr) {
 					xhr.setRequestHeader($('.output_follow').attr('data-header'),
@@ -17,7 +17,7 @@ $(function(){
 		            if(param.result === 'logout') {
 		                alert('로그인 후 팔로우가 가능합니다');
 		            } else if(param.result === 'success') {
-		                alert('팔로우 완료!');
+						displayFollow(param,output_follow);
 		            } else {
 		                alert('팔로우 오류 발생');
 		            }
@@ -29,18 +29,17 @@ $(function(){
 		});
 	
 	//팔로우 표시 공통 함수
-	function displayFollow(param){
+	function displayFollow(param,ui){
 		let output;
 		if(param.status == 'following'){
-			output = '../assets/images/hr2/follow.png';
+			output = '../assets/images/hr2/follow.svg';
 		}else if(param.status == 'unfollow'){
-			output = '../assets/images/hr2/unfollow.png';			
+			output = '../assets/images/hr2/unfollow.svg';			
 		}else{
 			alert('팔로우 표시 오류 발생');
 		}
 		//문서 객체에 추가
-		$('.output_follow').attr('src',output);
+		ui.attr('src',output);
+		ui.parent().find('.follow-cnt').text(param.follow_cnt);
 	}
-	//초기 데이터 표시
-	selectFollow($('.output_follow').attr('data-num'));
 });

@@ -95,30 +95,34 @@
 			<div class="member-list">
 				<c:forEach var="member" items="${members}">
 					<div class="member-item" data-value="${member.user_num}">
-					<img class="member-profile-img" src="/member/photoView2?user_num=${member.user_num}">
-					<div class="align-center font-white bold-title top-5">${member.name}</div>
-					
-					<c:if test="${!empty principal.memberVO}">
-						<button class="membership-btn top-10" onclick="location.href='${pageContext.request.contextPath}/fan/selectArtist?user_num=${member.user_num}'">
-							멤버십 구독
-						</button>
-						<c:if test="${empty member.follower_num or login_num!=member.follower_num}">
-							<div class="vertical-center follow-cnt">
-							<img class="output_follow" data-num="${member.follow_num}" data-unum="${member.follower_num}" data-header="${_csrf.headerName}" data-token="${_csrf.token}"
-							  src="${pageContext.request.contextPath}/assets/images/hr2/unfollow.png" style="width:20px; height:20px;]">
-							<span style="color:white;"><b>Follower</b> ${member.follow_cnt}</span>
-							</div>
+						<img class="member-profile-img"
+							src="/member/photoView2?user_num=${member.user_num}">
+						<div class="align-center font-white bold-title top-5">${member.name}</div>
+						<c:if test="${!empty principal}">
+							<button class="membership-btn top-10"
+								onclick="location.href='${pageContext.request.contextPath}/fan/selectArtist?user_num=${member.user_num}'">
+								멤버십 구독</button>
+							<c:if
+								test="${empty member.follower_num or member.follower_num!=principal.memberVO.user_num}">
+								<span style="color: white;"><b>팔로워</b> <span
+									class="vertical-center follow-cnt">${member.follow_cnt}</span></span>
+								<img class="output_follow" data-num="${member.user_num}"
+									data-header="${_csrf.headerName}" data-token="${_csrf.token}"
+									src="${pageContext.request.contextPath}/assets/images/hr2/unfollow.svg"
+									style="width: 20px; height: 20px;]">
+							</c:if>
+							<c:if
+								test="${!empty member.follower_num and member.follower_num==principal.memberVO.user_num}">
+								<span style="color: white;"><b>팔로워</b> <span
+									class="vertical-center follow-cnt">${member.follow_cnt}</span></span>
+								<img class="output_follow" data-num="${member.follow_num}"
+									data-unum="${member.follower_num}"
+									data-header="${_csrf.headerName}" data-token="${_csrf.token}"
+									src="${pageContext.request.contextPath}/assets/images/hr2/follow.svg"
+									style="width: 20px; height: 20px;]">
+							</c:if>
 						</c:if>
-						<c:if test="${!empty member.follower_num and login_num==member.follower_num}">
-							<div class="vertical-center follow-cnt">
-								<img class="output_follow" data-num="${member.follow_num}" data-unum="${member.follower_num}" data-header="${_csrf.headerName}" data-token="${_csrf.token}"
-							  	src="${pageContext.request.contextPath}/assets/images/hr2/follow.png" style="width:20px; height:20px;]">
-								<span style="color:white;"><b>Follower</b> ${member.follow_cnt}</span>
-							</div>
-						</c:if>
-					</c:if>
-					</div>
-				</c:forEach>	
+				</c:forEach>
 			</div>
 			<div class="member-detail font-white">
 				<hr>

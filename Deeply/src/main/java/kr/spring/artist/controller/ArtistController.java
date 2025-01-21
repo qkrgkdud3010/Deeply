@@ -80,7 +80,7 @@ public class ArtistController {
 		}
 		
 		
-		members = artistService.selectGroupMembers(group_num);
+		//members = artistService.selectGroupMembers(group_num);
 		log.debug("<<아티스트 상세>> : " + members); 
 		
 		Map<String,Object> videoMap = new HashMap<String,Object>();
@@ -97,8 +97,6 @@ public class ArtistController {
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);
 
-		
-		
 		
 		return "artistDetail";
 	}

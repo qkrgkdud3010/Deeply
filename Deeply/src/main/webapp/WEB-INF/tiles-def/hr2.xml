@@ -46,10 +46,6 @@
     	<put-attribute name="body" value="/WEB-INF/views/payment/myArtistList.jsp"/>
     </definition>
     
-    
-    
-    
-    
     <!-- 아티스트 커뮤니티 -->
      <definition name="commuList" extends="main">
     	<put-attribute name="title" value="전체 글 목록"/>
@@ -80,6 +76,11 @@
     	<put-attribute name="body" value="/WEB-INF/views/commu/commuModify.jsp"/>
     </definition>
     
+    <!-- 아티스트 공지 -->
+    <definition name="noticeList" extends="main">
+	   	<put-attribute name="title" value="공지사항"/>
+	   	<put-attribute name="body" value="/WEB-INF/views/notice/noticeList.jsp"/>
+  	</definition>
 </tiles-definitions>
 
 

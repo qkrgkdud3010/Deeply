@@ -1,4 +1,4 @@
---결
+--결제
 Create table payment(
 pay_num number not null,
 pay_status number not null,
@@ -22,12 +22,15 @@ constraint follow_fk1 foreign key (follow_num) references auser (user_num),
 constraint follow_fk2 foreign key (follower_num) references duser (user_num)
 );
 
+--공지
 Create table notice(
 notice_num number not null,
 notice_title varchar2(90) not null,
 notice_content clob not null,
 notice_file varchar2(400) not null,
 user_num number not null,
+notice_date date default sysdate not null,
+notice_update date default sysdate,
 Constraint notice_pk primary key (notice_num),
 Constraint notice_fk foreign key (user_num) references duser (user_num)
 );

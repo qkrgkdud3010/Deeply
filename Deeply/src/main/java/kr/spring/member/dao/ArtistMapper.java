@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.AgroupVO;
 import kr.spring.member.vo.ArtistVO;
-import kr.spring.member.vo.MemberVO;
 
 
 
