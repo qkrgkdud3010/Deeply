@@ -381,37 +381,90 @@ font-size:16px;
 /*예치금 충전 끝*/
 /*메인 시작*/
 .key-img{
-	height:749px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.img-1{
+	width:70vw;
+	height:40vh;
+	margin-top:10%;
+}
+
 .key-box{
-	height:629px;
+	height:auto;
 	background-color:black;
+	padding:10% 20%;
 }
 .key-box-1{
-	width:900px;
 	color:white;
 	margin:0 auto;
-	font-size:60px;
-	padding-top:100px;
+	font-size: clamp(50px, 2vw, 80px);
+	
 }
 .key-box-2{
 	color:white;
-	width:900px;
 	margin:0 auto;
-	margin-top:80px;
+	
+}
+.bi-check-square{
+	font-style: normal;
+}
+
+.check-square-text{
+	font-size: clamp(10px, 2vw, 16px);
+	color:#0369A1;
+	text-decoration: none;
 }
 .key-box2{
-	height:400px;
+	height:auto;
+	padding:15% 15% 15% 20%;
 }
 .key-box2-1{
-	width:900px;
+	width:80vw;
 	margin:0 auto;
-	font-size:55px;
-	margin-top:80px;
+	font-size: clamp(50px, 2vw, 80px);
+	margin-bottom:5vh;
 }
-.key-box2-2{
-	width:1200px;
+.key-box2-1-1{
+	width:80vw;
 	margin:0 auto;
+	font-size: clamp(15px, 1.2vw, 20px);
+	color:#0369A1;
+}
+
+
+.key-box2-2 {
+    display: flex; 
+    justify-content: flex-end;
+    margin-top:5%;
+	gap:1rem;
+	
+}
+
+.key-box2-2 i {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.key-box2-2-1 {
+    margin: 0 auto;
+    display: flex; 
+    justify-content: flex-end;
+    font-size: clamp(3px, 1.2vw, 10px);
+}
+.key-box2-2-boot{
+	display: flex; 
+    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.boot2{
+	font-size: clamp(8px, 1.2vw, 14px);
+}
+.key-box2-2-text {
+    font-size: clamp(12px, 1.2vw, 16px);
 }
 
 .choice{
