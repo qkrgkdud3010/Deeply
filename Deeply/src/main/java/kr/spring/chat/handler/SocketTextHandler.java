@@ -10,7 +10,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class SocketTextHandler extends TextWebSocketHandler {
-/*
+
 	private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
 	
 	@Override
@@ -31,5 +31,5 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws  Exception{
 		sessions.remove(session);
 	}
-	*/
+	
 }
