@@ -9,35 +9,37 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <!-- 메인 시작 -->
 <!-- <div class="main-page"> -->
-	<div class="key-img">
-	
-	<div id="carouselExample" class="carousel slide">
-  <div class="carousel-inner">
-    <div class="carousel-item img1 active">
-      <img  src="${pageContext.request.contextPath}/assets/image_bundle/idol.png"   class="d-block" alt="...">
-    </div>
-    <div class="carousel-item img1">
-      <img src="${pageContext.request.contextPath}/assets/image_bundle/beno2.png"   class="d-block" alt="...">
-    </div>
-     <div class="carousel-item img1">
-      <img src="${pageContext.request.contextPath}/assets/image_bundle/newjeans.jpg"   class="d-block" alt="...">
-    </div>
-      <div class="carousel-item img1">
-      <img src="${pageContext.request.contextPath}/assets/image_bundle/black.jpg"   class="d-block" alt="...">
-    </div>
 
-  </div>
-  <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-	
+	<!-- 부트스트랩 시작 -->
+	<div class="key-img">
+		<div id="carouselExample" class="carousel slide">
+		  <div class="carousel-inner">
+		    <div class="carousel-item img1 active a-mainImg">
+		      <img  src="${pageContext.request.contextPath}/assets/image_bundle/newjeans.jpg"   class="d-block" alt="...">
+		    </div>
+		    <div class="carousel-item img1">
+		      <img src="${pageContext.request.contextPath}/assets/image_bundle/beno2.png"   class="d-block" alt="...">
+		    </div>
+		     <div class="carousel-item img1">
+		      <img src="${pageContext.request.contextPath}/assets/image_bundle/idol.png"   class="d-block" alt="...">
+		    </div>
+		      <div class="carousel-item img1">
+		      <img src="${pageContext.request.contextPath}/assets/image_bundle/black.jpg"   class="d-block" alt="...">
+		    </div>
+		
+		  </div>
+		  <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		  </button>
+		</div>
 	</div>
+	<!-- 부트스트랩 끝 -->
+	
 	<div class="key-box">
 		<div class="key-box-1">
 			1개월에 6,500원으로<br> 아티스트에게 더 가까워집니다.
