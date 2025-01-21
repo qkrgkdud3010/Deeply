@@ -5,18 +5,19 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <!-- 메인 시작 -->
-<div class="page-main">
+<!-- <div class="main-page"> -->
 	<div class="key-img">
 	
 	<div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img style="height:700px;" src="${pageContext.request.contextPath}/assets/image_bundle/beno1.png" class="d-block w-100" alt="...">
+      <img  src="${pageContext.request.contextPath}/assets/image_bundle/beno1.png" class="d-block w-100 img-1" alt="...">
     </div>
     <div class="carousel-item">
-      <img style="height:700px;" src="${pageContext.request.contextPath}/assets/image_bundle/beno2.png" class="d-block w-100" alt="...">
+      <img src="${pageContext.request.contextPath}/assets/image_bundle/beno2.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
       <img src="..." class="d-block w-100" alt="...">
@@ -37,11 +38,16 @@
 		<div class="key-box-1">
 			1개월에 6,500원으로<br> 아티스트에게 더 가까워집니다.
 		</div>
+		<br>
 		<div class="key-box-2">
-			V 아티스트 미공개 영상<br>V 1:1 채팅<br>V 멤버십 전용 굿즈 <br> <br>
-			<br> <br> <br> <a href=""
-				style="color: white; text-decoration: none;"> <b>->아티스트 구독하기</b>
-			</a>
+			<i class="bi bi-check-square">   아티스트 미공개 영상 </i>
+			<br>
+			<i class="bi bi-check-square">   1:1 채팅</i>
+			<br>
+			<i class="bi bi-check-square">   멤버십 전용 굿즈</i>
+			<br>
+			<br>
+			<a class="check-square-text" href=""> <b>→ 아티스트 구독하기</b></a>
 		</div>
 	</div>
 
@@ -52,104 +58,93 @@
 			<b>아티스트</b>와 <b>나</b> <br>우리가 함께하는 더 가까운 순간
 		</div>
 		
-		<div style="color:#0369A1; width:900px; margin:0 auto; margin-top:30px;">
-		특별한 소통, 당신의 마음이 전해지고<br>
-더 가까이에서 서로의 순간을 함께할 수 있습니다.
+		<div class="key-box2-1-1">
+		특별한 소통, 당신의 마음이 전해지고	<br>
+		더 가까이에서 서로의 순간을 함께할 수 있습니다.
 		</div>
 
-		<div class="key-box2-2">
-			<div style="width:71px; text-align:center; float:right; margin-left:50px;"> 
-				<img alt=""
-					src="${pageContext.request.contextPath}/assets/image_bundle/1.png" width="71px" height="71px">
-					1:1채팅
-			</div>
-			
-			<div style="width:71px; text-align:center;  float:right; margin-left:50px;"> 
-				<img alt=""
-					src="${pageContext.request.contextPath}/assets/image_bundle/2.png" width="71px" height="71px">
-					편지 쓰기
-			</div>
-			
-			<div style="width:71px; text-align:center;  float:right; margin-left:50px;"> 
-				<img alt=""
-					src="${pageContext.request.contextPath}/assets/image_bundle/3.png" width="71px" height="71px">
-					커뮤니티
-			</div>
-			
-			<div style="width:71px; text-align:center;  float:right; "> 
-				<img alt=""
-					src="${pageContext.request.contextPath}/assets/image_bundle/4.png" width="71px" height="71px">
-					아티스트 별 영상
-			</div>
+		
+				<!-- <div style="width:71px; text-align:center; float:right; margin-left:50px;">  -->
+				<div class="key-box2-2">
+				    <div class="key-box2-2-boot">
+				        <i class="bi bi-chat-left-text boot2"></i>
+				        <div class="key-box2-2-text"> 1:1 채팅</div>
+				    </div>
+				    <div class="key-box2-2-boot">
+				        <i class="bi bi-envelope-paper"></i>
+				        <div class="key-box2-2-text"> 편지 쓰기 </div>
+				    </div>
+				    <div class="key-box2-2-boot">
+				        <i class="bi bi-clipboard2-check"></i>
+				        <div class="key-box2-2-text"> 커뮤니티 </div>
+				    </div>
+				    <div class="key-box2-2-boot">
+				        <i class="bi bi-film" ></i>
+				        <div class="key-box2-2-text">아티스트 영상</div>
+				    </div>
+				</div>
+	</div>
+	
+	<div style="height:1800px;">
+		<div class="choice">
+		<div class="name"><b>아티스트와 채팅</b><br>
+		<span style="font-size:20px; width:200px;">
+		오픈 채팅방에 참여하여<br>
+	내가 선택한 아티스트와 대화를<br>
+	이어나가 보세요.</span>
+		</div>
+		<div class="line"></div>
+		<div class="img"></div>
+			 <div style="background-color:red; float:left; width:380px; height:380px;">
+		 
+		 </div>
+		</div>
+	
+			<div class="choice">
+		<div class="name"><b>함께하는 커뮤니티</b><br>
+		<span style="font-size:20px; width:200px;">
+		팬들과 다양한 이야기를 나누고<br>
+	특별한 순간을 공유해 기록해보세요.</span>
+		
+		</div>
+		<div class="line"></div>
+		<div class="img"></div>
+			 <div style="background-color:red; float:left; width:380px; height:380px;">
+		 
+		 </div>
+		</div>
+		
+			<div class="choice">
+		<div class="name"><b>편지 쓰고 답장 받기</b><br>
+		<span style="font-size:20px; width:200px;">
+		팬들과 다양한 이야기를 나누고<br>
+	특별한 순간을 공유해 기록해보세요.</span></div>
+	
+	
+		<div class="line"></div>
+		<div class="img"></div>
+			 <div style="background-color:red; float:left; width:380px; height:380px;">
+		 <img src="${pageContext.request.contextPath}/assets/image_bundle/main_letter2.png" class="item-img" width="390px" height="420px">
+		 </div>
+		</div>
+	
+	
+			<div class="choice">
+		<div class="name"><b>하이라이트 영상 시청</b><br>
+		<span style="font-size:20px; width:200px;">
+		아티스트의 무대, 일상, 비하인드 영상까지! <br>
+	다양한 순간을 영상으로 만나보세요.</span></div>
+	
+	
+		<div class="line"></div>
+		<div class="img">
+		 <div style="background-color:red; width:380px; height:380px;">
+		 
+		 </div>
+		</div>
 		</div>
 	</div>
-<div style="height:1800px;">
-	<div class="choice">
-	<div class="name"><b>아티스트와 채팅</b><br>
-	<span style="font-size:20px; width:200px;">
-	오픈 채팅방에 참여하여<br>
-내가 선택한 아티스트와 대화를<br>
-이어나가 보세요.</span>
-	</div>
-	<div class="line"></div>
-	<div class="img"></div>
-		 <div style="background-color:red; float:left; width:380px; height:380px;">
-	 
-	 </div>
-	</div>
-
-		<div class="choice">
-	<div class="name"><b>함께하는 커뮤니티</b><br>
-	<span style="font-size:20px; width:200px;">
-	팬들과 다양한 이야기를 나누고<br>
-특별한 순간을 공유해 기록해보세요.</span>
-	
-	</div>
-	<div class="line"></div>
-	<div class="img"></div>
-		 <div style="background-color:red; float:left; width:380px; height:380px;">
-	 
-	 </div>
-	</div>
-	
-		<div class="choice">
-	<div class="name"><b>편지 쓰고 답장 받기</b><br>
-	<span style="font-size:20px; width:200px;">
-	팬들과 다양한 이야기를 나누고<br>
-특별한 순간을 공유해 기록해보세요.</span></div>
-
-
-	<div class="line"></div>
-	<div class="img"></div>
-		 <div style="background-color:red; float:left; width:380px; height:380px;">
-	 <img src="${pageContext.request.contextPath}/assets/image_bundle/Lukas.png" class="item-img" width="390px" height="420px">
-	 </div>
-	</div>
-
-
-		<div class="choice">
-	<div class="name"><b>하이라이트 영상 시청</b><br>
-	<span style="font-size:20px; width:200px;">
-	아티스트의 무대, 일상, 비하인드 영상까지! <br>
-다양한 순간을 영상으로 만나보세요.</span></div>
-
-
-	<div class="line"></div>
-	<div class="img">
-	 <div style="background-color:red; width:380px; height:380px;">
-	 
-	 </div>
-	</div>
-	</div>
-
-
-
-
-
-
-
-</div>
-</div>
+<!-- </div> -->
 
 	<div class="shop">
 		<div class="shop-1"> shop</div>
