@@ -45,7 +45,7 @@ public class VideoController {
     @Autowired
     private ArtistMapper artistMapper;
 
- // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/group")
     public String showGroupVideosPage(
         @RequestParam("group_num") Long groupNum,
