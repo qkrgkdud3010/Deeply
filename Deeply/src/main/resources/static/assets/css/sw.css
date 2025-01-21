@@ -622,11 +622,12 @@ a {
  	height:15vw;
  	margin:0 auto;
  	overflow:hidden;
+ 	border-radius:10px;
+ 	border:none;
  	background:skyblue;
  }
  
  .artist-contents-item img{
- 	border:1px solid black;
  	width:100%; 
  	height:100%;
  	object-fit: cover;
@@ -647,7 +648,35 @@ a {
  	flex-direction:column;
  	align-items:center;
  	justify-content:center;
+ 	position:relative;
  }
+ 
+ .follow-cnt{
+	position:absolute;
+	top:-10%;
+	right:5%;
+	gap:1rem;
+
+ }
+ .membership-btn{
+ 	width:5vw;
+ 	height:2vw;
+ 	position:absolute;
+ 	bottom:-5%;
+ 	background:#0369A1;
+ 	border:none;
+ 	color:white;
+ 	border-radius:10px;
+ 	font-size:0.6vw;
+ 	font-weight:bold;
+ 	cursor:pointer;
+ }
+ 
+  .membership-btn:hover{
+  	background-color: #e0e0ff;
+    transform: scale(1.1);
+    color:black;
+  }
  
   /* 
 ===============================

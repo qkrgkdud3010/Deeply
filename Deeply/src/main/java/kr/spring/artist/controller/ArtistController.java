@@ -31,6 +31,8 @@ import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.member.vo.PrincipalDetails;
 import kr.spring.util.FileUtil;
+import kr.spring.video.service.VideoService;
+import kr.spring.video.vo.VideoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,6 +46,8 @@ public class ArtistController {
 	ItemService itemService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	VideoService videoService;
 	
 	//아티스트 목록
 	@GetMapping("/list")
@@ -79,11 +83,16 @@ public class ArtistController {
 		members = artistService.selectGroupMembers(group_num);
 		log.debug("<<아티스트 상세>> : " + members); 
 		
+		Map<String,Object> videoMap = new HashMap<String,Object>();
+		videoMap.put("groupNum", group_num);
+		List<VideoVO> videos = videoService.selectListByGroup(videoMap);
 		
 		List<ItemVO> shops = itemService.selectListByUserNum(group_num);
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);
+		model.addAttribute("videos",videos);
 		
 		
 		
