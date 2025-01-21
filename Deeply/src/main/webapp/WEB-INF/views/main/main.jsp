@@ -7,6 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <!-- 메인 시작 -->
 <!-- <div class="main-page"> -->
 
@@ -95,42 +96,42 @@
 		<div class="choice">
 		<div class="name">
 			<div class="c-content1">
-			<b style="font-size: clamp(40px, 1.2vw, 60px);">아티스트와 채팅</b>
+			<b style="font-size: clamp(40px, 1.2vw, 60px);">편지 쓰고 답장 받기</b>
 			<br>
 				<span class="choice-text">
-					오픈 채팅방에 참여하여<br>
-					내가 선택한 아티스트와 대화를<br>
-					이어나가 보세요.
+					진심을 담아 아티스트에게 편지를 <br>
+					전해보세요. <br>
+					마음을 더욱 가까이 전달할 수 있습니다.
 				</span>
 			</div>
 			<div>
-			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/chat.png">
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/main_letter3.png">
 			</div>
 		</div>
 		<div class="name">
+			<div class="c-content">
+			<b style="font-size: clamp(40px, 1.2vw, 60px);">아티스트의 공연</b>
+			<br>
+				<span class="choice-text">
+					아티스트의 무대를 감상하며<br>
+					아주 특별한 순간을 함께하세요.
+				</span>
+			</div>
+			<div>
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/main_perform.png">
+			</div>
+		</div>
+		<div class="name">	
 			<div class="c-content">
 			<b style="font-size: clamp(40px, 1.2vw, 60px);">함께하는 커뮤니티</b>
 			<br>
 				<span class="choice-text">
 					팬들과 다양한 이야기를 나누고<br>
-					특별한 순간을 공유해 기록해보세요.
+					소중한 순간을 공유해 기록해보세요.
 				</span>
 			</div>
 			<div>
-			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/chat.png">
-			</div>
-		</div>
-		<div class="name">	
-			<div class="c-content">
-			<b style="font-size: clamp(40px, 1.2vw, 60px);">편지 쓰고 답장 받기</b>
-			<br>
-				<span class="choice-text">
-					팬들과 다양한 이야기를 나누고<br>
-					특별한 순간을 공유해 기록해보세요.
-				</span>
-			</div>
-			<div>
-			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/main_letter3.png">
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/main_comm.png">
 			</div>
 		</div>
 		<div class="name">
@@ -150,7 +151,7 @@
 <!-- </div> -->
 
 	<div class="shop">
-		<div class="shop-1"> shop</div>
+		<div class="shop-1"> SHOP</div>
 		<hr class="custom-hr2" noshade="noshade">
 		<div class="shop-2">new</div>
     <c:set var="loop_flag" value="true"/>
@@ -176,36 +177,18 @@
 	<div class="empty-div"></div>
 	</div>
 	
-	
-	
-	
-	
-	
-	
-	<div class="artist">
-
+	<div class="shop-3"> ARTIST </div>
+		<div class="artist">
 			<c:forEach var="group" items="${groups}" varStatus="status">
-			<c:if test="${status.index < 12}">
-			
-			
-				<div style="width:160px; float:left;" class="item-card">
-				<a href="detail?group_num=${group.group_num}">
-					<div>
-					
-						<img width="150px"
-						height="150px" class="alist-img" src="${pageContext.request.contextPath}/assets/upload/${group.group_photo}">
-					</div>
-					<div >
-						${group.group_name}
-					</div>
-					</a> 
+			<c:if test="${status.index < 20}">
+				<div class="item-cards2">
+					<span><a href="${pageContext.request.contextPath}/artist/list">
+						<img class="alist-img" src="${pageContext.request.contextPath}/assets/upload/${group.group_photo}"></a></span>
+							<span class="artist-text">${group.group_name}</span>
 				</div>
-			
 			</c:if>
 		</c:forEach>
 	</div>
-	
-
 <!-- 메인 끝 -->
 
 
