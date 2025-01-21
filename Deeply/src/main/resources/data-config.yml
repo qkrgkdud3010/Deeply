@@ -5,5 +5,4 @@ dataconfig:
   db-password: f1234
   openai-secret-key: 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
   naver-client-id: 
-  naver-client-secret: 
-  
+  naver-client-secret:

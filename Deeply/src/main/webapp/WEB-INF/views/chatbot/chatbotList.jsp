@@ -39,6 +39,7 @@
 		$('#message').keydown(function(event){
 			if(event.keyCode == 13 && !event.shiftKey) {
 				$('#chatting_form').trigger('submit');
+				$('#message').val('').focus();
 			}
 		});
 		//채팅 메시지 처리
@@ -50,6 +51,8 @@
 			}
 			
 			$('#chatting_message').append('<div class="from-position"><div class="item">'+$('#message').val().replace(/\r\n/g,'<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>')+'</div></div>');
+			//스크롤을 하단에 위치시킴
+			$('#chatting_message').scrollTop($("#chatting_message")[0].scrollHeight);
 			
 			//form 이하의 태그에 입력한 데이터를 모두 읽어옴
 			const form_data = $(this).serialize();
