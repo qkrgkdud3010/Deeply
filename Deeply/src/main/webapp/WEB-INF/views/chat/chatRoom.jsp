@@ -14,7 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hr1.css">
-<script src="${pageContext.request.contextPath}/assets/js/chat.js"></script>
+
 
 <!--  
 <div class="page-main">
@@ -37,21 +37,42 @@
 -->
 
   <!-- 유저 이름 설정 -->
-   <div class="login-container">
-    <input id="username" type="text" placeholder="Enter your username" />
-    <button id="btnSetUsername">Set Username</button>
-</div>
+<!-- Login Section -->
+      <!-- 로그인 컨테이너 -->
+   
+ 
+ <div class="chatroom-detail">
+        <h2>채팅방 상세</h2>
+        
+        <p><strong>채팅방 이름:</strong> ${chatName}</p>
+        <p><strong>말풍선 내용:</strong> ${ballonName}</p>
 
-<div class="room-container" style="display: none;">
-    <input id="roomName" type="text" placeholder="Enter room name" />
-    <button id="btnJoinRoom">Join Room</button>
-</div>
+        <!-- 아티스트 사진 미리보기 -->
+        <c:if test="${not empty artistPhoto}">
+            <p><strong>아티스트 사진:</strong></p>
+            <img src="${artistPhoto}" alt="Artist Photo" style="max-width: 300px; max-height: 300px;" />
+        </c:if>
 
-<div id="chatContainer" style="display: none;">
-    <div id="message-list" style="height: 300px; overflow-y: auto;"></div>
-    <input id="msg" type="text" placeholder="Enter message" />
-    <button id="btnSend">Send</button>
-</div>
+    </div>
+ 
+ 
+    <div class="room-container">
+        <h2>Available Rooms</h2>
+        <div id="roomList"></div>
+        <button id="btnJoinRoom">Join Room</button>
+    </div>
+
+    <!-- 채팅 컨테이너 -->
+    <div id="chatContainer">
+        <div id="message-list"></div>
+        <form id="messageForm">
+            <input type="text" id="msg" placeholder="Type your message here" />
+            <button id="btnSend">Send</button>
+        </form>
+    </div>
+
+
+<script src="${pageContext.request.contextPath}/assets/js/chat.js"></script>
 
             <!-- Messages will appear here
         </div>

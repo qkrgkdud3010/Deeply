@@ -115,3 +115,98 @@ button:hover {
 .chat-input button:hover {
     background-color: #0056b3;
 }
+
+
+/*================
+채팅방 들어가기 - 아티스트 입장의 css
+==================*/
+
+body {
+    background: linear-gradient(to bottom, black 30%, skyblue 70%);
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* 전체 화면 높이 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 내부 영역을 하늘색 배경, 가운데 정렬 */
+.container {
+    background-color: skyblue;
+    padding: 30px; /* 여유 공간 더 추가 */
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px; /* 최대 너비 */
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* 살짝 그림자 추가 */
+}
+
+/* 제목 스타일 - 더 크고 진한 하얀색 */
+h2 {
+    margin: 0 0 20px;
+    color: white;
+    font-size: 36px; /* 크기 증가 */
+    font-weight: bold; /* 진한 글씨 */
+}
+
+/* 입력 필드 및 버튼 스타일 */
+input, textarea, button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px; /* 여유 공간 더 추가 */
+    border-radius: 5px;
+    border: none;
+}
+
+/* 텍스트영역 크기 설정 */
+textarea {
+    resize: none;
+    height: 120px; /* 높이 조정 */
+}
+
+/* 버튼 스타일 - 크기와 외각선 추가 */
+button {
+    background-color: skyblue;
+    color: white;
+    font-size: 18px; /* 버튼 크기 증가 */
+    cursor: pointer;
+    border: 2px solid white; /* 흰색 외각선 추가 */
+    padding: 15px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #4CAF50;
+}
+
+button:active {
+    background-color: #45a049;
+}
+
+/* 파일 선택 버튼 스타일 */
+input[type="file"] {
+    font-size: 16px; /* 버튼 크기 */
+    padding: 15px; /* 크기 증가 */
+    border: 2px solid white;
+    background-color: skyblue;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* 선택된 이미지 미리보기 스타일 */
+#image-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* 이미지가 선택된 후 표시되는 스타일 */
+#image-container img {
+    max-width: 400px; /* 이미지를 크게 표시 */
+    max-height: 400px; /* 최대 높이 설정 */
+    display: block;
+    margin: 0 auto; /* 가운데 정렬 */
+}

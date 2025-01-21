@@ -2,40 +2,11 @@ let username = null;
 let currentRoom = null;
 
 $(document).ready(function () {
-    // 유저 이름 설정
-    $('#btnSetUsername').on('click', function (evt) {
-        evt.preventDefault();
-        username = $('#username').val().trim();
+    // 자동으로 유저 이름을 가져오기
+    fetchUsername();
 
-        if (!username) {
-            alert("Please enter a username.");
-            return;
-        }
-
-        // 로그인 관련은 숨겨놓기
-        $('.login-container').hide();
-        $('.room-container').show(); // 방 선택 UI 보이기
-    });
-
-    // 채팅방 접속
-    $('#btnJoinRoom').on('click', function (evt) {
-        evt.preventDefault();
-        let room = $('#roomName').val().trim();
-
-        if (!room) {
-            alert("Please enter a room name.");
-            return;
-        }
-
-        currentRoom = room;
-		console.log("courrent-room:"+currentRoom);
-
-        // 방 선택 UI 숨기고 채팅 UI 보여주기
-        $('.room-container').hide();
-        $('#chatContainer').show();
-
-        connectStomp(currentRoom); // STOMP 연결
-    });
+    // 방 목록 자동 가져오기
+    fetchRooms();
 
     // 메시지 전송
     $('#btnSend').on('click', function (evt) {
@@ -56,10 +27,92 @@ $(document).ready(function () {
             socket.send(`/chat/${currentRoom}`, {}, JSON.stringify({ user: username, msg: msg }));
         }
     });
+
+    // 채팅방 접속
+    $('#btnJoinRoom').on('click', function (evt) {
+        evt.preventDefault();
+
+        if (!currentRoom) {
+            alert("Please select a room.");
+            return;
+        }
+
+        console.log("current-room: " + currentRoom);
+
+        // 방 선택 UI 숨기고 채팅 UI 보여주기
+        $('.room-container').hide();
+        $('#chatContainer').show();
+
+        connectStomp(currentRoom); // STOMP 연결
+    });
 });
 
 var socket = null;
 var isStomp = false;
+
+// 자동으로 유저 이름을 가져오는 AJAX 함수
+function fetchUsername() {
+    $.ajax({
+        url: '/chat/getUsername', // 서버에서 유저 이름을 가져오는 엔드포인트
+        method: 'GET',
+        success: function (data) {
+            console.log("Fetched username response:", data); // 서버 응답 확인
+            if (data.result === 'success') {
+                username = data.id;
+
+                if (!username) {
+                    alert("Username is empty. Please try again.");
+                    return;
+                }
+
+                $('.login-container').hide();
+                $('.room-container').show(); // 방 선택 UI 보이기
+                console.log("Username successfully set to:", username);
+            } else {
+                alert("Failed to fetch username. Please try again.");
+            }
+        },
+        error: function (error) {
+            console.error("Error fetching username:", error);
+            alert("Error fetching username. Please contact support.");
+        }
+    });
+}
+
+// 방 목록을 자동으로 가져오는 AJAX 함수
+function fetchRooms() {
+    $.ajax({
+        url: '/chat/room', // 서버의 GET 요청 URL
+        method: 'GET', // HTTP 메소드
+        dataType: 'json', // 서버로부터 응답 받을 데이터 형식
+        success: function (data) {
+            // 성공적으로 데이터를 받았을 때
+            if (data.result === 'success') {
+                console.log("Chat room data fetched successfully.");
+                
+                // 서버에서 방이 1개일 때
+                if (data.room) {
+                    // 하나의 방 정보가 있는 경우
+                    currentRoom = data.room; // 방 번호 설정
+                    $('#roomList').html(''); // 이전 내용 삭제
+                    $('#roomList').append(`<div>${data.room}</div>`); // 방 이름 출력
+
+                    // 방 선택 UI 자동으로 보여주기
+                    $('#btnJoinRoom').show(); // 'Join Room' 버튼 표시
+                }
+            } else if (data.result === 'logout') {
+                alert("You are logged out. Please log in again.");
+                // 로그인 페이지로 리디렉션 (필요시)
+                window.location.href = '/login';
+            }
+        },
+        error: function (error) {
+            // 요청 실패 시 에러 처리
+            console.error("Error fetching rooms:", error);
+            alert("Error fetching rooms. Please try again.");
+        }
+    });
+}
 
 // STOMP 연결 함수
 function connectStomp(room) {

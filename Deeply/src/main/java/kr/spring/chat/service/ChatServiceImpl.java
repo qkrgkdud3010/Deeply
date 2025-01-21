@@ -1,5 +1,11 @@
 package kr.spring.chat.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,39 +75,53 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
+	
 	/*
 	 * 메세지 관련 부분
 	 * */
+	
 	@Override
 	public void insertMsg(ChatMsgVO chmVO) {
 		chatMapper.insertMsg(chmVO);
-		
 	}
 
-
-
 	
 
-	
-	
+	@Override
+	public Long selectChatroomNum(Long chat_user_num) {
+		
+		return chatMapper.selectChatroomNum(chat_user_num);
+	}
 
-
-	
-	
-
-
-
-	
-	
-
-	
+	@Override
+	public String selectId(Long chat_user_num) {
+		// TODO Auto-generated method stub
+		return chatMapper.selectId(chat_user_num);
+	}
 
 	
 	
 	
-	
-
 
 	
-
 }
+
+
+	
+	
+
+
+
+	
+	
+
+	
+
+	
+	
+	
+	
+
+
+	
+

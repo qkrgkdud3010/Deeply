@@ -1,16 +1,12 @@
 package kr.spring.chat.handler;
-
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.json.JSONObject;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
 public class SocketTextHandler extends TextWebSocketHandler {
-
 	private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
 	
 	@Override

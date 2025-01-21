@@ -1,5 +1,7 @@
 package kr.spring.chat.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,6 +30,13 @@ public class ChatVO {
 	//채팅에 참여하는 유저
 	private long duser_num; //아티스트 번호
 	private String duser_id; //아티스트 아이디
+	
+	//아티스트 말풍선 정보
+	private String ballon_name;
+	
+	private String chatName;   // 채팅방 이름
+    private String ballonName; // 말풍선 내용
+    private MultipartFile artistPhoto; // 아티스트 사진 (파일 업로드 처리)
 	
 	
 

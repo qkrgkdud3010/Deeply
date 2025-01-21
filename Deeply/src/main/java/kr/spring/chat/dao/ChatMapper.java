@@ -1,5 +1,7 @@
 package kr.spring.chat.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -57,5 +59,11 @@ public interface ChatMapper {
 	
 	//메세지 주고 받기
 	public void insertMsg(ChatMsgVO chmVO);
+	@Select("SELECT chat_num FROM(SELECT chat_num FROM chat WHERE chat_user_num = #{chat_user_num} ORDER BY chat_num ASC) WHERE ROWNUM=1")
+	public Long selectChatroomNum(Long chat_user_num);
+	@Select("SELECT chat_id FROM(SELECT chat_id FROM chat WHERE chat_user_num = #{chat_user_num} ORDER BY chat_num ASC) WHERE ROWNUM=1")
+	public String selectId(Long chat_user_num);
+	 // 특정 채팅방의 메시지를 가져오는 메서드
+    
 
 }

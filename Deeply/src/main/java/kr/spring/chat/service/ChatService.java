@@ -1,5 +1,9 @@
 package kr.spring.chat.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.chat.vo.ChatMsgVO;
@@ -29,7 +33,8 @@ public interface ChatService {
 	public int checkDuserCondition(Long chat_num);
 	//아티스트면 chat_kind = 1
 	public void updateAuserKind(Long chat_num);
-	
+
+
 	
 	
 	/*
@@ -37,6 +42,10 @@ public interface ChatService {
 	 * */
 	
 	//메세지 DB에 메시지 등록하기
-	public void insertMsg(ChatMsgVO chmVO);
+	
+	void insertMsg(ChatMsgVO chmVO);
+	public Long selectChatroomNum(Long chat_user_num);
+	public String selectId(Long chat_user_num);
+    
 	
 }
