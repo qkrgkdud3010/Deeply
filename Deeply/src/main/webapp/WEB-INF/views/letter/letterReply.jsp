@@ -25,8 +25,8 @@
 	<div class="font-white bold-title align-center width-20 font-1 top-3">잔여 발송 가능 편지 ${letter_limit}/3</div>
 	<div class="space-10vw"></div>
 	<div id="letter_form" class="letter-btn-div vertical-center">
-		<button class="letter-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}'">보낸편지</button>
-		<button class="letter-btn font-white bold-title align-center"  onclick="location.href='${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}'">아티스트의 답장</button>
+		<button class="letter-btn font-white bold-title align-center font-1" onclick="location.href='${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}'">보낸편지</button>
+		<button class="letter-btn font-white bold-title align-center font-1"  onclick="location.href='${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}'">아티스트의 답장</button>
 		<c:if test="${letter_limit > 0}">
 		<button class="write-btn bold-title align-center left-50" onclick="location.href='${pageContext.request.contextPath}/letter/write?artist_num=${artist.user_num}'">편지 작성</button>
 		</c:if>

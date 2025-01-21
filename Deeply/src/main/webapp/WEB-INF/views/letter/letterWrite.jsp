@@ -23,8 +23,8 @@
 	<div class="font-white bold-title align-center width-20 font-1 top-3">잔여 발송 가능 편지 ${letter_limit}/3</div>
 	<div class="space-10vw"></div>
 	<div id="letter_form" class="letter-btn-div vertical-center">
-		<div class="letter-btn font-white bold-title align-center"><a href="${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}">보낸편지</a></div>
-		<div class="letter-btn font-white bold-title align-center"><a href="${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}">아티스트의 답장</a></div>
+		<div class="letter-btn font-white bold-title align-center font-1"><a href="${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}">보낸편지</a></div>
+		<div class="letter-btn font-white bold-title align-center font-1"><a href="${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}">아티스트의 답장</a></div>
 	</div>
 	<div class="letter-body">
 		<form:form modelAttribute="letterVO" action="write" id="write_letter" enctype="multipart/form-data">

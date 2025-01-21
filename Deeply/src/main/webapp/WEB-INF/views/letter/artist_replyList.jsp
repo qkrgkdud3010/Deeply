@@ -24,8 +24,8 @@
 	</div>
 	<div class="space-10vw"></div>
 	<div id="letter_form" class="letter-btn-div vertical-center">
-		<button class="letter-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist.user_num}'">받은 편지</button>
-		<button class="letter-btn font-white bold-title align-center"  onclick="location.href='${pageContext.request.contextPath}/letter/artist_reply?artist_num=${artist.user_num}'">보낸 답장</button>
+		<button class="letter-btn font-white bold-title align-center font-1" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist.user_num}'">받은 편지</button>
+		<button class="letter-btn font-white bold-title align-center font-1"  onclick="location.href='${pageContext.request.contextPath}/letter/artist_reply?artist_num=${artist.user_num}'">보낸 답장</button>
 	</div>
 	<div class="letter-body">
 		<div class="letter-box">

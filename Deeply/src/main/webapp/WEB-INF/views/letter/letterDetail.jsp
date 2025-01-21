@@ -35,8 +35,8 @@
 	<div class="space-10vw"></div>
 	<div id="letter_form" class="letter-btn-div vertical-center">
 		<c:if test="${!empty principal.memberVO}">
-		<button class="letter-btn font-white bold-title align-center" onclick="location.href='${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}'">보낸편지</button>
-		<button class="letter-btn font-white bold-title align-center"  onclick="location.href='${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}'">아티스트의 답장</button>
+		<button class="letter-btn font-white bold-title align-center font-0_8" onclick="location.href='${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}'">보낸편지</button>
+		<button class="letter-btn font-white bold-title align-center font-0_8"  onclick="location.href='${pageContext.request.contextPath}/letter/reply?artist_num=${artist.user_num}'">아티스트의 답장</button>
 		<button class="write-btn bold-title align-center left-50" onclick="location.href='${pageContext.request.contextPath}/letter/list?artist_num=${artist.user_num}'">편지 목록</button>
 		</c:if>
 		<c:if test="${!empty principal.artistVO}">
