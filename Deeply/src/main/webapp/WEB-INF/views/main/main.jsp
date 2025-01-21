@@ -13,15 +13,19 @@
 	
 	<div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img  src="${pageContext.request.contextPath}/assets/image_bundle/beno1.png" class="d-block w-100 img-1" alt="...">
+    <div class="carousel-item img1 active">
+      <img  src="${pageContext.request.contextPath}/assets/image_bundle/idol.png"   class="d-block" alt="...">
     </div>
-    <div class="carousel-item">
-      <img src="${pageContext.request.contextPath}/assets/image_bundle/beno2.png" class="d-block w-100" alt="...">
+    <div class="carousel-item img1">
+      <img src="${pageContext.request.contextPath}/assets/image_bundle/beno2.png"   class="d-block" alt="...">
     </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
+     <div class="carousel-item img1">
+      <img src="${pageContext.request.contextPath}/assets/image_bundle/newjeans.jpg"   class="d-block" alt="...">
     </div>
+      <div class="carousel-item img1">
+      <img src="${pageContext.request.contextPath}/assets/image_bundle/black.jpg"   class="d-block" alt="...">
+    </div>
+
   </div>
   <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -108,7 +112,7 @@
 		
 		</div>
 		<div class="line"></div>
-		<div class="img"></div>
+		<div class="img"> <img src="${pageContext.request.contextPath}/assets/image_bundle/2222.png" class="item-img" width="390px" height="420px"></div>
 			 <div style="background-color:red; float:left; width:380px; height:380px;">
 		 
 		 </div>

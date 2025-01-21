@@ -142,9 +142,28 @@ console.log(userNum,orderNum);  // 제대로 값이 출력되는지 확인
 	            if (bookingNum!=null) {
 	                body.booking_num = parseInt(bookingNum, 10);
 	            }else if(orderNum!=null){
-	            	body.order_num = parseInt(orderNum, 10);
-	            	body.item_quantity = parseInt(itemQuantity, 10);
+	            	 let items = [];
+
+	            	    // itemQuantity가 배열인 경우 각 상품의 정보를 묶어서 배열에 추가
+	            	    if (Array.isArray(itemQuantity)) {
+	            	        for (let i = 0; i < itemQuantity.length; i++) {
+	            	            let item = {
+	            	                order_num: parseInt(orderNum, 10),
+	            	                item_quantity: parseInt(itemQuantity[i], 10)
+	            	            };
+	            	            items.push(item);
+	            	        }
+	            	    } else {
+	            	        // itemQuantity가 단일 값인 경우 하나의 객체로 묶어서 배열에 추가
+	            	        items.push({
+	            	            order_num: parseInt(orderNum, 10),
+	            	            item_quantity: parseInt(itemQuantity, 10)
+	            	        });
 	            }
+	
+	            	    const body = {
+	            	            items: items
+	            	        };
 
 	            const notified = await fetch(endpoint, {
 	                method: "POST",

@@ -12,10 +12,11 @@
 <footer>
 <div style="height:26px; margin-bottom:10px;">
 	<div class="ft-1">
-		<div class="link"><a href="#">1대1문의</a></div>
-		<div class="link"><a href="#">이벤트 예매</a></div>
-		<div class="link"><a href="#">개인정보</a></div>
-		<div class="link"><a href="#">아티스트SHOP</a></div>
+		
+	
+	<div class="link"><a href="${pageContext.request.contextPath}/artist/list">아티스트</a></div>
+	<div class="link"><a href="${pageContext.request.contextPath}/item/main">shop</a></div>
+	<div class="link"><a href="${pageContext.request.contextPath}/commu/list">커뮤니티</a></div>
 	</div>
 	<div class="ft-2">
 	<c:if test="${empty principal}">
@@ -32,16 +33,12 @@
 </div>
 <div style="height:26px; margin-bottom:10px;">
 	<div class="ft-3">
-		<div class="link"><a href="#">1대1문의</a></div>
-		<div class="link"><a href="#">이벤트 예매</a></div>
-		<div class="link"><a href="#">개인정보</a></div>
+
 	</div>
 </div>
 <div style="height:26px; margin-bottom:10px;">
 	<div class="ft-3">
-		<div class="link"></div>
-		<div class="link"><a href="#">이벤트 예매</a></div>
-		<div class="link"><a href="#">개인정보</a></div>
+
 	</div>
 </div>
 <div class="line"></div>

@@ -511,4 +511,11 @@ font-size:16px;
 .img{
 	float:left;
 }
+.img1{
+	width:95%;
+    margin:0 auto;
+    height:40vw;
+    position:relative;
+    overflow: hidden;
+}
 /*메인 끝*/
