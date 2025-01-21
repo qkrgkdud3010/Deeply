@@ -456,20 +456,25 @@ textarea {
 }
 
 .video-card-title {
-	margin-top: 10px;
-	font-family: "Manrope-SemiBold", Helvetica;
-	font-weight: 600;
-	font-size: 18px;
-	color: #fff;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis; /* 긴 제목 처리 */
+    margin-top: 10px;
+    font-family: "Manrope-SemiBold", Helvetica;
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+    white-space: nowrap; /* 한 줄로 제한 */
+    overflow: hidden;    /* 넘친 텍스트 숨김 */
+    text-overflow: ellipsis; /* 긴 제목 말줄임표 처리 */
+    max-width: 100%;     /* 카드 내부에서 최대 너비 제한 */
 }
 
 .video-card-description {
 	margin-top: 5px;
 	color: #ccc;
 	font-size: 14px;
+	white-space: nowrap; /* 한 줄로 제한 */
+    overflow: hidden;    /* 넘친 텍스트 숨김 */
+    text-overflow: ellipsis; /* 긴 제목 말줄임표 처리 */
+    max-width: 100%;     /* 카드 내부에서 최대 너비 제한 */
 }
 
 /* "더보기" 버튼 */

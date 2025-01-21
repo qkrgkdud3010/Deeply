@@ -36,7 +36,7 @@ public class FAQController {
 
         if (principalDetails != null && principalDetails.hasRole("ADMIN")) {
             model.addAttribute("isAdmin", true);
-        } else {
+        }else {
             model.addAttribute("isAdmin", false);
         }
 

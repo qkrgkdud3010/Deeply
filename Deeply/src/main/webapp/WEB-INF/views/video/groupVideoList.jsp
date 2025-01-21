@@ -13,7 +13,9 @@
     <div class="heading-container">
         <h2 class="section-heading">멤버십 전용</h2>
         <div class="right-container">
+        	<c:if test="${isArtist}">
             <div class="upload-button" onclick="location.href='${pageContext.request.contextPath}/artist/videos/upload_form'">영상 업로드</div>
+            </c:if>
             <p>멤버십 영상 페이지 바로가기 &gt;</p>
         </div>
     </div>

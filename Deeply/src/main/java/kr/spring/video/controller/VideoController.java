@@ -39,12 +39,25 @@ public class VideoController {
     private ArtistMapper artistMapper;
 
  // 그룹별 영상 페이지
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/group")
     public String showGroupVideosPage(
         @RequestParam("group_num") Long groupNum,
         @RequestParam(value = "page", defaultValue = "1") int page,
+        @AuthenticationPrincipal PrincipalDetails principal,
         Model model
     ) {
+    	
+    	// 사용자 역할 체크
+        ArtistVO artistVO = principal.getArtistVO();
+        if (artistVO != null && artistVO.getUser_num() != null) {
+            model.addAttribute("isArtist", true);
+        } else if (principal.hasRole("ADMIN")) {
+            model.addAttribute("isAdmin", true);
+        } else {
+            model.addAttribute("isGeneralUser", true); // 일반 사용자 처리
+        }
+    	
         // 1. group_num으로 카테고리 조회
         List<VideoCategoryVO> categories = videoCategoryService.getCategoriesByGroupNum(groupNum);
         categories.forEach(category -> System.out.println("Category: " + category));
@@ -75,7 +88,7 @@ public class VideoController {
  // 영상 업로드 페이지 (로그인 필요)
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/upload_form")
-    public String showUploadPage() {
+    public String showUploadPage(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         System.out.println("==> showUploadPage called");
         return "videoUpload"; // Tiles 정의 이름
     }
@@ -118,7 +131,7 @@ public class VideoController {
         // 4) DB에 영상 정보 저장
         videoService.insertVideo(video);
 
-        return "redirect:/videos";
+        return "redirect:/artist/videos/group?group_num=" + agroup.getGroup_num();
     }
 
     // GET /artist/videos/page?videoId=37&group_num=61 (로그인 필요)
@@ -131,8 +144,23 @@ public class VideoController {
         Model model
     ) {
         log.info("==> showVideoPage called with videoId: {}, groupNum: {}", videoId, groupNum);
-
-        Long userNum = principal.getArtistVO().getUser_num();
+        
+        Long userNum;
+        
+        // 사용자 역할 체크
+        ArtistVO artistVO = principal.getArtistVO();
+        if (artistVO != null && artistVO.getUser_num() != null) {
+            model.addAttribute("isArtist", true);
+            userNum = principal.getArtistVO().getUser_num();
+        } else if (principal.hasRole("ADMIN")) {
+            model.addAttribute("isAdmin", true);
+            userNum = principal.getMemberVO().getUser_num();
+        } else {
+            model.addAttribute("isGeneralUser", true); // 일반 사용자 처리
+            userNum = principal.getMemberVO().getUser_num();
+        }
+        
+        
 
         // 영상 정보 조회
         VideoVO video = videoService.selectVideo(videoId);

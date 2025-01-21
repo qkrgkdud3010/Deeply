@@ -12,7 +12,7 @@
     <section class="upload-section">
         <h2>영상 업로드</h2>
         <!-- 파일 업로드는 제거하므로, 일반 POST로 변경 -->
-        <form action="/videos/upload" method="post" id="video-upload-form" novalidate>
+        <form action="upload" method="post" id="video-upload-form" novalidate>
             <!-- CSRF 토큰 -->
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
@@ -20,7 +20,6 @@
             <div class="title-container">
                 <input type="text" name="title" maxlength="100"
                     placeholder="제목을 입력하세요" class="upload-title" data-required="true">
-                <span class="char-limit">0/100</span>
             </div>
 
             <!-- 카테고리와 멤버십 여부 선택 -->
