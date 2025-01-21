@@ -379,32 +379,3 @@ input[type="button"]:hover {
 	margin: 0 10px;
 	border-radius: 50%;
 }
-/* ================
-	글 수정/삭제
-================ */
-.commu-write{
-	display: flex;
-	list-style: none;
-}
-.page-main-write{
-	margin: 20px;
-	width: 80%;
-}
-/* 게시판 폼(CKEditor 사용시)
---------------------*/
-form#commu_register, form#commu_modify{
-	padding:0 0 10px 0;
-	width:100%;
-	border:none;
-}
-form#commu_register ul, form#commu_modify ul{
-	padding:20px;
-}
-form#commu_register input[type="text"],
-               form#commu_modify input[type="text"]{
-	width:100%;
-	margin-bottom:10px;
-}
-.ck-editor__editable_inline{
-	min-height:250px;
-}

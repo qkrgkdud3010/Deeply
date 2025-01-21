@@ -103,42 +103,43 @@
 		<h2>회원상세정보</h2>
 		<hr size="3px">
 		<div class="mypage-1" style="margin: 0 auto; text-align: center;">
-			<div class="profile-image">
+			<div class="profile-image" style="align-items: center; text-align: center;">
 				<img src="${pageContext.request.contextPath}/member/photoView"
-					width="200" height="200" class="my-photo2" id="photo_btn">
+					width="200" height="200" class="my-profile-img" id="photo_btn">
+				<div id="photo_choice" style="display: none;">
+					<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}">
+					<input type="hidden" id="csrfTokenValue" value="${_csrf.token}">
+					<input type="file" id="upload"
+						accept="image/gif,image/png,image/jpeg"> <br> <input
+						type="button" value="전송" id="photo_submit"> <input
+						type="button" value="취소" id="photo_reset">
+				</div>
 			</div>
-			<div id="photo_choice" style="display: none;">
-				<input type="hidden" id="csrfHeaderName" value="${_csrf.headerName}">
-				<input type="hidden" id="csrfTokenValue" value="${_csrf.token}">
-				<input type="file" id="upload"
-					accept="image/gif,image/png,image/jpeg"> <br> <input
-					type="button" value="전송" id="photo_submit"> <input
-					type="button" value="취소" id="photo_reset">
-			</div>
+			<p style="text-align: center; font-size: 18px; color: #00A2CF; margin: 15px 0 40px 0;">
+					<b>아티스트</b></p>
 		</div>
-		<b style="text-align: center; font-size: 18px; color: #00A2CF;">아티스트</b>
-		<table class="myTable">
-			<tr>
-				<td><b>아이디 </b>${member.id}</td>
-				<td><b>닉네임 </b>${member.group_name} ${member.name}</td>
-			</tr>
-			<tr>
-				<td><b>이메일 </b>${member.email}</td>
-			</tr>
-			<tr>
-				<td colspan="2"><b>소개글 </b>${member.intro}
-						<a href="${pageContext.request.contextPath}/member/myPage1"><img
-						src="${pageContext.request.contextPath}/assets/images/hr2/follow.png"
-						width="20px" height="20px"></a></td>
-			</tr>
-		</table>
+		<div>
+			<table class="myTable">
+				<tr>
+					<td><b>아이디 </b>${member.id}</td>
+					<td><b>닉네임 </b>${member.group_name} ${member.name}</td>
+				</tr>
+				<tr>
+					<td><b>이메일 </b>${member.email}</td>
+				</tr>
+				<tr>
+					<td colspan="2"><b>소개글 </b>${member.intro}
+							<a href="${pageContext.request.contextPath}/member/myPage1"><img
+							src="${pageContext.request.contextPath}/assets/images/hr2/follow.png"
+							width="20px" height="20px"></a></td>
+				</tr>
+			</table>
+		</div>
 		<div class="mypage-link" style="margin-bottom: 10px auto;">
 			<input type="button" value="공연 관리"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="굿즈 관리"
-				onclick="${pageContext.request.contextPath}"> <input
-				type="button" value="커뮤니티 관리"
-				 onclick="${pageContext.request.contextPath}"> <input
+				onclick="${pageContext.request.contextPath}">  <input
 				type="button" value="편지 관리"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="채팅 관리"
