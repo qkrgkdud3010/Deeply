@@ -3,8 +3,15 @@ $(function () {
 	 *  사진 등록시 이미지 바로 띄우기
 	 * ========================= */
 	let quantity = 1;
+	let total_quantity = 0;
+	$(".quan_amount").each(function () {
+	    total_quantity += parseInt($(this).data("value")); 
+	});
+	console.log("total_quantity: " + total_quantity);
+	
 	let totalAmount = $('#totalAmount').data('value');
 	$('#cart_val').html(formatNumber(totalAmount) + '원');
+	$('#check_total').html(formatNumber(totalAmount) + '원');
 	if(totalAmount < 50000){
 		$('#delivery_fee').html(formatNumber(3000) + '원')
 		$('#cart_total_val').html(formatNumber(totalAmount) + '원');
@@ -36,39 +43,8 @@ $(function () {
 		};		
 	});
 	
-	/* ======================
-	 *  상품 수량 변경 +,- 이용
-	 * ====================== */
+
 	
-	$('#minus_btn').click(function(){
-	    
-	    if (quantity <= 1) {
-	        quantity = 1;
-	    } else {
-	        quantity--;
-	    }
-	    $('#quantity').data('value', quantity);
-	    $('#quantity').html(quantity);
-
-	    const totalPrice = $('#price_total').data('price') * quantity;
-	    $('#price_total').html(formatNumber(totalPrice) + '원');
-
-	});
-
-	$('#plus_btn').click(function(){
-	    
-	    if (quantity >= 3) {
-	        quantity = 3;
-	    } else {
-	        quantity++;
-	    }
-	    $('#quantity').data('value', quantity);
-	    $('#quantity').html(quantity);
-
-	    const totalPrice = $('#price_total').data('price') * quantity;
-	    $('#price_total').html(formatNumber(totalPrice) + '원');
-
-	});
 	/* ======================
      *  장바구니
      * ====================== */
@@ -78,14 +54,19 @@ $(function () {
 		        cquantity = 1;
 		    } else {
 		        cquantity--;
+				total_quantity--;
 				totalAmount -= $(this).parents('.v-center').find('.price_total').data('price');
 				$('#cart_val').html(formatNumber(totalAmount) + '원');
 				if(totalAmount >= 50000){
 					$('#cart_total_val').html(formatNumber(totalAmount) + '원');
-					$('#delivery_fee').html('0원')
+					$('#delivery_fee').html('0원');
+					$('#check_total').data('price', totalAmount);
+					$('#check_total').html(formatNumber(totalAmount) + '원');
 				}else{
 					$('#cart_total_val').html(formatNumber(totalAmount + 3000) + '원');
-					$('#delivery_fee').html(formatNumber(3000) + '원')
+					$('#delivery_fee').html(formatNumber(3000) + '원');
+					$('#check_total').data('price', totalAmount + 3000);
+					$('#check_total').html(formatNumber(totalAmount + 3000) + '원');
 				}
 				
 		    }
@@ -103,14 +84,19 @@ $(function () {
 		        cquantity = 3;
 		    } else {
 		        cquantity++;
+				total_quantity++;
 				totalAmount += $(this).parents('.v-center').find('.price_total').data('price');
 				$('#cart_val').html(formatNumber(totalAmount) + '원');
 				if(totalAmount >= 50000){
 					$('#cart_total_val').html(formatNumber(totalAmount) + '원');
-					$('#delivery_fee').html('0원')
+					$('#delivery_fee').html('0원');
+					$('#check_total').data('price', totalAmount);
+					$('#check_total').html(formatNumber(totalAmount) + '원');
 				}else{
 					$('#cart_total_val').html(formatNumber(totalAmount + 3000) + '원');
-					$('#delivery_fee').html(formatNumber(3000) + '원')
+					$('#delivery_fee').html(formatNumber(3000) + '원');
+					$('#check_total').data('price', totalAmount + 3000);
+					$('#check_total').html(formatNumber(totalAmount + 3000) + '원');
 				}
 		    }
 		    $(this).parent().find('.quantity').data('value', cquantity);
@@ -127,11 +113,6 @@ $(function () {
 	function formatNumber(num) {
 	    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
-	
-	$('#order_btn').click(function(){
-		const item_num = $('#item_num').data('num');
-		location.href='../item/order?item_num='+item_num+'&quantity='+quantity;
-	});
 	
 	/* ======================
 	 *  장바구니 바로 추가
@@ -222,22 +203,35 @@ $(function () {
 	});
 	
 	$('.cart-btn').click(function() {
-	       // 현재 버튼의 id에서 item_num 추출
-	       let item_num = $(this).data('value');
-	       console.log(item_num);
-
-	       // 해당 수량 데이터 가져오기
-	       let order_quantity = $(this).closest('.q-box').find('.quantity').data('value');
-
-	       // 페이지 이동
-	       location.href = '../item/order?item_num='+item_num+'&quantity='+order_quantity;
-	   });
+		// 현재 버튼의 id에서 item_num 추출
+	    let item_num = $(this).data('value');
+	       
+	    // 해당 수량 데이터 가져오기
+	    let order_quantity = $(this).closest('.vertical-center').find('.quantity').data('value');
+		   
+		console.log(item_num);	
+		console.log(order_quantity);   
+	    // 페이지 이동
+	    location.href = '../item/order?item_num='+item_num+'&quantity='+order_quantity;
+	});
 	   
 	
 	$('#cart_submit_btn').click(function(){
-		   location.href = '../item/orders?price='+totalAmount;
+		const target = $('.hidden-check-box');
+		target.show();
+		$('.hidden-check-box')[0].scrollIntoView({ behavior: 'smooth' });
+		
 	});
 	
+	$('.hidden-close-btn').click(function(){
+		$('.hidden-check-box').hide();
+	});
+	
+	$('.hidden-submit-btn').click(function(){
+		let total_price= $('#check_total').data('price');
+
+		location.href='../charge/payment?pay_price='+total_price+'&item_quantity='+total_quantity;
+	});
 	
 	
 });

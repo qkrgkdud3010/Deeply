@@ -36,7 +36,9 @@
 				<div>
 					<div class="item-grade vertical-center">
 						<div class="only-sell">단독판매</div>
+						<c:if test="${cart_item.isPremium == 1 && cart_item.isMember > 0}">
 						<div class="premium-sell">구독회원전용</div>
+						</c:if>
 					</div>
 					<div class="item-cart-name">${cart_item.item_name}</div>
 					<div class="item-cart-box q-box">
@@ -44,7 +46,7 @@
 						<div class="item-cart-area v-center">
 							<div class="quantity-box">
 								<button class="quantity-btn a-center cminus_btn">-</button>
-								<span class="quantity-number a-center quantity" id="quantity" data-value="${cart_item.order_quantity}">${cart_item.order_quantity}</span>
+								<span class="quantity-number a-center quantity quan_amount" id="quantity" data-value="${cart_item.order_quantity}">${cart_item.order_quantity}</span>
 								<button class="quantity-btn a-center cplus_btn">+</button>
 							</div>
 							<div class="cart-item-price price_total" data-price="${cart_item.item_price}">
@@ -66,15 +68,34 @@
 					<div class="price-box">
 						<div class="cart-total-price">
 						<input type="hidden" id="totalAmount" data-value="${totalAmount}">
-							총 상품 금액 <span id="cart_val"></span> + 배송비 <span id="delivery_fee"></span>
+							<span id="cart_val"></span> + 배송비 <span id="delivery_fee"></span>
 						</div>
-						<div class="cart-total-price">
-							<div id="cart_total_val"></div>
+						<div class="cart-total-price vertical-center">
+							 총 상품 금액: <span id="cart_total_val"></span>
 						</div>
 					</div>
-					<div id="cart_submit_btn">결제하기</div>
+					<div class="submit-btn" id="cart_submit_btn">결제하기</div>
 				</div>
-			
-				
+			</div>
+			<div class="hidden-check-box">
+				<div class="check-title">결제 확인</div>
+				<div class="hidden-close-btn">닫기</div>
+				<div>
+					<div class="vertical-center hidden-items">
+						<c:forEach var="cart_item" items="${cart}">
+							<div>
+							<div class="hidden-img-div">
+								<img src="${pageContext.request.contextPath}/assets/upload/${cart_item.filename}">
+							</div>
+							<div class="hidden-name">${cart_item.item_name}</div>
+							<div class="hidden-quantity">${cart_item.order_quantity}개</div>
+							</div>
+						</c:forEach>
+					</div>
+					<hr>
+					<span class="hidden-total">총 결제 금액: <span id="check_total" data-price="0"></span></span>
+					<div class="hidden-submit-btn">전체 결제</div>
+					
+				</div>
 			</div>
 		</c:if>

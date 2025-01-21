@@ -103,7 +103,7 @@
 				<div class="item-info3">
 					<ul>
 						<li>단독판매</li>
-						<c:if test="${item.category == 1}">
+						<c:if test="${item.category == 1 && isMember > 0}">
 						<li class="prim">구독회원전용</li>
 						</c:if>
 						<li class="bold-text">상품명 : ${item.item_name}</li>

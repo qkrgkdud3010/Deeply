@@ -42,13 +42,13 @@
 				<div class="width-10 fan-font-design">${letter.nick_name}</div>
 				</c:if>
 				<c:if test="${letter.isFan != 1}">
-				<div class="width-10">${letter.nick_name}</div>
+				<div class="width-10 font-0_8">${letter.nick_name}</div>
 				</c:if>
 				<c:if test="${letter.isFan == 1}">
 				<div class="width-80"><a class="fan-title-design" href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
 				</c:if>
 				<c:if test="${letter.isFan != 1}">
-				<div class="width-80"><a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
+				<div class="width-80 font-0_8"><a href="${pageContext.request.contextPath}/letter/detail?letter_num=${letter.letter_num}">${letter.letter_title}</a></div>
 				</c:if>
 				<div class="width-10 align-center">${letter.post_date}</div>
 				<c:if test="${letter.replied == 0}">

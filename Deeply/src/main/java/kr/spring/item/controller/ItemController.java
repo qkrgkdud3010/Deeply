@@ -237,10 +237,18 @@ public class ItemController {
 		log.debug("<<상품 상세 - item_num>> : " + item_num);
 		
 		
-		Map<String,Object> map = new HashMap<String,Object>();
+		
 		
 		ItemVO item = itemService.selectitem(item_num);
 		AgroupVO agroup = artistService.selectArtistDetail(item.getUser_num());
+		
+		if(principal.getMemberVO() != null) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("user_num", principal.getMemberVO().getUser_num());
+			map.put("group_name", agroup.getGroup_name());
+			int isMember = itemService.checkMembership(map);
+			model.addAttribute("isMember", isMember);
+		}
 		
 		model.addAttribute("item",item);
 		model.addAttribute("orderVO",new OrderVO());
@@ -487,6 +495,28 @@ public class ItemController {
 		    totalAmount += cartItem.getItem_price() * cartItem.getOrder_quantity();
 		}
 		
+		
+		
+		
+		if(principal.getMemberVO() != null) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("user_num", user_num);
+			
+			for(CartVO cart : carts) {
+				ItemVO item = itemService.selectitem(cart.getItem_num());
+				cart.setIsPremium(item.getCategory());
+				AgroupVO agroup = artistService.selectArtistDetail(item.getUser_num());
+				String group_name = agroup.getGroup_name();
+				map.put("group_name", group_name);
+				int isMember = itemService.checkMembership(map);
+				if(isMember > 0) {
+					cart.setIsMember(1);
+				}
+			}
+			
+		}
+		
+		
 		log.debug("<<장바구니 목록>> : " + carts);
 		model.addAttribute("totalAmount", totalAmount);
 		model.addAttribute("cart", carts);
@@ -606,11 +636,11 @@ public class ItemController {
 			return "itemOrderList"; // 주문내역으로 이동
 	}
 
+	
 
 
 
-
-	}
+}
 
 
 

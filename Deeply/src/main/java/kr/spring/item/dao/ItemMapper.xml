@@ -236,7 +236,13 @@
 		ORDER BY 
 		    o.ORDER_DATE DESC
 	</select>
-	
+	<select id="checkMembership" parameterType="map" resultType="integer">
+		SELECT COUNT(*)
+			FROM fan f
+			JOIN auser_detail d ON f.fan_artist = d.user_num
+			WHERE f.user_num = #{user_num}
+			AND d.group_name = #{group_name}
+	</select>
 	
 	
 </mapper>

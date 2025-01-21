@@ -56,6 +56,9 @@ a {
 .font-0_8{
 	font-size:0.8vw;
 }
+.font-0_9{
+	font-size:0.9vw;
+}
 .font-1{
 	font-size:1vw;
 }
@@ -1632,13 +1635,13 @@ a {
 .fan-font-design {
     font-weight: bold;
     color: white;
-    font-size: clamp(12px, 1vw, 20px);
+    font-size: clamp(12px, 0.9vw, 20px);
     text-shadow: 0 0 7px #7DD3FC, 0 0 7px #7DD3FC;
 }
 
 .fan-title-design{
 	font-weight:bold;
-	color:#0EA5E9;
+	font-size:0.8vw;
 }
 
 
