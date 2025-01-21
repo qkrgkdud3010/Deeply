@@ -26,7 +26,7 @@
 						<div class="profile-item">
 							<img src="/member/photoView2?user_num=${myArtistList.fan_artist}"
 								class="my-photo2"><br>
-							<a href='${pageContext.request.contextPath}/fan/selectArtist?user_num=${myArtistList.fan_artist}'>멤버십</a>
+							<a class="membership-blue-btn" href='${pageContext.request.contextPath}/fan/selectArtist?user_num=${myArtistList.fan_artist}'>멤버십</a>
 							<div class="profile-text">
 								<div class="group-name"><b>${myArtistList.group_name}</b></div>
 								<div class="artist-name"><b>${myArtistList.name}</b></div>

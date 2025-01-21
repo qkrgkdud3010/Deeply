@@ -16,21 +16,22 @@
 	<hr>
 	<div class="myInfo">
 		<div class="mypage-1" style="margin: 0 auto; text-align: center;">
-			<div class="profile-image">
+			<div class="profile-image" style="align-items:center; text-align: center;">
 				<img src="${pageContext.request.contextPath}/member/photoView"
-					width="200" height="200" class="my-photo2" id="photo_btn">
+					width="200" height="200" class="my-profile-img" id="photo_btn">
 			</div>
-		</div>
 		<c:if test="${member.auth==0}">
-			<p style="text-align: center; font-size: 18px; color: #00A2CF;">
+			<p style="text-align: center; font-size: 18px; color: #00A2CF; margin: 15px 0 40px 0;">
 				<b>일반회원</b>
 			</p>
 		</c:if>
 		<c:if test="${member.auth==1}">
-			<p style="text-align: center; font-size: 18px; color: #00A2CF;">
+			<p style="text-align: center; font-size: 18px; color: #00A2CF; margin: 15px 0 40px 0;">
 				<b>유료회원</b>
 			</p>
 		</c:if>
+		</div>
+		<div>
 		<table class="myTable">
 			<tr>
 				<td><b>아이디 </b>${member.name}</td>
@@ -56,23 +57,22 @@
 						width="20px" height="20px"></a></td>
 			</tr>
 		</table>
+		</div>
 	</div>
 	<div class="followList">
 		<c:if test="${count == 0}">
 			<div class="result-display">팔로우하는 아티스트가 없습니다.</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<table class="profile-list" data-header="${_csrf.headerName}" data-token="${_csrf.token}">
+			<div class="profile-list" data-header="${_csrf.headerName}" data-token="${_csrf.token}">
 				<c:forEach var="followList" items="${followList}">
 					<div class="profile-item">
-						<img src="/member/photoView2?user_num=${followList.user_num}" class="my-photo2"><img class="my-photo" src="${pageContext.request.contextPath}/assets/images/hr2/follow.svg">
-                        <div class="profile-text">
-	                        <div class="group-name"><b>${followList.group_name}</b></div>
-                        	<a class="artist-name"><b>${followList.name}</b></a>
-                        </div>
+						<img src="/member/photoView2?user_num=${followList.user_num}" class="my-photo2">
+						<img class="my-photo" src="${pageContext.request.contextPath}/assets/images/hr2/follow.svg">
+                        <div class="profile-text"><b>${followList.group_name}<br>${followList.name}</b></div>
 					</div>
 				</c:forEach>
-			</table>
+			</div>
 			<div class="align-center">${page}</div>
 		</c:if>
 	</div>
