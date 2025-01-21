@@ -87,11 +87,12 @@ public class ArtistController {
 		
 		videoMap.put("groupNum", group_num);
 		
-		List<VideoVO> videos = videoService.selectListByGroup(videoMap);
+		List<VideoVO> video = videoService.selectListByGroup(videoMap);
 		
 		List<ItemVO> shops = itemService.selectListByUserNum(group_num);
 		
-		model.addAttribute("video", videos);
+		model.addAttribute("groupNum", group_num);
+		model.addAttribute("video", video);
 		model.addAttribute("vo", vo);
 		model.addAttribute("members", members);
 		model.addAttribute("shops",shops);

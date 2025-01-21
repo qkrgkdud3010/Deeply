@@ -154,7 +154,8 @@
 	<div class="artist-contents-container">
 		<div class="artist-contents-title bold-title">HIGHLIGHTS</div>
 			<div class="scroll-track">
-                <c:forEach var="video" items="${membershipVideos}" varStatus="status">
+				<div class="artist-contents-list vertical-center">
+                <c:forEach var="video" items="${video}" varStatus="status">
                     <c:if test="${status.index < 4}">
                         <!-- 유튜브 썸네일 처리 -->
                         <c:choose>
@@ -170,18 +171,15 @@
                                 <c:set var="thumbnailUrl" value="${video.mediaUrl}" />
                             </c:otherwise>
                         </c:choose>
-
-                        <div class="video-card" onclick="location.href='${pageContext.request.contextPath}/videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
-                            <img src="${thumbnailUrl}" alt="썸네일" />
-                            <div class="video-card-title">${video.title}</div>
-                            <div class="video-card-description">${video.description}</div>
+						<div class="artist-contents-item shadow-effect">
+                        	<div class="video-card" onclick="location.href='${pageContext.request.contextPath}videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
+                            	<img src="${thumbnailUrl}" alt="썸네일" />
+                        	</div>
                         </div>
                     </c:if>
                 </c:forEach>
+                </div>
             </div>
-		<div class="artist-contents-list vertical-center">
-			
-		</div>
 		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}videos/group?group_num=${vo.group_num}">->전체 영상</a></div>
 	</div>
 	<div class="artist-contents-container">
