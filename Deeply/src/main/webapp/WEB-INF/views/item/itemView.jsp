@@ -16,8 +16,8 @@
 <div class="detail-container">
 	<div class="addCart-alert" id="addCart_alert">
 		<div class="x-btn" id="alert_x_btn">x</div>
-		<div>상품을 장바구니에 추가하였습니다</div>
-		<a href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기 →</a>
+		<div class="c-btn">상품을 장바구니에 추가하였습니다</div>
+		<a class="c-btn2" href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기 →</a>
 	</div>
 	
 	<%-- 아티스트 계정으로 로그인 시작 --%>
@@ -43,7 +43,7 @@
 			    }
 			</script>
 			<input type="button" class="nonbox-button" value="등록하기" onclick="location.href='/item/write'">
-			<a href="javascript:history.go(-1);" class="btn-back">이전으로</a>
+			<input type="button" class="nonbox-button" value="이전으로" onclick="location.href='/item/main'">
 		</c:if>
 	</div>
 	<%-- 아티스트 계정으로 로그인 끝--%>
@@ -79,9 +79,9 @@
 						            </c:when>
 						        </c:choose>
 					        </li>
-							<li>상품명 : ${item.item_name}</li>
-							<li>가격 : ${item.item_price}원</li>
-							<li>수량 : ${item.item_stock}개</li>
+							<li class="info">상품명 : ${item.item_name}</li>
+							<li class="info">가격 : ${item.item_price}원</li>
+							<li class="info">수량 : ${item.item_stock}개</li>
 							
 						</ul>
 					</div>

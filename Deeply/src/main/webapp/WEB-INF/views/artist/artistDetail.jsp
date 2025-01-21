@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/artistPage.js"></script>
@@ -96,20 +97,27 @@
 					<div class="member-item" data-value="${member.user_num}">
 					<img class="member-profile-img" src="/member/photoView2?user_num=${member.user_num}">
 					<div class="align-center font-white bold-title top-5">${member.name}</div>
-					</div>
+					
 					<c:if test="${!empty principal.memberVO}">
-						<button class="top-10" onclick="location.href='${pageContext.request.contextPath}/fan/selectArtist?user_num=${member.user_num}'">
+						<button class="membership-btn top-10" onclick="location.href='${pageContext.request.contextPath}/fan/selectArtist?user_num=${member.user_num}'">
 							멤버십 구독
 						</button>
 						<c:if test="${empty member.follower_num or login_num!=member.follower_num}">
-							<span class="follow-cnt" style="color:white;"><b>팔로워</b> ${member.follow_cnt}</span><img class="output_follow" data-num="${member.follow_num}" data-unum="${member.follower_num}" data-header="${_csrf.headerName}" data-token="${_csrf.token}"
+							<div class="vertical-center follow-cnt">
+							<img class="output_follow" data-num="${member.follow_num}" data-unum="${member.follower_num}" data-header="${_csrf.headerName}" data-token="${_csrf.token}"
 							  src="${pageContext.request.contextPath}/assets/images/hr2/unfollow.png" style="width:20px; height:20px;]">
+							<span style="color:white;"><b>Follower</b> ${member.follow_cnt}</span>
+							</div>
 						</c:if>
 						<c:if test="${!empty member.follower_num and login_num==member.follower_num}">
-							<span class="follow-cnt" style="color:white;"><b>팔로워</b> ${member.follow_cnt}</span><img class="output_follow" data-num="${member.follow_num}" data-unum="${member.follower_num}" data-header="${_csrf.headerName}" data-token="${_csrf.token}"
-							  src="${pageContext.request.contextPath}/assets/images/hr2/follow.png" style="width:20px; height:20px;]">
+							<div class="vertical-center follow-cnt">
+								<img class="output_follow" data-num="${member.follow_num}" data-unum="${member.follower_num}" data-header="${_csrf.headerName}" data-token="${_csrf.token}"
+							  	src="${pageContext.request.contextPath}/assets/images/hr2/follow.png" style="width:20px; height:20px;]">
+								<span style="color:white;"><b>Follower</b> ${member.follow_cnt}</span>
+							</div>
 						</c:if>
 					</c:if>
+					</div>
 				</c:forEach>	
 			</div>
 			<div class="member-detail font-white">
@@ -138,22 +146,6 @@
 				
 				
 			</div>
-			<div class="official-board-container">
-				<div class="official-board-title font-white bold-title"><span class="vertical-center left-5">공지사항</span></div>
-				<div class="official-board-list">
-					<ul>
-						<li class="official-board-item align-center font-white top-3">공지사항 1</li>
-						<li class="official-board-item align-center font-white top-3">공지사항 2</li>
-					
-						<li class="official-board-item align-center font-white top-3">공지사항 3</li>
-						
-						<li class="official-board-item align-center font-white top-3">공지사항 4</li>
-						
-						<li class="official-board-item align-center font-white top-3">공지사항 5</li>
-						
-					</ul>
-				</div>
-			</div>
 		</div>
 	</div>
 	<div class="space-10vw"></div>
@@ -162,18 +154,32 @@
 	<div class="artist-contents-container">
 		<div class="artist-contents-title bold-title">HIGHLIGHTS</div>
 		<div class="artist-contents-list vertical-center">
-			<div class="artist-contents-item">
-				<img>
+			<c:forEach items="${videos}" var="video" begin="0" end="3">
+			<div class="artist-contents-item shadow-effect">
+				<c:if test="${status.index < 7}">
+                        <!-- 유튜브 썸네일 처리 -->
+                        <c:choose>
+                            <c:when test="${fn:contains(video.mediaUrl, 'youtube.com/watch?v=')}">
+                                <c:set var="youtubeId" value="${fn:substringAfter(video.mediaUrl, 'v=')}"/>
+                                <c:set var="thumbnailUrl" value="https://img.youtube.com/vi/${youtubeId}/0.jpg"/>
+                            </c:when>
+                            <c:when test="${fn:contains(video.mediaUrl, 'youtu.be/')}">
+                                <c:set var="youtubeId" value="${fn:substringAfter(video.mediaUrl, 'youtu.be/')}" />
+                                <c:set var="thumbnailUrl" value="https://img.youtube.com/vi/${youtubeId}/0.jpg" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="thumbnailUrl" value="${video.mediaUrl}" />
+                            </c:otherwise>
+                        </c:choose>
+
+                        <div class="video-card" onclick="location.href='${pageContext.request.contextPath}/videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
+                            <img src="${thumbnailUrl}" alt="썸네일" />
+                            <div class="video-card-title">${video.title}</div>
+                            <div class="video-card-description">${video.description}</div>
+                        </div>
+                    </c:if>
 			</div>
-			<div class="artist-contents-item">
-				<img>
-			</div>
-			<div class="artist-contents-item">
-				<img>
-			</div>
-			<div class="artist-contents-item">
-				<img>
-			</div>
+			</c:forEach>
 		</div>
 		<div class="artist-contents-more right-align vertical-center"><a href="${pageContext.request.contextPath}videos/group?group_num=${vo.group_num}">->전체 영상</a></div>
 	</div>
@@ -181,7 +187,7 @@
 		<div class="artist-contents-title bold-title">SHOP</div>
 		<div class="artist-contents-list vertical-center">
 			<c:forEach items="${shops}" var="item" begin="0" end="3">
-			<div class="artist-contents-item">
+			<div class="artist-contents-item shadow-effect">
 				<img src="${pageContext.request.contextPath}/assets/upload/${item.filename}">
 			</div>
 			</c:forEach>

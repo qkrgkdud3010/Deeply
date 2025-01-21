@@ -160,6 +160,11 @@ public class ItemServiceImpl implements ItemService{
 	public int checkMembership(Map<String, Object> map) {
 		return itemMapper.checkMembership(map);
 	}
+
+	@Override
+	public List<ItemVO> selecExceptPremium(Map<String, Object> map) {
+		return itemMapper.selecExceptPremium(map);
+	}
 	
 	
 	

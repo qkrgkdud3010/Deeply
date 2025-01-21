@@ -162,8 +162,23 @@ public class ItemController {
 						  Model model,
 						  @AuthenticationPrincipal PrincipalDetails principal) {
 
-		log.debug("<<PrincipalDetails 객체>>: " + principal);
 		log.debug("<<user_num>> : " + user_num);
+		
+		Long my_num = null;
+		int isMember = 0;
+		
+		if(principal != null && principal.getMemberVO() != null) {
+			my_num = principal.getMemberVO().getUser_num();
+			Map<String,Object> mapMembership = new HashMap<String,Object>();
+			AgroupVO agroup = artistService.selectArtistDetail(user_num);
+			String group_name = agroup.getGroup_name();
+			mapMembership.put("user_num", my_num);
+			mapMembership.put("group_name", group_name);
+			isMember = itemService.checkMembership(mapMembership);
+		}
+		
+		
+		
 		
 		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -175,6 +190,7 @@ public class ItemController {
 			Long auser_num = artist.getUser_num();
 			map.put("user_num", auser_num);
 			model.addAttribute("auser_num", auser_num);
+			isMember = 1;
 		}
 		
 		//유저 계정으로 접속
@@ -203,7 +219,13 @@ public class ItemController {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
-			list = itemService.selectList(map);
+			
+			if(isMember > 0) {
+				list = itemService.selectList(map);
+			}else {
+				list = itemService.selecExceptPremium(map);
+			}
+			
 		}
 		
 		
@@ -226,7 +248,7 @@ public class ItemController {
 	/*==============================
 	 * 	상품 상세
 	 * =============================*/
-	//@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
 	public String process(long item_num,
 						  Model model,
@@ -248,6 +270,8 @@ public class ItemController {
 			map.put("group_name", agroup.getGroup_name());
 			int isMember = itemService.checkMembership(map);
 			model.addAttribute("isMember", isMember);
+		}else {
+			model.addAttribute("isMember", 0);
 		}
 		
 		model.addAttribute("item",item);

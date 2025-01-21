@@ -90,6 +90,34 @@
 					AND user_num = #{user_num}
 			]]>
 	</select>	
+	<select id="selecExceptPremium" parameterType="map" resultType="itemVO">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			FROM (SELECT
+					item_num,
+					filename,
+					item_name,
+					item_regdate,
+					item_modifydate,
+					item_stock,
+					item_description,
+					item_price,
+					user_num,
+					category
+				FROM shop_item
+				JOIN agroup ON shop_item.user_num = agroup.group_num
+				<include refid="shopSearch"/>
+				ORDER BY item_regdate desc)a)
+			<![CDATA[
+					WHERE rnum >= #{start} 
+					AND rnum <= #{end}
+					AND user_num = #{user_num}
+					AND category = 0
+			]]>
+	</select>	
 	
 	<update id="updateItem" parameterType="ItemVO">
 		UPDATE shop_item SET 

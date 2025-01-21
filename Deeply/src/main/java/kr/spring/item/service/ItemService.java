@@ -24,6 +24,8 @@ public interface ItemService {
 	public List<ItemVO> showListGroup();
 	public AgroupVO selectGroup(String group_name);
 	
+	public List<ItemVO> selecExceptPremium(Map<String,Object> map);
+	
 	//----------구매자(사용자)-------------
 	public void insertOrder(OrderVO ordervo);
 	public void updateStock(int quantity, long item_num);

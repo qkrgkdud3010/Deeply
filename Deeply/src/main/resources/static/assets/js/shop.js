@@ -182,7 +182,7 @@ $(function () {
 		event.preventDefault();
 		$('.item-premium-btn').css('background', 'none');
 		let item_category = $(this).data('num');
-		$(this).css('background', 'yellow');
+		$(this).css('background', '#FEFF9F');
 		$('#category_val').val(item_category);
 	});
 
