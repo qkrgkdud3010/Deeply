@@ -143,8 +143,7 @@
 					다양한 순간을 영상으로 만나보세요.
 				</span>
 			</div>	
-			<div>
-			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/chat.png">
+			 	<img class="choice4" src="${pageContext.request.contextPath}/assets/image_bundle/main_movie.png">
 			</div>
 		</div>
 	</div>
@@ -160,7 +159,7 @@
             <c:forEach items="${list}" var="item" varStatus="status">
                 <!-- 4개의 아이템만 출력 -->
                 <c:if test="${status.index < 4}">
-                <div class="item-cards">
+                <div class="item-cards">	
                     <a href="${pageContext.request.contextPath}/item/detail?item_num=${item.item_num}">
                         <img src="${pageContext.request.contextPath}/assets/upload/${item.filename}" class="item-img" >
                     </a>
