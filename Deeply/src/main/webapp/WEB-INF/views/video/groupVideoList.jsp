@@ -57,7 +57,7 @@
         <c:if test="${!isMembership}">
             <div class="membership-overlay">
                 <p>멤버십 전용 영상입니다. 멤버십 가입 후 시청하실 수 있습니다.</p>
-                <button class="membership-join-btn">멤버십 가입하기</button>
+                <button class="membership-join-btn" onclick="location.href='${pageContext.request.contextPath}/artist/list'">멤버십 가입하기</button>
             </div>
         </c:if>
     </div>
