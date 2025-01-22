@@ -41,7 +41,7 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <div class="video-card" onclick="location.href='${pageContext.request.contextPath}/videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
+                        <div class="video-card" onclick="location.href='${pageContext.request.contextPath}/artist/videos/page?videoId=${video.videoId}&group_num=${groupNum}'">
                             <img src="${thumbnailUrl}" alt="썸네일" />
                             <div class="video-card-title">${video.title}</div>
                             <div class="video-card-description">${video.description}</div>
