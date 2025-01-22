@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.chat.dao.ChatMapper;
-import kr.spring.chat.vo.ChatMsgVO;
+
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.ArtistVO;
 
@@ -80,11 +80,7 @@ public class ChatServiceImpl implements ChatService{
 	 * 메세지 관련 부분
 	 * */
 	
-	@Override
-	public void insertMsg(ChatMsgVO chmVO) {
-		chatMapper.insertMsg(chmVO);
-	}
-
+	
 	
 
 	@Override

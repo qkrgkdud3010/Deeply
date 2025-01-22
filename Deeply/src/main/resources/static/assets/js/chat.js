@@ -24,7 +24,7 @@ $(document).ready(function () {
 
         // STOMP 서버에 메시지 전송
         if (socket && isStomp) {
-            socket.send(`/chat/${currentRoom}`, {}, JSON.stringify({ user: username, msg: msg }));
+            socket.send(`/chat/${currentRoom}`, {}, JSON.stringify({ user: username, msg: msg, status: 'sent' }));
         }
     });
 
@@ -99,6 +99,11 @@ function fetchRooms() {
 
                     // 방 선택 UI 자동으로 보여주기
                     $('#btnJoinRoom').show(); // 'Join Room' 버튼 표시
+
+                    // 방에 자동 입장
+                    $('.room-container').hide();
+                    $('#chatContainer').show();
+                    connectStomp(currentRoom); // STOMP 연결
                 }
             } else if (data.result === 'logout') {
                 alert("You are logged out. Please log in again.");
@@ -114,14 +119,12 @@ function fetchRooms() {
     });
 }
 
-// STOMP 연결 함수
 function connectStomp(room) {
-    var sock = new SockJS("/stompChat"); // SockJS 엔드포인트
+    var sock = new SockJS("/stompChat"); // STOMP 엔드포인트
     var client = Stomp.over(sock);
     isStomp = true;
     socket = client;
 
-    // 연결 시 로그를 출력
     client.connect({}, function () {
         console.log("Connected to /stompChat!");
 
@@ -134,14 +137,19 @@ function connectStomp(room) {
                 let message = JSON.parse(event.body); // 메시지 파싱
                 console.log("Received message:", message);
 
-                if (message.user !== username) {
-                    $('#message-list').append(`<div class="chat-bubble server"><b>${message.user}:</b> ${message.msg}</div>`);
+                if (message && message.user && message.msg) {  // 메시지가 예상대로 오는지 확인
+                    if (message.user !== username) {
+                        // 받은 메시지를 화면에 표시 (received 상태)
+                        $('#message-list').append(`<div class="chat-bubble received"><b>${message.user}:</b> ${message.msg}</div>`);
 
-                    // 자동 스크롤
-                    var chatContainer = document.getElementById('chatContainer');
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                        // 자동 스크롤
+                        var chatContainer = document.getElementById('chatContainer');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    } else {
+                        console.log("Own message ignored:", message);
+                    }
                 } else {
-                    console.log("Own message ignored:", message);
+                    console.error("Invalid message format:", message);
                 }
             } catch (error) {
                 console.error("Error parsing message:", error, event.body);
@@ -151,3 +159,23 @@ function connectStomp(room) {
         console.error("STOMP connection failed:", error);  // 연결 실패 시 오류 출력
     });
 }
+
+// 메시지 전송 코드 수정 (보내는 메시지에 status 'sent' 추가)
+$('#btnSend').on('click', function (evt) {
+    evt.preventDefault();
+    let msg = $('input#msg').val();
+
+    if (!msg.trim()) {
+        alert("Please enter a message.");
+        return;
+    }
+
+    // 보낸 메시지 화면에 표시
+    $('#message-list').append(`<div class="chat-bubble user"><b>${username}:</b> ${msg}</div>`);
+    $('input#msg').val(''); // 입력창 초기화
+
+    // STOMP 서버에 메시지 전송
+    if (socket && isStomp) {
+        socket.send(`/chat/${currentRoom}`, {}, JSON.stringify({ user: username, msg: msg, status: 'sent' }));
+    }
+});

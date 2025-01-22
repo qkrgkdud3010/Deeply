@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import kr.spring.chat.vo.ChatMsgVO;
+
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.ArtistVO;
 
@@ -58,10 +58,10 @@ public interface ChatMapper {
 	*******************/
 	
 	//메세지 주고 받기
-	public void insertMsg(ChatMsgVO chmVO);
-	@Select("SELECT chat_num FROM(SELECT chat_num FROM chat WHERE chat_user_num = #{chat_user_num} ORDER BY chat_num ASC) WHERE ROWNUM=1")
+	//public void insertMsg(ChatMsgVO chmVO);
+	@Select("SELECT chat_num FROM(SELECT chat_num FROM chat WHERE chat_user_num = #{chat_user_num} ORDER BY chat_num DESC) WHERE ROWNUM=1")
 	public Long selectChatroomNum(Long chat_user_num);
-	@Select("SELECT chat_id FROM(SELECT chat_id FROM chat WHERE chat_user_num = #{chat_user_num} ORDER BY chat_num ASC) WHERE ROWNUM=1")
+	@Select("SELECT chat_id FROM(SELECT chat_id FROM chat WHERE chat_user_num = #{chat_user_num} ORDER BY chat_num DESC) WHERE ROWNUM=1")
 	public String selectId(Long chat_user_num);
 	 // 특정 채팅방의 메시지를 가져오는 메서드
     

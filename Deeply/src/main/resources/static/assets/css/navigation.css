@@ -1,71 +1,42 @@
-@charset "UTF-8";
-
 body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-        .chat-container {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            background-color: #f5f5f5;
-        }
+.floating-nav {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
 
-        .chat-bubble {
-            max-width: 60%;
-            margin: 10px;
-            padding: 10px;
-            border-radius: 15px;
-            font-size: 14px;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
+.floating-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #007BFF;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
-        .chat-bubble.user {
-            background-color: #0084ff;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
+.floating-nav ul li {
+  margin: 0;
+}
 
-        .chat-bubble.server {
-            background-color: #e0e0e0;
-            color: black;
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
+.floating-nav ul li a {
+  display: block;
+  padding: 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  text-align: center;
+  transition: background 0.3s ease;
+}
 
-        .input-container {
-            display: flex;
-            padding: 10px;
-            background-color: #ffffff;
-            border-top: 1px solid #cccccc;
-        }
-
-        .input-container input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 20px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .input-container button {
-            margin-left: 10px;
-            padding: 10px 15px;
-            background-color: #0084ff;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .input-container button:hover {
-            background-color: #005bb5;
-        }
+.floating-nav ul li a:hover {
+  background: #0056b3;
+}

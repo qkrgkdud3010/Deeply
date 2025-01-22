@@ -2,7 +2,7 @@ package kr.spring.chat.controller;
 
 
 import kr.spring.chat.service.ChatService;
-import kr.spring.chat.vo.ChatMsgVO;
+
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.ArtistVO;
 import kr.spring.member.vo.PrincipalDetails;

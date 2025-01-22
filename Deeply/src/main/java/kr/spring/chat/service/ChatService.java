@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.ibatis.annotations.Select;
 
-import kr.spring.chat.vo.ChatMsgVO;
+
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.ArtistVO;
 
@@ -43,7 +43,7 @@ public interface ChatService {
 	
 	//메세지 DB에 메시지 등록하기
 	
-	void insertMsg(ChatMsgVO chmVO);
+	//void insertMsg(ChatMsgVO chmVO);
 	public Long selectChatroomNum(Long chat_user_num);
 	public String selectId(Long chat_user_num);
     

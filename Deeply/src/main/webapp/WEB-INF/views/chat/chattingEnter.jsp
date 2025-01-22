@@ -7,6 +7,8 @@
 	<sec:authentication property="principal" var="principal"/>
 </sec:authorize>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hr1.css">
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs"></script>
 
 <!-- 채팅방 형성 시작 -->
 <div class="page-main">

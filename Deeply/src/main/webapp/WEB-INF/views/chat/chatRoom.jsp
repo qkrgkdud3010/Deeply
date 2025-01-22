@@ -14,7 +14,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/hr1.css">
-
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs"></script>
 
 <!--  
 <div class="page-main">
@@ -50,26 +51,41 @@
         <!-- 아티스트 사진 미리보기 -->
         <c:if test="${not empty artistPhoto}">
             <p><strong>아티스트 사진:</strong></p>
-            <img src="${artistPhoto}" alt="Artist Photo" style="max-width: 300px; max-height: 300px;" />
         </c:if>
 
     </div>
  
  
-    <div class="room-container">
-        <h2>Available Rooms</h2>
-        <div id="roomList"></div>
-        <button id="btnJoinRoom">Join Room</button>
+         <div class="container">
+        <!-- 로그인 화면 -->
+        <div class="login-container">
+            <h2>로그인</h2>
+            <p>사용자 이름을 자동으로 가져옵니다...</p>
+        </div>
+
+        <!-- 방 선택 화면 -->
+        <div class="room-container">
+            <h2>채팅방 선택</h2>
+            <div id="roomList"></div>
+            <button id="btnJoinRoom">Join Room</button>
+        </div>
+
+        <!-- 채팅 화면 -->
+        <div id="chatContainer">
+            <div id="message-list"></div>
+            <div class="input-container">
+                <input type="text" id="msg" placeholder="메시지를 입력하세요..." />
+                <button id="btnSend">전송</button>
+            </div>
+        </div>
     </div>
 
-    <!-- 채팅 컨테이너 -->
-    <div id="chatContainer">
-        <div id="message-list"></div>
-        <form id="messageForm">
-            <input type="text" id="msg" placeholder="Type your message here" />
-            <button id="btnSend">Send</button>
-        </form>
-    </div>
+    <!-- JS 라이브러리 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockJS-client@1.5.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+   
+
 
 
 <script src="${pageContext.request.contextPath}/assets/js/chat.js"></script>

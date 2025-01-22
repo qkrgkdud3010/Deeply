@@ -48,7 +48,7 @@
 	
 	
 	<!-- 메세지 주고받는 부분 -->
-	<!-- 메세지 등록 -->
+	<!-- 
   	<insert id="insertMsg" parameterType="chatMsgVO">
 		INSERT INTO chatmsg(
 			chatmsg_num,
@@ -71,7 +71,7 @@
   	ORDERBY chatmsg_num ASC
   	
   	</select>
-
+메세지 등록 -->
 
 
 
