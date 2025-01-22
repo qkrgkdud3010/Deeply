@@ -137,17 +137,17 @@
 		</div>
 		<div class="mypage-link" style="margin-bottom: 10px auto;">
 			<input type="button" value="공연 관리"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="location.href='${pageContext.request.contextPath}'"> <input
 				type="button" value="굿즈 관리"
-				onclick="${pageContext.request.contextPath}">  <input
+				onclick="location.href='${pageContext.request.contextPath}'">  <input
 				type="button" value="편지 관리"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="location.href='${pageContext.request.contextPath}'"> <input
 				type="button" value="채팅 관리"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="location.href='${pageContext.request.contextPath}'"> <input
 				type="button" value="영상 관리"
-				onclick="${pageContext.request.contextPath}"> <input
+				onclick="location.href='${pageContext.request.contextPath}'"> <input
 				type="button" value="공지 등록"
-				onclick="${pageContext.request.contextPath}/notice/wrtie">
+				onclick="location.href='${pageContext.request.contextPath}/notice/wrtie'">
 		</div>
 	</div>
 </c:if>
