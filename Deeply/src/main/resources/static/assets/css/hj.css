@@ -1445,7 +1445,6 @@ form#item{
 	border:1px solid grey;
 	width:17vw;
 	height:3.5vh;
-	padding:0 0 0 15vw;
 	font-size: clamp(9px, 1vw, 13px);
 }
 
