@@ -15,7 +15,7 @@
 	<input type="hidden" id="item_quantity" data-order-num="${item_quantity}">
 	</c:if>
 	<hr>
-	<h2>결제 방식, ${booking_num}, ${order_num}, ${item_quantity}</h2>
+	<h2>결제 방식</h2>
 	<form>
 		<div style="display: none;">
 			<label for="usePoints">사용할 포인트: </label> <input type="number"
@@ -117,73 +117,57 @@ console.log(userNum,orderNum);  // 제대로 값이 출력되는지 확인
 
 	        // 결제 성공 여부 확인
 	   if (response.code !== undefined) {
-    const bookingElement = document.querySelector("#booking_info");
-    const orderElement = document.querySelector("#order_info");
-    const itemElement = document.querySelector("#item_quantity");
-
-    const bookingNum = bookingElement ? bookingElement.getAttribute("data-book-num") : null;
-    const orderNum = orderElement ? orderElement.getAttribute("data-order-num") : null;
-    const itemQuantity = itemElement ? itemElement.getAttribute("data-order-num") : null;
-
-    const endpoint = bookingNum
-        ? `${pageContext.request.contextPath}/booking/complete`
-        : orderNum
-        ? `${pageContext.request.contextPath}/item/complete`
-        : `${pageContext.request.contextPath}/charge/complete`;
-
-
-
-	            const body = {
-	                totalAmount: finalPrice,
-	                user_num: userNum
-	                
-	            };
-
-	            if (bookingNum!=null) {
-	                body.booking_num = parseInt(bookingNum, 10);
-	            }else if(orderNum!=null){
-	            	 let items = [];
-
-	            	    // itemQuantity가 배열인 경우 각 상품의 정보를 묶어서 배열에 추가
-	            	    if (Array.isArray(itemQuantity)) {
-	            	        for (let i = 0; i < itemQuantity.length; i++) {
-	            	            let item = {
-	            	                order_num: parseInt(orderNum, 10),
-	            	                item_quantity: parseInt(itemQuantity[i], 10)
-	            	            };
-	            	            items.push(item);
-	            	        }
-	            	    } else {
-	            	        // itemQuantity가 단일 값인 경우 하나의 객체로 묶어서 배열에 추가
-	            	        items.push({
-	            	            order_num: parseInt(orderNum, 10),
-	            	            item_quantity: parseInt(itemQuantity, 10)
-	            	        });
-	            }
-	
-	            	    const body = {
-	            	            items: items
-	            	        };
-
-	            const notified = await fetch(endpoint, {
-	                method: "POST",
-	                headers: {
-	                    "Content-Type": "application/json",
-	                    "X-CSRF-TOKEN": csrfToken,
-	                },
-	                body: JSON.stringify(body),
-	            });
-
-	            if (notified.ok) {
-	                alert("결제가 성공적으로 완료되었습니다.");
-	                window.location.href = "/main/main";
-	            } else {
-	                const errorResponse = await notified.json();
-	                console.error("결제 처리 실패:", errorResponse);
-	                alert("결제 처리 중 문제가 발생했습니다.");
-	            }
+		   alert("결제가 실패했습니다. 다시 시도해주세요.");
+    
 	        } else {
-	            alert("결제가 실패했습니다. 다시 시도해주세요.");
+	        	const bookingElement = document.querySelector("#booking_info");
+	            const orderElement = document.querySelector("#order_info");
+	            const itemElement = document.querySelector("#item_quantity");
+
+	            const bookingNum = bookingElement ? bookingElement.getAttribute("data-book-num") : null;
+	            const orderNum = orderElement ? orderElement.getAttribute("data-order-num") : null;
+	            const itemQuantity = itemElement ? itemElement.getAttribute("data-order-num") : null;
+
+	            const endpoint = bookingNum
+	                ? `${pageContext.request.contextPath}/booking/complete`
+	                : orderNum
+	                ? `${pageContext.request.contextPath}/item/complete`
+	                : `${pageContext.request.contextPath}/charge/complete`;
+
+
+
+	        	            const body = {
+	        	                totalAmount: finalPrice,
+	        	                user_num: userNum
+	        	                
+	        	            };
+
+	        	            if (bookingNum!=null) {
+	        	                body.booking_num = parseInt(bookingNum, 10);
+	        	            }else if(orderNum!=null){
+	        	            	body.order_num = parseInt(orderNum, 10);
+	        	            	body.item_quantity = parseInt(itemQuantity, 10);
+	        	            }
+	        	
+	        	            
+
+	        	            const notified = await fetch(endpoint, {
+	        	                method: "POST",
+	        	                headers: {
+	        	                    "Content-Type": "application/json",
+	        	                    "X-CSRF-TOKEN": csrfToken,
+	        	                },
+	        	                body: JSON.stringify(body),
+	        	            });
+
+	        	            if (notified.ok) {
+	        	                alert("결제가 성공적으로 완료되었습니다.");
+	        	                window.location.href = "/main/main";
+	        	            } else {
+	        	                const errorResponse = await notified.json();
+	        	                console.error("결제 처리 실패:", errorResponse);
+	        	                alert("결제 처리 중 문제가 발생했습니다.");
+	        	            }
 	        }
 	    } catch (error) {
 	        console.error("결제 요청 중 오류 발생:", error);
