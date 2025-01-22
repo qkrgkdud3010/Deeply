@@ -66,6 +66,10 @@ public class BookingController {
 		log.debug("<<예매 페이지 번호>> : " + pageNum);
 		Map<String,Object> map = new HashMap<String,Object>();
 		
+		AgroupVO group = artistService.selectArtistDetail(group_num);
+		String group_name = group.getGroup_name();
+		
+		
 		LocalDate today = LocalDate.now();
 	    LocalDate hundredDaysLater = today.plusDays(100);
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -105,43 +109,53 @@ public class BookingController {
 			
 			
 			list = bookingService.selectEventByArtistId(map);
-		}
-		
-		for(EventVO e : list) {
-			if(e.getPerf_status().equals("before")) {
-				e.setStatus_name("예매 전");
-			}else if(e.getPerf_status().equals("ongoing")) {
-				e.setStatus_name("예매 기간");
-			}else if(e.getPerf_status().equals("membership")) {
-				e.setStatus_name("선예매 기간");
-			}else {
-				e.setStatus_name("종료된 이벤트");
-			}
+			int isFan = 0;
 			
-		}
-		
-		AgroupVO group = artistService.selectArtistDetail(group_num);
-		String group_name = group.getGroup_name();
-		int isFan = 0;
-		
-		if(principal.getMemberVO() != null) {
-			MemberVO member = principal.getMemberVO();
-			Map<String,Object> fanMap = new HashMap<String,Object>();
-			fanMap.put("user_num", member.getUser_num());
-			fanMap.put("group_name", group_name);
-			isFan = bookingService.checkIfGroupMembership(fanMap);
-			
-			model.addAttribute("user_num", member.getUser_num());
-		}
-		
-		if(isFan > 0) {
 			for(EventVO e : list) {
-				if(e.getPerf_status().equals("membership")) {
-					e.setIsMembership(1);
+				if(e.getPerf_status().equals("before")) {
+					e.setStatus_name("예매 전");
+				}else if(e.getPerf_status().equals("ongoing")) {
+					e.setStatus_name("예매 기간");
+				}else if(e.getPerf_status().equals("membership")) {
+					e.setStatus_name("선예매 기간");
+				}else {
+					e.setStatus_name("종료된 이벤트");
 				}
-					
+				
+			}
+			
+			if(isFan > 0) {
+				for(EventVO e : list) {
+					if(e.getPerf_status().equals("membership")) {
+						e.setIsMembership(1);
+					}
+						
+				}
+			}
+			
+			
+			
+			if(principal.getMemberVO() != null) {
+				MemberVO member = principal.getMemberVO();
+				Map<String,Object> fanMap = new HashMap<String,Object>();
+				fanMap.put("user_num", member.getUser_num());
+				fanMap.put("group_name", group_name);
+				isFan = bookingService.checkIfGroupMembership(fanMap);
+				
+				model.addAttribute("name", member.getName());
+				model.addAttribute("address1", member.getAddress1());
+				model.addAttribute("address2", member.getAddress2());
+				model.addAttribute("zipcode", member.getZipcode());
+				
+				model.addAttribute("user_num", member.getUser_num());
+				
 			}
 		}
+		
+		
+		
+		
+	
 		
 		model.addAttribute("dateRange",dateRange);
 		model.addAttribute("count", count);

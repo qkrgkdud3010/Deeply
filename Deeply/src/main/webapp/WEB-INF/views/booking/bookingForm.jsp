@@ -34,8 +34,8 @@
 <div class="booking-main">
 	<form:form modelAttribute="bookingVO" action="book"
 		id="booking_process" enctype="multipart/form-data">
-		<form:hidden path="perf_num" value="${event.perf_num}"></form:hidden>
-		<form:hidden path="user_num" value="${member.user_num}"></form:hidden>
+		<form:hidden path="perf_num" value="${event.perf_num}"/>
+		<form:hidden path="user_num" value="${member.user_num}"/>
 		<div class="book-form-style">
 			<p>
 				<form:label path="booked_seat">예약 인원</form:label>
@@ -79,27 +79,26 @@
 				<h2 class="top-5">배송지 정보</h2>
 				<p>
 					<form:label class="top-3" path="deliver_name">이름</form:label>
-					<form:input class="medium-input" path="deliver_name" />
+					<form:input class="medium-input" path="deliver_name"/>
 					<form:errors path="deliver_name" cssClass="error-color"/>
 					
 				</p>
 				<p>
 					<form:label path="zipcode">우편번호</form:label>
 					<form:input path="zipcode" id="zipcode" class="Authentication2 medium-input"
-						type="text" placeholder="우편번호" />
+						type="text"/>
 					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"
 						class="default-btn2">
 					<form:errors path="zipcode" cssClass="error-color" />
 				</p>
 				<p>
 					<form:label path="address1">주소</form:label>
-					<form:input path="address1" class="medium-input" id="address1" type="text"
-						placeholder="주소" />
+					<form:input path="address1" class="medium-input" id="address1" type="text"/>
 					<form:errors path="address1" cssClass="error-color" />
 				</p>
 				<p>
 					<form:label path="address2">상세주소</form:label>
-					<form:input path="address2" class="medium-input" type="text" placeholder="상세주소" />
+					<form:input path="address2" class="medium-input" type="text"/>
 					<form:errors path="address2" cssClass="error-color" />
 				</p>
 				<p>

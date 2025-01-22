@@ -40,20 +40,20 @@
 		</c:if>
 		<c:if test="${empty principal.artistVO && !empty principal.memberVO}">
     <a href="/item/cart?user_num=${principal.memberVO.user_num}">
-        <img class="cart-img" src="${pageContext.request.contextPath}/assets/images/hj/cart.png" style="width: 1.8vw; height: 1.8vw;">
+        <img class="cart-img" src="${pageContext.request.contextPath}/assets/images/hj/cart.png" style="width: 1.3vw; height: 1.3vw;">
     </a>
 </c:if>
 		<%--=============사용자 로그인 영역 끝=========--%>
 		<%--=====사용자,관리자 공통 로그인 영역 시작======--%>
 		<c:if test="${!empty principal}">
 			<img src="${pageContext.request.contextPath}/member/photoView"
-				width="25" height="25" class="my-photo">
+				width="30vw" height="30vw" class="my-photo">
 			<c:if test="${!empty principal.memberVO.nick_name}">
 		<span class="user_name">${principal.memberVO.nick_name}</span>님
 		</c:if>
 			<c:if test="${!empty principal && principal.artistVO!=null}">
-		<span class="user_name">${principal.artistVO.name}</span>님
-		</c:if>
+			<span class="user_name">${principal.artistVO.name}</span>님
+			</c:if>
 			<%-- 아래와 같이 폼을 만들고 post방식으로 전달해야 스프링
 		     시큐리티가 지원하는 로그아웃 기능을 사용할 수 있음 --%>
 			<form action="${pageContext.request.contextPath}/member/logout"
@@ -61,7 +61,7 @@
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}">
 			</form>
-			<a href="#" id="logout">로그아웃</a>
+			<a class="header-logout" href="#" id="logout">로그아웃</a>
 			<%-- a 링크에서 submit 기능을 얻기위해 아래 스크립트 활요 --%>
 			<script type="text/javascript">
 			const logout = document.getElementById('logout');
@@ -69,7 +69,7 @@
 				document.getElementById('frm_logout').submit();
 				event.preventDefault();
 			}
-		</script>
+			</script>
 		</c:if>
 		<%--=====사용자,관리자 공통 로그인 영역 끝========--%>
 	</div>

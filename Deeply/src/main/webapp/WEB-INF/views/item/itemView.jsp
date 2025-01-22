@@ -20,7 +20,15 @@
 		<div class="c-btn">상품을 장바구니에 추가하였습니다</div>
 		<a class="c-btn2" href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기 →</a>
 	</div>
+</div>
+<div class="detail-container">
+	<div class="addCart-alert" id="addCart_alert2">
+	<div class="empty-div">
+		<div class="x-btn" id="alert_x_btn">x</div>
+		<div class="c-btn">동일한 상품은 3개까지만 담을 수 있습니다</div>
+		<a class="c-btn2" href="${pageContext.request.contextPath}/item/cart?user_num=${principal.memberVO.user_num}">장바구니 바로가기 →</a>
 	</div>
+</div>
 	
 	<%-- 아티스트 계정으로 로그인 시작 --%>
 	<div class="button page-action">

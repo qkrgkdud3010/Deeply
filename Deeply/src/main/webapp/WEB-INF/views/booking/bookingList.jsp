@@ -38,16 +38,23 @@
 			</form>
 			<div class="booking-list top-1">
 				<div class="booking-items height-90">
-					<c:forEach var="list" items="${list}">
-					<div class="booking-item" data-num="${list.perf_num}" data-val="${list.isMembership}">
-						<img src="${pageContext.request.contextPath}/assets/upload/${list.perf_photo}">
-						<div class="perf-status font-white bold-title right-align">
-							${list.status_name}
+					<c:if test="${count > 0}">
+						<c:forEach var="list" items="${list}">
+						<div class="booking-item" data-num="${list.perf_num}" data-val="${list.isMembership}">
+							<img src="${pageContext.request.contextPath}/assets/upload/${list.perf_photo}">
+							<div class="perf-status font-white bold-title right-align">
+								${list.status_name}
+							</div>
+							<div class="perf-title font-white bold-title align-center">${list.perf_title}</div>
+							<div class="perf-date font-white bold-title align-center">${list.perf_date}</div>
 						</div>
-						<div class="perf-title font-white bold-title align-center">${list.perf_title}</div>
-						<div class="perf-date font-white bold-title align-center">${list.perf_date}</div>
-					</div>
 					</c:forEach>
+					</c:if>
+					<c:if test="${count == 0}">
+						<div class="align-center font-white bold-title width-100">
+							등록된 이벤트가 없습니다
+						</div>
+					</c:if>
 				</div>
 				<div class="page-div align-center height-10 font-white">
 					${page}

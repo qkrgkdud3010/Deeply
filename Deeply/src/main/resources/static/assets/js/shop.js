@@ -127,8 +127,7 @@ $(function () {
 	            } else if (param.result == 'success') {
 					$('#addCart_alert').show();
 	            } else if (param.result == 'over'){
-					$('#addCart_alert').html('동일한 제품의 수량은 3개까지만 담을 수 있습니다');
-					$('#addCart_alert').show();
+					$('#addCart_alert2').show();
 				}else {
 	                alert('장바구니 등록 오류 발생');
 	            }
