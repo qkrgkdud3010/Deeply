@@ -147,7 +147,7 @@
 				type="button" value="영상 관리"
 				onclick="location.href='${pageContext.request.contextPath}'"> <input
 				type="button" value="공지 등록"
-				onclick="location.href='${pageContext.request.contextPath}/notice/wrtie'">
+				onclick="location.href='${pageContext.request.contextPath}/notice/write'">
 		</div>
 	</div>
 </c:if>
