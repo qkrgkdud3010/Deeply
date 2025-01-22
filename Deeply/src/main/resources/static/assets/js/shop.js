@@ -140,6 +140,9 @@ $(function () {
 	$('#alert_x_btn').click(function(){
 		$('#addCart_alert').hide();
 	});
+	$('#alert_x_btn2').click(function(){
+		$('#addCart_alert2').hide();
+	});
 	
 	/* ======================
 	 *  장바구니 수량 변경
