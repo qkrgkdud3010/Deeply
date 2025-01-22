@@ -84,17 +84,15 @@
 			<c:if test="${!empty principal && principal.memberVO.auth < 9}">
 				<a href="${pageContext.request.contextPath}/commu/list">커뮤니티</a>
 				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
+				<a href="${pageContext.request.contextPath}/notice/list">아티스트 공지</a>
 				<a href="${pageContext.request.contextPath}/item/main">shop</a>
 				
 			</c:if>
 		<%--아티스트--%>
 			<c:if test="${!empty principal && principal.artistVO!=null}">
-				<a href="${pageContext.request.contextPath}/commu/list">커뮤니티</a>
 				<a href="${pageContext.request.contextPath}/item/main">shop</a>
-			
 				<a href="${pageContext.request.contextPath}/artist/list">아티스트</a>
 				<a href="${pageContext.request.contextPath}/chat/chWrite">채팅</a>
-				<a href="#">팬관리</a>
 			
 			</c:if>
 			

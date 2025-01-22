@@ -91,7 +91,7 @@
 			<input type="button" value="나의 SHOP" onclick="location.href='${pageContext.request.contextPath}/item/orderList'"> 
 			<input type="button" value="나의 아티스트" onclick="location.href='${pageContext.request.contextPath}/follow/followList'"> 
 			<input type="button" value="작성글 목록" onclick="location.href='${pageContext.request.contextPath}/commu/myList'"> 
-			<input type="button" value="나의 편지" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist_num}'"> 
+			<input type="button" value="나의 편지" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist.artist_num}'"> 
 			<input type="button" value="좋아요 영상" onclick="location.href='${pageContext.request.contextPath}'"> 
 			<input type="button" value="고객센터" onclick="location.href='${pageContext.request.contextPath}'">
 		</div>
@@ -147,7 +147,7 @@
 				type="button" value="영상 관리"
 				onclick="${pageContext.request.contextPath}"> <input
 				type="button" value="공지 등록"
-				onclick="${pageContext.request.contextPath}">
+				onclick="${pageContext.request.contextPath}/notice/wrtie">
 		</div>
 	</div>
 </c:if>
