@@ -133,7 +133,7 @@
   <!-- FAQ Header -->
   <div class="faq-header">
     <h1 class="faq-title">자주 묻는 질문</h1>
-    <a href="#contact" class="contact-link" onclick="location.href='${pageContext.request.contextPath}/contact/inquiryForm">1대1 문의 하러가기</a>
+    <a href="${pageContext.request.contextPath}/contact/inquiryForm" class="contact-link">1대1 문의 하러가기</a>
    	<div class="admin-button">
    		<c:if test="${isAdmin}">
     		<a href="${pageContext.request.contextPath}/faq/add" class="admin-link">Add FAQ</a>
