@@ -92,8 +92,8 @@
 			<input type="button" value="나의 아티스트" onclick="location.href='${pageContext.request.contextPath}/follow/followList'"> 
 			<input type="button" value="작성글 목록" onclick="location.href='${pageContext.request.contextPath}/commu/myList'"> 
 			<input type="button" value="나의 편지" onclick="location.href='${pageContext.request.contextPath}/letter/artist_list?artist_num=${artist.artist_num}'"> 
-			<input type="button" value="좋아요 영상" onclick="location.href='${pageContext.request.contextPath}'"> 
-			<input type="button" value="고객센터" onclick="location.href='${pageContext.request.contextPath}'">
+			<!-- 미완성 <input type="button" value="좋아요 영상" onclick="location.href='${pageContext.request.contextPath}'"> --> 
+			<input type="button" value="고객센터" onclick="location.href='${pageContext.request.contextPath}/faq'">
 		</div>
 	</div>
 </c:if>
@@ -145,7 +145,7 @@
 				type="button" value="채팅 관리"
 				onclick="location.href='${pageContext.request.contextPath}'"> <input
 				type="button" value="영상 관리"
-				onclick="location.href='${pageContext.request.contextPath}'"> <input
+				onclick="location.href='${pageContext.request.contextPath}/artist/videos/upload_form'"> <input
 				type="button" value="공지 등록"
 				onclick="location.href='${pageContext.request.contextPath}/notice/write'">
 		</div>

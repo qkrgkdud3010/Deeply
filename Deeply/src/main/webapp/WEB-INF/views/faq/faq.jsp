@@ -46,10 +46,10 @@
   display: flex;
   flex-direction: column;
   width: 95%;
-  max-width: 1025px;
+  max-width: 900px;
   color: #fff;
   padding: 20px;
-  font: 600 24px/1 'Inter', sans-serif;
+  font-size: 20px; /* 24px -> 20px로 축소 */
   margin-top: 20px;
   cursor: pointer;
 }
@@ -60,10 +60,17 @@
   transition: transform 0.3s ease;
 }
 
-.faq-question { 
+.faq-question h2 {
+  margin: 0; /* h2 기본 마진 제거 */
+  font-size: 1em; /* 상위 요소 폰트 사이즈 상속 */
+  flex-grow: 1; /* 남는 공간 채우기 */
+}
+
+.faq-question {
   display: flex;
   align-items: center;
-  gap:20px;
+  gap: 15px; /* 요소 간 간격 축소 */
+  padding: 10px 0; /* 내부 패딩 조정 */
 }
 
 .faq-answer {
@@ -81,7 +88,8 @@
 }
 
 .admin-actions {
-    margin-top: 10px;
+  flex-shrink: 0; /* 관리자 버튼 영역 고정 */
+  white-space: nowrap; /* 버튼 줄바꿈 방지 */
 }
 
 .admin-actions a {
@@ -125,7 +133,7 @@
   <!-- FAQ Header -->
   <div class="faq-header">
     <h1 class="faq-title">자주 묻는 질문</h1>
-    <a href="#contact" class="contact-link">1대1 문의 하러가기</a>
+    <a href="#contact" class="contact-link" onclick="location.href='${pageContext.request.contextPath}/contact/inquiryForm">1대1 문의 하러가기</a>
    	<div class="admin-button">
    		<c:if test="${isAdmin}">
     		<a href="${pageContext.request.contextPath}/faq/add" class="admin-link">Add FAQ</a>

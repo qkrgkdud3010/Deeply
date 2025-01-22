@@ -41,7 +41,7 @@ public class VideoController {
     
     @Autowired
     private FanService fanService; // FanService 주입
-
+    
     @Autowired
     private ArtistMapper artistMapper;
 
@@ -64,20 +64,30 @@ public class VideoController {
             model.addAttribute("isGeneralUser", true); // 일반 사용자 처리
         }
 
-        // 멤버십 상태 체크
+     // 멤버십 상태 체크
         if (artistVO == null && !principal.hasRole("ADMIN")) {
-            MemberVO memberVO = principal.getMemberVO(); // MemberVO를 가져옴
-            if (memberVO != null) { // Null 체크
-                Long userNum = memberVO.getUser_num(); // User의 user_num 가져오기
-                FanVO fanVO = fanService.selectFan(userNum, groupNum); // FanService를 통해 FanVO 조회
-
-                if (fanVO != null && fanVO.getFan_status() == 1) {
-                    model.addAttribute("isMembership", true);
-                } else {
-                    model.addAttribute("isMembership", false);
+            MemberVO memberVO = principal.getMemberVO();
+            if (memberVO != null) {
+                Long userNum = memberVO.getUser_num();
+                
+                
+                // 그룹 소속 아티스트 목록 조회
+                List<ArtistVO> artists = artistMapper.selectGroupMembers(groupNum);
+                
+                boolean isMembership = false;
+                if (artists != null && !artists.isEmpty()) {
+                    for (ArtistVO artist : artists) {
+                        // 각 아티스트별로 팬 상태 확인
+                        FanVO fanVO = fanService.selectFan(userNum, artist.getUser_num());
+                        if (fanVO != null && fanVO.getFan_status() > 0) {
+                            isMembership = true;
+                            break; // 하나라도 조건 충족 시 탈출
+                        }
+                    }
                 }
+                
+                model.addAttribute("isMembership", isMembership);
             } else {
-                // MemberVO가 null일 경우 처리
                 model.addAttribute("isMembership", false);
             }
         }
