@@ -66,6 +66,7 @@
 </br>
 
 **2. SHOP (판매자 - 아티스트 계정)**  
+![main](https://github.com/704hj/Deeply/blob/main/images/artist.gif?raw=true)
   - **상품 관리**  
     - MyBatis를 활용한 상품 등록 및 수정 (썸머노트 에디터 적용)  
     - JavaScript와 Ajax를 활용한 실시간 상품 삭제 처리  
