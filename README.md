@@ -4,11 +4,11 @@
 </br></br>
 
 ## 📑 목차  
-📖 [프로젝트 개요]()</br>
-⚙️ [개발환경 및 기술 스택]()</br>
-😊 [담당 기능]()</br>
-💡 [문제 해결]()</br>
-❓ [느낀 점]()</br>
+📖 [프로젝트 개요](https://github.com/704hj/Deeply/tree/main#-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)</br>
+⚙️ [개발환경 및 기술 스택](https://github.com/704hj/Deeply/tree/main#%EF%B8%8F-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD-%EB%B0%8F-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)</br>
+😊 [담당 기능](https://github.com/704hj/Deeply/tree/main#-%EB%8B%B4%EB%8B%B9-%EA%B8%B0%EB%8A%A5)</br>
+💡 [문제 해결](https://github.com/704hj/Deeply/tree/main#-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)</br>
+❓ [느낀 점](https://github.com/704hj/Deeply/tree/main#-%EB%8A%90%EB%82%80-%EC%A0%90)</br>
 
 </br></br>
 
@@ -115,7 +115,7 @@
 
 - **매일 프로젝트 진행 상황을 기록하며 성장**  
   - 상세한 일지를 작성하며 진행 상황을 관리하고, 문제 해결 과정을 복기하여 빠른 문제 해결에 기여  
-  ➡️[프로젝트 일지](https://www.notion.so/1718913a4d278078a4b1dc6da0fecf11)  
+  ➡️[프로젝트 일지](https://www.notion.so/Deeply-1718913a4d27801d8763feadc42cfe44)  
 
 - **데이터베이스 설계의 중요성 체감**  
   - 잘못된 데이터 구조가 기능 구현 및 유지보수에 미치는 영향을 경험하며, 효율적인 데이터 모델링의 필요성을 깨달음  
