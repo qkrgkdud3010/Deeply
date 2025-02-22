@@ -44,7 +44,7 @@
     ![CSS3](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
     ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
     ![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
-    ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+    ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)</br>
     ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
     ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black)
     ![JSP](https://img.shields.io/badge/JSP-323330?style=for-the-badge&logo=eclipse&logoColor=white)
@@ -57,7 +57,7 @@
 ## 😊 담당 기능
 
 **1. 메인 페이지**  
-   ![main](https://github.com/704hj/ChallengeWithMe/blob/main/images/main.gif?raw=true)  
+   ![main](https://github.com/704hj/Deeply/edit/main/images/main.gif)  
   - MySQL과 연동된 상품 데이터 출력  
   - JSTL과 EL을 활용한 동적 데이터 처리  
   - Bootstrap과 jQuery를 활용한 반응형 UI 구현  
