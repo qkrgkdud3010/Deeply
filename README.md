@@ -57,7 +57,7 @@
 ## 😊 담당 기능
 
 **1. 메인 페이지**  
-   ![main](https://github.com/704hj/Deeply/edit/main/images/main.gif)  
+   ![main](https://github.com/704hj/Deeply/blob/main/images/main.gif?raw=true)  
   - MySQL과 연동된 상품 데이터 출력  
   - JSTL과 EL을 활용한 동적 데이터 처리  
   - Bootstrap과 jQuery를 활용한 반응형 UI 구현  
@@ -78,6 +78,7 @@
 </br>
 
 **3. SHOP (구매자 - 팬 계정)**  
+![main](https://github.com/704hj/Deeply/blob/main/images/cart.gif?raw=true)  
   - **장바구니 기능**  
     - 로그인된 사용자만 상품 추가 가능 (Spring Security 적용)  
     - JavaScript와 Ajax를 활용한 비동기 장바구니 관리  
@@ -88,6 +89,7 @@
 </br>
 
 **4. 마이페이지**  
+![main](https://github.com/704hj/Deeply/blob/main/images/mypage.gif?raw=true)  
   - **주문 내역 조회**  
     - MyBatis를 활용한 주문 내역 관리  
     - 주문 날짜, 상품 정보 및 결제 금액 출력  
