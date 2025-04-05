@@ -99,8 +99,7 @@
 
 ## 💡 문제 해결
 
-**[그룹별 최신 상품 조회 SQL 최적화]**  
-  ➡️https://www.notion.so/controller-1778913a4d27805e9bc3dc00ed040056
+**[그룹별 최신 상품 조회 SQL 최적화](https://www.notion.so/controller-1778913a4d27805e9bc3dc00ed040056)**  
   
 - **문제점**
   - 특정 그룹별 최신 등록된 상품 조회 시 중첩된 for문 사용으로 비효율적
@@ -123,17 +122,15 @@
 
 ## ❓ 느낀 점
 
-- **매일 프로젝트 진행 상황을 기록하며 성장**  
+- **[]매일 프로젝트 진행 상황을 기록하며 성장(https://www.notion.so/Deeply-1718913a4d27801d8763feadc42cfe44)**  
   - 상세한 일지를 작성하며 진행 상황을 관리하고, 문제 해결 과정을 복기하여 빠른 문제 해결에 기여  
-    ➡️[프로젝트 일지](https://www.notion.so/Deeply-1718913a4d27801d8763feadc42cfe44)  
 
 - **데이터베이스 설계의 중요성 체감**  
   - 잘못된 데이터 구조가 기능 구현 및 유지보수에 미치는 영향을 경험하며, 효율적인 데이터 모델링의 필요성을 깨달음  
 
-- **JavaScript 비동기 처리 개선 필요성 인식**  
+- **[JavaScript 비동기 처리 개선 필요성 인식](https://www.notion.so/1718913a4d2781279c9cd87ac00cb3d1)**  
   - Ajax와 JavaScript를 활용해 실시간 반영을 구현하며 UX 향상을 경험했지만, 효율적인 비동기 로직 개선 필요성을 느낌
-    ➡️https://www.notion.so/1718913a4d2781279c9cd87ac00cb3d1
+    
 
-- **Spring Boot 활용으로 생산성 향상**  
+- **[Spring Boot 활용으로 생산성 향상](https://www.notion.so/Spring-1718913a4d27810ea984f641abb33e0a)**  
   - 기존 설정 작업이 간소화되면서 개발 속도가 향상됨을 경험하고, 대규모 프로젝트에서의 생산성 향상을 체감
-    ➡️https://www.notion.so/Spring-1718913a4d27810ea984f641abb33e0a
